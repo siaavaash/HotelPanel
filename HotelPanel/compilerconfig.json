@@ -1,0 +1,142 @@
+﻿[
+  {
+    "outputFile": "UI/assets/styles/index.css",
+    "inputFile": "UI/assets/styles/index.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/settings/index.css",
+    "inputFile": "UI/assets/styles/spec/settings/index.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/tools/index.css",
+    "inputFile": "UI/assets/styles/spec/tools/index.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/index.css",
+    "inputFile": "UI/assets/styles/spec/index.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/vendor/index.css",
+    "inputFile": "UI/assets/styles/vendor/index.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/settings/baseColors.css",
+    "inputFile": "UI/assets/styles/spec/settings/baseColors.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/settings/borders.css",
+    "inputFile": "UI/assets/styles/spec/settings/borders.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/settings/breakpoints.css",
+    "inputFile": "UI/assets/styles/spec/settings/breakpoints.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/settings/brandColors.css",
+    "inputFile": "UI/assets/styles/spec/settings/brandColors.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/settings/fonts.css",
+    "inputFile": "UI/assets/styles/spec/settings/fonts.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/settings/materialColors.css",
+    "inputFile": "UI/assets/styles/spec/settings/materialColors.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/tools/mixins/clearfix.css",
+    "inputFile": "UI/assets/styles/spec/tools/mixins/clearfix.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/tools/mixins/index.css",
+    "inputFile": "UI/assets/styles/spec/tools/mixins/index.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/tools/mixins/mediaQueriesRanges.css",
+    "inputFile": "UI/assets/styles/spec/tools/mixins/mediaQueriesRanges.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/tools/mixins/placeholder.css",
+    "inputFile": "UI/assets/styles/spec/tools/mixins/placeholder.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/vendor/datepicker.css",
+    "inputFile": "UI/assets/styles/vendor/datepicker.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/vendor/fullcalendar.css",
+    "inputFile": "UI/assets/styles/vendor/fullcalendar.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/vendor/jquery.datatables.css",
+    "inputFile": "UI/assets/styles/vendor/jquery.datatables.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/vendor/perfectScrollbar.css",
+    "inputFile": "UI/assets/styles/vendor/perfectScrollbar.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/vendor/sparkline.css",
+    "inputFile": "UI/assets/styles/vendor/sparkline.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/components/easyPieChart.css",
+    "inputFile": "UI/assets/styles/spec/components/easyPieChart.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/components/footer.css",
+    "inputFile": "UI/assets/styles/spec/components/footer.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/components/forms.css",
+    "inputFile": "UI/assets/styles/spec/components/forms.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/components/index.css",
+    "inputFile": "UI/assets/styles/spec/components/index.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/components/loader.css",
+    "inputFile": "UI/assets/styles/spec/components/loader.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/components/masonry.css",
+    "inputFile": "UI/assets/styles/spec/components/masonry.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/components/pageContainer.css",
+    "inputFile": "UI/assets/styles/spec/components/pageContainer.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/components/progressBar.css",
+    "inputFile": "UI/assets/styles/spec/components/progressBar.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/components/sidebar.css",
+    "inputFile": "UI/assets/styles/spec/components/sidebar.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/components/topbar.css",
+    "inputFile": "UI/assets/styles/spec/components/topbar.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/generic/base.css",
+    "inputFile": "UI/assets/styles/spec/generic/base.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/generic/index.css",
+    "inputFile": "UI/assets/styles/spec/generic/index.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/screens/chat.css",
+    "inputFile": "UI/assets/styles/spec/screens/chat.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/screens/email.css",
+    "inputFile": "UI/assets/styles/spec/screens/email.scss"
+  },
+  {
+    "outputFile": "UI/assets/styles/spec/screens/index.css",
+    "inputFile": "UI/assets/styles/spec/screens/index.scss"
+  }
+]
