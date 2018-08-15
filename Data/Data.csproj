@@ -1,0 +1,877 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4CFA9A54-6E4C-435C-9BE4-D2A33CA8D532}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Data</RootNamespace>
+    <AssemblyName>Data</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Context.cs" />
+    <Compile Include="DataModel\Accommodation.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Accommodation1.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Accommodation960605.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Accommodation960726.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccommodationAirport.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccommodationAttribute.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccommodationCommission.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccommodationCommission1.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccommodationDescription.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccommodationItour.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccommodationItoursSupplier.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccommodationLocation1.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccommodationLocation960612.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccommodationLocationDuP.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccommodationLocationDuP2.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccommodationLocationTmp.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccommodationMap3.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccommodationReview.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccommodationTmp.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Accommodation_Booking.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Accommodation_Booking2.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Accommodation_Booking3.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Accommodation_Booking4.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Accommodation_Booking5.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccomodationImage.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccomodationRoomImage.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccomodationSupplier.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccomodationSupplier960616.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccomodationSupplierTmp.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccomodationVoucher.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccomodatonContract.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccomodatonContractPassenger.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Address.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AdvertisingInformation.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Aircraft.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Airline.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AirlineSupplierConfig.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AirlineSupplierWhitelist.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AirLineUnMap.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Airport.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Airportflyinghobo.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AirportSupplier.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AirportSupplier961110.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AirportSupplier961213.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AirportSupplierConfig.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AirportSupplierConfig1.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AirportSupplierConfig2.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AirportSupplierConfig961220.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AirportSupplierConfig970121.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AirportSupplierConfig_970219.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AirportSupplierConfig_970317.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AirportSupplierConfig_9703171.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AirPortUnMap.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Answer.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\ArrivalDetail.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Bank.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Banner.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Bill.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\BookingAirport.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\CarFee.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\CarSpecialEquipsAmount.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\CarTax.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\CarTotalFare.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\CarTrawelerSizeCode.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\CharteInfo.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Company.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Company1.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\CompanyName.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\CompanySupplierAccess.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\CompanyWhiteLabelConfig.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Contact.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Contacts1.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\ContactU.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Contract.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\ContractRefund.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Country.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\CountryNationality.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Currency.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\DevelopmentRequest.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\DevelopmentRequestDetail.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\DevelopmentRequestFile.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Discount.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Document.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Email.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\EmailMarketing.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Exchange.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\ExchangeDetail.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\ExchangeDetails_970317.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Facility.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Facility1.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\FacilityTemp.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\FlightContract.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\FlightContractPassenger.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\FlightDiscount.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\FlightEticket.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\FlightIndex.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\FlightTicket.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\FlightTicketArrival.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\FlightTicketDeparture.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\FlightTicketFareBreakdown.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\FlightTicketInformation.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\FlightTicketNotArrival.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\FlightTicketNotDeparture.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\FlightTicketTaxesFareBreakdown.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GC.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GCMAP.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GCMAPOld.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GCMAPXmlNode.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GetHotelAvailInfo.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\gtaFileName.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\gtaHotel.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\gtaHotelFileName.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\gtaHotelInfoOnly.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\gtaHotelRoomType.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\gtaLocationData.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\gtaLocationDataTemp.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\gtaLocationData_970313.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Help.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Help1.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\HotelIndex.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\IataAirport.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\iContext.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>iContext.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\iContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\iContext.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>iContext.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Inbox.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Inbox1.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Inbox2.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\InsuranceCity.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\InsuranceContract.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\InsuranceCountry.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\InsuranceLocation.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\InsurancePlan.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\InsuranceTicket.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Interest.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\IP.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\IssuanceData.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\JsonData.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Language.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Localize.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Location.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Location960605.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Location960627.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Location961114.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\LocationCnv.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\LocationHotelsBed.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\LocationInfo.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\LocationMistakeName.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\LocationMistakeName960524.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\LocationMistakeName961114.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\LocationSupplier.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\LocationSupplier24.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\LocationSupplier_970227.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\LocationTmp.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\LocationType.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\LoginLog.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Meal.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Message.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\MessagesMapped.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\MistakeName.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\NamesTemp2.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Newsletter.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\OfflineAccommodation.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\OfflineAccomodationImage.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\OtherAirport.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\PackagesIndex.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Page.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Pages_970424.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Payment.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Payment1.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Payment970410.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\PaymentCard.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\PaymentList.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\PaymentTicket.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\PerEngCityName.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Person.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\PersonNameList.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Pickup.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\PNR.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\PNR_RPH.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Privilege.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Privilege_970202.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Privilege_970414.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Privilege_970421.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Privilege_970508.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Propertyv3.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Propertyv4.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Question.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Question_status.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\RailwayContract.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\RailwayStation.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\RailwayStation1.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\RailwayStationTemp.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\RailwayStationTemp2.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\RailwayStation_970306.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\RailwayStation_970309.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\RatePlan.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\RatePlanSupplier.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\RequestLog.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\RequestObject.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\RequestTour.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\RequestUser.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\ReserveRefound.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Role.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\RolePrivilege.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\RolePrivilege_970202.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\RolePrivilege_970414.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\RolePrivilege_970421.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Role_970202.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Role_970414.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Service.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\ServiceContract.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\ServiceLocation.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\SessionItemX.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\SessionTimeItemX.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Setting.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\SpecialEquipPref.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Suggestion.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Supplier.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Supplier960615.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\sysdiagram.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Tbl.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\TblAirPortAlirezaMap.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\TblAllAirport.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\TblDiff.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\TblDiff2.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\TblDiff3.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\TblFac.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Tblrank.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Telephone.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\TelephoneU.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Ticket.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Ticketing.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\TicketStatu.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\TimeZone.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Token.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Tour.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Tpsa.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\TransferAddress.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\TransferContract.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\TransferTelephone.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\trexd.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\trexd2.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\TSAirport.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\TSLocation.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\TSProperty.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Tutorial.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\UnMapped.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\User.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\User1.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\UserLog.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\UserPictureDic.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\UserRole961221.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\UserRole_970202.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\VoucherRoom.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Wallet.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\WeatherForcast.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\WeatherLocationSearch.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Webservicex.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\WebSite.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Zone.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="DataModel\iContext.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>iContext.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="DataModel\iContext.edmx.diagram">
+      <DependentUpon>iContext.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DataModel\iContext.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>iContext.Context.cs</LastGenOutput>
+      <DependentUpon>iContext.edmx</DependentUpon>
+    </Content>
+    <Content Include="DataModel\iContext.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>iContext.edmx</DependentUpon>
+      <LastGenOutput>iContext.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EntitiesModel\" />
+    <Folder Include="PublicModel\" />
+    <Folder Include="ServiceModel\" />
+    <Folder Include="ViewModel\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
