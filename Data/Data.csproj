@@ -838,6 +838,7 @@
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PublicModel\LoginModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="DataModel\iContext.edmx">
@@ -869,7 +870,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="EntitiesModel\" />
-    <Folder Include="PublicModel\" />
     <Folder Include="ServiceModel\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
