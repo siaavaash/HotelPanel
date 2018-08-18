@@ -16,5 +16,14 @@ namespace Data.ViewModel
             public string Country { get; set; }
             public Nullable<System.DateTime> lastUpdate { get; set; }
         }
+        public class SearchAccommodation
+        {
+            public long? AccommodationlID { get; set; }
+            public string Name { get; set; }
+            public string CityName { get; set; }
+            public string Country { get; set; }
+            public long? From { get; set; }
+            public long? To { get; set; }
+        }
     }
 }

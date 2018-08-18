@@ -83,7 +83,7 @@
                             <a class="sidebar-link td-n" href="index.html">
                                 <div class="peers ai-c fxw-nw">
                                     <div class="peer">
-                                        <div class="logo"><img src="assets/static/images/logo.png" alt=""></div>
+                                        <div class="logo"><img src="~/Content/Images/logo.png" alt=""></div>
                                     </div>
                                     <div class="peer peer-greed">
                                         <h5 class="lh-1 mB-0 logo-text">Adminator</h5>
@@ -272,16 +272,18 @@
                     </ul>
                 </div>
             </div>
-            <main class="main-content bgc-grey-100">
-                <div id="mainContent">
-                    <div class="full-container">
-                        @RenderBody()
-                    </div>
-                </div>
-            </main>
-            <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600"><span>Copyright © 2017 Designed by <a href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a>. All rights reserved.</span></footer>
         </div>
+
     </div>
+    <main class="main-content bgc-grey-100">
+        <div id="mainContent">
+            <div class="full-container">
+                @RenderBody()
+                <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600"><span>Copyright © 2017 Designed by <a href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a>. All rights reserved.</span></footer>
+            </div>
+        </div>
+    </main>
+
     <script type="text/javascript" src="~/Content/Scripts/vendor.js"></script>
     <script type="text/javascript" src="~/Content/Scripts/bundle.js"></script>
 </body>

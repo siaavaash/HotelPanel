@@ -1846,3 +1846,7 @@ a.fc-more {
 .fc-unthemed .fc-list-empty {
     background-color: #eee
 }
+.main-content {
+    padding: 85px 20px 20px;
+     min-height: initial !important; 
+}

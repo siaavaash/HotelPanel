@@ -1,4 +1,5 @@
-﻿using Logic.BusinessObjects;
+﻿using Data.ViewModel;
+using Logic.BusinessObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,31 @@ namespace HotelPanel.Controllers
         {
             return View();
         }
-        public ActionResult List()
+        [HttpGet]
+        public ActionResult List(AccommodationModels.SearchAccommodation Model)
         {
-            var Model = _AccommodationBusiness.GetNames();
+            if(ModelState.IsValid)
+            {
+                var Result = _AccommodationBusiness.GetNames(Model);
+                return View(Result);
+            }
+            return View(new List<Data.ViewModel.AccommodationModels.ListNameAccommodation>());
+        }
+        public ActionResult Images(long AccommodationID)
+        {
+            var Model = _AccommodationBusiness.GetImages(AccommodationID);
             return View(Model);
+        }
+        [HttpPost]
+        public ActionResult Filter(List<long> ImageID)
+        {
+            bool Result = true;//_AccommodationBusiness.FilterImages(ImageID);
+            if (Result)
+            {
+                Session["Message"] = "Your Accommodation Images Successfully Filtered";
+                return RedirectToAction("List");
+            }
+            return RedirectToAction("List");
         }
     }
 }

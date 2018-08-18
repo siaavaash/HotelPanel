@@ -1,0 +1,7 @@
+﻿@model List<Data.DataModel.AccomodationImage>
+
+@foreach(var Item in Model)
+{
+<img src="@Item.Link" id="@Item.ImageID" style="width:350px; margin:3px;">
+}
+

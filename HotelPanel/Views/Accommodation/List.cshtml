@@ -1,47 +1,18 @@
 ﻿@model List<Data.ViewModel.AccommodationModels.ListNameAccommodation>
 
 <div class="container-fluid">
-    <h4 class="c-grey-900 mT-10 mB-30">Data Tables</h4>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="bgc-white bd bdrs-3 p-20 mB-20">
-                <h4 class="c-grey-900 mB-20">Bootstrap Data Table</h4>
-                <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                    <thead>
-                        <tr>
-                            <th>Accommodation ID</th>
-                            <th>Name</th>
-                            <th>City</th>
-                            <th>Country</th>
-                            <th>Last Update Date</th>
-                            <th>Options</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Accommodation ID</th>
-                            <th>Name</th>
-                            <th>City</th>
-                            <th>Country</th>
-                            <th>Last Update Date</th>
-                            <th>Options</th>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        <tr>
-                            @foreach (var Item in Model)
-                            {
-                                <td>@Item.AccommodationlID</td>
-                                <td>@Item.Name</td>
-                                <td>@Item.CityName</td>
-                                <td>@Item.Country</td>
-                                <td>@Item.lastUpdate</td>
-                                <td>..</td>
-                            }
-                        </tr>                        
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+    <h4 class="c-grey-900 mT-10 mB-30">Accommodation</h4>
+    @if (Session["Message-Success"].ToString() != string.Empty)
+    {
+        <div class="alert alert-success" role="alert">This is a success alert—check it out!</div>
+        Session["Message-Success"] = null;
+    }
+    @if (Model.Count != 0)
+    {
+        @RenderPage("_Table.cshtml")
+    }
+    else
+    {
+        @RenderPage("_Search.cshtml")
+    }
 </div>
