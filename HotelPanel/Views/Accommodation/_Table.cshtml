@@ -27,13 +27,21 @@
                     @foreach (var Item in Model)
                     {
                         <tr>
-                            <td>@Item.AccommodationlID</td>
+                            <td>@Item.AccommodationID</td>
                             <td>@Item.Name</td>
                             <td>@Item.CityName</td>
                             <td>@Item.Country</td>
                             <td>@Item.lastUpdate</td>
                             <td>
-                                @Html.ActionLink("Link", "Images", "Accommodation", new { AccommodationID = Item.AccommodationlID }, null)
+                                
+                                <div class="dropdown">
+                                    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 35px, 0px);">
+                                        <a class="dropdown-item" href="Images/AccommodationID=@Item.AccommodationID">Images</a>
+                                        <a class="dropdown-item" href="Weather/?AccommodationID=@Item.AccommodationID">Weather</a>
+                                        <a class="dropdown-item" href="#">Something else here</a>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     }

@@ -10,7 +10,7 @@ namespace Data.ViewModel
     {
         public class ListNameAccommodation
         {
-            public long AccommodationlID { get; set; }
+            public long AccommodationID { get; set; }
             public string Name { get; set; }
             public string CityName { get; set; }
             public string Country { get; set; }
@@ -18,7 +18,7 @@ namespace Data.ViewModel
         }
         public class SearchAccommodation
         {
-            public long? AccommodationlID { get; set; }
+            public long? AccommodationID { get; set; }
             public string Name { get; set; }
             public string CityName { get; set; }
             public string Country { get; set; }

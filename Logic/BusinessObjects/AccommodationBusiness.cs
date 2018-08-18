@@ -7,7 +7,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Service;
 namespace Logic.BusinessObjects
 {
     public class AccommodationBusiness
@@ -28,6 +28,22 @@ namespace Logic.BusinessObjects
             }
         }
         /// <summary>
+        /// Get Accommodation By ID
+        /// </summary>
+        /// <param name="AccommodationID"></param>
+        /// <returns></returns>
+        public Accommodation GetAccommodation(long AccommodationID)
+        {
+            try
+            {
+                return DataContext.Context.Accommodations.Where(x => x.AccommodationlID == AccommodationID).FirstOrDefault();
+            }
+            catch (Exception exeption)
+            {
+                throw exeption;
+            }
+        }
+        /// <summary>
         /// Get Full Name Of Accommodations
         /// </summary>
         /// <returns></returns>
@@ -36,33 +52,81 @@ namespace Logic.BusinessObjects
             try
             {
                 List<Accommodation> Query = new List<Accommodation>();
-                if (Model.AccommodationlID != null)
+                if (Model.AccommodationID != null)
                 {
-                    Query = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == Model.AccommodationlID).ToList();
+                    if(Query.Count == 0)
+                    {
+                        Query = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == Model.AccommodationID).ToList();
+                    }
+                    else
+                    {
+                        Query = Query.Where(x => x.AccommodationlID == Model.AccommodationID).ToList();
+                    }
+                    
                 }
                 if (!String.IsNullOrEmpty(Model.Name))
                 {
-                    Query = DataContext.Context.Accommodations.Where(x => x.Name.ToLower().Contains(Model.Name.ToLower())).ToList();
+                    if (Query.Count == 0)
+                    {
+                        Query = DataContext.Context.Accommodations.Where(x => x.Name.ToLower().Contains(Model.Name.ToLower())).ToList();
+                    }
+                    else
+                    {
+                        Query = Query.Where(x => x.Name.ToLower().Contains(Model.Name.ToLower())).ToList();
+                    }
+                    
                 }
                 if (!String.IsNullOrEmpty(Model.CityName))
                 {
-                    Query = DataContext.Context.Accommodations.Where(x => x.CityName.ToLower().Contains(Model.CityName.ToLower())).ToList();
+                    if (Query.Count == 0)
+                    {
+                        Query = DataContext.Context.Accommodations.Where(x => x.CityName.ToLower().Contains(Model.CityName.ToLower())).ToList();
+                    }
+                    else
+                    {
+                        Query = Query.Where(x => x.CityName.ToLower().Contains(Model.CityName.ToLower())).ToList();
+                    }
+                    
                 }
                 if (!String.IsNullOrEmpty(Model.Country))
                 {
-                    Query = DataContext.Context.Accommodations.Where(x => x.Country.ToLower().Contains(Model.Country.ToLower())).ToList();
+                    if (Query.Count == 0)
+                    {
+                        Query = DataContext.Context.Accommodations.Where(x => x.Country.ToLower().Contains(Model.Country.ToLower())).ToList();
+                    }
+                    else
+                    {
+                        Query = Query.Where(x => x.Country.ToLower().Contains(Model.Country.ToLower())).ToList();
+                    }
+                    
                 }
                 if (Model.From != null)
                 {
-                    Query = DataContext.Context.Accommodations.Where(x => x.AccommodationlID >= Model.From).ToList();
+                    if (Query.Count == 0)
+                    {
+                        Query = DataContext.Context.Accommodations.Where(x => x.AccommodationlID >= Model.From).ToList();
+                    }
+                    else
+                    {
+                        Query = Query.Where(x => x.AccommodationlID >= Model.From).ToList();
+                    }
+                    
                 }
                 if (Model.To != null)
                 {
-                    Query = DataContext.Context.Accommodations.Where(x => x.AccommodationlID <= Model.To).ToList();
+                    if (Query.Count == 0)
+                    {
+                        Query = DataContext.Context.Accommodations.Where(x => x.AccommodationlID <= Model.To).ToList();
+                    }
+                    else
+                    {
+                        Query = Query.Where(x => x.AccommodationlID <= Model.To).ToList();
+                    }
+                    
                 }
                 return Query.Select(x => new AccommodationModels.ListNameAccommodation
                 {
-                    AccommodationlID = x.AccommodationlID,
+                    AccommodationID = x.AccommodationlID,
                     Name = x.Name,
                     CityName=x.CityName,
                     Country=x.Country,
@@ -84,6 +148,19 @@ namespace Logic.BusinessObjects
             try
             {
                 return DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID==AccommodationID).ToList();
+            }
+            catch (Exception exeption)
+            {
+                throw exeption;
+            }
+        }
+        public WeatherModels.Forecast.Root GetWeather(long AccommodationID)
+        {
+            try
+            {
+                var Accommodation = GetAccommodation(AccommodationID);
+                var Result = WeatherConcreteMapper.Avail(Accommodation.CityName);
+                return Result;
             }
             catch (Exception exeption)
             {

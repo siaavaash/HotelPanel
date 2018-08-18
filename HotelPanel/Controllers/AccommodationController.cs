@@ -16,7 +16,12 @@ namespace HotelPanel.Controllers
         {
             return View();
         }
-        [HttpGet]
+        public ActionResult List()
+        {
+            return View(new List<Data.ViewModel.AccommodationModels.ListNameAccommodation>());
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult List(AccommodationModels.SearchAccommodation Model)
         {
             if(ModelState.IsValid)
@@ -29,6 +34,12 @@ namespace HotelPanel.Controllers
         public ActionResult Images(long AccommodationID)
         {
             var Model = _AccommodationBusiness.GetImages(AccommodationID);
+            return View(Model);
+        }
+        public ActionResult Weather(string AccommodationID)
+        {
+            long Entry = AccommodationID.IsNormalized() ? long.Parse(AccommodationID) : 0;
+            var Model = _AccommodationBusiness.GetWeather(Entry);
             return View(Model);
         }
         [HttpPost]

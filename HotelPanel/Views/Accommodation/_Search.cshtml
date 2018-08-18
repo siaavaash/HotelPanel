@@ -2,15 +2,16 @@
     <div class="bgc-white p-20 bd">
         <h6 class="c-grey-900">Search Accommodation</h6>
         <div class="mT-30">
-            <form method="get">
+            <form method="post">
+                @Html.AntiForgeryToken()
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputEmail4">Accommodation ID</label>
-                        <input type="email" class="form-control" id="inputAccommodationID" name="AccommodationID" placeholder="50620">
+                        <input type="number" class="form-control" id="inputAccommodationID" name="AccommodationID" placeholder="50620">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputPassword4">Name</label>
-                        <input type="password" class="form-control" id="inputName" name="Name" placeholder="Hilton">
+                        <input type="text" class="form-control" id="inputName" name="Name" placeholder="Hilton">
                     </div>
                 </div>
                 <div class="form-row">
