@@ -838,6 +838,7 @@
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PublicModel\LocationModels.cs" />
     <Compile Include="PublicModel\LoginModels.cs" />
     <Compile Include="ServiceModel\Weather.cs" />
     <Compile Include="ViewModel\AccommodationModels.cs" />

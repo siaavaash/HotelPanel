@@ -160,6 +160,7 @@
     <Compile Include="Controllers\AirportController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -218,10 +219,11 @@
     <Content Include="Views\Airport\List.cshtml" />
     <Content Include="Views\Airport\_Table.cshtml" />
     <Content Include="Views\Airport\_Search.cshtml" />
+    <Content Include="Views\Public\Index.cshtml" />
+    <Content Include="Views\Accommodation\Weather.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

@@ -160,6 +160,11 @@ namespace Logic.BusinessObjects
             {
                 var Accommodation = GetAccommodation(AccommodationID);
                 var Result = WeatherConcreteMapper.Avail(Accommodation.CityName);
+                Result.Google = new Data.PublicModel.LocationModels.Google
+                {
+                    Lat = Accommodation.Latitude,
+                    Lng = Accommodation.Longitude
+                };
                 return Result;
             }
             catch (Exception exeption)

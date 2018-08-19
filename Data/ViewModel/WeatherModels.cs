@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.PublicModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,8 @@ namespace Data.ViewModel
             {
                 public int Wind { get; set; }
                 public DateTime Sunrise { get; set; }
-                public string Pressure { get; set; }                
+                public string Pressure { get; set; }    
+                public LocationModels.Google Google { get; set; }
                 public List<ForecastDays> Forecast { get; set; }
             }
         }
