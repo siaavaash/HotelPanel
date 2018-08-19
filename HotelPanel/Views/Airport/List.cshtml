@@ -1,4 +1,4 @@
-﻿@model List<Data.DataModel.Airport>
+﻿@model IEnumerable<Data.DataModel.Airport>
 
 <div class="container-fluid">
     <h4 class="c-grey-900 mT-10 mB-30">Airports</h4>
@@ -7,7 +7,7 @@
         <div class="alert alert-success" role="alert">This is a success alert—check it out!</div>
         Session["Message-Success"] = null;
     }
-    @if (Model.Count != 0)
+    @if (Model != null)
     {
         @RenderPage("_Table.cshtml")
     }

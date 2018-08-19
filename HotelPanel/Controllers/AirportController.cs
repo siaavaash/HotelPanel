@@ -19,14 +19,14 @@ namespace HotelPanel.Controllers
         [HttpGet]
         public ActionResult List()
         {
-            List<Data.DataModel.Airport> Result = new List<Data.DataModel.Airport>();
+            IEnumerable<Data.DataModel.Airport> Result = null;
             return View(Result);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult List(AirportModels.SearchAirport Model)
         {
-            var Result = airportBusiness.Search(Model);
+            IEnumerable<Data.DataModel.Airport> Result = airportBusiness.Search(Model);
             return View(Result);
         }
     }

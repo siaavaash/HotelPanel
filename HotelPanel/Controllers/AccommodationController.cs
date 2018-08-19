@@ -18,7 +18,8 @@ namespace HotelPanel.Controllers
         }
         public ActionResult List()
         {
-            return View(new List<Data.ViewModel.AccommodationModels.ListNameAccommodation>());
+            IEnumerable<AccommodationModels.ListNameAccommodation> Result = null;
+            return View(Result);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -26,7 +27,7 @@ namespace HotelPanel.Controllers
         {
             if(ModelState.IsValid)
             {
-                var Result = _AccommodationBusiness.GetNames(Model);
+                IEnumerable<AccommodationModels.ListNameAccommodation> Result = _AccommodationBusiness.GetNames(Model);
                 return View(Result);
             }
             return View(new List<Data.ViewModel.AccommodationModels.ListNameAccommodation>());
