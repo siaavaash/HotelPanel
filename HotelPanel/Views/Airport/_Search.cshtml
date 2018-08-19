@@ -1,0 +1,30 @@
+﻿
+<div class="bgc-white p-20 bd">
+    <h6 class="c-grey-900">Search Airport</h6>
+    <div class="mT-30">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4">Aiport ID</label>
+                    <input type="number" class="form-control" id="inputAirportID" name="AirportID" placeholder="2605">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4">Name</label>
+                    <input type="text" class="form-control" id="inputName" name="Name" placeholder="Atlantic City Intl">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputAddress">Location ID</label>
+                    <input type="text" class="form-control" id="inputLocationID" name="LocationID" placeholder="Location">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputAddress2">Code</label>
+                    <input type="text" class="form-control" id="inputCode" name="Code" placeholder="ACY">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+</div>

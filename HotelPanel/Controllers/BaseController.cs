@@ -1,5 +1,8 @@
 ﻿using Common;
+using Constants;
 using Data;
+using Data.DataModel;
+using Logic.BusinessObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +29,19 @@ namespace HotelPanel.Controllers
             //    return false;
             //}
             return true;
+        }
+        /// <summary>
+        /// Current User While Process Application
+        /// </summary>
+        public User1 CurrentUser
+        {
+            get
+            {
+                var userId = iUser.CurrentUserId;
+                if (userId <= 0) return null;
+                return new PublicBusiness().GetUser(userId);
+            }
+            set => iUser.CurrentUserId = value?.UserID ?? 0;
         }
         /// <summary>
         /// در خواست لاگوت ارسال شده است؟ request آیا در
@@ -67,7 +83,7 @@ namespace HotelPanel.Controllers
         /// <summary>
         /// مشخص می کند که آیا کاربر لاگین است یا نه
         /// </summary>
-        public bool SessionIsValid => Session["User"] != null;
+        public bool SessionIsValid => CurrentUser != null;
         /// <summary>
         /// آیا در صفحه لاگین هستیم؟
         /// </summary>
@@ -77,12 +93,10 @@ namespace HotelPanel.Controllers
             {
                 try
                 {
-                    var loginPages = new[]
-                    {
-                        "Login".ToLower()//Login Address
-                    };
-                    var currentUrl = "/" + Request.RequestContext.RouteData.Values.Values.First().ToString().ToLower() + "/";
-                    return loginPages.Any(x => x.Contains(currentUrl));
+                    var loginPages = Key.Routes.Login.ToLower();
+                    var currentUrl = Request.RequestContext.RouteData.Values.Values.First().ToString().ToLower();
+                    Boolean Check= loginPages.Contains(currentUrl);
+                    return Check;
                 }
                 catch { }
                 return false;

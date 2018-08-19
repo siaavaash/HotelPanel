@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -95,6 +96,21 @@ namespace Common
             public string ControllerName { get; set; }
             public string ActionName { get; set; }
             public string AreaName { get; set; }
+        }
+        public static TResult GetConfig<TResult>(string key)
+        {
+            try
+            {
+                return (TResult)Convert.ChangeType(ConfigurationManager.AppSettings[key], typeof(TResult));
+            }
+            catch (ConfigurationErrorsException configEx)
+            {
+                throw configEx;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
     public static class ObjectExtensions

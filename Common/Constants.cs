@@ -14,4 +14,34 @@ namespace Constants
             public const string Login = "/Login/Index";
         }
     }
+    public static class Key
+    {
+        public static class Routes
+        {
+            public const string Login = "Login";
+        }
+    }
+    public static class PublicConstants
+    {
+        public static class Session
+        {
+            public const string CurrentCurrency = "CurrentCurrency";
+            public const string CurrentLanguage = "CurrentLanguage";
+            public const string CurrentUserId = "CurrentUserId";
+            public const string HSession = "HSession";
+            public const string Link = "Link";
+            public const string LastKeepSessionAliveCall = "LastKeepSessionAliveCall";
+            public const string Fare = "Fare";
+            public const string iWallet = "iWallet";
+            public const string iCIP = "iCIP";
+            public const string AddFundWallet = "AddFundWallet";
+            public const string Notification = "Notification";
+            public const string Suggestion = "Suggestion";
+            public const string PaymentError = "PaymentError";
+            public const string iCaptcha = "iCaptcha";
+            public const string Message_Error = "Message_Error";
+            public const string Message_Success = "Message_Success";
+            public const string Message_Warning = "Message_Warning";
+        }
+    }
 }

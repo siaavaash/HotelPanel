@@ -1,4 +1,5 @@
 ﻿using Common;
+using Constants;
 using Data.PublicModel;
 using Logic.BusinessObjects;
 using System;
@@ -9,15 +10,16 @@ using System.Web.Mvc;
 
 namespace HotelPanel.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
         UserBusiness userBusiness = new UserBusiness();
         /// <summary>
         /// Login View
         /// </summary>
         /// <returns>View Login</returns>
-        public ActionResult Index()
+        public ActionResult Index(string u)
         {
+            ViewBag.NextAction = u;
             return View();
         }
         /// <summary>
@@ -30,18 +32,20 @@ namespace HotelPanel.Controllers
         {
             if (Model.Username == null && Model.Password == null)
             {
-                Session["Message-Error"] = "Please enter username and password";
+                iUserStorage.Store(PublicConstants.Session.Message_Error, "Please enter username and password");
+                
                 return Redirect(Constants.URL.Routes.Login);
             }
             Model.Password = Model.Password.ToMD5();
-            Boolean resultLogin = userBusiness.LoginUser(Model);
-            if (resultLogin)
+            var resultLogin = userBusiness.LoginUser(Model);
+            if (resultLogin != null)
             {
+                CurrentUser = resultLogin;
                 return Redirect(Constants.URL.Routes.Home);
             }
             else
             {
-                Session["Message-Error"] = "Password or username is not correct";
+                iUserStorage.Store(PublicConstants.Session.Message_Error, "Password or username is not correct");
                 return Redirect(Constants.URL.Routes.Login);
             }
         }

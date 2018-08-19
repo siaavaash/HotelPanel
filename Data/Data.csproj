@@ -841,6 +841,7 @@
     <Compile Include="PublicModel\LoginModels.cs" />
     <Compile Include="ServiceModel\Weather.cs" />
     <Compile Include="ViewModel\AccommodationModels.cs" />
+    <Compile Include="ViewModel\AirportModels.cs" />
     <Compile Include="ViewModel\WeatherModels.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.DataModel;
 using Data.PublicModel;
 using System;
 using System.Collections.Generic;
@@ -14,18 +15,18 @@ namespace Logic.BusinessObjects
         /// لاگین یوزر
         /// </summary>
         /// <returns></returns>
-        public Boolean LoginUser(LoginModels.LoginEntry model)
+        public User1 LoginUser(LoginModels.LoginEntry model)
         {
             try
             {
-                var user = DataContext.Context.Users.FirstOrDefault(i => i.Username == model.Username && i.Password == model.Password);
+                var user = DataContext.Context.User1.Where(i => i.Username == model.Username && i.Password == model.Password).FirstOrDefault();
                 if (user != null)
                 {
-                    return true;
+                    return user;
                 }
                 else
                 {
-                    return false;
+                    return null;
                 }
 
             }

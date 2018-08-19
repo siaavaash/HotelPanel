@@ -157,11 +157,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccommodationController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AirportController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="iUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -213,6 +215,9 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Accommodation\_Search.cshtml" />
     <Content Include="Views\Accommodation\_Table.cshtml" />
+    <Content Include="Views\Airport\List.cshtml" />
+    <Content Include="Views\Airport\_Table.cshtml" />
+    <Content Include="Views\Airport\_Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
