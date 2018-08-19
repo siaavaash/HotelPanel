@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="AppSetting.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Enumeration.cs" />
     <Compile Include="iLogger.cs" />
     <Compile Include="iUserStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

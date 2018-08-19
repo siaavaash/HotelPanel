@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Service;
+using Common;
 namespace Logic.BusinessObjects
 {
     public class AccommodationBusiness
@@ -160,12 +161,16 @@ namespace Logic.BusinessObjects
             {
                 var Accommodation = GetAccommodation(AccommodationID);
                 var Result = WeatherConcreteMapper.Avail(Accommodation.CityName);
-                Result.Google = new Data.PublicModel.LocationModels.Google
+                WeatherModels.Forecast.Root Model = new WeatherModels.Forecast.Root();
+                Model.Wind = Result.query.results.channel.wind.speed.ToKM().ToString();
+                Model.Sunrise = Result.query.results.channel.astronomy.sunrise.ToUpper();
+                Model.Pressure = Result.query.results.channel.atmosphere.pressure;
+                Model.Google = new Data.PublicModel.LocationModels.Google
                 {
                     Lat = Accommodation.Latitude,
                     Lng = Accommodation.Longitude
                 };
-                return Result;
+                return Model;
             }
             catch (Exception exeption)
             {

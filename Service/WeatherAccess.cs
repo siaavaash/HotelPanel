@@ -1,4 +1,4 @@
-﻿using Data.ServiceModel;
+﻿using Service.ServiceModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;

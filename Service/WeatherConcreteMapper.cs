@@ -9,11 +9,10 @@ namespace Service
 {
     public static class WeatherConcreteMapper
     {
-        public static WeatherModels.Forecast.Root Avail(string CityName)
+        public static ServiceModel.Weather.RootObject Avail(string CityName)
         {
             var WeatherAvail = Service.WeatherAccess.Get(CityName);
-            WeatherModels.Forecast.Root Result = new WeatherModels.Forecast.Root();
-            return Result;
+            return WeatherAvail;
         }
     }
 }

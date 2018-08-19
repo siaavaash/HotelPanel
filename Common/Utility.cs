@@ -26,6 +26,33 @@ namespace Common
 
             return sb.ToString();
         }
+        public static string[] SplitString(string text, char key)
+        {
+            if (String.IsNullOrEmpty(text)) return null;
+            string str = null;
+            string[] strArr = null;
+            str = text;
+            char[] splitchar = { key };
+            strArr = str.Split(splitchar);
+            return strArr;
+        }
+        public static int ToKM(this string mph)
+        {
+            double Unit = 1.60934;
+            double Entry = double.Parse(mph);
+            double Calculate = Entry * Unit;
+            var round = (int)RoundUpValue(Calculate,2);
+            return round;
+        }
+        public static double RoundUpValue(double value, int decimalpoint)
+        {
+            var result = Math.Round(value, decimalpoint);
+            if (result < value)
+            {
+                result += Math.Pow(10, -decimalpoint);
+            }
+            return result;
+        }
         public static byte[] GetHash(string inputString)
         {
             HashAlgorithm algorithm = MD5.Create();

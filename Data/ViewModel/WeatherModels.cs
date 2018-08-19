@@ -22,8 +22,8 @@ namespace Data.ViewModel
             }
             public class Root
             {
-                public int Wind { get; set; }
-                public DateTime Sunrise { get; set; }
+                public string Wind { get; set; }
+                public string Sunrise { get; set; }
                 public string Pressure { get; set; }    
                 public LocationModels.Google Google { get; set; }
                 public List<ForecastDays> Forecast { get; set; }
