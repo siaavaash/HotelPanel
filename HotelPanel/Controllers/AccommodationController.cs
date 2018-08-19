@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace HotelPanel.Controllers
 {
-    public class AccommodationController : Controller
+    public class AccommodationController : BaseController
     {
         AccommodationBusiness _AccommodationBusiness = new AccommodationBusiness();
         // GET: Accommodation
