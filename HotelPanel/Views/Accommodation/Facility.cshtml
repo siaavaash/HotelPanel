@@ -1,0 +1,19 @@
+﻿@model Data.ViewModel.AccommodationModels.AccommodationFacility
+<div class="bdT pX-40 pY-30">
+    <h4>Accommodation Name</h4>
+    <p>
+        @Model.Name
+    </p>
+    <h4>Description</h4>
+    <p>
+        @Html.Raw(Model.Description)
+    </p>
+    <h4>Facilities</h4>
+    @foreach(var item in Model.Facilities)
+    {
+    <p>
+        @item.Name
+    </p>
+    }
+    
+</div>

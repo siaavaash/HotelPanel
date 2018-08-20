@@ -13,11 +13,11 @@ namespace Data.ViewModel
         {
             public class ForecastDays
             {
-                public string Code { get; set; }
+                public int Code { get; set; }
                 public string Date { get; set; }
                 public string Day { get; set; }
-                public decimal High { get; set; }
-                public decimal Low { get; set; }
+                public string High { get; set; }
+                public string Low { get; set; }
                 public string Text { get; set; }
             }
             public class Root

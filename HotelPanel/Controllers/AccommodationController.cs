@@ -1,4 +1,6 @@
-﻿using Data.ViewModel;
+﻿using Common;
+using Constants;
+using Data.ViewModel;
 using Logic.BusinessObjects;
 using System;
 using System.Collections.Generic;
@@ -49,10 +51,22 @@ namespace HotelPanel.Controllers
             bool Result = true;//_AccommodationBusiness.FilterImages(ImageID);
             if (Result)
             {
-                Session["Message"] = "Your Accommodation Images Successfully Filtered";
+                iUserStorage.Store(PublicConstants.Session.Message_Success, "Your Accommodation Images Successfully Filtered"); ;
                 return RedirectToAction("List");
             }
             return RedirectToAction("List");
+        }
+        public ActionResult Facility(long AccommodationID)
+        {
+            AccommodationModels.AccommodationFacility Model = new AccommodationModels.AccommodationFacility();
+            var Facility = _AccommodationBusiness.GetFacilities(AccommodationID);
+            var Description = _AccommodationBusiness.GetDescription(AccommodationID);
+            string Name = _AccommodationBusiness.GetAccommodation(AccommodationID).Name;
+            Model.Facilities = new List<Data.DataModel.Facility>(Facility);
+            Model.Description = Description;
+            Model.AccommodationID = AccommodationID;
+            Model.Name = Name;
+            return View(Model);
         }
     }
 }
