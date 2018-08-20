@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Service;
 using Common;
+using static Data.ViewModel.WeatherModels.Forecast;
+
 namespace Logic.BusinessObjects
 {
     public class AccommodationBusiness
@@ -155,6 +157,28 @@ namespace Logic.BusinessObjects
                 throw exeption;
             }
         }
+        public List<Facility> GetFacilities(long AccommodationID)
+        {
+            try
+            {
+                return DataContext.Context.Accommodations.Where(x => x.AccommodationlID == AccommodationID).FirstOrDefault().Facilities.ToList();
+            }
+            catch (Exception exeption)
+            {
+                throw exeption;
+            }
+        }
+        public string GetDescription(long AccommodationID)
+        {
+            try
+            {
+                return DataContext.Context.Accommodations.Where(x => x.AccommodationlID == AccommodationID).FirstOrDefault().Description;
+            }
+            catch (Exception exeption)
+            {
+                throw exeption;
+            }
+        }
         public WeatherModels.Forecast.Root GetWeather(long AccommodationID)
         {
             try
@@ -162,6 +186,7 @@ namespace Logic.BusinessObjects
                 var Accommodation = GetAccommodation(AccommodationID);
                 var Result = WeatherConcreteMapper.Avail(Accommodation.CityName);
                 WeatherModels.Forecast.Root Model = new WeatherModels.Forecast.Root();
+                Model.Forecast = new List<ForecastDays>();
                 Model.Wind = Result.query.results.channel.wind.speed.ToKM().ToString();
                 Model.Sunrise = Result.query.results.channel.astronomy.sunrise.ToUpper();
                 Model.Pressure = Result.query.results.channel.atmosphere.pressure;
@@ -170,9 +195,17 @@ namespace Logic.BusinessObjects
                     Lat = Accommodation.Latitude,
                     Lng = Accommodation.Longitude
                 };
-                for(int i = 1; i <= 7; i++)
+                for(int i = 0; i < 7; i++)
                 {
-                    //Result.query.results.channel.item.forecast[i].
+                    Model.Forecast.Add(new ForecastDays
+                    {
+                        Date = Result.query.results.channel.item.forecast[i].date,
+                        Code = (int.Parse(Result.query.results.channel.item.forecast[i].code)),
+                        Day = Result.query.results.channel.item.forecast[i].day,
+                        High = Utility.FahrenheitToCentigrade(Result.query.results.channel.item.forecast[i].high).ToString(),
+                        Low = Utility.FahrenheitToCentigrade(Result.query.results.channel.item.forecast[i].low).ToString(),
+                        Text = Result.query.results.channel.item.forecast[i].text
+                    });
                 }
                 return Model;
             }

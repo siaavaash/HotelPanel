@@ -1,4 +1,8 @@
-﻿@model Data.ViewModel.WeatherModels.Forecast.Root
+﻿@using System.Linq;
+@model Data.ViewModel.WeatherModels.Forecast.Root
+    @{ 
+        int AvarageToday = (int.Parse(Model.Forecast[0].High) + int.Parse(Model.Forecast[0].Low))/2;
+    }
     <div class="bd bgc-white p-20">
         <div class="layers">
             <div class="layer w-100 mB-20">
@@ -11,22 +15,91 @@
                             <div class="layer w-100">
                                 <div class="peers fxw-nw ai-c">
                                     <div class="peer mR-20">
-                                        <h3>32<sup>°F</sup></h3>
+                                        <h3>@AvarageToday<sup>°C</sup></h3>
                                     </div>
                                     <div class="peer">
-                                        <canvas class="sleet" width="44" height="44"></canvas>
+                                        @if (
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.sunny ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.hot ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.clear_night ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.fair_day ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.fair_night ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.blustery
+                                            )
+                                        {
+                                            <canvas class="clear-day" width="44" height="44"></canvas>
+                                        }
+                                        @if (
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.freezing_rain ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.mixed_rain_and_hail ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.mixed_rain_and_sleet ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.mixed_rain_and_snow ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.sleet ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.showers ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.showers_2
+
+                                            )
+                                        {
+                                            <canvas class="sleet" width="44" height="44"></canvas>
+                                        }
+                                        @if (
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.partly_cloudy ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.partly_cloudy_day ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.partly_cloudy_night
+                                            )
+                                        {
+                                            <canvas class="partly-cloudy-day" width="44" height="44"></canvas>
+                                        }
+                                        @if (
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.cloudy ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.mostly_cloudy_day ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.mostly_cloudy_night ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.haze
+                                            )
+                                        {
+                                            <canvas class="cloudy" width="44" height="44"></canvas>
+                                        }
+                                        @if (
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.snow ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.snow_flurries ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.snow_showers ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.scattered_snow_showers ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.heavy_snow ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.light_snow_showers ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.mixed_snow_and_sleet ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.blowing_snow ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.heavy_sno_2 ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.light_snow_showers
+
+                                            )
+                                        {
+                                            <canvas class="snow" width="44" height="44"></canvas>
+                                        }
+                                        @if (
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.thundershowers ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.thunderstorms ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.severe_thunderstorms ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.scattered_thunderstorms_2 ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.scattered_thunderstorms ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.isolated_thunderstorms ||
+                                            Model.Forecast[0].Code == (int)Common.WeatherType.isolated_thundershowers 
+
+                                            )
+                                        {
+                                            <canvas class="wind" width="30" height="30"></canvas>
+                                        }
                                     </div>
                                 </div>
                             </div>
-                            <div class="layer w-100"><span class="fw-600 c-grey-600">Partly Clouds</span></div>
+                            <div class="layer w-100"><span class="fw-600 c-grey-600">@Model.Forecast[0].Text</span></div>
                         </div>
                     </div>
                     <div class="peer">
                         <div class="layers ai-fe">
                             <div class="layer">
-                                <h5 class="mB-5">Monday</h5>
+                                <h5 class="mB-5">@Model.Forecast[0].Day</h5>
                             </div>
-                            <div class="layer"><span class="fw-600 c-grey-600">Nov, 01 2017</span></div>
+                            <div class="layer"><span class="fw-600 c-grey-600">@Model.Forecast[0].Date</span></div>
                         </div>
                     </div>
                 </div>
@@ -36,53 +109,103 @@
                     <div class="layer w-100 bdT pY-5">
                         <div class="peers ai-c jc-sb fxw-nw">
                             <div class="peer"><span>Wind</span></div>
-                            <div class="peer ta-r"><span class="fw-600 c-grey-800">10km/h</span></div>
+                            <div class="peer ta-r"><span class="fw-600 c-grey-800">@Model.Wind km/h</span></div>
                         </div>
                     </div>
                     <div class="layer w-100 bdT pY-5">
                         <div class="peers ai-c jc-sb fxw-nw">
                             <div class="peer"><span>Sunrise</span></div>
-                            <div class="peer ta-r"><span class="fw-600 c-grey-800">05:00 AM</span></div>
+                            <div class="peer ta-r"><span class="fw-600 c-grey-800">@Model.Sunrise</span></div>
                         </div>
                     </div>
                     <div class="layer w-100 bdT pY-5">
                         <div class="peers ai-c jc-sb fxw-nw">
                             <div class="peer"><span>Pressure</span></div>
-                            <div class="peer ta-r"><span class="fw-600 c-grey-800">1B</span></div>
+                            <div class="peer ta-r"><span class="fw-600 c-grey-800">@Model.Pressure in</span></div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="layer w-100">
                 <div class="peers peers-greed ai-fs ta-c">
+                    @foreach (var item in Model.Forecast)
+                    {
+                        int _ItemAvarage = (int.Parse(item.High)+int.Parse(item.Low))/2;
                     <div class="peer">
-                        <h6 class="mB-10">MON</h6>
-                        <canvas class="sleet" width="30" height="30"></canvas><span class="d-b fw-600">32<sup>°F</sup></span>
+                        <h6 class="mB-10">@item.Day</h6>
+                        @if (
+                                        item.Code == (int)Common.WeatherType.sunny ||
+                                        item.Code == (int)Common.WeatherType.hot ||
+                                        item.Code == (int)Common.WeatherType.clear_night ||
+                                        item.Code == (int)Common.WeatherType.fair_day ||
+                                        item.Code == (int)Common.WeatherType.fair_night ||
+                                        item.Code == (int)Common.WeatherType.blustery
+                                        )
+                        {
+                            <canvas class="clear-day" width="44" height="44"></canvas><span class="d-b fw-600">@_ItemAvarage<sup>°C</sup></span>
+                        }
+                        @if (
+                            item.Code == (int)Common.WeatherType.freezing_rain ||
+                            item.Code == (int)Common.WeatherType.mixed_rain_and_hail ||
+                            item.Code == (int)Common.WeatherType.mixed_rain_and_sleet ||
+                            item.Code == (int)Common.WeatherType.mixed_rain_and_snow ||
+                            item.Code == (int)Common.WeatherType.sleet ||
+                            item.Code == (int)Common.WeatherType.showers ||
+                            item.Code == (int)Common.WeatherType.showers_2
+
+                            )
+                        {
+                            <canvas class="sleet" width="44" height="44"></canvas><span class="d-b fw-600">@_ItemAvarage<sup>°C</sup></span>
+                        }
+                        @if (
+                            item.Code == (int)Common.WeatherType.partly_cloudy ||
+                            item.Code == (int)Common.WeatherType.partly_cloudy_day ||
+                            item.Code == (int)Common.WeatherType.partly_cloudy_night
+                            )
+                        {
+                            <canvas class="partly-cloudy-day" width="44" height="44"></canvas><span class="d-b fw-600">@_ItemAvarage<sup>°C</sup></span>
+                        }
+                        @if (
+                            item.Code == (int)Common.WeatherType.cloudy ||
+                            item.Code == (int)Common.WeatherType.mostly_cloudy_day ||
+                            item.Code == (int)Common.WeatherType.mostly_cloudy_night ||
+                            item.Code == (int)Common.WeatherType.haze
+                            )
+                        {
+                            <canvas class="cloudy" width="44" height="44"></canvas><span class="d-b fw-600">@_ItemAvarage<sup>°C</sup></span>
+                        }
+                        @if (
+                            item.Code == (int)Common.WeatherType.snow ||
+                            item.Code == (int)Common.WeatherType.snow_flurries ||
+                            item.Code == (int)Common.WeatherType.snow_showers ||
+                            item.Code == (int)Common.WeatherType.scattered_snow_showers ||
+                            item.Code == (int)Common.WeatherType.heavy_snow ||
+                            item.Code == (int)Common.WeatherType.light_snow_showers ||
+                            item.Code == (int)Common.WeatherType.mixed_snow_and_sleet ||
+                            item.Code == (int)Common.WeatherType.blowing_snow ||
+                            item.Code == (int)Common.WeatherType.heavy_sno_2 ||
+                            item.Code == (int)Common.WeatherType.light_snow_showers
+
+                            )
+                        {
+                            <canvas class="snow" width="44" height="44"></canvas><span class="d-b fw-600">@_ItemAvarage<sup>°C</sup></span>
+                        }
+                        @if (
+                                            item.Code == (int)Common.WeatherType.thundershowers ||
+                                            item.Code == (int)Common.WeatherType.thunderstorms ||
+                                            item.Code == (int)Common.WeatherType.severe_thunderstorms ||
+                                            item.Code == (int)Common.WeatherType.scattered_thunderstorms_2 ||
+                                            item.Code == (int)Common.WeatherType.scattered_thunderstorms ||
+                                            item.Code == (int)Common.WeatherType.isolated_thunderstorms ||
+                                            item.Code == (int)Common.WeatherType.isolated_thundershowers
+
+                                            )
+                        {
+                            <canvas class="wind" width="30" height="30"></canvas><span class="d-b fw-600">@_ItemAvarage<sup>°C</sup></span>
+                        }
                     </div>
-                    <div class="peer">
-                        <h6 class="mB-10">TUE</h6>
-                        <canvas class="clear-day" width="30" height="30"></canvas><span class="d-b fw-600">30<sup>°F</sup></span>
-                    </div>
-                    <div class="peer">
-                        <h6 class="mB-10">WED</h6>
-                        <canvas class="partly-cloudy-day" width="30" height="30"></canvas><span class="d-b fw-600">28<sup>°F</sup></span>
-                    </div>
-                    <div class="peer">
-                        <h6 class="mB-10">THR</h6>
-                        <canvas class="cloudy" width="30" height="30"></canvas><span class="d-b fw-600">32<sup>°F</sup></span>
-                    </div>
-                    <div class="peer">
-                        <h6 class="mB-10">FRI</h6>
-                        <canvas class="snow" width="30" height="30"></canvas><span class="d-b fw-600">24<sup>°F</sup></span>
-                    </div>
-                    <div class="peer">
-                        <h6 class="mB-10">SAT</h6>
-                        <canvas class="wind" width="30" height="30"></canvas><span class="d-b fw-600">28<sup>°F</sup></span>
-                    </div>
-                    <div class="peer">
-                        <h6 class="mB-10">SUN</h6>
-                        <canvas class="sleet" width="30" height="30"></canvas><span class="d-b fw-600">32<sup>°F</sup></span>
-                    </div>
+                    }
+
                 </div>
             </div>
         </div>

@@ -26,16 +26,17 @@
                 <tbody>
                     @foreach (var Item in Model)
                     {
-                        <tr>
-                            <td>@Item.AccommodationID</td>
-                            <td>@Item.Name</td>
-                            <td>@Item.CityName</td>
-                            <td>@Item.Country</td>
-                            <td>@Item.lastUpdate</td>
-                            <td>
+                    <tr>
+                        <td>@Item.AccommodationID</td>
+                        <td>@Item.Name</td>
+                        <td>@Item.CityName</td>
+                        <td>@Item.Country</td>
+                        <td>@Item.lastUpdate</td>
+                        <td>
                             <a href="Images/?AccommodationID=@Item.AccommodationID" class="btn cur-p btn-secondary">Images</a>
                             <a href="Weather/?AccommodationID=@Item.AccommodationID" class="btn cur-p btn-primary">Weather</a>
-                        </tr>
+                            <a href="Facility/?AccommodationID=@Item.AccommodationID" class="btn cur-p btn-warning">Facility</a>
+</tr>
                     }
                 </tbody>
             </table>

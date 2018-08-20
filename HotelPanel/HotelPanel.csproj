@@ -221,6 +221,7 @@
     <Content Include="Views\Airport\_Search.cshtml" />
     <Content Include="Views\Public\Index.cshtml" />
     <Content Include="Views\Accommodation\Weather.cshtml" />
+    <Content Include="Views\Accommodation\Facility.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
