@@ -170,6 +170,10 @@ namespace Logic.BusinessObjects
                     Lat = Accommodation.Latitude,
                     Lng = Accommodation.Longitude
                 };
+                for(int i = 1; i <= 7; i++)
+                {
+                    //Result.query.results.channel.item.forecast[i].
+                }
                 return Model;
             }
             catch (Exception exeption)
