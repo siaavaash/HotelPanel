@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="BusinessObjects\AccommodationBusiness.cs" />
     <Compile Include="BusinessObjects\AirportBusiness.cs" />
+    <Compile Include="BusinessObjects\GIATABusiness.cs" />
     <Compile Include="BusinessObjects\PublicBusiness.cs" />
     <Compile Include="BusinessObjects\UserBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

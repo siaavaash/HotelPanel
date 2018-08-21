@@ -51,7 +51,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceModel\GIATAModels.cs" />
+    <Compile Include="ServiceModel\PublicModels.cs" />
     <Compile Include="ServiceModel\Weather.cs" />
+    <Compile Include="Suppliers\GIATAAccess.cs" />
     <Compile Include="WeatherAccess.cs" />
     <Compile Include="WeatherConcreteMapper.cs" />
   </ItemGroup>
