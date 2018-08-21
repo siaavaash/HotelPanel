@@ -185,6 +185,7 @@
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\logo.svg" />
     <Content Include="Content\Scripts\bundle.js" />
+    <Content Include="Content\Scripts\jquery.js" />
     <Content Include="Content\Scripts\vendor.js" />
     <Content Include="Content\Style\style.css" />
     <Content Include="favicon.ico" />
