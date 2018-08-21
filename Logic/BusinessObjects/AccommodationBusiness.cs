@@ -25,7 +25,7 @@ namespace Logic.BusinessObjects
             {
                 return DataContext.Context.Accommodations.ToList();
             }
-            catch(Exception exeption)
+            catch (Exception exeption)
             {
                 throw exeption;
             }
@@ -57,7 +57,7 @@ namespace Logic.BusinessObjects
                 List<Accommodation> Query = new List<Accommodation>();
                 if (Model.AccommodationID != null)
                 {
-                    if(Query.Count == 0)
+                    if (Query.Count == 0)
                     {
                         Query = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == Model.AccommodationID).ToList();
                     }
@@ -65,7 +65,7 @@ namespace Logic.BusinessObjects
                     {
                         Query = Query.Where(x => x.AccommodationlID == Model.AccommodationID).ToList();
                     }
-                    
+
                 }
                 if (!String.IsNullOrEmpty(Model.Name))
                 {
@@ -77,7 +77,7 @@ namespace Logic.BusinessObjects
                     {
                         Query = Query.Where(x => x.Name.ToLower().Contains(Model.Name.ToLower())).ToList();
                     }
-                    
+
                 }
                 if (!String.IsNullOrEmpty(Model.CityName))
                 {
@@ -89,7 +89,7 @@ namespace Logic.BusinessObjects
                     {
                         Query = Query.Where(x => x.CityName.ToLower().Contains(Model.CityName.ToLower())).ToList();
                     }
-                    
+
                 }
                 if (!String.IsNullOrEmpty(Model.Country))
                 {
@@ -101,7 +101,7 @@ namespace Logic.BusinessObjects
                     {
                         Query = Query.Where(x => x.Country.ToLower().Contains(Model.Country.ToLower())).ToList();
                     }
-                    
+
                 }
                 if (Model.From != null)
                 {
@@ -113,7 +113,7 @@ namespace Logic.BusinessObjects
                     {
                         Query = Query.Where(x => x.AccommodationlID >= Model.From).ToList();
                     }
-                    
+
                 }
                 if (Model.To != null)
                 {
@@ -125,15 +125,15 @@ namespace Logic.BusinessObjects
                     {
                         Query = Query.Where(x => x.AccommodationlID <= Model.To).ToList();
                     }
-                    
+
                 }
                 return Query.Select(x => new AccommodationModels.ListNameAccommodation
                 {
                     AccommodationID = x.AccommodationlID,
                     Name = x.Name,
-                    CityName=x.CityName,
-                    Country=x.Country,
-                    lastUpdate=x.lastUpdate
+                    CityName = x.CityName,
+                    Country = x.Country,
+                    lastUpdate = x.lastUpdate
                 }).ToList();
             }
             catch (Exception exeption)
@@ -150,7 +150,7 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                return DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID==AccommodationID).ToList();
+                return DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID == AccommodationID && (x.IsActive ?? false)).ToList();
             }
             catch (Exception exeption)
             {
@@ -195,7 +195,7 @@ namespace Logic.BusinessObjects
                     Lat = Accommodation.Latitude,
                     Lng = Accommodation.Longitude
                 };
-                for(int i = 0; i < 7; i++)
+                for (int i = 0; i < 7; i++)
                 {
                     Model.Forecast.Add(new ForecastDays
                     {
@@ -218,16 +218,16 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                foreach(var Item in ImageID)
+                foreach (var Item in ImageID)
                 {
                     var Model = DataContext.Context.AccomodationImages.Where(x => x.ImageID == Item).FirstOrDefault();
-                    if(Model != null)
+                    if (Model != null)
                     {
                         Model.IsActive = false;
                         Model.DateActive = DateTime.Now;
-                        //Model.UserID = ;
                         DataContext.Context.Entry(Model).State = EntityState.Modified;
-                    }                    
+                    }
+                    DataContext.Context.SaveChanges();
                 }
                 return true;
             }

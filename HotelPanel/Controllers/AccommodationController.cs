@@ -27,7 +27,7 @@ namespace HotelPanel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult List(AccommodationModels.SearchAccommodation Model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 IEnumerable<AccommodationModels.ListNameAccommodation> Result = _AccommodationBusiness.GetNames(Model);
                 return View(Result);
@@ -48,10 +48,10 @@ namespace HotelPanel.Controllers
         [HttpPost]
         public ActionResult Filter(List<long> ImageID)
         {
-            bool Result = true;//_AccommodationBusiness.FilterImages(ImageID);
+            bool Result = _AccommodationBusiness.FilterImages(ImageID);
             if (Result)
             {
-                iUserStorage.Store(PublicConstants.Session.Message_Success, "Your Accommodation Images Successfully Filtered"); ;
+                iUserStorage.Store(PublicConstants.Session.Message_Success, "Your Accommodation Images Successfully Filtered");
                 return RedirectToAction("List");
             }
             return RedirectToAction("List");

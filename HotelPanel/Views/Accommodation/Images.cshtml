@@ -39,14 +39,14 @@
         display: block !important
     }
 
-    .send_image {
+    .btn {
         display: block;
         padding: 0 30px;
         text-align: center;
         line-height: 32px;
         background: #22b6b7;
         color: #fff;
-        margin:20px 5px;
+        margin: 20px 5px;
         border-radius: 5px;
         cursor: pointer;
         width: 200px;
@@ -58,25 +58,42 @@
 
         <div class="gallery">
             <div class="img_child"><i class="fas fa-check"></i></div>
-
             <img src="@Item.Link" id="@Item.ImageID" class="select-image">
         </div>
 
     }
 
 </div>
-<button class="send_image" type="submit">Send</button>
+<div>
+
+    <button id="back" class="btn" type="submit" onclick="window.history.back();">Back</button>
+    <button id="send" class="btn" type="submit">Filter</button>
+</div>
 
 <script type="text/javascript" src="~/Content/Scripts/jquery.js"></script>
 
 <script>
+    var filtered = new Array();
     $(document).ready(function () {
         $(".select-image").click(function () {
             $(this).toggleClass("desc");
             $(this).parent().find("i.fa-check").toggleClass("dis")
             var ID = $(this).parent().find("img.desc").attr("id");
-            alert(ID)
+            filtered.push(ID);
         });
+        $("#send").click(function () {
+            $.ajax({
+                url: "/Accommodation/Filter",
+                type: "POST",
+                data: { ImageID: filtered },
+                success: function (data) {
+                    window.history.back();
+                },
+                error: function (ex) {
+
+                }
+            });
+        })
     });
 
 </script>
