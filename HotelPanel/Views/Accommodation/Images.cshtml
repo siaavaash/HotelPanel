@@ -1,70 +1,82 @@
 ﻿@model List<Data.DataModel.AccomodationImage>
-<style>
-    .select_image {
-        width: 350px;
-        margin: 3px;
-        z-index: -1;
-        left:0;
-        right:0;
-        margin:auto;
-    }
-    .activee{
-        background-color:green;
-    }
-    .select_image_parent {
-        width: 400px;
-        margin: 1px;
-        background-color:red;
-        display:inline-block;
-        z-index:200;
-    }
-</style>
-
 
 <style>
-    .select-image {
-        width: 350px;
-        margin: 3px;
-        height: 300px;
-        cursor: pointer;
+    div.gallery {
+        margin: 5px;
+        border: 1px solid #ccc;
+        float: left;
+        width: 380px;
     }
-    .dis{
-        display:inline-block;
+
+        div.gallery:hover {
+            border: 1px solid #777;
+        }
+
+        div.gallery img {
+            width: 380px;
+            height: 250px;
+            cursor: pointer;
+        }
+
+    .desc {
+        opacity: 0.5;
     }
-    .parent {
+
+    i.fa-check {
+        color: green;
+        font-size: 18px;
         position: absolute;
-        z-index: 1;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 0;
+        z-index: 5;
+        background-color: white;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: none;
+        text-align: center;
+    }
+
+    .dis {
+        display: block !important
+    }
+
+    .send_image {
+        display: block;
+        padding: 0 30px;
+        text-align: center;
+        line-height: 32px;
+        background: #22b6b7;
         color: #fff;
-        opacity: 1;
-        visibility: visible;
-        transition: ease all .3s;
-        background-color: rgba(0,0,0,0.3);
-        width: 350px;
-        height:300px;
-        margin: 3px;
-        display:flex;
+        margin:20px 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 200px;
     }
 </style>
+<div>
+    @foreach (var Item in Model)
+    {
 
-@foreach (var Item in Model)
-{
-<div class="dis">
-    <img src="@Item.Link" id="@Item.ImageID" class="select-image">
-    <div></div>
+        <div class="gallery">
+            <div class="img_child"><i class="fas fa-check"></i></div>
+
+            <img src="@Item.Link" id="@Item.ImageID" class="select-image">
+        </div>
+
+    }
+
 </div>
-}
+<button class="send_image" type="submit">Send</button>
+
 <script type="text/javascript" src="~/Content/Scripts/jquery.js"></script>
 
 <script>
     $(document).ready(function () {
         $(".select-image").click(function () {
-            $("div").addClass("parent");
-            //$(this).css("width","150px")
-        })
-    })
-  
+            $(this).toggleClass("desc");
+            $(this).parent().find("i.fa-check").toggleClass("dis")
+            var ID = $(this).parent().find("img.desc").attr("id");
+            alert(ID)
+        });
+    });
+
 </script>
