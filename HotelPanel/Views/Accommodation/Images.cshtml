@@ -1,7 +1,37 @@
 ﻿@model List<Data.DataModel.AccomodationImage>
+<style>
+    .select_image {
+        width: 350px;
+        margin: 3px;
+        z-index: -1;
+        left:0;
+        right:0;
+        margin:auto;
+    }
+    .activee{
+        background-color:green;
+    }
+    .select_image_parent {
+        width: 400px;
+        margin: 1px;
+        background-color:red;
+        display:inline-block;
+        z-index:200;
+    }
+</style>
 
-@foreach(var Item in Model)
+
+@foreach (var Item in Model)
 {
-<img src="@Item.Link" id="@Item.ImageID" style="width:350px; margin:3px;">
+<div class="select_image_parent">
+    <img src="@Item.Link" id="@Item.ImageID" class="select_image">
+</div>
 }
 
+<script src="~/Content/Scripts/jquery.js"></script>
+
+    <script>
+        $("body").on("click", "img", function () {
+            $("div.select_image_parent").addClass("activee");
+        });
+    </script>
