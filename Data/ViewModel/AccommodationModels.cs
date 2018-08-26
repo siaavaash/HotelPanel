@@ -33,5 +33,26 @@ namespace Data.ViewModel
             public string Description { get; set; }
             public List<Facility> Facilities { get; set; }
         }
+        public class EditName
+        {
+            public long AccommodationID { get; set; }
+            public string Name { get; set; }
+        }
+        public class EditDescription
+        {
+            public long AccommodationID { get; set; }
+            public string Description { get; set; }
+        }
+        public class AddFacilities
+        {
+            public long AccommodationID { get; set; }
+            public List<Facility> Facilities { get; set; }
+        }
+        public class EditFacilities
+        {
+            public long AccommodationID { get; set; }
+            public long FacilityID { get; set; }
+            public string Name { get; set; }
+        }
     }
 }

@@ -1,18 +1,19 @@
 ﻿@model Data.ViewModel.AccommodationModels.AccommodationFacility
 <div class="bdT pX-40 pY-30">
-    <h4>Accommodation Name</h4>
+    <h4>Accommodation Name @Html.ActionLink("Edit", "EditName", new { id = Model.AccommodationID }, new { @class = "btn cur-p btn-warning" })</h4>
+
     <p>
         @Model.Name
     </p>
-    <h4>Description</h4>
+    <h4>Description @Html.ActionLink("Edit", "EditDescription", new { id = Model.AccommodationID }, new { @class = "btn cur-p btn-warning" })</h4>
     <p>
         @Html.Raw(Model.Description)
     </p>
-    <h4>Facilities</h4>
+    <h4>Facilities @Html.ActionLink("Add", "AddFacility", new { id = Model.AccommodationID }, new { @class = "btn cur-p btn-success" })</h4> <small>Hover the mouse over the facility name to display the edit button</small>
     @foreach(var item in Model.Facilities)
     {
     <p>
-        @item.Name
+        @Html.ActionLink("Edit", "EditFacility", new { id = item.FacilityID }, new { @class = "btn cur-p btn-warning" }) @item.Name
     </p>
     }
     

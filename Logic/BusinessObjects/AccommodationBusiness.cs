@@ -236,5 +236,76 @@ namespace Logic.BusinessObjects
                 throw exeption;
             }
         }
+        public bool EditName(AccommodationModels.EditName Model)
+        {
+            try
+            {
+                var Accommodations = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == Model.AccommodationID).FirstOrDefault();
+                if (Accommodations != null)
+                {
+                    Accommodations.Name = Model.Name;
+                    DataContext.Context.Entry(Accommodations).State = EntityState.Modified;
+                    DataContext.Context.SaveChanges();
+                    return true;
+                }                
+            }
+            catch
+            {
+            }
+            return false;
+        }
+        public bool EditDescription(AccommodationModels.EditDescription Model)
+        {
+            try
+            {
+                var Accommodations = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == Model.AccommodationID).FirstOrDefault();
+                if (Accommodations != null)
+                {
+                    Accommodations.Description = Model.Description;
+                    DataContext.Context.Entry(Accommodations).State = EntityState.Modified;
+                    DataContext.Context.SaveChanges();
+                    return true;
+                }
+            }
+            catch
+            {
+            }
+            return false;
+        }
+        public bool AddFacilities(AccommodationModels.AddFacilities Model)
+        {
+            try
+            {
+                var Accommodations = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == Model.AccommodationID).FirstOrDefault();
+                if (Accommodations != null)
+                {
+                    DataContext.Context.Facilities.AddRange(Model.Facilities);
+                    DataContext.Context.SaveChanges();
+                    return true;
+                }
+            }
+            catch
+            {
+            }
+            return false;
+        }
+        public bool EditFacilities(AccommodationModels.EditFacilities Model)
+        {
+            try
+            {
+                var Accommodations = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == Model.AccommodationID).FirstOrDefault();
+                if (Accommodations != null)
+                {
+                    var Facility = Accommodations.Facilities.Where(x => x.FacilityID == Model.FacilityID).FirstOrDefault();
+                    Facility.Name = Model.Name;
+                    DataContext.Context.SaveChanges();
+                    return true;
+                }
+            }
+            catch
+            {
+            }
+            return false;
+        }
     }
 }

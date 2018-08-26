@@ -68,5 +68,86 @@ namespace HotelPanel.Controllers
             Model.Name = Name;
             return View(Model);
         }
+        public ActionResult EditName(long id)
+        {
+            var accommodation = _AccommodationBusiness.GetAccommodation(id);
+            AccommodationModels.EditName Model = new AccommodationModels.EditName
+            {
+                AccommodationID = accommodation.AccommodationlID,
+                Name = accommodation.Name
+            };
+            return View(Model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditName(AccommodationModels.EditName Model)
+        {
+            if (ModelState.IsValid)
+            {
+                var Result = _AccommodationBusiness.EditName(Model);
+                iUserStorage.Store(PublicConstants.Session.Message_Success, PublicConstants.Message.Success);
+                return View(Model);
+            }
+            iUserStorage.Store(PublicConstants.Session.Message_Error, PublicConstants.Message.Faild);
+            return View(Model);
+        }
+        public ActionResult EditDescription(long id)
+        {
+            var accommodation = _AccommodationBusiness.GetAccommodation(id);
+            AccommodationModels.EditDescription Model = new AccommodationModels.EditDescription
+            {
+                AccommodationID = accommodation.AccommodationlID,
+                Description = accommodation.Description
+            };
+            return View(Model);
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditDescription(AccommodationModels.EditDescription Model)
+        {
+            if (ModelState.IsValid)
+            {
+                var Result = _AccommodationBusiness.EditDescription(Model);
+                iUserStorage.Store(PublicConstants.Session.Message_Success, PublicConstants.Message.Success);
+                return View(Model);
+            }
+            iUserStorage.Store(PublicConstants.Session.Message_Error, PublicConstants.Message.Faild);
+            return View(Model);
+        }
+        public ActionResult AddFacility()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddFacility(AccommodationModels.AddFacilities Model)
+        {
+            if (ModelState.IsValid)
+            {
+                var Result = _AccommodationBusiness.AddFacilities(Model);
+                iUserStorage.Store(PublicConstants.Session.Message_Success, PublicConstants.Message.Success);
+                return View(Result);
+            }
+            iUserStorage.Store(PublicConstants.Session.Message_Error, PublicConstants.Message.Faild);
+            return View();
+        }
+        public ActionResult EditFacility(long id)
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditFacility(AccommodationModels.EditFacilities Model)
+        {
+            if (ModelState.IsValid)
+            {
+                var Result = _AccommodationBusiness.EditFacilities(Model);
+                iUserStorage.Store(PublicConstants.Session.Message_Success, PublicConstants.Message.Success);
+                return View(Result);
+            }
+            iUserStorage.Store(PublicConstants.Session.Message_Error, PublicConstants.Message.Faild);
+            return View();
+        }
     }
 }
