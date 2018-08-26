@@ -1,5 +1,10 @@
 ﻿@model List<Data.DataModel.AccomodationImage>
+@{
+                /**/
 
+                string Message_Alert = Common.iUserStorage.Retrive<string>(Constants.PublicConstants.Session.Message_Error);
+                string Message_Success = Common.iUserStorage.Retrive<string>(Constants.PublicConstants.Session.Message_Success);
+}
 <style>
     div.gallery {
         margin: 5px;
@@ -52,6 +57,16 @@
         width: 200px;
     }
 </style>
+@if (!String.IsNullOrEmpty(Message_Alert))
+{
+    <div class="alert alert-danger" role="alert">@Message_Alert</div>
+    Common.iUserStorage.Remove(Constants.PublicConstants.Session.Message_Error);
+}
+@if (!String.IsNullOrEmpty(Message_Success))
+{
+    <div class="alert alert-success" role="alert">@Message_Success</div>
+    Common.iUserStorage.Remove(Constants.PublicConstants.Session.Message_Success);
+}
 <div>
     @foreach (var Item in Model)
     {
@@ -74,6 +89,9 @@
 
 <script>
     var filtered = new Array();
+    $(window).on('beforeunload', function () {
+        $(window).scrollTop(0);
+    });
     $(document).ready(function () {
         $(".select-image").click(function () {
             $(this).toggleClass("desc");
@@ -87,7 +105,7 @@
                 type: "POST",
                 data: { ImageID: filtered },
                 success: function (data) {
-                    window.history.back();
+                    location.reload(true);
                 },
                 error: function (ex) {
 

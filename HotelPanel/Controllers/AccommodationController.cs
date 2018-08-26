@@ -46,15 +46,15 @@ namespace HotelPanel.Controllers
             return View(Model);
         }
         [HttpPost]
-        public ActionResult Filter(List<long> ImageID)
+        public JsonResult Filter(List<long> ImageID)
         {
-            bool Result = _AccommodationBusiness.FilterImages(ImageID);
+            bool Result = true;// _AccommodationBusiness.FilterImages(ImageID);
             if (Result)
             {
                 iUserStorage.Store(PublicConstants.Session.Message_Success, "Your Accommodation Images Successfully Filtered");
-                return RedirectToAction("List");
+                return Json(Result,JsonRequestBehavior.AllowGet);
             }
-            return RedirectToAction("List");
+            return Json(Result, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Facility(long AccommodationID)
         {
