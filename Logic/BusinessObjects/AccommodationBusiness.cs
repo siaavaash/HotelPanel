@@ -265,9 +265,8 @@ namespace Logic.BusinessObjects
                 foreach (var Item in Accommodation)
                 {
                     Item.IsActive = true;
-                    
+                    DataContext.Context.Entry(Item).State = EntityState.Modified;                    
                 }
-                DataContext.Context.Entry(Accommodation).State = EntityState.Modified;
                 DataContext.Context.SaveChanges();
                 return true;
             }

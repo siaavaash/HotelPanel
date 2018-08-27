@@ -42,7 +42,7 @@ namespace Data.DataModel
         public virtual DbSet<RailwayStationTemp> RailwayStationTemps { get; set; }
         public virtual DbSet<RailwayStationTemp2> RailwayStationTemp2 { get; set; }
         public virtual DbSet<Accommodation> accommodationimages { get; set; }
-        public virtual DbSet<AccommodationAirport> AccommodationAirports { get; set; }
+        //public virtual DbSet<AccommodationAirport> AccommodationAirports { get; set; }
         public virtual DbSet<Accommodation> Accommodations { get; set; }
         public virtual DbSet<AccommodationAttribute> AccommodationAttributes { get; set; }
         public virtual DbSet<AccommodationCommission1> AccommodationCommission1 { get; set; }
