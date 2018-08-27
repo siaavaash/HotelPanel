@@ -95,20 +95,21 @@
     {
 
     <div class="gallery">
-        <div class="img_child" style="display:none;"><i class="fas fa-check"></i></div>
         @if (Item.IsActive == false)
     {
         <label class="myCheckbox">
+            <span class="img_child"><i class="fas fa-check"></i></span>
             <img src="@Item.Link" id="@Item.ImageID" class="select-image desc">
-            <input type="checkbox" value="delete" class="select_check" style="display:none" />
+            <input type="checkbox" value="delete" class="select_check" />
         </label>
 
 }
 else
 {
         <label class="myCheckbox">
+            <span class="img_child"><i class="fas fa-check"></i></span>
             <img src="@Item.Link" id="@Item.ImageID" class="select-image">
-            <input type="checkbox" value="delete" class="select_check" style="display:none" />
+            <input type="checkbox" value="delete" class="select_check" />
         </label>
 
 }
@@ -131,38 +132,37 @@ else
         $(window).scrollTop(0);
     });
     $(document).ready(function () {
-
+        $(".desc").parent().find(".fa-check").addClass('dis');
         $(".desc").parent().find('.select_check').prop('checked', true);
-        $('.gallery').each(function(img , item){
+        $('.myCheckbox').each(function(img , item){
             if ($(item).children("input.select_check").prop("checked")) {
                 var a = $(this).children("img").attr("id");
                 filtered.push(a);
             }
         })
-   
 
-        
-        
-       
-      
+    });
 
-
-        $(".select_check").click(function () {
-       
-            var name = $(this);
-            if (name.prop("checked")) {
-                $(this).parent().find(".select-image").addClass('desc');
-                $(this).parent().find(".img_child").addClass('dis');
-                var ID = $(this).parent().find("img.desc").attr("id");
-                filtered.push(ID);
-            } else {
+        $(".myCheckbox").click(function () {
+            if ($(this).children("img.select-image").hasClass("desc")) {
                 $(this).parent().find(".select-image").removeClass('desc');
-                var ID = $(this).parent().find("img.desc").attr("id");
-                filtered.pop(ID);
+                $(this).parent().find(".fa-check").removeClass('dis');
+                $(this).children("input.select_check").prop('checked', false);
+                var ID = $(this).children("img.select-image").attr("id");
+                for (var i = filtered.length ; i--;) {
+                    if (filtered[i] == ID) filtered.splice(i, 1);
+                }
+            } else {
+                $(this).parent().find(".select-image").addClass('desc');
+                $(this).parent().find(".fa-check").addClass('dis');
+                $(this).children("input.select_check").prop('checked', true);
+                var Id = $(this).children("img.select-image").attr("id");
+                filtered.push(Id);
             }
+            return false;
         });
 
-   
+
 
         $("#send").click(function () {
             $.ajax({
@@ -177,6 +177,4 @@ else
                 }
             });
         })
-    });
-
 </script>

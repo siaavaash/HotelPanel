@@ -53,8 +53,9 @@ namespace HotelPanel.Controllers
         [HttpPost]
         public JsonResult Filter(AccommodationModels.FilterImages Model)
         {
-            bool Result = true;// _AccommodationBusiness.FilterImages(Model.ImageID);
-            bool Verify = true;//_AccommodationBusiness.Verify(Model.AccommodationID);
+            bool ResultClear = _AccommodationBusiness.ReloadVerify(Model.AccommodationID);
+            bool Result =  _AccommodationBusiness.FilterImages(Model.ImageID);
+            bool Verify = _AccommodationBusiness.Verify(Model.AccommodationID);
             if (Result && Verify)
             {
                 iUserStorage.Store(PublicConstants.Session.Message_Success, "Your Accommodation Images Successfully Filtered");
