@@ -57,6 +57,28 @@
         cursor: pointer;
         width: 200px;
     }
+    .select_check {
+        width: 50px;
+        height: 20px;
+        position: absolute;
+        top: 10px;
+        left: 0;
+        display:none;
+    }
+    /*.myCheckbox input {
+        z-index: -9999;
+    }
+
+    .myCheckbox span {
+        width: 20px;
+        height: 20px;
+        display: block;
+        background-color: #eee;
+    }
+
+    .myCheckbox input:checked + span {
+        background-color: green;
+    }*/
 </style>
 @if (!String.IsNullOrEmpty(Message_Alert))
 {
@@ -73,19 +95,23 @@
     {
 
     <div class="gallery">
-        <div class="img_child"><i class="fas fa-check"></i></div>
+        <div class="img_child" style="display:none;"><i class="fas fa-check"></i></div>
         @if (Item.IsActive == false)
-        {
+    {
+        <label class="myCheckbox">
             <img src="@Item.Link" id="@Item.ImageID" class="select-image desc">
-            <input type="checkbox" value="delete" class="select_check" />
+            <input type="checkbox" value="delete" class="select_check" style="display:none" />
+        </label>
 
-        }
-        else
-        {
+}
+else
+{
+        <label class="myCheckbox">
             <img src="@Item.Link" id="@Item.ImageID" class="select-image">
-            <input type="checkbox" value="delete" class="select_check" />
+            <input type="checkbox" value="delete" class="select_check" style="display:none" />
+        </label>
 
-        }
+}
     </div>
 
     }
@@ -94,7 +120,7 @@
 <div>
 
     <button id="back" class="btn" type="submit" onclick="window.history.back();">Back</button>
-    <button id="send" class="btn send" type="submit">Filter</button>
+    <button id="send" class="btn" type="submit">Filter</button>
 </div>
 
 <script type="text/javascript" src="~/Content/Scripts/jquery.js"></script>
@@ -105,11 +131,20 @@
         $(window).scrollTop(0);
     });
     $(document).ready(function () {
-        //if ($("img.select-image").hasClass("desc")) {
-        //    $(this).prev(':checkbox').prop('checked', true);
-        //    var ID = $(this).find("img.desc").attr("id");
-        //    filtered.push(ID);
-        //}
+
+        $(".desc").parent().find('.select_check').prop('checked', true);
+        $('.gallery').each(function(img , item){
+            if ($(item).children("input.select_check").prop("checked")) {
+                var a = $(this).children("img").attr("id");
+                filtered.push(a);
+            }
+        })
+   
+
+        
+        
+       
+      
 
 
         $(".select_check").click(function () {
@@ -117,6 +152,7 @@
             var name = $(this);
             if (name.prop("checked")) {
                 $(this).parent().find(".select-image").addClass('desc');
+                $(this).parent().find(".img_child").addClass('dis');
                 var ID = $(this).parent().find("img.desc").attr("id");
                 filtered.push(ID);
             } else {
