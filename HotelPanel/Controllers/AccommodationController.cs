@@ -36,7 +36,12 @@ namespace HotelPanel.Controllers
         }
         public ActionResult Images(long AccommodationID)
         {
-            var Model = _AccommodationBusiness.GetImages(AccommodationID);
+            var Images = _AccommodationBusiness.GetImages(AccommodationID);
+            AccommodationModels.FilterImagesView Model = new AccommodationModels.FilterImagesView
+            {
+                AccommodationID = AccommodationID,
+                AccomodationImages = Images
+            };
             return View(Model);
         }
         public ActionResult Weather(string AccommodationID)
@@ -46,10 +51,11 @@ namespace HotelPanel.Controllers
             return View(Model);
         }
         [HttpPost]
-        public JsonResult Filter(List<long> ImageID)
+        public JsonResult Filter(AccommodationModels.FilterImages Model)
         {
-            bool Result = _AccommodationBusiness.FilterImages(ImageID);
-            if (Result)
+            bool Result = _AccommodationBusiness.FilterImages(Model.ImageID);
+            bool Verify = _AccommodationBusiness.Verify(Model.AccommodationID);
+            if (Result && Verify)
             {
                 iUserStorage.Store(PublicConstants.Session.Message_Success, "Your Accommodation Images Successfully Filtered");
                 return Json(Result,JsonRequestBehavior.AllowGet);
@@ -115,8 +121,20 @@ namespace HotelPanel.Controllers
             iUserStorage.Store(PublicConstants.Session.Message_Error, PublicConstants.Message.Faild);
             return View(Model);
         }
-        public ActionResult AddFacility()
+        public ActionResult ListFacility(long id)
         {
+            var Facilities = _AccommodationBusiness.GetFacilities();
+            var accommodation = _AccommodationBusiness.GetAccommodation(id);
+            AccommodationModels.ListFacilities Model = new AccommodationModels.ListFacilities
+            {
+                AccommodationID = accommodation.AccommodationlID,
+                AccommodationName = accommodation.Name,
+                Facilities = Facilities
+            };
+            return View(Model);
+        }
+        public ActionResult AddFacility()
+        {            
             return View();
         }
         [HttpPost]
@@ -127,7 +145,7 @@ namespace HotelPanel.Controllers
             {
                 var Result = _AccommodationBusiness.AddFacilities(Model);
                 iUserStorage.Store(PublicConstants.Session.Message_Success, PublicConstants.Message.Success);
-                return View(Result);
+                return View();
             }
             iUserStorage.Store(PublicConstants.Session.Message_Error, PublicConstants.Message.Faild);
             return View();

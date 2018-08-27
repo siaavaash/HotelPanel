@@ -1,4 +1,20 @@
 ﻿@model Data.ViewModel.AccommodationModels.AccommodationFacility
+@{
+    /**/
+
+    string Message_Alert = Common.iUserStorage.Retrive<string>(Constants.PublicConstants.Session.Message_Error);
+    string Message_Success = Common.iUserStorage.Retrive<string>(Constants.PublicConstants.Session.Message_Success);
+}
+@if (!String.IsNullOrEmpty(Message_Alert))
+{
+    <div class="alert alert-danger" role="alert">@Message_Alert</div>
+    Common.iUserStorage.Remove(Constants.PublicConstants.Session.Message_Error);
+}
+@if (!String.IsNullOrEmpty(Message_Success))
+{
+    <div class="alert alert-success" role="alert">@Message_Success</div>
+    Common.iUserStorage.Remove(Constants.PublicConstants.Session.Message_Success);
+}
 <div class="bdT pX-40 pY-30">
     <h4>Accommodation Name @Html.ActionLink("Edit", "EditName", new { id = Model.AccommodationID }, new { @class = "btn cur-p btn-warning" })</h4>
 
@@ -9,12 +25,12 @@
     <p>
         @Html.Raw(Model.Description)
     </p>
-    <h4>Facilities @Html.ActionLink("Add", "AddFacility", new { id = Model.AccommodationID }, new { @class = "btn cur-p btn-success" })</h4> <small>Hover the mouse over the facility name to display the edit button</small>
-    @foreach(var item in Model.Facilities)
+    <h4>Facilities @Html.ActionLink("Add", "ListFacility", new { id = Model.AccommodationID }, new { @class = "btn cur-p btn-success" })</h4> <small>Hover the mouse over the facility name to display the edit button</small>
+    @foreach (var item in Model.Facilities)
     {
-    <p>
-        @Html.ActionLink("Edit", "EditFacility", new { id = item.FacilityID }, new { @class = "btn cur-p btn-warning" }) @item.Name
-    </p>
+        <p>
+            @Html.ActionLink("Edit", "EditFacility", new { id = item.FacilityID }, new { @class = "btn cur-p btn-warning" }) @item.Name
+        </p>
     }
-    
+
 </div>

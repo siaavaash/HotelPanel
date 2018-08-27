@@ -1,0 +1,83 @@
+﻿@model Data.ViewModel.AccommodationModels.ListFacilities
+@{
+    /**/
+
+    string Message_Alert = Common.iUserStorage.Retrive<string>(Constants.PublicConstants.Session.Message_Error);
+    string Message_Success = Common.iUserStorage.Retrive<string>(Constants.PublicConstants.Session.Message_Success);
+}
+@if (!String.IsNullOrEmpty(Message_Alert))
+{
+    <div class="alert alert-danger" role="alert">@Message_Alert</div>
+    Common.iUserStorage.Remove(Constants.PublicConstants.Session.Message_Error);
+}
+@if (!String.IsNullOrEmpty(Message_Success))
+{
+    <div class="alert alert-success" role="alert">@Message_Success</div>
+    Common.iUserStorage.Remove(Constants.PublicConstants.Session.Message_Success);
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="bgc-white bd bdrs-3 p-20 mB-20">
+            <h4 class="c-grey-900 mB-20">Facility List</h4><small>Add Facility For Accommodation: @Model.AccommodationID Name: @Model.AccommodationName</small>
+            <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>Facility ID</th>
+                        <th>Category</th>
+                        <th>Name</th>
+                        <th>Persian Category</th>
+                        <th>Persian Name</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Facility ID</th>
+                        <th>Category</th>
+                        <th>Name</th>
+                        <th>Persian Category</th>
+                        <th>Persian Name</th>
+                        <th>Options</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var Item in Model.Facilities)
+                    {
+                        <tr>
+                            <td>@Item.FacilityID</td>
+                            <td>@Item.Category</td>
+                            <td>@Item.Name</td>
+                            <td>@Item.PersianCategory</td>
+                            <td>@Item.PersianName</td>
+                            <td>
+                                @*@Html.ActionLink("Select", "AddFacility", new { FacilityID = Item.FacilityID,AcommodationID= Model.AccommodationID }, new { @class = "btn cur-p btn-success" })*@
+                                <a class="btn cur-p btn-success" id="@Item.FacilityID">Select</a>
+</tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    var filtered = new Array();
+    $(document).ready(function () {
+        $(".btn cur-p btn-success").click(function () {
+            var ID = $(this).attr("id");
+            filtered.push(ID);
+        });
+        $("#send").click(function () {
+            $.ajax({
+                url: "/Accommodation/AddFacility",
+                type: "POST",
+                data: { FacilityID: filtered,AccommodationID=@Model.AccommodationID },
+                success: function (data) {
+                    location.reload(true);
+                },
+                error: function (ex) {
+
+                }
+            });
+        })
+    });
+</script>

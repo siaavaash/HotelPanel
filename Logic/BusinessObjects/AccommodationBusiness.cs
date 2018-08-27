@@ -127,6 +127,18 @@ namespace Logic.BusinessObjects
                     }
 
                 }
+                if (Model.Verified != true)
+                {
+                    if (Query.Count == 0)
+                    {
+                        Query = DataContext.Context.Accommodations.Where(x => x.IsVerified != true).ToList();
+                    }
+                    else
+                    {
+                        Query = Query.Where(x => x.IsVerified != true).ToList();
+                    }
+
+                }
                 return Query.Select(x => new AccommodationModels.ListNameAccommodation
                 {
                     AccommodationID = x.AccommodationlID,
@@ -150,7 +162,16 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                return DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID == AccommodationID && (x.IsActive ?? false)).ToList();
+                var Verified = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == AccommodationID).FirstOrDefault().IsVerified;
+                if (!(bool)Verified)
+                {
+                    return DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID == AccommodationID && (x.IsActive ?? false)).ToList();
+                }
+                else
+                {
+                    return DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID == AccommodationID).ToList();
+                }
+                
             }
             catch (Exception exeption)
             {
@@ -236,6 +257,20 @@ namespace Logic.BusinessObjects
                 throw exeption;
             }
         }
+        public bool Verify(long AccommodationID)
+        {
+            try
+            {
+                var Accommodation = Data.DataContext.Context.Accommodations.Where(x => x.AccommodationlID == AccommodationID).FirstOrDefault();
+                Accommodation.IsVerified = true;
+                DataContext.Context.SaveChanges();
+                return true;
+            }
+            catch (Exception exeption)
+            {
+                throw exeption;
+            }
+        }
         public bool EditName(AccommodationModels.EditName Model)
         {
             try
@@ -277,12 +312,13 @@ namespace Logic.BusinessObjects
             try
             {
                 var Accommodations = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == Model.AccommodationID).FirstOrDefault();
-                if (Accommodations != null)
+                foreach(var Item in Model.FacilityID)
                 {
-                    DataContext.Context.Facilities.AddRange(Model.Facilities);
+                    var Facility = DataContext.Context.Facilities.Where(x => x.FacilityID == Item).FirstOrDefault();
+                    Accommodations.Facilities.Add(Facility);
                     DataContext.Context.SaveChanges();
-                    return true;
                 }
+                return true;
             }
             catch
             {
@@ -306,6 +342,17 @@ namespace Logic.BusinessObjects
             {
             }
             return false;
+        }
+        public List<Facility> GetFacilities()
+        {
+            try
+            {
+                return DataContext.Context.Facilities.ToList();
+            }
+            catch (Exception exeption)
+            {
+                throw exeption;
+            }
         }
     }
 }

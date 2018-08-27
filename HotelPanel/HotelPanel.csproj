@@ -290,6 +290,7 @@
     <Content Include="Views\Accommodation\EditDescription.cshtml" />
     <Content Include="Views\Accommodation\AddFacility.cshtml" />
     <Content Include="Views\Accommodation\EditFacility.cshtml" />
+    <Content Include="Views\Accommodation\ListFacility.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

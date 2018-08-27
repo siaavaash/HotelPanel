@@ -17,6 +17,16 @@ namespace Data.ViewModel
             public string Country { get; set; }
             public Nullable<System.DateTime> lastUpdate { get; set; }
         }
+        public class FilterImages
+        {
+            public long AccommodationID { get; set; }
+            public List<long> ImageID { get; set; }
+        }
+        public class FilterImagesView
+        {
+            public long AccommodationID { get; set; }
+            public List<AccomodationImage> AccomodationImages { get; set; }
+        }
         public class SearchAccommodation
         {
             public long? AccommodationID { get; set; }
@@ -25,6 +35,7 @@ namespace Data.ViewModel
             public string Country { get; set; }
             public long? From { get; set; }
             public long? To { get; set; }
+            public bool Verified { get; set; }
         }
         public class AccommodationFacility
         {
@@ -43,10 +54,16 @@ namespace Data.ViewModel
             public long AccommodationID { get; set; }
             public string Description { get; set; }
         }
+        public class ListFacilities
+        {
+            public long AccommodationID { get; set; }
+            public string AccommodationName { get; set; }
+            public List<Facility> Facilities { get; set; }
+        }
         public class AddFacilities
         {
             public long AccommodationID { get; set; }
-            public List<Facility> Facilities { get; set; }
+            public List<long> FacilityID { get; set; }
         }
         public class EditFacilities
         {
