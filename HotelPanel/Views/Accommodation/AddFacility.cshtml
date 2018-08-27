@@ -1,0 +1,18 @@
+﻿
+@{
+    /**/
+
+    string Message_Alert = Common.iUserStorage.Retrive<string>(Constants.PublicConstants.Session.Message_Error);
+    string Message_Success = Common.iUserStorage.Retrive<string>(Constants.PublicConstants.Session.Message_Success);
+}
+@if (!String.IsNullOrEmpty(Message_Alert))
+{
+    <div class="alert alert-danger" role="alert">@Message_Alert</div>
+    Common.iUserStorage.Remove(Constants.PublicConstants.Session.Message_Error);
+}
+@if (!String.IsNullOrEmpty(Message_Success))
+{
+    <div class="alert alert-success" role="alert">@Message_Success</div>
+    Common.iUserStorage.Remove(Constants.PublicConstants.Session.Message_Success);
+}
+

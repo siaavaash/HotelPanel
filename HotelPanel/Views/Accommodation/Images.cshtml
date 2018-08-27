@@ -1,7 +1,146 @@
-﻿@model List<Data.DataModel.AccomodationImage>
+﻿@model Data.ViewModel.AccommodationModels.FilterImagesView
+@{
+                /**/
 
-@foreach(var Item in Model)
-{
-<img src="@Item.Link" id="@Item.ImageID" style="width:350px; margin:3px;">
+                string Message_Alert = Common.iUserStorage.Retrive<string>(Constants.PublicConstants.Session.Message_Error);
+                string Message_Success = Common.iUserStorage.Retrive<string>(Constants.PublicConstants.Session.Message_Success);
 }
+<style>
+    div.gallery {
+        margin: 5px;
+        border: 1px solid #ccc;
+        float: left;
+        width: 380px;
+    }
 
+        div.gallery:hover {
+            border: 1px solid #777;
+        }
+
+        div.gallery img {
+            width: 380px;
+            height: 250px;
+            cursor: pointer;
+        }
+
+    .desc {
+        filter:brightness(0.5);
+       
+    }
+
+    i.fa-check {
+        color: green;
+        font-size: 18px;
+        position: absolute;
+        z-index: 5;
+        background-color: white;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: none;
+        text-align: center;
+    }
+
+    .dis {
+        display: block !important
+    }
+
+    .btn {
+        display: block;
+        padding: 0 30px;
+        text-align: center;
+        line-height: 32px;
+        background: #22b6b7;
+        color: #fff;
+        margin: 20px 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 200px;
+    }
+</style>
+@if (!String.IsNullOrEmpty(Message_Alert))
+{
+    <div class="alert alert-danger" role="alert">@Message_Alert</div>
+    Common.iUserStorage.Remove(Constants.PublicConstants.Session.Message_Error);
+}
+@if (!String.IsNullOrEmpty(Message_Success))
+{
+    <div class="alert alert-success" role="alert">@Message_Success</div>
+    Common.iUserStorage.Remove(Constants.PublicConstants.Session.Message_Success);
+}
+<div>
+    @foreach (var Item in Model.AccomodationImages)
+    {
+
+    <div class="gallery">
+        <div class="img_child"><i class="fas fa-check"></i></div>
+        @if (Item.IsActive == false)
+        {
+            <img src="@Item.Link" id="@Item.ImageID" class="select-image desc">
+            <input type="checkbox" value="delete" class="select_check" />
+
+        }
+        else
+        {
+            <img src="@Item.Link" id="@Item.ImageID" class="select-image">
+            <input type="checkbox" value="delete" class="select_check" />
+
+        }
+    </div>
+
+    }
+
+</div>
+<div>
+
+    <button id="back" class="btn" type="submit" onclick="window.history.back();">Back</button>
+    <button id="send" class="btn send" type="submit">Filter</button>
+</div>
+
+<script type="text/javascript" src="~/Content/Scripts/jquery.js"></script>
+
+<script>
+    var filtered = new Array();
+    $(window).on('beforeunload', function () {
+        $(window).scrollTop(0);
+    });
+    $(document).ready(function () {
+        //if ($("img.select-image").hasClass("desc")) {
+        //    $(this).prev(':checkbox').prop('checked', true);
+        //    var ID = $(this).find("img.desc").attr("id");
+        //    filtered.push(ID);
+        //}
+
+
+        $(".select_check").click(function () {
+       
+            var name = $(this);
+            if (name.prop("checked")) {
+                $(this).parent().find(".select-image").addClass('desc');
+                var ID = $(this).parent().find("img.desc").attr("id");
+                filtered.push(ID);
+            } else {
+                $(this).parent().find(".select-image").removeClass('desc');
+                var ID = $(this).parent().find("img.desc").attr("id");
+                filtered.pop(ID);
+            }
+        });
+
+   
+
+        $("#send").click(function () {
+            $.ajax({
+                url: "/Accommodation/Filter",
+                type: "POST",
+                data: { ImageID: filtered, AccommodationID:@(Model.AccommodationID) },
+                success: function (data) {
+                    location.reload(true);
+                },
+                error: function (ex) {
+
+                }
+            });
+        })
+    });
+
+</script>

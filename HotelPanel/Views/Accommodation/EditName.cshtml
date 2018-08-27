@@ -1,0 +1,32 @@
+﻿@model Data.ViewModel.AccommodationModels.EditName
+@{
+    /**/
+
+    string Message_Alert = Common.iUserStorage.Retrive<string>(Constants.PublicConstants.Session.Message_Error);
+    string Message_Success = Common.iUserStorage.Retrive<string>(Constants.PublicConstants.Session.Message_Success);
+}
+@if (!String.IsNullOrEmpty(Message_Alert))
+{
+    <div class="alert alert-danger" role="alert">@Message_Alert</div>
+    Common.iUserStorage.Remove(Constants.PublicConstants.Session.Message_Error);
+}
+@if (!String.IsNullOrEmpty(Message_Success))
+{
+    <div class="alert alert-success" role="alert">@Message_Success</div>
+    Common.iUserStorage.Remove(Constants.PublicConstants.Session.Message_Success);
+}
+<div class="bgc-white p-20 bd">
+    <h6 class="c-grey-900">Edit Accommodation Name</h6>
+    <div class="mT-30">
+        @using (Html.BeginForm("EditName", "Accommodation", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(x => x.AccommodationID)
+            <div class="form-group">
+                <label for="exampleInputEmail1">Accommodation Name</label>
+                <input type="text" class="form-control" placeholder="Enter Name" name="Name" value="@Model.Name">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        }
+    </div>
+</div>

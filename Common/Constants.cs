@@ -20,7 +20,7 @@ namespace Constants
         {
             public const string Login = "Login";
         }
-    }
+    }    
     public static class PublicConstants
     {
         public static class Session
@@ -42,6 +42,11 @@ namespace Constants
             public const string Message_Error = "Message_Error";
             public const string Message_Success = "Message_Success";
             public const string Message_Warning = "Message_Warning";
+        }
+        public static class Message
+        {
+            public const string Faild = "Sorry, your request could not be completed please try again";
+            public const string Success = "Your request has been successfully completed";
         }
     }
 }

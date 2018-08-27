@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Service;
 using Common;
+using static Data.ViewModel.WeatherModels.Forecast;
+
 namespace Logic.BusinessObjects
 {
     public class AccommodationBusiness
@@ -23,7 +25,7 @@ namespace Logic.BusinessObjects
             {
                 return DataContext.Context.Accommodations.ToList();
             }
-            catch(Exception exeption)
+            catch (Exception exeption)
             {
                 throw exeption;
             }
@@ -55,7 +57,7 @@ namespace Logic.BusinessObjects
                 List<Accommodation> Query = new List<Accommodation>();
                 if (Model.AccommodationID != null)
                 {
-                    if(Query.Count == 0)
+                    if (Query.Count == 0)
                     {
                         Query = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == Model.AccommodationID).ToList();
                     }
@@ -63,7 +65,7 @@ namespace Logic.BusinessObjects
                     {
                         Query = Query.Where(x => x.AccommodationlID == Model.AccommodationID).ToList();
                     }
-                    
+
                 }
                 if (!String.IsNullOrEmpty(Model.Name))
                 {
@@ -75,7 +77,7 @@ namespace Logic.BusinessObjects
                     {
                         Query = Query.Where(x => x.Name.ToLower().Contains(Model.Name.ToLower())).ToList();
                     }
-                    
+
                 }
                 if (!String.IsNullOrEmpty(Model.CityName))
                 {
@@ -87,7 +89,7 @@ namespace Logic.BusinessObjects
                     {
                         Query = Query.Where(x => x.CityName.ToLower().Contains(Model.CityName.ToLower())).ToList();
                     }
-                    
+
                 }
                 if (!String.IsNullOrEmpty(Model.Country))
                 {
@@ -99,7 +101,7 @@ namespace Logic.BusinessObjects
                     {
                         Query = Query.Where(x => x.Country.ToLower().Contains(Model.Country.ToLower())).ToList();
                     }
-                    
+
                 }
                 if (Model.From != null)
                 {
@@ -111,7 +113,7 @@ namespace Logic.BusinessObjects
                     {
                         Query = Query.Where(x => x.AccommodationlID >= Model.From).ToList();
                     }
-                    
+
                 }
                 if (Model.To != null)
                 {
@@ -123,15 +125,27 @@ namespace Logic.BusinessObjects
                     {
                         Query = Query.Where(x => x.AccommodationlID <= Model.To).ToList();
                     }
-                    
+
+                }
+                if (Model.Verified != true)
+                {
+                    if (Query.Count == 0)
+                    {
+                        Query = DataContext.Context.Accommodations.Where(x => x.IsVerified != true).ToList();
+                    }
+                    else
+                    {
+                        Query = Query.Where(x => x.IsVerified != true).ToList();
+                    }
+
                 }
                 return Query.Select(x => new AccommodationModels.ListNameAccommodation
                 {
                     AccommodationID = x.AccommodationlID,
                     Name = x.Name,
-                    CityName=x.CityName,
-                    Country=x.Country,
-                    lastUpdate=x.lastUpdate
+                    CityName = x.CityName,
+                    Country = x.Country,
+                    lastUpdate = x.lastUpdate
                 }).ToList();
             }
             catch (Exception exeption)
@@ -148,7 +162,38 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                return DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID==AccommodationID).ToList();
+                var Verified = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == AccommodationID).FirstOrDefault().IsVerified;
+                if (!(bool)Verified)
+                {
+                    return DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID == AccommodationID && (x.IsActive ?? false)).ToList();
+                }
+                else
+                {
+                    return DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID == AccommodationID).ToList();
+                }
+                
+            }
+            catch (Exception exeption)
+            {
+                throw exeption;
+            }
+        }
+        public List<Facility> GetFacilities(long AccommodationID)
+        {
+            try
+            {
+                return DataContext.Context.Accommodations.Where(x => x.AccommodationlID == AccommodationID).FirstOrDefault().Facilities.ToList();
+            }
+            catch (Exception exeption)
+            {
+                throw exeption;
+            }
+        }
+        public string GetDescription(long AccommodationID)
+        {
+            try
+            {
+                return DataContext.Context.Accommodations.Where(x => x.AccommodationlID == AccommodationID).FirstOrDefault().Description;
             }
             catch (Exception exeption)
             {
@@ -162,6 +207,7 @@ namespace Logic.BusinessObjects
                 var Accommodation = GetAccommodation(AccommodationID);
                 var Result = WeatherConcreteMapper.Avail(Accommodation.CityName);
                 WeatherModels.Forecast.Root Model = new WeatherModels.Forecast.Root();
+                Model.Forecast = new List<ForecastDays>();
                 Model.Wind = Result.query.results.channel.wind.speed.ToKM().ToString();
                 Model.Sunrise = Result.query.results.channel.astronomy.sunrise.ToUpper();
                 Model.Pressure = Result.query.results.channel.atmosphere.pressure;
@@ -170,9 +216,17 @@ namespace Logic.BusinessObjects
                     Lat = Accommodation.Latitude,
                     Lng = Accommodation.Longitude
                 };
-                for(int i = 1; i <= 7; i++)
+                for (int i = 0; i < 7; i++)
                 {
-                    //Result.query.results.channel.item.forecast[i].
+                    Model.Forecast.Add(new ForecastDays
+                    {
+                        Date = Result.query.results.channel.item.forecast[i].date,
+                        Code = (int.Parse(Result.query.results.channel.item.forecast[i].code)),
+                        Day = Result.query.results.channel.item.forecast[i].day,
+                        High = Utility.FahrenheitToCentigrade(Result.query.results.channel.item.forecast[i].high).ToString(),
+                        Low = Utility.FahrenheitToCentigrade(Result.query.results.channel.item.forecast[i].low).ToString(),
+                        Text = Result.query.results.channel.item.forecast[i].text
+                    });
                 }
                 return Model;
             }
@@ -185,18 +239,115 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                foreach(var Item in ImageID)
+                foreach (var Item in ImageID)
                 {
                     var Model = DataContext.Context.AccomodationImages.Where(x => x.ImageID == Item).FirstOrDefault();
-                    if(Model != null)
+                    if (Model != null)
                     {
                         Model.IsActive = false;
                         Model.DateActive = DateTime.Now;
-                        //Model.UserID = ;
                         DataContext.Context.Entry(Model).State = EntityState.Modified;
-                    }                    
+                    }
+                    DataContext.Context.SaveChanges();
                 }
                 return true;
+            }
+            catch (Exception exeption)
+            {
+                throw exeption;
+            }
+        }
+        public bool Verify(long AccommodationID)
+        {
+            try
+            {
+                var Accommodation = Data.DataContext.Context.Accommodations.Where(x => x.AccommodationlID == AccommodationID).FirstOrDefault();
+                Accommodation.IsVerified = true;
+                DataContext.Context.SaveChanges();
+                return true;
+            }
+            catch (Exception exeption)
+            {
+                throw exeption;
+            }
+        }
+        public bool EditName(AccommodationModels.EditName Model)
+        {
+            try
+            {
+                var Accommodations = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == Model.AccommodationID).FirstOrDefault();
+                if (Accommodations != null)
+                {
+                    Accommodations.Name = Model.Name;
+                    DataContext.Context.Entry(Accommodations).State = EntityState.Modified;
+                    DataContext.Context.SaveChanges();
+                    return true;
+                }                
+            }
+            catch
+            {
+            }
+            return false;
+        }
+        public bool EditDescription(AccommodationModels.EditDescription Model)
+        {
+            try
+            {
+                var Accommodations = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == Model.AccommodationID).FirstOrDefault();
+                if (Accommodations != null)
+                {
+                    Accommodations.Description = Model.Description;
+                    DataContext.Context.Entry(Accommodations).State = EntityState.Modified;
+                    DataContext.Context.SaveChanges();
+                    return true;
+                }
+            }
+            catch
+            {
+            }
+            return false;
+        }
+        public bool AddFacilities(AccommodationModels.AddFacilities Model)
+        {
+            try
+            {
+                var Accommodations = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == Model.AccommodationID).FirstOrDefault();
+                foreach(var Item in Model.FacilityID)
+                {
+                    var Facility = DataContext.Context.Facilities.Where(x => x.FacilityID == Item).FirstOrDefault();
+                    Accommodations.Facilities.Add(Facility);
+                    DataContext.Context.SaveChanges();
+                }
+                return true;
+            }
+            catch
+            {
+            }
+            return false;
+        }
+        public bool EditFacilities(AccommodationModels.EditFacilities Model)
+        {
+            try
+            {
+                var Accommodations = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == Model.AccommodationID).FirstOrDefault();
+                if (Accommodations != null)
+                {
+                    var Facility = Accommodations.Facilities.Where(x => x.FacilityID == Model.FacilityID).FirstOrDefault();
+                    Facility.Name = Model.Name;
+                    DataContext.Context.SaveChanges();
+                    return true;
+                }
+            }
+            catch
+            {
+            }
+            return false;
+        }
+        public List<Facility> GetFacilities()
+        {
+            try
+            {
+                return DataContext.Context.Facilities.ToList();
             }
             catch (Exception exeption)
             {

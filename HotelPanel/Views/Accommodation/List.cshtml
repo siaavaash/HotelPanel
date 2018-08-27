@@ -1,11 +1,19 @@
 ﻿@model IEnumerable<Data.ViewModel.AccommodationModels.ListNameAccommodation>
-
+@{ 
+    string Message_Alert = Common.iUserStorage.Retrive<string>(Constants.PublicConstants.Session.Message_Error);
+    string Message_Success = Common.iUserStorage.Retrive<string>(Constants.PublicConstants.Session.Message_Success);
+}
 <div class="container-fluid">
     <h4 class="c-grey-900 mT-10 mB-30">Accommodation</h4>
-    @if (Session["Message-Success"].ToString() != string.Empty)
+    @if (!String.IsNullOrEmpty(Message_Alert))
     {
-        <div class="alert alert-success" role="alert">This is a success alert—check it out!</div>
-        Session["Message-Success"] = null;
+        <div class="alert alert-danger" role="alert">@Message_Alert</div>
+        Common.iUserStorage.Remove(Constants.PublicConstants.Session.Message_Error);
+    }
+    @if (!String.IsNullOrEmpty(Message_Success))
+    {
+        <div class="alert alert-success" role="alert">@Message_Success</div>
+        Common.iUserStorage.Remove(Constants.PublicConstants.Session.Message_Success);
     }
     @if (Model != null)
     {

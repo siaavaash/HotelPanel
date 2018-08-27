@@ -1,0 +1,19 @@
+﻿@model Data.ViewModel.AccommodationModels.EditName
+@{
+
+}
+
+<div class="bgc-white p-20 bd">
+    <h6 class="c-grey-900">Edit Accommodation Name</h6>
+    <div class="mT-30">
+        @using (Html.BeginForm("EditName", "Accommodation", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label for="exampleInputEmail1">Accommodation Name</label>
+                <input type="text" class="form-control" placeholder="Enter Name" name="Name">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        }
+    </div>
+</div>

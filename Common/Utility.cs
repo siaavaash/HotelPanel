@@ -51,7 +51,14 @@ namespace Common
             {
                 result += Math.Pow(10, -decimalpoint);
             }
-            return result;
+            return result; 
+        }
+        public static int FahrenheitToCentigrade(string value)
+        {
+            double celsius;
+            double fahrenheit = Convert.ToDouble(value);
+            celsius = (fahrenheit - 32) * 5 / 9;
+            return (int)RoundUpValue(celsius, 0);
         }
         public static byte[] GetHash(string inputString)
         {
