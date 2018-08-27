@@ -64,9 +64,6 @@
     <Compile Include="DataModel\Accommodation960726.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\AccommodationAirport.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\AccommodationAttribute.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
@@ -97,16 +94,10 @@
     <Compile Include="DataModel\AccommodationLocationDuP2.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\AccommodationLocationTmp.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\AccommodationMap3.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\AccommodationReview.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\AccommodationTmp.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Accommodation_Booking.cs">
@@ -134,9 +125,6 @@
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\AccomodationSupplier960616.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\AccomodationSupplierTmp.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\AccomodationVoucher.cs">
@@ -512,9 +500,6 @@
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\LocationSupplier_970227.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\LocationTmp.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\LocationType.cs">
@@ -931,9 +916,6 @@
     <Compile Include="MapDataModel\sp_helpdiagrams_Result.cs">
       <DependentUpon>MapDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="MapDataModel\sysdiagram.cs">
-      <DependentUpon>MapDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="MapDataModel\TblB.cs">
       <DependentUpon>MapDataModel.tt</DependentUpon>
     </Compile>
@@ -959,6 +941,7 @@
     <EntityDeploy Include="MapDataModel\MapDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MapDataModel.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Data.MapDataModel</CustomToolNamespace>
     </EntityDeploy>
     <None Include="MapDataModel\MapDataModel.edmx.diagram">
       <DependentUpon>MapDataModel.edmx</DependentUpon>
@@ -982,11 +965,13 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MapDataModel.edmx</DependentUpon>
       <LastGenOutput>MapDataModel.Context.cs</LastGenOutput>
+      <CustomToolNamespace>Data.MapDataModel</CustomToolNamespace>
     </Content>
     <Content Include="MapDataModel\MapDataModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MapDataModel.edmx</DependentUpon>
       <LastGenOutput>MapDataModel.cs</LastGenOutput>
+      <CustomToolNamespace>Data.MapDataModel</CustomToolNamespace>
     </Content>
   </ItemGroup>
   <ItemGroup>

@@ -447,16 +447,6 @@ warning 6002: The table/view 'Map3.dbo.LocationInfo' does not have a primary key
           <Property Name="Country_Abbrev" Type="nvarchar" MaxLength="255" />
           <Property Name="World_Area_Code" Type="nvarchar" MaxLength="255" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="TblB">
           <Key>
             <PropertyRef Name="Bid" />
@@ -566,7 +556,6 @@ warning 6002: The table/view 'Map3.dbo.LocationInfo' does not have a primary key
           <EntitySet Name="LocationTmp" EntityType="Self.LocationTmp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LocationTmp2" EntityType="Self.LocationTmp2" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mgh_Air" EntityType="Self.Mgh_Air" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblB" EntityType="Self.TblB" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Accommodation" EntityType="Self.Accommodation" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -972,16 +961,6 @@ warning 6002: The table/view 'Map3.dbo.LocationInfo' does not have a primary key
           <Property Name="Country_Abbrev" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="World_Area_Code" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="TblB">
           <Key>
             <PropertyRef Name="Bid" />
@@ -1189,7 +1168,6 @@ warning 6002: The table/view 'Map3.dbo.LocationInfo' does not have a primary key
           <EntitySet Name="LocationTmps" EntityType="Self.LocationTmp" />
           <EntitySet Name="LocationTmp2" EntityType="Self.LocationTmp2" />
           <EntitySet Name="Mgh_Air" EntityType="Self.Mgh_Air" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="TblBs" EntityType="Self.TblB" />
           <EntitySet Name="Accommodations" EntityType="Self.Accommodation" />
           <EntitySet Name="AccommodationAirports" EntityType="Self.AccommodationAirport" />
@@ -1556,17 +1534,6 @@ warning 6002: The table/view 'Map3.dbo.LocationInfo' does not have a primary key
                 <ScalarProperty Name="Country_name" ColumnName="Country_name" />
                 <ScalarProperty Name="Country_Abbrev" ColumnName="Country_Abbrev" />
                 <ScalarProperty Name="World_Area_Code" ColumnName="World_Area_Code" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="MapDataModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

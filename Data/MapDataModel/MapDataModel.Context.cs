@@ -42,7 +42,6 @@ namespace Data.MapDataModel
         public virtual DbSet<LocationTmp> LocationTmps { get; set; }
         public virtual DbSet<LocationTmp2> LocationTmp2 { get; set; }
         public virtual DbSet<Mgh_Air> Mgh_Air { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TblB> TblBs { get; set; }
         public virtual DbSet<Accommodation> Accommodations { get; set; }
         public virtual DbSet<AccommodationAirport> AccommodationAirports { get; set; }

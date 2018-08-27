@@ -22,7 +22,6 @@
         <EntityTypeShape EntityType="ContextModel.RailwayStationTemp" Width="1.5" PointX="13.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ContextModel.RailwayStationTemp2" Width="1.5" PointX="11.75" PointY="13.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ContextModel.Accommodation" Width="1.5" PointX="6" PointY="137.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ContextModel.AccommodationAirport" Width="1.5" PointX="13.75" PointY="13.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ContextModel.AccommodationAttribute" Width="1.5" PointX="8.25" PointY="159" IsExpanded="true" />
         <EntityTypeShape EntityType="ContextModel.AccommodationCommission1" Width="1.5" PointX="8.25" PointY="153.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ContextModel.AccommodationDescription" Width="1.5" PointX="22.5" PointY="160.25" IsExpanded="true" />
@@ -173,9 +172,6 @@
         <EntityTypeShape EntityType="ContextModel.Accommodation_Booking3" Width="1.5" PointX="21.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ContextModel.Accommodation_Booking4" Width="1.5" PointX="8.75" PointY="21.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ContextModel.Accommodation_Booking5" Width="1.5" PointX="21.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ContextModel.AccommodationLocationTmp" Width="1.5" PointX="21.75" PointY="18.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ContextModel.AccommodationTmp" Width="1.5" PointX="18.75" PointY="21.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ContextModel.AccomodationSupplierTmp" Width="1.5" PointX="20.75" PointY="21.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ContextModel.Airportflyinghobo" Width="1.5" PointX="10.75" PointY="22.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ContextModel.Facility1" Width="1.5" PointX="12.75" PointY="22.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ContextModel.GC" Width="1.5" PointX="22.75" PointY="21.75" IsExpanded="true" />
@@ -183,7 +179,6 @@
         <EntityTypeShape EntityType="ContextModel.GCMAP" Width="1.5" PointX="0.75" PointY="23.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ContextModel.GCMAPXmlNode" Width="1.5" PointX="2.75" PointY="23.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ContextModel.IataAirport" Width="1.5" PointX="23.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ContextModel.LocationTmp" Width="1.5" PointX="23.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ContextModel.OtherAirport" Width="1.5" PointX="23.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ContextModel.Propertyv3" Width="1.5" PointX="24.75" PointY="14.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ContextModel.Propertyv4" Width="1.5" PointX="14.75" PointY="24.75" IsExpanded="true" />
