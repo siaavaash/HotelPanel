@@ -1,4 +1,5 @@
 ﻿using Logic.BusinessObjects;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +24,11 @@ namespace HotelPanel.Controllers
         {
             try
             {
-                return Json(giataBusiness.MapRange(from, to));
+                return Json(new { success = true, data = JsonConvert.SerializeObject(giataBusiness.MapRange(from, to), Formatting.Indented) }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { message = ex.Message });
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
     }

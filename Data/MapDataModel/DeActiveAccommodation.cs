@@ -18,5 +18,6 @@ namespace Data.MapDataModel
         public long AccommodationlD { get; set; }
         public int Counter { get; set; }
         public bool ISDeactive { get; set; }
+        public Nullable<long> MovedToAccommodationlD { get; set; }
     }
 }

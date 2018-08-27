@@ -1,8 +1,11 @@
 ﻿using Newtonsoft.Json;
 using Service.ServiceModel.GIATAModels;
 using Service.ServiceModel.PublicModels;
+using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace Service.Suppliers
 {
@@ -16,25 +19,42 @@ namespace Service.Suppliers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ResultDataModel<Properties> GetPropertiesById(long id)
+        public ResultDataModel GetPropertiesById(long id)
         {
             try
             {
-                var xmlResponse = GetXML(serviceUrl + id);
+                HttpStatusCode statusCode = GetXML(serviceUrl + id, out Stream response);
 
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(xmlResponse);
-
-                string jsonResponse = JsonConvert.SerializeXmlNode(doc);
-                return new ResultDataModel<Properties>
+                if (statusCode == HttpStatusCode.OK)
                 {
-                    Success = true,
-                    Model = JsonConvert.DeserializeObject<Properties>(jsonResponse)
+                    var propertySerializer = new XmlSerializer(typeof(properties));
+                    return new ResultDataModel
+                    {
+                        Success = true,
+                        Model = (properties)propertySerializer.Deserialize(response),
+                    };
+                }
+                var serializer = new XmlSerializer(typeof(error));
+                var model = (error)serializer.Deserialize(response);
+                if (statusCode == HttpStatusCode.MovedPermanently)
+                    return new ResultDataModel
+                    {
+                        Success = true,
+                        Model = model,
+                    };
+                return new ResultDataModel
+                {
+                    Success = false,
+                    Error = new Error
+                    {
+                        Code = model.code.ToString(),
+                        Text = model.description,
+                    },
                 };
             }
             catch (HttpRequestException httpEx)
             {
-                return new ResultDataModel<Properties>
+                return new ResultDataModel
                 {
                     Success = false,
                     Error = new Error
@@ -46,7 +66,7 @@ namespace Service.Suppliers
             }
             catch (System.Exception ex)
             {
-                return new ResultDataModel<Properties>
+                return new ResultDataModel
                 {
                     Success = false,
                     Error = new Error
@@ -62,7 +82,7 @@ namespace Service.Suppliers
         /// </summary>
         /// <param name="url">server url</param>
         /// <returns></returns>
-        public string GetXML(string url)
+        public HttpStatusCode GetXML(string url, out Stream data)
         {
             try
             {
@@ -70,14 +90,13 @@ namespace Service.Suppliers
                 {
                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "bmV2aWxsZXxpdG91cnMubm86cDZNUkVLcHg =");
                     var response = client.GetAsync(url).Result;
-                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                        return response.Content.ReadAsStringAsync().Result;
-                    throw new HttpRequestException();
+                    data = response.Content.ReadAsStreamAsync().Result;
+                    return response.StatusCode;
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
     }

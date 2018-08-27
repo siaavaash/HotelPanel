@@ -190,6 +190,64 @@ namespace Logic.BusinessObjects
                 return false;
             }
         }
+        /// <summary>
+        /// Insert Deactive Accommodation
+        /// </summary>
+        /// <param name="id">Accommodation Id</param>
+        /// <param name="movedId">Moved Accommodation Id</param>
+        /// <param name="active">Is Active</param>
+        /// <returns></returns>
+        public bool DeactiveAccommodation(long id, out string message, long movedId = 0, bool deactive = false)
+        {
+            try
+            {
+                var accommodation = context.DeActiveAccommodations.FirstOrDefault(x => x.AccommodationlD == id);
+                message = null;
+                if (deactive)
+                {
+                    if (accommodation != null)
+                    {
+                        accommodation.ISDeactive = true;
+                        accommodation.Counter = 0;
+                    }
+                    else
+                    {
+                        context.DeActiveAccommodations.Add(new DeActiveAccommodation
+                        {
+                            AccommodationlD = id,
+                            Counter = 0,
+                            ISDeactive = true,
+                        });
+                    }
+                    return context.SaveChanges() > 0 ? true : false;
+                }
+                if (movedId != 0)
+                {
+                    if (accommodation == null)
+                    {
+                        context.DeActiveAccommodations.Add(new DeActiveAccommodation
+                        {
+                            AccommodationlD = id,
+                            MovedToAccommodationlD = movedId,
+                            ISDeactive = true,
+                        });
+                    }
+                    else
+                    {
+                        accommodation.ISDeactive = true;
+                        accommodation.MovedToAccommodationlD = movedId;
+                    }
+                    context.SaveChanges();
+                    return context.SaveChanges() > 0 ? true : false;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                return false;
+            }
+        }
 
         /// <summary>
         /// Map GIATA Data to Model
@@ -198,7 +256,7 @@ namespace Logic.BusinessObjects
         /// <param name="resultModel"></param>
         /// <param name="message"></param>
         /// <returns></returns>
-        public bool MapGIATADataToModel(Properties sourceModel, out GIATADbTransferModel resultModel, out string message)
+        public bool MapGIATADataToModel(properties sourceModel, out GIATADbTransferModel resultModel, out string message)
         {
             try
             {
@@ -206,7 +264,7 @@ namespace Logic.BusinessObjects
                 resultModel = new GIATADbTransferModel
                 {
                     AccommodationId = Convert.ToInt64(sourceModel.property.giataId),
-                    Address = address.addressLine[0] + " " + address.addressLine[1],
+                    Address = address.addressLine[0].Value + " " + address.addressLine[1].Value,
                     AirportCode = sourceModel.property.airports.airport[0].iata,
                     Category = sourceModel.property.category,
                     ChainId = Convert.ToInt64(sourceModel.property.chains.chain.chainId),
@@ -256,8 +314,47 @@ namespace Logic.BusinessObjects
             }
         }
 
+        public bool Map(long id, out string message)
+        {
+            try
+            {
+                var serviceResult = giataAccess.GetPropertiesById(id);
+                if (serviceResult.Success)
+                {
+                    if (serviceResult.Model is Properties)
+                    {
+                        if (MapGIATADataToModel((Properties)serviceResult.Model, out GIATADbTransferModel mapDb, out message))
+                        {
+                            if (MapGIATADataToDb(mapDb, out message))
+                                return true;
+                            return false;
+                        }
+                        return false;
+                    }
+                    else
+                    {
+                        var str = ((Error)serviceResult.Model).description.xlinkhref;
+                        var movedId = Convert.ToInt64(str.Substring(str.LastIndexOf('/') + 1));
+                        if (DeactiveAccommodation(id, out message, movedId))
+                        {
+                            message = ((Error)serviceResult.Model).description.text;
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+                message = serviceResult.Error.Text;
+                return false;
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                return false;
+            }
+        }
+
         /// <summary>
-        /// Map Data from GIATA Service to Db
+        /// Map Range Data from GIATA Service to Db
         /// </summary>
         /// <param name="from">from giata id</param>
         /// <param name="to">to giata id</param>
@@ -267,30 +364,41 @@ namespace Logic.BusinessObjects
             if (from > to)
                 throw new ArgumentException("Invalid parameter(s).");
             var returnList = new Dictionary<long, string>();
-            Parallel.For(from, to, i =>
+            for (long i = from; i <= to; i++)
+            //Parallel.For(from, to, i =>
             {
-                try
-                {
-                    var serviceResult = giataAccess.GetPropertiesById(i);
-                    if (serviceResult.Success)
-                    {
-                        if (MapGIATADataToModel(serviceResult.Model, out GIATADbTransferModel mapDb, out string mapModelMessage))
-                        {
-                            if (!MapGIATADataToDb(mapDb, out string mapDbMessage))
-                                returnList.Add(i, mapDbMessage);
-                        }
-                        else
-                            returnList.Add(i, mapModelMessage);
-                    }
-                    else
-                        returnList.Add(i, serviceResult.Error.Text);
-                }
-                catch (Exception ex)
-                {
-                    returnList.Add(i, ex.Message);
-                }
-            });
+                if (!Map(i, out string message))
+                    if (!TryMap(i, out message))
+                        returnList.Add(i, message);
+
+            }
             return returnList;
+        }
+        /// <summary>
+        /// Try Map 3 attempts
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public bool TryMap(long id, out string message)
+        {
+            try
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (Map(id, out message))
+                        return true;
+                }
+
+                DeactiveAccommodation(id, out message, deactive: true);
+                message = "Failed.";
+                return false;
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                return false;
+            }
         }
     }
 }

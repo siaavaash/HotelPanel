@@ -5,167 +5,807 @@ namespace Service.ServiceModel.GIATAModels
 {
 
     #region GIATA Response Model
-    public class Properties
+
+    public interface IResponse { }
+
+
+    // NOTE: Generated code may require at least .NET Framework 4.5 or .NET Core/Standard 2.0.
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
+    public partial class properties
     {
-        public string xmlnsxsi { get; set; }
-        public string xmlnsxlink { get; set; }
-        public Property property { get; set; }
+
+        private propertiesProperty propertyField;
+
+        /// <remarks/>
+        public propertiesProperty property
+        {
+            get
+            {
+                return this.propertyField;
+            }
+            set
+            {
+                this.propertyField = value;
+            }
+        }
     }
 
-    public class Property
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class propertiesProperty
     {
-        public string giataId { get; set; }
-        public DateTime lastUpdate { get; set; }
-        public string name { get; set; }
-        public Alternativenames alternativeNames { get; set; }
-        public City city { get; set; }
-        public Destination destination { get; set; }
-        public string country { get; set; }
-        public string category { get; set; }
-        public Ratings ratings { get; set; }
-        public Airports airports { get; set; }
-        public Addresses addresses { get; set; }
-        public Phones phones { get; set; }
-        public Emails emails { get; set; }
-        public Urls urls { get; set; }
-        public Geocodes geoCodes { get; set; }
-        public Propertycodes propertyCodes { get; set; }
-        public Chains chains { get; set; }
-        public Ghgml ghgml { get; set; }
+
+        private string nameField;
+
+        private propertiesPropertyCity cityField;
+
+        private string countryField;
+
+        private propertiesPropertyAddresses addressesField;
+
+        private propertiesPropertyPhone[] phonesField;
+
+        private propertiesPropertyEmails emailsField;
+
+        private propertiesPropertyUrls urlsField;
+
+        private propertiesPropertyGeoCodes geoCodesField;
+
+        private propertiesPropertyProvider[] propertyCodesField;
+
+        private propertiesPropertyChains chainsField;
+
+        private propertiesPropertyGhgml ghgmlField;
+
+        private byte giataIdField;
+
+        private System.DateTime lastUpdateField;
+
+        /// <remarks/>
+        public string name
+        {
+            get
+            {
+                return this.nameField;
+            }
+            set
+            {
+                this.nameField = value;
+            }
+        }
+
+        /// <remarks/>
+        public propertiesPropertyCity city
+        {
+            get
+            {
+                return this.cityField;
+            }
+            set
+            {
+                this.cityField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string country
+        {
+            get
+            {
+                return this.countryField;
+            }
+            set
+            {
+                this.countryField = value;
+            }
+        }
+
+        /// <remarks/>
+        public propertiesPropertyAddresses addresses
+        {
+            get
+            {
+                return this.addressesField;
+            }
+            set
+            {
+                this.addressesField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("phone", IsNullable = false)]
+        public propertiesPropertyPhone[] phones
+        {
+            get
+            {
+                return this.phonesField;
+            }
+            set
+            {
+                this.phonesField = value;
+            }
+        }
+
+        /// <remarks/>
+        public propertiesPropertyEmails emails
+        {
+            get
+            {
+                return this.emailsField;
+            }
+            set
+            {
+                this.emailsField = value;
+            }
+        }
+
+        /// <remarks/>
+        public propertiesPropertyUrls urls
+        {
+            get
+            {
+                return this.urlsField;
+            }
+            set
+            {
+                this.urlsField = value;
+            }
+        }
+
+        /// <remarks/>
+        public propertiesPropertyGeoCodes geoCodes
+        {
+            get
+            {
+                return this.geoCodesField;
+            }
+            set
+            {
+                this.geoCodesField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("provider", IsNullable = false)]
+        public propertiesPropertyProvider[] propertyCodes
+        {
+            get
+            {
+                return this.propertyCodesField;
+            }
+            set
+            {
+                this.propertyCodesField = value;
+            }
+        }
+
+        /// <remarks/>
+        public propertiesPropertyChains chains
+        {
+            get
+            {
+                return this.chainsField;
+            }
+            set
+            {
+                this.chainsField = value;
+            }
+        }
+
+        /// <remarks/>
+        public propertiesPropertyGhgml ghgml
+        {
+            get
+            {
+                return this.ghgmlField;
+            }
+            set
+            {
+                this.ghgmlField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public byte giataId
+        {
+            get
+            {
+                return this.giataIdField;
+            }
+            set
+            {
+                this.giataIdField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public System.DateTime lastUpdate
+        {
+            get
+            {
+                return this.lastUpdateField;
+            }
+            set
+            {
+                this.lastUpdateField = value;
+            }
+        }
     }
 
-    public class Alternativenames
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class propertiesPropertyCity
     {
-        public Alternativename[] alternativeName { get; set; }
+
+        private ushort cityIdField;
+
+        private string valueField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public ushort cityId
+        {
+            get
+            {
+                return this.cityIdField;
+            }
+            set
+            {
+                this.cityIdField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlTextAttribute()]
+        public string Value
+        {
+            get
+            {
+                return this.valueField;
+            }
+            set
+            {
+                this.valueField = value;
+            }
+        }
     }
 
-    public class Alternativename
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class propertiesPropertyAddresses
     {
-        public string alternativeNameType { get; set; }
-        public string text { get; set; }
-        public string effectiveDate { get; set; }
+
+        private propertiesPropertyAddressesAddress addressField;
+
+        /// <remarks/>
+        public propertiesPropertyAddressesAddress address
+        {
+            get
+            {
+                return this.addressField;
+            }
+            set
+            {
+                this.addressField = value;
+            }
+        }
     }
 
-    public class City
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class propertiesPropertyAddressesAddress
     {
-        public string cityId { get; set; }
-        public string text { get; set; }
+
+        private propertiesPropertyAddressesAddressAddressLine[] addressLineField;
+
+        private string streetField;
+
+        private string cityNameField;
+
+        private string countryField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("addressLine")]
+        public propertiesPropertyAddressesAddressAddressLine[] addressLine
+        {
+            get
+            {
+                return this.addressLineField;
+            }
+            set
+            {
+                this.addressLineField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string street
+        {
+            get
+            {
+                return this.streetField;
+            }
+            set
+            {
+                this.streetField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string cityName
+        {
+            get
+            {
+                return this.cityNameField;
+            }
+            set
+            {
+                this.cityNameField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string country
+        {
+            get
+            {
+                return this.countryField;
+            }
+            set
+            {
+                this.countryField = value;
+            }
+        }
     }
 
-    public class Destination
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class propertiesPropertyAddressesAddressAddressLine
     {
-        public string destinationId { get; set; }
-        public string text { get; set; }
+
+        private byte addressLineNumberField;
+
+        private string valueField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public byte addressLineNumber
+        {
+            get
+            {
+                return this.addressLineNumberField;
+            }
+            set
+            {
+                this.addressLineNumberField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlTextAttribute()]
+        public string Value
+        {
+            get
+            {
+                return this.valueField;
+            }
+            set
+            {
+                this.valueField = value;
+            }
+        }
     }
 
-    public class Ratings
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class propertiesPropertyPhone
     {
-        public Rating rating { get; set; }
+
+        private string techField;
+
+        private long valueField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string tech
+        {
+            get
+            {
+                return this.techField;
+            }
+            set
+            {
+                this.techField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlTextAttribute()]
+        public long Value
+        {
+            get
+            {
+                return this.valueField;
+            }
+            set
+            {
+                this.valueField = value;
+            }
+        }
     }
 
-    public class Rating
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class propertiesPropertyEmails
     {
-        public string value { get; set; }
-        public string isDefault { get; set; }
+
+        private string emailField;
+
+        /// <remarks/>
+        public string email
+        {
+            get
+            {
+                return this.emailField;
+            }
+            set
+            {
+                this.emailField = value;
+            }
+        }
     }
 
-    public class Airports
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class propertiesPropertyUrls
     {
-        public Airport[] airport { get; set; }
+
+        private string urlField;
+
+        /// <remarks/>
+        public string url
+        {
+            get
+            {
+                return this.urlField;
+            }
+            set
+            {
+                this.urlField = value;
+            }
+        }
     }
 
-    public class Airport
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class propertiesPropertyGeoCodes
     {
-        public string iata { get; set; }
+
+        private propertiesPropertyGeoCodesGeoCode geoCodeField;
+
+        /// <remarks/>
+        public propertiesPropertyGeoCodesGeoCode geoCode
+        {
+            get
+            {
+                return this.geoCodeField;
+            }
+            set
+            {
+                this.geoCodeField = value;
+            }
+        }
     }
 
-    public class Addresses
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class propertiesPropertyGeoCodesGeoCode
     {
-        public Address address { get; set; }
+
+        private decimal latitudeField;
+
+        private decimal longitudeField;
+
+        private string accuracyField;
+
+        /// <remarks/>
+        public decimal latitude
+        {
+            get
+            {
+                return this.latitudeField;
+            }
+            set
+            {
+                this.latitudeField = value;
+            }
+        }
+
+        /// <remarks/>
+        public decimal longitude
+        {
+            get
+            {
+                return this.longitudeField;
+            }
+            set
+            {
+                this.longitudeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string accuracy
+        {
+            get
+            {
+                return this.accuracyField;
+            }
+            set
+            {
+                this.accuracyField = value;
+            }
+        }
     }
 
-    public class Address
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class propertiesPropertyProvider
     {
-        public Addressline[] addressLine { get; set; }
-        public string street { get; set; }
-        public string cityName { get; set; }
-        public string country { get; set; }
+
+        private propertiesPropertyProviderCodeValue[][] codeField;
+
+        private string providerCodeField;
+
+        private string providerTypeField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("value", typeof(propertiesPropertyProviderCodeValue), IsNullable = false)]
+        public propertiesPropertyProviderCodeValue[][] code
+        {
+            get
+            {
+                return this.codeField;
+            }
+            set
+            {
+                this.codeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string providerCode
+        {
+            get
+            {
+                return this.providerCodeField;
+            }
+            set
+            {
+                this.providerCodeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string providerType
+        {
+            get
+            {
+                return this.providerTypeField;
+            }
+            set
+            {
+                this.providerTypeField = value;
+            }
+        }
     }
 
-    public class Addressline
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class propertiesPropertyProviderCodeValue
     {
-        public string addressLineNumber { get; set; }
-        public string text { get; set; }
+
+        private string nameField;
+
+        private string valueField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string name
+        {
+            get
+            {
+                return this.nameField;
+            }
+            set
+            {
+                this.nameField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlTextAttribute()]
+        public string Value
+        {
+            get
+            {
+                return this.valueField;
+            }
+            set
+            {
+                this.valueField = value;
+            }
+        }
     }
 
-    public class Phones
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class propertiesPropertyChains
     {
-        public Phone[] phone { get; set; }
+
+        private propertiesPropertyChainsChain chainField;
+
+        /// <remarks/>
+        public propertiesPropertyChainsChain chain
+        {
+            get
+            {
+                return this.chainField;
+            }
+            set
+            {
+                this.chainField = value;
+            }
+        }
     }
 
-    public class Phone
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class propertiesPropertyChainsChain
     {
-        public string tech { get; set; }
-        public string text { get; set; }
+
+        private ushort chainIdField;
+
+        private string chainNameField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public ushort chainId
+        {
+            get
+            {
+                return this.chainIdField;
+            }
+            set
+            {
+                this.chainIdField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string chainName
+        {
+            get
+            {
+                return this.chainNameField;
+            }
+            set
+            {
+                this.chainNameField = value;
+            }
+        }
     }
 
-    public class Emails
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class propertiesPropertyGhgml
     {
-        public string email { get; set; }
+
+        private string hrefField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = "http://www.w3.org/1999/xlink")]
+        public string href
+        {
+            get
+            {
+                return this.hrefField;
+            }
+            set
+            {
+                this.hrefField = value;
+            }
+        }
     }
 
-    public class Urls
+
+
+
+
+
+    // NOTE: Generated code may require at least .NET Framework 4.5 or .NET Core/Standard 2.0.
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
+    public partial class error : IResponse
     {
-        public string url { get; set; }
+
+        private ushort codeField;
+
+        private string descriptionField;
+
+        /// <remarks/>
+        public ushort code
+        {
+            get
+            {
+                return this.codeField;
+            }
+            set
+            {
+                this.codeField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string description
+        {
+            get
+            {
+                return this.descriptionField;
+            }
+            set
+            {
+                this.descriptionField = value;
+            }
+        }
     }
 
-    public class Geocodes
-    {
-        public Geocode geoCode { get; set; }
-    }
 
-    public class Geocode
-    {
-        public string accuracy { get; set; }
-        public string latitude { get; set; }
-        public string longitude { get; set; }
-    }
-
-    public class Propertycodes
-    {
-        public Provider[] provider { get; set; }
-    }
-
-    public class Provider
-    {
-        public string providerCode { get; set; }
-        public string providerType { get; set; }
-        public Code code { get; set; }
-    }
-
-    public class Code
-    {
-        public string status { get; set; }
-        public long value { get; set; }
-    }
-
-    public class Chains
-    {
-        public Chain chain { get; set; }
-    }
-
-    public class Chain
-    {
-        public string chainId { get; set; }
-        public string chainName { get; set; }
-    }
-
-    public class Ghgml
-    {
-        public string xlinkhref { get; set; }
-    }
     #endregion
-
     /// <summary>
     /// GIATA Database Transfer Model
     /// </summary>

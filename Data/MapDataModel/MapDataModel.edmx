@@ -327,6 +327,7 @@ warning 6002: The table/view 'Map3.dbo.AccomodationSupplier' does not have a pri
           <Property Name="AccommodationlD" Type="bigint" Nullable="false" />
           <Property Name="Counter" Type="int" Nullable="false" />
           <Property Name="ISDeactive" Type="bit" Nullable="false" />
+          <Property Name="MovedToAccommodationlD" Type="bigint" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'Map3.dbo.Location' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -890,6 +891,7 @@ warning 6002: The table/view 'Map3.dbo.LocationInfo' does not have a primary key
           <Property Name="AccommodationlD" Type="Int64" Nullable="false" />
           <Property Name="Counter" Type="Int32" Nullable="false" />
           <Property Name="ISDeactive" Type="Boolean" Nullable="false" />
+          <Property Name="MovedToAccommodationlD" Type="Int64" />
         </EntityType>
         <EntityType Name="LocationHotelsBed">
           <Key>
@@ -1455,6 +1457,7 @@ warning 6002: The table/view 'Map3.dbo.LocationInfo' does not have a primary key
           <EntitySetMapping Name="DeActiveAccommodations">
             <EntityTypeMapping TypeName="MapDataModel.DeActiveAccommodation">
               <MappingFragment StoreEntitySet="DeActiveAccommodation">
+                <ScalarProperty Name="MovedToAccommodationlD" ColumnName="MovedToAccommodationlD" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="AccommodationlD" ColumnName="AccommodationlD" />
                 <ScalarProperty Name="Counter" ColumnName="Counter" />

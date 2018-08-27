@@ -1,4 +1,6 @@
-﻿namespace Service.ServiceModel.PublicModels
+﻿using Service.ServiceModel.GIATAModels;
+
+namespace Service.ServiceModel.PublicModels
 {
     public class Error
     {
@@ -6,10 +8,10 @@
         public string Text { get; set; }
         public bool IsApiError { get; set; }
     }
-    public class ResultDataModel<TModel> where TModel : class
+    public class ResultDataModel
     {
         public bool Success { get; set; }
         public Error Error { get; set; }
-        public TModel Model { get; set; }
+        public IResponse Model { get; set; }
     }
 }
