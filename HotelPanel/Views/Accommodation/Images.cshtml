@@ -57,6 +57,28 @@
         cursor: pointer;
         width: 200px;
     }
+    .select_check {
+        width: 50px;
+        height: 20px;
+        position: absolute;
+        top: 10px;
+        left: 0;
+        display:none;
+    }
+    /*.myCheckbox input {
+        z-index: -9999;
+    }
+
+    .myCheckbox span {
+        width: 20px;
+        height: 20px;
+        display: block;
+        background-color: #eee;
+    }
+
+    .myCheckbox input:checked + span {
+        background-color: green;
+    }*/
 </style>
 @if (!String.IsNullOrEmpty(Message_Alert))
 {
@@ -73,19 +95,24 @@
     {
 
     <div class="gallery">
-        <div class="img_child"><i class="fas fa-check"></i></div>
         @if (Item.IsActive == false)
-        {
+    {
+        <label class="myCheckbox">
+            <span class="img_child"><i class="fas fa-check"></i></span>
             <img src="@Item.Link" id="@Item.ImageID" class="select-image desc">
             <input type="checkbox" value="delete" class="select_check" />
+        </label>
 
-        }
-        else
-        {
+}
+else
+{
+        <label class="myCheckbox">
+            <span class="img_child"><i class="fas fa-check"></i></span>
             <img src="@Item.Link" id="@Item.ImageID" class="select-image">
             <input type="checkbox" value="delete" class="select_check" />
+        </label>
 
-        }
+}
     </div>
 
     }
@@ -94,7 +121,7 @@
 <div>
 
     <button id="back" class="btn" type="submit" onclick="window.history.back();">Back</button>
-    <button id="send" class="btn send" type="submit">Filter</button>
+    <button id="send" class="btn" type="submit">Filter</button>
 </div>
 
 <script type="text/javascript" src="~/Content/Scripts/jquery.js"></script>
@@ -105,28 +132,37 @@
         $(window).scrollTop(0);
     });
     $(document).ready(function () {
-        //if ($("img.select-image").hasClass("desc")) {
-        //    $(this).prev(':checkbox').prop('checked', true);
-        //    var ID = $(this).find("img.desc").attr("id");
-        //    filtered.push(ID);
-        //}
-
-
-        $(".select_check").click(function () {
-       
-            var name = $(this);
-            if (name.prop("checked")) {
-                $(this).parent().find(".select-image").addClass('desc');
-                var ID = $(this).parent().find("img.desc").attr("id");
-                filtered.push(ID);
-            } else {
-                $(this).parent().find(".select-image").removeClass('desc');
-                var ID = $(this).parent().find("img.desc").attr("id");
-                filtered.pop(ID);
+        $(".desc").parent().find(".fa-check").addClass('dis');
+        $(".desc").parent().find('.select_check').prop('checked', true);
+        $('.myCheckbox').each(function(img , item){
+            if ($(item).children("input.select_check").prop("checked")) {
+                var a = $(this).children("img").attr("id");
+                filtered.push(a);
             }
+        })
+
+    });
+
+        $(".myCheckbox").click(function () {
+            if ($(this).children("img.select-image").hasClass("desc")) {
+                $(this).parent().find(".select-image").removeClass('desc');
+                $(this).parent().find(".fa-check").removeClass('dis');
+                $(this).children("input.select_check").prop('checked', false);
+                var ID = $(this).children("img.select-image").attr("id");
+                for (var i = filtered.length ; i--;) {
+                    if (filtered[i] == ID) filtered.splice(i, 1);
+                }
+            } else {
+                $(this).parent().find(".select-image").addClass('desc');
+                $(this).parent().find(".fa-check").addClass('dis');
+                $(this).children("input.select_check").prop('checked', true);
+                var Id = $(this).children("img.select-image").attr("id");
+                filtered.push(Id);
+            }
+            return false;
         });
 
-   
+
 
         $("#send").click(function () {
             $.ajax({
@@ -141,6 +177,4 @@
                 }
             });
         })
-    });
-
 </script>

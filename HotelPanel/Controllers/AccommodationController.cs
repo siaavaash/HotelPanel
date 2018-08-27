@@ -53,7 +53,8 @@ namespace HotelPanel.Controllers
         [HttpPost]
         public JsonResult Filter(AccommodationModels.FilterImages Model)
         {
-            bool Result = _AccommodationBusiness.FilterImages(Model.ImageID);
+            bool ResultClear = _AccommodationBusiness.ReloadVerify(Model.AccommodationID);
+            bool Result =  _AccommodationBusiness.FilterImages(Model.ImageID);
             bool Verify = _AccommodationBusiness.Verify(Model.AccommodationID);
             if (Result && Verify)
             {
