@@ -7,22 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Data.DataModel
+namespace Data.MapDataModel
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class LocationTmp
+    public partial class AccomodationSupplier
     {
-        public long LocationID { get; set; }
-        public long ParentLocationID { get; set; }
-        public long LocationTypeID { get; set; }
-        public string SubClass { get; set; }
-        public string Name { get; set; }
-        public string NameLong { get; set; }
+        public long AccomodationSupplierID { get; set; }
+        public long AccommodationlID { get; set; }
+        public long SupplierID { get; set; }
+        public string Code { get; set; }
+        public bool Active { get; set; }
+        public string ProviderType { get; set; }
+        public string ProviderCode { get; set; }
+        public string ProviderValue { get; set; }
         public Nullable<System.DateTime> lastUpdate { get; set; }
         public string CountryCode { get; set; }
         public string CityName { get; set; }
         public Nullable<long> CityId { get; set; }
+        public string CountryName { get; set; }
     }
 }

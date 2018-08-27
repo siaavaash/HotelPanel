@@ -7,18 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Data.DataModel
+namespace Data.MapDataModel
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class AccommodationLocationTmp
+    public partial class DeActiveAccommodation
     {
-        public long LocationID { get; set; }
-        public long AccommodationID { get; set; }
-        public Nullable<System.DateTime> lastUpdate { get; set; }
-        public string CountryCode { get; set; }
-        public string CityName { get; set; }
-        public Nullable<long> CityId { get; set; }
+        public int Id { get; set; }
+        public long AccommodationlD { get; set; }
+        public int Counter { get; set; }
+        public bool ISDeactive { get; set; }
     }
 }
