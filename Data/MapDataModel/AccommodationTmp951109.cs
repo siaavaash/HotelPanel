@@ -7,12 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Data.DataModel
+namespace Data.MapDataModel
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class AccommodationTmp
+    public partial class AccommodationTmp951109
     {
         public long AccommodationlID { get; set; }
         public Nullable<long> ChainID { get; set; }
@@ -32,5 +32,9 @@ namespace Data.DataModel
         public string CountryCode { get; set; }
         public string CityName { get; set; }
         public Nullable<long> CityId { get; set; }
+        public string Axml { get; set; }
+        public string CountryName { get; set; }
+        public Nullable<long> destinationId { get; set; }
+        public string DestinationCode { get; set; }
     }
 }

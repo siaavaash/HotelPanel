@@ -7,18 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Data.DataModel
+namespace Data.MapDataModel
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class AccomodationSupplierTmp
+    public partial class Acc_Airport
     {
-        public long AccomodationSupplierID { get; set; }
-        public long AccommodationlID { get; set; }
-        public long SupplierID { get; set; }
-        public string Code { get; set; }
-        public bool Active { get; set; }
+        public long AirPortID { get; set; }
+        public Nullable<long> AccommodationlID { get; set; }
+        public string AirPort_Code { get; set; }
+        public Nullable<long> destinationId { get; set; }
+        public string DestinationCode { get; set; }
+        public string category { get; set; }
+        public string rating { get; set; }
         public Nullable<System.DateTime> lastUpdate { get; set; }
         public string CountryCode { get; set; }
         public string CityName { get; set; }

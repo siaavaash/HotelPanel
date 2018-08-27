@@ -43,6 +43,7 @@ namespace Data.DataModel
         public virtual DbSet<RailwayStationTemp2> RailwayStationTemp2 { get; set; }
         public virtual DbSet<Accommodation> accommodationimages { get; set; }
         public virtual DbSet<AccommodationAirport> AccommodationAirports { get; set; }
+        public virtual DbSet<Accommodation> Accommodations { get; set; }
         public virtual DbSet<AccommodationAttribute> AccommodationAttributes { get; set; }
         public virtual DbSet<AccommodationCommission1> AccommodationCommission1 { get; set; }
         public virtual DbSet<AccommodationDescription> AccommodationDescriptions { get; set; }
@@ -193,9 +194,6 @@ namespace Data.DataModel
         public virtual DbSet<Accommodation_Booking3> Accommodation_Booking3 { get; set; }
         public virtual DbSet<Accommodation_Booking4> Accommodation_Booking4 { get; set; }
         public virtual DbSet<Accommodation_Booking5> Accommodation_Booking5 { get; set; }
-        public virtual DbSet<AccommodationLocationTmp> AccommodationLocationTmps { get; set; }
-        public virtual DbSet<AccommodationTmp> AccommodationTmps { get; set; }
-        public virtual DbSet<AccomodationSupplierTmp> AccomodationSupplierTmps { get; set; }
         public virtual DbSet<Airportflyinghobo> Airportflyinghobos { get; set; }
         public virtual DbSet<Facility1> Facility1 { get; set; }
         public virtual DbSet<GC> GCs { get; set; }
@@ -203,7 +201,6 @@ namespace Data.DataModel
         public virtual DbSet<GCMAP> GCMAPS { get; set; }
         public virtual DbSet<GCMAPXmlNode> GCMAPXmlNodes { get; set; }
         public virtual DbSet<IataAirport> IataAirports { get; set; }
-        public virtual DbSet<LocationTmp> LocationTmps { get; set; }
         public virtual DbSet<OtherAirport> OtherAirports { get; set; }
         public virtual DbSet<Propertyv3> Propertyv3 { get; set; }
         public virtual DbSet<Propertyv4> Propertyv4 { get; set; }

@@ -64,9 +64,6 @@
     <Compile Include="DataModel\Accommodation960726.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\AccommodationAirport.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\AccommodationAttribute.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
@@ -97,16 +94,10 @@
     <Compile Include="DataModel\AccommodationLocationDuP2.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\AccommodationLocationTmp.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\AccommodationMap3.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\AccommodationReview.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\AccommodationTmp.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Accommodation_Booking.cs">
@@ -134,9 +125,6 @@
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\AccomodationSupplier960616.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\AccomodationSupplierTmp.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\AccomodationVoucher.cs">
@@ -514,9 +502,6 @@
     <Compile Include="DataModel\LocationSupplier_970227.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\LocationTmp.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\LocationType.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
@@ -838,6 +823,102 @@
     <Compile Include="DataModel\Zone.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="MapDataModel\Accommodation.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\AccommodationAirport.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\AccommodationAlternativeName.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\AccommodationDiff.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\AccommodationLocation.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\AccommodationLocationTmp.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\AccommodationLogTable.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\AccommodationproviderXml.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\AccommodationTmp.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\AccommodationTmp2.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\AccommodationTmp951109.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\AccomodationSupplier.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\AccomodationSupplier2Tmp.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\AccomodationSupplierTmp.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\Acc_Airport.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\Airport.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\DeActiveAccommodation.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\Location.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\LocationHotelsBed.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\LocationInfo.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\LocationLogTb.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\LocationTmp.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\LocationTmp2.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\MapDataModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MapDataModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\MapDataModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\MapDataModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MapDataModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\Mgh_Air.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\sp_helpdiagrams_Result.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MapDataModel\TblB.cs">
+      <DependentUpon>MapDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublicModel\LocationModels.cs" />
     <Compile Include="PublicModel\LoginModels.cs" />
@@ -849,12 +930,21 @@
     <EntityDeploy Include="DataModel\iContext.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>iContext.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Data.DataModel</CustomToolNamespace>
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
     <None Include="DataModel\iContext.edmx.diagram">
       <DependentUpon>iContext.edmx</DependentUpon>
+    </None>
+    <EntityDeploy Include="MapDataModel\MapDataModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MapDataModel.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Data.MapDataModel</CustomToolNamespace>
+    </EntityDeploy>
+    <None Include="MapDataModel\MapDataModel.edmx.diagram">
+      <DependentUpon>MapDataModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -863,11 +953,25 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>iContext.Context.cs</LastGenOutput>
       <DependentUpon>iContext.edmx</DependentUpon>
+      <CustomToolNamespace>Data.DataModel</CustomToolNamespace>
     </Content>
     <Content Include="DataModel\iContext.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>iContext.edmx</DependentUpon>
       <LastGenOutput>iContext.cs</LastGenOutput>
+      <CustomToolNamespace>Data.DataModel</CustomToolNamespace>
+    </Content>
+    <Content Include="MapDataModel\MapDataModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MapDataModel.edmx</DependentUpon>
+      <LastGenOutput>MapDataModel.Context.cs</LastGenOutput>
+      <CustomToolNamespace>Data.MapDataModel</CustomToolNamespace>
+    </Content>
+    <Content Include="MapDataModel\MapDataModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MapDataModel.edmx</DependentUpon>
+      <LastGenOutput>MapDataModel.cs</LastGenOutput>
+      <CustomToolNamespace>Data.MapDataModel</CustomToolNamespace>
     </Content>
   </ItemGroup>
   <ItemGroup>
