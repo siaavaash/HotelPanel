@@ -127,17 +127,9 @@ namespace Logic.BusinessObjects
                     }
 
                 }
-                if (Model.Verified != true)
+                if (Model.Verified != true && Query.Count != 0)
                 {
-                    if (Query.Count == 0)
-                    {
-                        Query = DataContext.Context.accommodationimages.Where(x => x.IsVerified != true).ToList();
-                    }
-                    else
-                    {
                         Query = Query.Where(x => x.IsVerified != true).ToList();
-                    }
-
                 }
                 return Query.Select(x => new AccommodationModels.ListNameAccommodation
                 {
