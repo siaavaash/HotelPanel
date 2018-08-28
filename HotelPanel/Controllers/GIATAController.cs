@@ -1,13 +1,10 @@
 ﻿using Logic.BusinessObjects;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace HotelPanel.Controllers
 {
-    public class GIATAController : Controller
+    public class GIATAController : BaseController
     {
         private readonly GIATABusiness giataBusiness;
         public GIATAController()
@@ -23,11 +20,11 @@ namespace HotelPanel.Controllers
         {
             try
             {
-                return Json(giataBusiness.MapRange(from, to));
+                return Json(new { success = true, data = giataBusiness.MapRange(from, to) }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { message = ex.Message });
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
     }
