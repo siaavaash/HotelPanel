@@ -1,0 +1,1616 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MapDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Acc_Airport">
+          <Key>
+            <PropertyRef Name="AirPortID" />
+          </Key>
+          <Property Name="AirPortID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccommodationlID" Type="bigint" />
+          <Property Name="AirPort_Code" Type="nvarchar" MaxLength="100" />
+          <Property Name="destinationId" Type="bigint" />
+          <Property Name="DestinationCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="category" Type="nvarchar" MaxLength="4000" />
+          <Property Name="rating" Type="nvarchar" MaxLength="4000" />
+          <Property Name="lastUpdate" Type="datetime" />
+          <Property Name="CountryCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityId" Type="bigint" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Map3Test.dbo.Accommodation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Accommodation">
+          <Key>
+            <PropertyRef Name="AccommodationlID" />
+          </Key>
+          <Property Name="AccommodationlID" Type="bigint" Nullable="false" />
+          <Property Name="ChainID" Type="bigint" />
+          <Property Name="AirportCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="Type" Type="tinyint" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Rating" Type="nvarchar" MaxLength="10" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="PostCodeZip" Type="nvarchar" MaxLength="255" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="50" />
+          <Property Name="Latitude" Type="nvarchar" MaxLength="50" />
+          <Property Name="Longitude" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Near" Type="nvarchar" MaxLength="255" />
+          <Property Name="lastUpdate" Type="datetime" />
+          <Property Name="CountryCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="300" />
+          <Property Name="CityId" Type="bigint" />
+          <Property Name="Resort" Type="nvarchar" MaxLength="300" />
+          <Property Name="Region" Type="nvarchar" MaxLength="300" />
+          <Property Name="DestinationId" Type="nvarchar" MaxLength="50" />
+          <Property Name="Destination" Type="nvarchar" MaxLength="250" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="HotelArea" Type="nvarchar" MaxLength="500" />
+          <Property Name="HotelImages" Type="varchar" MaxLength="5000" />
+          <Property Name="HotelLocation" Type="nvarchar" MaxLength="500" />
+          <Property Name="HotelInfo" Type="varchar" MaxLength="5000" />
+          <Property Name="PAmenities" Type="varchar" MaxLength="5000" />
+          <Property Name="Email" Type="varchar" MaxLength="5000" />
+          <Property Name="Url" Type="varchar" MaxLength="5000" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="UserID" Type="bigint" />
+          <Property Name="DateVerified" Type="datetime" />
+          <Property Name="IsVerified" Type="bit" />
+          <Property Name="IsError" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Map3Test.dbo.AccommodationAirport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AccommodationAirport">
+          <Key>
+            <PropertyRef Name="AccommodationAirportID" />
+          </Key>
+          <Property Name="AccommodationAirportID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AirportID" Type="bigint" />
+          <Property Name="AccommodationlID" Type="bigint" />
+          <Property Name="AirportCode" Type="char" MaxLength="3" />
+          <Property Name="LocationID" Type="bigint" />
+          <Property Name="destinationId" Type="bigint" />
+          <Property Name="DestinationCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="category" Type="nvarchar" MaxLength="4000" />
+          <Property Name="rating" Type="nvarchar" MaxLength="4000" />
+          <Property Name="lastUpdate" Type="datetime" />
+          <Property Name="CountryCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="300" />
+          <Property Name="CityId" Type="bigint" />
+        </EntityType>
+        <EntityType Name="AccommodationAlternativeNames">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccommodationID" Type="bigint" Nullable="false" />
+          <Property Name="AlternativeName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="AlternativeNameType" Type="nvarchar" MaxLength="50" />
+          <Property Name="EffectiveDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Map3Test.dbo.AccommodationDiff' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AccommodationDiff">
+          <Key>
+            <PropertyRef Name="AccommodationlID" />
+          </Key>
+          <Property Name="AccommodationlID" Type="bigint" Nullable="false" />
+          <Property Name="ChainID" Type="bigint" />
+          <Property Name="AirportCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="Type" Type="tinyint" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Rating" Type="nvarchar" MaxLength="10" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="PostCodeZip" Type="nvarchar" MaxLength="255" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="50" />
+          <Property Name="Latitude" Type="nvarchar" MaxLength="50" />
+          <Property Name="Longitude" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Near" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Map3Test.dbo.AccommodationLocation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AccommodationLocation">
+          <Key>
+            <PropertyRef Name="LocationID" />
+            <PropertyRef Name="AccommodationID" />
+          </Key>
+          <Property Name="LocationID" Type="bigint" Nullable="false" />
+          <Property Name="AccommodationID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AccommodationLocationTmp">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LocationID" Type="bigint" Nullable="false" />
+          <Property Name="AccommodationID" Type="bigint" Nullable="false" />
+          <Property Name="lastUpdate" Type="datetime" />
+          <Property Name="CountryCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityId" Type="bigint" />
+        </EntityType>
+        <EntityType Name="AccommodationLogTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccommodationID" Type="bigint" Nullable="false" />
+          <Property Name="OldCityId" Type="bigint" />
+          <Property Name="NewCityId" Type="bigint" />
+          <Property Name="OldCountryCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="NewCountryCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="OldCityName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="NewCityName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="LastUpdate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="AccommodationproviderXml">
+          <Key>
+            <PropertyRef Name="Rid" />
+          </Key>
+          <Property Name="Rid" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="bigint" />
+          <Property Name="AccommodationlID" Type="bigint" />
+          <Property Name="providerXml" Type="xml" />
+          <Property Name="VALUE" Type="varchar(max)" />
+          <Property Name="providerCode" Type="varchar(max)" />
+          <Property Name="providerType" Type="varchar(max)" />
+          <Property Name="NAME" Type="varchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Map3Test.dbo.AccommodationproviderXmlValue' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="AccommodationproviderXmlValue">
+          <Property Name="AccommodationlID" Type="bigint" />
+          <Property Name="ProviderCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="ProviderType" Type="nvarchar" MaxLength="100" />
+          <Property Name="providerXml" Type="xml" />
+          <Property Name="value" Type="varchar(max)" />
+        </EntityType>-->
+        <EntityType Name="AccommodationTmp">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccommodationlID" Type="bigint" Nullable="false" />
+          <Property Name="ChainID" Type="bigint" />
+          <Property Name="AirportCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Type" Type="tinyint" />
+          <Property Name="Name" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Rating" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="PostCodeZip" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Latitude" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Longitude" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Near" Type="nvarchar" MaxLength="4000" />
+          <Property Name="lastUpdate" Type="datetime" />
+          <Property Name="CountryCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityId" Type="bigint" />
+          <Property Name="Axml" Type="nvarchar(max)" />
+          <Property Name="CountryName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="destinationId" Type="nvarchar" MaxLength="50" />
+          <Property Name="DestinationCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="Url" Type="nvarchar" MaxLength="4000" />
+        </EntityType>
+        <EntityType Name="AccommodationTmp2">
+          <Key>
+            <PropertyRef Name="AccommodationlID" />
+          </Key>
+          <Property Name="AccommodationlID" Type="bigint" Nullable="false" />
+          <Property Name="ChainID" Type="bigint" />
+          <Property Name="AirportCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Type" Type="tinyint" />
+          <Property Name="Name" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Rating" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="PostCodeZip" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Latitude" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Longitude" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Near" Type="nvarchar" MaxLength="4000" />
+          <Property Name="lastUpdate" Type="datetime" />
+          <Property Name="CountryCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityId" Type="bigint" />
+          <Property Name="Axml" Type="xml" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Map3Test.dbo.AccommodationTmp951109' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AccommodationTmp951109">
+          <Key>
+            <PropertyRef Name="AccommodationlID" />
+          </Key>
+          <Property Name="AccommodationlID" Type="bigint" Nullable="false" />
+          <Property Name="ChainID" Type="bigint" />
+          <Property Name="AirportCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Type" Type="tinyint" />
+          <Property Name="Name" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Rating" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="PostCodeZip" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Latitude" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Longitude" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Near" Type="nvarchar" MaxLength="4000" />
+          <Property Name="lastUpdate" Type="datetime" />
+          <Property Name="CountryCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityId" Type="bigint" />
+          <Property Name="Axml" Type="nvarchar(max)" />
+          <Property Name="CountryName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="destinationId" Type="bigint" />
+          <Property Name="DestinationCode" Type="nvarchar" MaxLength="4000" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Map3Test.dbo.AccommodationTmpXmlNode' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="AccommodationTmpXmlNode">
+          <Property Name="AccommodationlID" Type="bigint" />
+          <Property Name="NodeName" Type="varchar(max)" />
+          <Property Name="NodeValue" Type="varchar(max)" />
+          <Property Name="RPH" Type="xml" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Map3Test.dbo.AccomodationSupplier' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AccomodationSupplier">
+          <Key>
+            <PropertyRef Name="AccomodationSupplierID" />
+            <PropertyRef Name="AccommodationlID" />
+            <PropertyRef Name="SupplierID" />
+            <PropertyRef Name="Code" />
+            <PropertyRef Name="Active" />
+          </Key>
+          <Property Name="AccomodationSupplierID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccommodationlID" Type="bigint" Nullable="false" />
+          <Property Name="SupplierID" Type="bigint" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="ProviderType" Type="nvarchar" MaxLength="4000" />
+          <Property Name="ProviderCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProviderValue" Type="nvarchar" MaxLength="4000" />
+          <Property Name="lastUpdate" Type="datetime" />
+          <Property Name="CountryCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityId" Type="bigint" />
+          <Property Name="CountryName" Type="nvarchar" MaxLength="4000" />
+        </EntityType>
+        <EntityType Name="AccomodationSupplier2Tmp">
+          <Key>
+            <PropertyRef Name="AccomodationSupplierID" />
+          </Key>
+          <Property Name="AccomodationSupplierID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccommodationlID" Type="bigint" Nullable="false" />
+          <Property Name="SupplierID" Type="bigint" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="4000" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="ProviderType" Type="nvarchar" MaxLength="4000" />
+          <Property Name="ProviderCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProviderValue" Type="nvarchar" MaxLength="4000" />
+          <Property Name="lastUpdate" Type="datetime" />
+          <Property Name="CountryCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityId" Type="bigint" />
+          <Property Name="CountryName" Type="nvarchar" MaxLength="4000" />
+        </EntityType>
+        <EntityType Name="AccomodationSupplierTmp">
+          <Key>
+            <PropertyRef Name="AccomodationSupplierID" />
+          </Key>
+          <Property Name="AccomodationSupplierID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccommodationlID" Type="bigint" Nullable="false" />
+          <Property Name="SupplierID" Type="bigint" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="4000" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="ProviderType" Type="nvarchar" MaxLength="4000" />
+          <Property Name="ProviderCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="ProviderValue" Type="nvarchar" MaxLength="4000" />
+          <Property Name="lastUpdate" Type="datetime" />
+          <Property Name="CountryCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityId" Type="bigint" />
+          <Property Name="CountryName" Type="nvarchar" MaxLength="4000" />
+        </EntityType>
+        <EntityType Name="Airport">
+          <Key>
+            <PropertyRef Name="AirportID" />
+          </Key>
+          <Property Name="AirportID" Type="bigint" Nullable="false" />
+          <Property Name="LocationID" Type="bigint" />
+          <Property Name="Type" Type="tinyint" Nullable="false" />
+          <Property Name="Code" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Latitude" Type="nvarchar" MaxLength="50" />
+          <Property Name="Longitude" Type="nvarchar" MaxLength="50" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeActiveAccommodation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccommodationlD" Type="bigint" Nullable="false" />
+          <Property Name="Counter" Type="int" />
+          <Property Name="ISDeactive" Type="bit" Nullable="false" />
+          <Property Name="MovedToAccommodationlD" Type="bigint" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Map3Test.dbo.Location' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationID" />
+            <PropertyRef Name="ParentLocationID" />
+            <PropertyRef Name="LocationTypeID" />
+          </Key>
+          <Property Name="LocationID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentLocationID" Type="bigint" Nullable="false" />
+          <Property Name="LocationTypeID" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="300" />
+          <Property Name="NameLong" Type="nvarchar" MaxLength="800" />
+          <Property Name="CityId" Type="bigint" />
+          <Property Name="AirportCodeNear" Type="char" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="LocationHotelsBed">
+          <Key>
+            <PropertyRef Name="LocationHotelsBedID" />
+          </Key>
+          <Property Name="LocationHotelsBedID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Country" Type="nvarchar" MaxLength="300" />
+          <Property Name="RegionID" Type="bigint" />
+          <Property Name="Region" Type="nvarchar" MaxLength="300" />
+          <Property Name="ResortID" Type="bigint" />
+          <Property Name="Resort" Type="nvarchar" MaxLength="300" />
+          <Property Name="CountryID" Type="bigint" />
+          <Property Name="LocationRegionID" Type="bigint" />
+          <Property Name="LocationResortID" Type="bigint" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Map3Test.dbo.LocationInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="LocationInfo">
+          <Key>
+            <PropertyRef Name="LocationID" />
+            <PropertyRef Name="ParentLocationID" />
+            <PropertyRef Name="LocationTypeID" />
+          </Key>
+          <Property Name="LocationID" Type="bigint" Nullable="false" />
+          <Property Name="ParentLocationID" Type="bigint" Nullable="false" />
+          <Property Name="LocationTypeID" Type="bigint" Nullable="false" />
+          <Property Name="SubClass" Type="nvarchar" MaxLength="100" />
+          <Property Name="Name" Type="nvarchar" MaxLength="300" />
+          <Property Name="NameLong" Type="nvarchar" MaxLength="800" />
+          <Property Name="lastUpdate" Type="datetime" />
+          <Property Name="CountryCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityId" Type="bigint" />
+          <Property Name="AirportCode" Type="char" MaxLength="3" />
+          <Property Name="NamePath" Type="nvarchar" MaxLength="4000" />
+          <Property Name="destinationId" Type="bigint" />
+          <Property Name="DestinationCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Rank" Type="tinyint" />
+          <Property Name="ParentLocation2ID" Type="bigint" />
+          <Property Name="TypeID" Type="int" />
+          <Property Name="AccommodationlID" Type="bigint" />
+          <Property Name="Latitude" Type="nvarchar" MaxLength="50" />
+          <Property Name="Longitude" Type="nvarchar" MaxLength="50" />
+          <Property Name="GeoLocation" Type="geography" />
+          <Property Name="AirportCodeNear" Type="char" MaxLength="3" />
+          <Property Name="HotelsProRegion" Type="nvarchar" MaxLength="4000" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="800" />
+        </EntityType>
+        <EntityType Name="LocationLogTb">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CityID" Type="bigint" />
+          <Property Name="NewName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="NewCountryCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="NewCityName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="OldName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="OldCountryCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="OldCityName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="LocationID" Type="bigint" />
+        </EntityType>
+        <EntityType Name="LocationTmp">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentLocationID" Type="bigint" Nullable="false" />
+          <Property Name="LocationTypeID" Type="bigint" Nullable="false" />
+          <Property Name="SubClass" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Name" Type="nvarchar" MaxLength="4000" />
+          <Property Name="NameLong" Type="nvarchar" MaxLength="4000" />
+          <Property Name="lastUpdate" Type="datetime" />
+          <Property Name="CountryCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityId" Type="bigint" />
+        </EntityType>
+        <EntityType Name="LocationTmp2">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="bigint" Nullable="false" />
+          <Property Name="ParentLocationID" Type="bigint" Nullable="false" />
+          <Property Name="LocationTypeID" Type="bigint" Nullable="false" />
+          <Property Name="SubClass" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Name" Type="nvarchar" MaxLength="4000" />
+          <Property Name="NameLong" Type="nvarchar" MaxLength="4000" />
+          <Property Name="lastUpdate" Type="datetime" />
+          <Property Name="CountryCode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="CityId" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Mgh_Air">
+          <Key>
+            <PropertyRef Name="AirCode" />
+          </Key>
+          <Property Name="AirCode" Type="bigint" Nullable="false" />
+          <Property Name="City_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Airport_Code" Type="nvarchar" MaxLength="255" />
+          <Property Name="Airport_Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Country_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Country_Abbrev" Type="nvarchar" MaxLength="255" />
+          <Property Name="World_Area_Code" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="TblB">
+          <Key>
+            <PropertyRef Name="Bid" />
+          </Key>
+          <Property Name="Bid" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Bdesc" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Bcount" Type="bigint" />
+          <Property Name="Btype" Type="bigint" />
+          <Property Name="Bdate" Type="datetime" />
+          <Property Name="Bcode" Type="nvarchar(max)" />
+          <Property Name="Brow" Type="bigint" />
+        </EntityType>
+        <EntityContainer Name="MapDbModelStoreContainer">
+          <EntitySet Name="Acc_Airport" EntityType="Self.Acc_Airport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccommodationAlternativeNames" EntityType="Self.AccommodationAlternativeNames" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccommodationLocationTmp" EntityType="Self.AccommodationLocationTmp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccommodationLogTable" EntityType="Self.AccommodationLogTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccommodationproviderXml" EntityType="Self.AccommodationproviderXml" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccommodationTmp" EntityType="Self.AccommodationTmp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccommodationTmp2" EntityType="Self.AccommodationTmp2" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccomodationSupplier2Tmp" EntityType="Self.AccomodationSupplier2Tmp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccomodationSupplierTmp" EntityType="Self.AccomodationSupplierTmp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Airport" EntityType="Self.Airport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeActiveAccommodation" EntityType="Self.DeActiveAccommodation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LocationHotelsBed" EntityType="Self.LocationHotelsBed" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LocationLogTb" EntityType="Self.LocationLogTb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LocationTmp" EntityType="Self.LocationTmp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LocationTmp2" EntityType="Self.LocationTmp2" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mgh_Air" EntityType="Self.Mgh_Air" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblB" EntityType="Self.TblB" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Accommodation" EntityType="Self.Accommodation" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Accommodation].[AccommodationlID] AS [AccommodationlID], 
+    [Accommodation].[ChainID] AS [ChainID], 
+    [Accommodation].[AirportCode] AS [AirportCode], 
+    [Accommodation].[Type] AS [Type], 
+    [Accommodation].[Name] AS [Name], 
+    [Accommodation].[Rating] AS [Rating], 
+    [Accommodation].[Address] AS [Address], 
+    [Accommodation].[PostCodeZip] AS [PostCodeZip], 
+    [Accommodation].[Telephone] AS [Telephone], 
+    [Accommodation].[Fax] AS [Fax], 
+    [Accommodation].[Latitude] AS [Latitude], 
+    [Accommodation].[Longitude] AS [Longitude], 
+    [Accommodation].[Description] AS [Description], 
+    [Accommodation].[Near] AS [Near], 
+    [Accommodation].[lastUpdate] AS [lastUpdate], 
+    [Accommodation].[CountryCode] AS [CountryCode], 
+    [Accommodation].[CityName] AS [CityName], 
+    [Accommodation].[CityId] AS [CityId], 
+    [Accommodation].[Resort] AS [Resort], 
+    [Accommodation].[Region] AS [Region], 
+    [Accommodation].[DestinationId] AS [DestinationId], 
+    [Accommodation].[Destination] AS [Destination], 
+    [Accommodation].[Country] AS [Country], 
+    [Accommodation].[HotelArea] AS [HotelArea], 
+    [Accommodation].[HotelImages] AS [HotelImages], 
+    [Accommodation].[HotelLocation] AS [HotelLocation], 
+    [Accommodation].[HotelInfo] AS [HotelInfo], 
+    [Accommodation].[PAmenities] AS [PAmenities], 
+    [Accommodation].[Email] AS [Email], 
+    [Accommodation].[Url] AS [Url], 
+    [Accommodation].[IsActive] AS [IsActive], 
+    [Accommodation].[UserID] AS [UserID], 
+    [Accommodation].[DateVerified] AS [DateVerified], 
+    [Accommodation].[IsVerified] AS [IsVerified], 
+    [Accommodation].[IsError] AS [IsError]
+    FROM [dbo].[Accommodation] AS [Accommodation]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AccommodationAirport" EntityType="Self.AccommodationAirport" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AccommodationAirport].[AccommodationAirportID] AS [AccommodationAirportID], 
+    [AccommodationAirport].[AirportID] AS [AirportID], 
+    [AccommodationAirport].[AccommodationlID] AS [AccommodationlID], 
+    [AccommodationAirport].[AirportCode] AS [AirportCode], 
+    [AccommodationAirport].[LocationID] AS [LocationID], 
+    [AccommodationAirport].[destinationId] AS [destinationId], 
+    [AccommodationAirport].[DestinationCode] AS [DestinationCode], 
+    [AccommodationAirport].[category] AS [category], 
+    [AccommodationAirport].[rating] AS [rating], 
+    [AccommodationAirport].[lastUpdate] AS [lastUpdate], 
+    [AccommodationAirport].[CountryCode] AS [CountryCode], 
+    [AccommodationAirport].[CityName] AS [CityName], 
+    [AccommodationAirport].[CityId] AS [CityId]
+    FROM [dbo].[AccommodationAirport] AS [AccommodationAirport]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AccommodationDiff" EntityType="Self.AccommodationDiff" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AccommodationDiff].[AccommodationlID] AS [AccommodationlID], 
+    [AccommodationDiff].[ChainID] AS [ChainID], 
+    [AccommodationDiff].[AirportCode] AS [AirportCode], 
+    [AccommodationDiff].[Type] AS [Type], 
+    [AccommodationDiff].[Name] AS [Name], 
+    [AccommodationDiff].[Rating] AS [Rating], 
+    [AccommodationDiff].[Address] AS [Address], 
+    [AccommodationDiff].[PostCodeZip] AS [PostCodeZip], 
+    [AccommodationDiff].[Telephone] AS [Telephone], 
+    [AccommodationDiff].[Fax] AS [Fax], 
+    [AccommodationDiff].[Latitude] AS [Latitude], 
+    [AccommodationDiff].[Longitude] AS [Longitude], 
+    [AccommodationDiff].[Description] AS [Description], 
+    [AccommodationDiff].[Near] AS [Near]
+    FROM [dbo].[AccommodationDiff] AS [AccommodationDiff]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AccommodationLocation" EntityType="Self.AccommodationLocation" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AccommodationLocation].[LocationID] AS [LocationID], 
+    [AccommodationLocation].[AccommodationID] AS [AccommodationID]
+    FROM [dbo].[AccommodationLocation] AS [AccommodationLocation]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AccommodationTmp951109" EntityType="Self.AccommodationTmp951109" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AccommodationTmp951109].[AccommodationlID] AS [AccommodationlID], 
+    [AccommodationTmp951109].[ChainID] AS [ChainID], 
+    [AccommodationTmp951109].[AirportCode] AS [AirportCode], 
+    [AccommodationTmp951109].[Type] AS [Type], 
+    [AccommodationTmp951109].[Name] AS [Name], 
+    [AccommodationTmp951109].[Rating] AS [Rating], 
+    [AccommodationTmp951109].[Address] AS [Address], 
+    [AccommodationTmp951109].[PostCodeZip] AS [PostCodeZip], 
+    [AccommodationTmp951109].[Telephone] AS [Telephone], 
+    [AccommodationTmp951109].[Fax] AS [Fax], 
+    [AccommodationTmp951109].[Latitude] AS [Latitude], 
+    [AccommodationTmp951109].[Longitude] AS [Longitude], 
+    [AccommodationTmp951109].[Description] AS [Description], 
+    [AccommodationTmp951109].[Near] AS [Near], 
+    [AccommodationTmp951109].[lastUpdate] AS [lastUpdate], 
+    [AccommodationTmp951109].[CountryCode] AS [CountryCode], 
+    [AccommodationTmp951109].[CityName] AS [CityName], 
+    [AccommodationTmp951109].[CityId] AS [CityId], 
+    [AccommodationTmp951109].[Axml] AS [Axml], 
+    [AccommodationTmp951109].[CountryName] AS [CountryName], 
+    [AccommodationTmp951109].[destinationId] AS [destinationId], 
+    [AccommodationTmp951109].[DestinationCode] AS [DestinationCode]
+    FROM [dbo].[AccommodationTmp951109] AS [AccommodationTmp951109]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AccomodationSupplier" EntityType="Self.AccomodationSupplier" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AccomodationSupplier].[AccomodationSupplierID] AS [AccomodationSupplierID], 
+    [AccomodationSupplier].[AccommodationlID] AS [AccommodationlID], 
+    [AccomodationSupplier].[SupplierID] AS [SupplierID], 
+    [AccomodationSupplier].[Code] AS [Code], 
+    [AccomodationSupplier].[Active] AS [Active], 
+    [AccomodationSupplier].[ProviderType] AS [ProviderType], 
+    [AccomodationSupplier].[ProviderCode] AS [ProviderCode], 
+    [AccomodationSupplier].[ProviderValue] AS [ProviderValue], 
+    [AccomodationSupplier].[lastUpdate] AS [lastUpdate], 
+    [AccomodationSupplier].[CountryCode] AS [CountryCode], 
+    [AccomodationSupplier].[CityName] AS [CityName], 
+    [AccomodationSupplier].[CityId] AS [CityId], 
+    [AccomodationSupplier].[CountryName] AS [CountryName]
+    FROM [dbo].[AccomodationSupplier] AS [AccomodationSupplier]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Location" EntityType="Self.Location" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Location].[LocationID] AS [LocationID], 
+    [Location].[ParentLocationID] AS [ParentLocationID], 
+    [Location].[LocationTypeID] AS [LocationTypeID], 
+    [Location].[Name] AS [Name], 
+    [Location].[NameLong] AS [NameLong], 
+    [Location].[CityId] AS [CityId], 
+    [Location].[AirportCodeNear] AS [AirportCodeNear]
+    FROM [dbo].[Location] AS [Location]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="LocationInfo" EntityType="Self.LocationInfo" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [LocationInfo].[LocationID] AS [LocationID], 
+    [LocationInfo].[ParentLocationID] AS [ParentLocationID], 
+    [LocationInfo].[LocationTypeID] AS [LocationTypeID], 
+    [LocationInfo].[SubClass] AS [SubClass], 
+    [LocationInfo].[Name] AS [Name], 
+    [LocationInfo].[NameLong] AS [NameLong], 
+    [LocationInfo].[lastUpdate] AS [lastUpdate], 
+    [LocationInfo].[CountryCode] AS [CountryCode], 
+    [LocationInfo].[CityName] AS [CityName], 
+    [LocationInfo].[CityId] AS [CityId], 
+    [LocationInfo].[AirportCode] AS [AirportCode], 
+    [LocationInfo].[NamePath] AS [NamePath], 
+    [LocationInfo].[destinationId] AS [destinationId], 
+    [LocationInfo].[DestinationCode] AS [DestinationCode], 
+    [LocationInfo].[Rank] AS [Rank], 
+    [LocationInfo].[ParentLocation2ID] AS [ParentLocation2ID], 
+    [LocationInfo].[TypeID] AS [TypeID], 
+    [LocationInfo].[AccommodationlID] AS [AccommodationlID], 
+    [LocationInfo].[Latitude] AS [Latitude], 
+    [LocationInfo].[Longitude] AS [Longitude], 
+    [LocationInfo].[GeoLocation] AS [GeoLocation], 
+    [LocationInfo].[AirportCodeNear] AS [AirportCodeNear], 
+    [LocationInfo].[HotelsProRegion] AS [HotelsProRegion], 
+    [LocationInfo].[FullName] AS [FullName]
+    FROM [dbo].[LocationInfo] AS [LocationInfo]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MapDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Acc_Airport">
+          <Key>
+            <PropertyRef Name="AirPortID" />
+          </Key>
+          <Property Name="AirPortID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccommodationlID" Type="Int64" />
+          <Property Name="AirPort_Code" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="destinationId" Type="Int64" />
+          <Property Name="DestinationCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="category" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="rating" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="lastUpdate" Type="DateTime" Precision="3" />
+          <Property Name="CountryCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int64" />
+        </EntityType>
+        <EntityType Name="AccommodationAlternativeName">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccommodationID" Type="Int64" Nullable="false" />
+          <Property Name="AlternativeName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="AlternativeNameType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EffectiveDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="AccommodationLocationTmp">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LocationID" Type="Int64" Nullable="false" />
+          <Property Name="AccommodationID" Type="Int64" Nullable="false" />
+          <Property Name="lastUpdate" Type="DateTime" Precision="3" />
+          <Property Name="CountryCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int64" />
+        </EntityType>
+        <EntityType Name="AccommodationLogTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccommodationID" Type="Int64" Nullable="false" />
+          <Property Name="OldCityId" Type="Int64" />
+          <Property Name="NewCityId" Type="Int64" />
+          <Property Name="OldCountryCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="NewCountryCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="OldCityName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="NewCityName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="AccommodationproviderXml">
+          <Key>
+            <PropertyRef Name="Rid" />
+          </Key>
+          <Property Name="Rid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" />
+          <Property Name="AccommodationlID" Type="Int64" />
+          <Property Name="providerXml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="VALUE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="providerCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="providerType" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="NAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="AccommodationTmp">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccommodationlID" Type="Int64" Nullable="false" />
+          <Property Name="ChainID" Type="Int64" />
+          <Property Name="AirportCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="Byte" />
+          <Property Name="Name" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Rating" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PostCodeZip" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Latitude" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Longitude" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Near" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="lastUpdate" Type="DateTime" Precision="3" />
+          <Property Name="CountryCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int64" />
+          <Property Name="Axml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CountryName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="destinationId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DestinationCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Url" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AccommodationTmp2">
+          <Key>
+            <PropertyRef Name="AccommodationlID" />
+          </Key>
+          <Property Name="AccommodationlID" Type="Int64" Nullable="false" />
+          <Property Name="ChainID" Type="Int64" />
+          <Property Name="AirportCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="Byte" />
+          <Property Name="Name" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Rating" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PostCodeZip" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Latitude" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Longitude" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Near" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="lastUpdate" Type="DateTime" Precision="3" />
+          <Property Name="CountryCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int64" />
+          <Property Name="Axml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AccomodationSupplier2Tmp">
+          <Key>
+            <PropertyRef Name="AccomodationSupplierID" />
+          </Key>
+          <Property Name="AccomodationSupplierID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccommodationlID" Type="Int64" Nullable="false" />
+          <Property Name="SupplierID" Type="Int64" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="ProviderType" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderValue" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="lastUpdate" Type="DateTime" Precision="3" />
+          <Property Name="CountryCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int64" />
+          <Property Name="CountryName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AccomodationSupplierTmp">
+          <Key>
+            <PropertyRef Name="AccomodationSupplierID" />
+          </Key>
+          <Property Name="AccomodationSupplierID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccommodationlID" Type="Int64" Nullable="false" />
+          <Property Name="SupplierID" Type="Int64" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="ProviderType" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderValue" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="lastUpdate" Type="DateTime" Precision="3" />
+          <Property Name="CountryCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int64" />
+          <Property Name="CountryName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Airport">
+          <Key>
+            <PropertyRef Name="AirportID" />
+          </Key>
+          <Property Name="AirportID" Type="Int64" Nullable="false" />
+          <Property Name="LocationID" Type="Int64" />
+          <Property Name="Type" Type="Byte" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeActiveAccommodation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccommodationlD" Type="Int64" Nullable="false" />
+          <Property Name="Counter" Type="Int32" />
+          <Property Name="ISDeactive" Type="Boolean" Nullable="false" />
+          <Property Name="MovedToAccommodationlD" Type="Int64" />
+        </EntityType>
+        <EntityType Name="LocationHotelsBed">
+          <Key>
+            <PropertyRef Name="LocationHotelsBedID" />
+          </Key>
+          <Property Name="LocationHotelsBedID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Country" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="RegionID" Type="Int64" />
+          <Property Name="Region" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="ResortID" Type="Int64" />
+          <Property Name="Resort" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="CountryID" Type="Int64" />
+          <Property Name="LocationRegionID" Type="Int64" />
+          <Property Name="LocationResortID" Type="Int64" />
+        </EntityType>
+        <EntityType Name="LocationLogTb">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CityID" Type="Int64" />
+          <Property Name="NewName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="NewCountryCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="NewCityName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="OldName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="OldCountryCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="OldCityName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="LocationID" Type="Int64" />
+        </EntityType>
+        <EntityType Name="LocationTmp">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentLocationID" Type="Int64" Nullable="false" />
+          <Property Name="LocationTypeID" Type="Int64" Nullable="false" />
+          <Property Name="SubClass" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="NameLong" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="lastUpdate" Type="DateTime" Precision="3" />
+          <Property Name="CountryCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int64" />
+        </EntityType>
+        <EntityType Name="LocationTmp2">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="Int64" Nullable="false" />
+          <Property Name="ParentLocationID" Type="Int64" Nullable="false" />
+          <Property Name="LocationTypeID" Type="Int64" Nullable="false" />
+          <Property Name="SubClass" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="NameLong" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="lastUpdate" Type="DateTime" Precision="3" />
+          <Property Name="CountryCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int64" />
+        </EntityType>
+        <EntityType Name="Mgh_Air">
+          <Key>
+            <PropertyRef Name="AirCode" />
+          </Key>
+          <Property Name="AirCode" Type="Int64" Nullable="false" />
+          <Property Name="City_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Airport_Code" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Airport_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Country_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Country_Abbrev" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="World_Area_Code" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TblB">
+          <Key>
+            <PropertyRef Name="Bid" />
+          </Key>
+          <Property Name="Bid" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Bdesc" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Bcount" Type="Int64" />
+          <Property Name="Btype" Type="Int64" />
+          <Property Name="Bdate" Type="DateTime" Precision="3" />
+          <Property Name="Bcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Brow" Type="Int64" />
+        </EntityType>
+        <EntityType Name="Accommodation">
+          <Key>
+            <PropertyRef Name="AccommodationlID" />
+          </Key>
+          <Property Name="AccommodationlID" Type="Int64" Nullable="false" />
+          <Property Name="ChainID" Type="Int64" />
+          <Property Name="AirportCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="Byte" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Rating" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PostCodeZip" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Near" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="lastUpdate" Type="DateTime" Precision="3" />
+          <Property Name="CountryCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int64" />
+          <Property Name="Resort" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Region" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="DestinationId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Destination" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HotelArea" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="HotelImages" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="HotelLocation" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="HotelInfo" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="PAmenities" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="Url" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="UserID" Type="Int64" />
+          <Property Name="DateVerified" Type="DateTime" Precision="3" />
+          <Property Name="IsVerified" Type="Boolean" />
+          <Property Name="IsError" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="AccommodationAirport">
+          <Key>
+            <PropertyRef Name="AccommodationAirportID" />
+          </Key>
+          <Property Name="AccommodationAirportID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AirportID" Type="Int64" />
+          <Property Name="AccommodationlID" Type="Int64" />
+          <Property Name="AirportCode" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="LocationID" Type="Int64" />
+          <Property Name="destinationId" Type="Int64" />
+          <Property Name="DestinationCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="category" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="rating" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="lastUpdate" Type="DateTime" Precision="3" />
+          <Property Name="CountryCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int64" />
+        </EntityType>
+        <EntityType Name="AccommodationDiff">
+          <Key>
+            <PropertyRef Name="AccommodationlID" />
+          </Key>
+          <Property Name="AccommodationlID" Type="Int64" Nullable="false" />
+          <Property Name="ChainID" Type="Int64" />
+          <Property Name="AirportCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="Byte" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Rating" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PostCodeZip" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Near" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AccommodationLocation">
+          <Key>
+            <PropertyRef Name="LocationID" />
+            <PropertyRef Name="AccommodationID" />
+          </Key>
+          <Property Name="LocationID" Type="Int64" Nullable="false" />
+          <Property Name="AccommodationID" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AccommodationTmp951109">
+          <Key>
+            <PropertyRef Name="AccommodationlID" />
+          </Key>
+          <Property Name="AccommodationlID" Type="Int64" Nullable="false" />
+          <Property Name="ChainID" Type="Int64" />
+          <Property Name="AirportCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="Byte" />
+          <Property Name="Name" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Rating" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PostCodeZip" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Latitude" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Longitude" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Near" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="lastUpdate" Type="DateTime" Precision="3" />
+          <Property Name="CountryCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int64" />
+          <Property Name="Axml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CountryName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="destinationId" Type="Int64" />
+          <Property Name="DestinationCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AccomodationSupplier">
+          <Key>
+            <PropertyRef Name="AccomodationSupplierID" />
+            <PropertyRef Name="AccommodationlID" />
+            <PropertyRef Name="SupplierID" />
+            <PropertyRef Name="Code" />
+            <PropertyRef Name="Active" />
+          </Key>
+          <Property Name="AccomodationSupplierID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccommodationlID" Type="Int64" Nullable="false" />
+          <Property Name="SupplierID" Type="Int64" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="ProviderType" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderValue" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="lastUpdate" Type="DateTime" Precision="3" />
+          <Property Name="CountryCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int64" />
+          <Property Name="CountryName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationID" />
+            <PropertyRef Name="ParentLocationID" />
+            <PropertyRef Name="LocationTypeID" />
+          </Key>
+          <Property Name="LocationID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentLocationID" Type="Int64" Nullable="false" />
+          <Property Name="LocationTypeID" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="NameLong" Type="String" MaxLength="800" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int64" />
+          <Property Name="AirportCodeNear" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="LocationInfo">
+          <Key>
+            <PropertyRef Name="LocationID" />
+            <PropertyRef Name="ParentLocationID" />
+            <PropertyRef Name="LocationTypeID" />
+          </Key>
+          <Property Name="LocationID" Type="Int64" Nullable="false" />
+          <Property Name="ParentLocationID" Type="Int64" Nullable="false" />
+          <Property Name="LocationTypeID" Type="Int64" Nullable="false" />
+          <Property Name="SubClass" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="NameLong" Type="String" MaxLength="800" FixedLength="false" Unicode="true" />
+          <Property Name="lastUpdate" Type="DateTime" Precision="3" />
+          <Property Name="CountryCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int64" />
+          <Property Name="AirportCode" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="NamePath" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="destinationId" Type="Int64" />
+          <Property Name="DestinationCode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Rank" Type="Byte" />
+          <Property Name="ParentLocation2ID" Type="Int64" />
+          <Property Name="TypeID" Type="Int32" />
+          <Property Name="AccommodationlID" Type="Int64" />
+          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GeoLocation" Type="Geography" />
+          <Property Name="AirportCodeNear" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="HotelsProRegion" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="800" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="MapDbContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Acc_Airport" EntityType="Self.Acc_Airport" />
+          <EntitySet Name="AccommodationAlternativeNames" EntityType="Self.AccommodationAlternativeName" />
+          <EntitySet Name="AccommodationLocationTmps" EntityType="Self.AccommodationLocationTmp" />
+          <EntitySet Name="AccommodationLogTables" EntityType="Self.AccommodationLogTable" />
+          <EntitySet Name="AccommodationproviderXmls" EntityType="Self.AccommodationproviderXml" />
+          <EntitySet Name="AccommodationTmps" EntityType="Self.AccommodationTmp" />
+          <EntitySet Name="AccommodationTmp2" EntityType="Self.AccommodationTmp2" />
+          <EntitySet Name="AccomodationSupplier2Tmp" EntityType="Self.AccomodationSupplier2Tmp" />
+          <EntitySet Name="AccomodationSupplierTmps" EntityType="Self.AccomodationSupplierTmp" />
+          <EntitySet Name="Airports" EntityType="Self.Airport" />
+          <EntitySet Name="DeActiveAccommodations" EntityType="Self.DeActiveAccommodation" />
+          <EntitySet Name="LocationHotelsBeds" EntityType="Self.LocationHotelsBed" />
+          <EntitySet Name="LocationLogTbs" EntityType="Self.LocationLogTb" />
+          <EntitySet Name="LocationTmps" EntityType="Self.LocationTmp" />
+          <EntitySet Name="LocationTmp2" EntityType="Self.LocationTmp2" />
+          <EntitySet Name="Mgh_Air" EntityType="Self.Mgh_Air" />
+          <EntitySet Name="TblBs" EntityType="Self.TblB" />
+          <EntitySet Name="Accommodations" EntityType="Self.Accommodation" />
+          <EntitySet Name="AccommodationAirports" EntityType="Self.AccommodationAirport" />
+          <EntitySet Name="AccommodationDiffs" EntityType="Self.AccommodationDiff" />
+          <EntitySet Name="AccommodationLocations" EntityType="Self.AccommodationLocation" />
+          <EntitySet Name="AccommodationTmp951109" EntityType="Self.AccommodationTmp951109" />
+          <EntitySet Name="AccomodationSuppliers" EntityType="Self.AccomodationSupplier" />
+          <EntitySet Name="Locations" EntityType="Self.Location" />
+          <EntitySet Name="LocationInfoes" EntityType="Self.LocationInfo" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MapDbModelStoreContainer" CdmEntityContainer="MapDbContext">
+          <EntitySetMapping Name="Acc_Airport">
+            <EntityTypeMapping TypeName="MapDbModel.Acc_Airport">
+              <MappingFragment StoreEntitySet="Acc_Airport">
+                <ScalarProperty Name="AirPortID" ColumnName="AirPortID" />
+                <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
+                <ScalarProperty Name="AirPort_Code" ColumnName="AirPort_Code" />
+                <ScalarProperty Name="destinationId" ColumnName="destinationId" />
+                <ScalarProperty Name="DestinationCode" ColumnName="DestinationCode" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccommodationAlternativeNames">
+            <EntityTypeMapping TypeName="MapDbModel.AccommodationAlternativeName">
+              <MappingFragment StoreEntitySet="AccommodationAlternativeNames">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AccommodationID" ColumnName="AccommodationID" />
+                <ScalarProperty Name="AlternativeName" ColumnName="AlternativeName" />
+                <ScalarProperty Name="AlternativeNameType" ColumnName="AlternativeNameType" />
+                <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccommodationLocationTmps">
+            <EntityTypeMapping TypeName="MapDbModel.AccommodationLocationTmp">
+              <MappingFragment StoreEntitySet="AccommodationLocationTmp">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="AccommodationID" ColumnName="AccommodationID" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccommodationLogTables">
+            <EntityTypeMapping TypeName="MapDbModel.AccommodationLogTable">
+              <MappingFragment StoreEntitySet="AccommodationLogTable">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AccommodationID" ColumnName="AccommodationID" />
+                <ScalarProperty Name="OldCityId" ColumnName="OldCityId" />
+                <ScalarProperty Name="NewCityId" ColumnName="NewCityId" />
+                <ScalarProperty Name="OldCountryCode" ColumnName="OldCountryCode" />
+                <ScalarProperty Name="NewCountryCode" ColumnName="NewCountryCode" />
+                <ScalarProperty Name="OldCityName" ColumnName="OldCityName" />
+                <ScalarProperty Name="NewCityName" ColumnName="NewCityName" />
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccommodationproviderXmls">
+            <EntityTypeMapping TypeName="MapDbModel.AccommodationproviderXml">
+              <MappingFragment StoreEntitySet="AccommodationproviderXml">
+                <ScalarProperty Name="Rid" ColumnName="Rid" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
+                <ScalarProperty Name="providerXml" ColumnName="providerXml" />
+                <ScalarProperty Name="VALUE" ColumnName="VALUE" />
+                <ScalarProperty Name="providerCode" ColumnName="providerCode" />
+                <ScalarProperty Name="providerType" ColumnName="providerType" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccommodationTmps">
+            <EntityTypeMapping TypeName="MapDbModel.AccommodationTmp">
+              <MappingFragment StoreEntitySet="AccommodationTmp">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
+                <ScalarProperty Name="ChainID" ColumnName="ChainID" />
+                <ScalarProperty Name="AirportCode" ColumnName="AirportCode" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PostCodeZip" ColumnName="PostCodeZip" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Near" ColumnName="Near" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="Axml" ColumnName="Axml" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="destinationId" ColumnName="destinationId" />
+                <ScalarProperty Name="DestinationCode" ColumnName="DestinationCode" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccommodationTmp2">
+            <EntityTypeMapping TypeName="MapDbModel.AccommodationTmp2">
+              <MappingFragment StoreEntitySet="AccommodationTmp2">
+                <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
+                <ScalarProperty Name="ChainID" ColumnName="ChainID" />
+                <ScalarProperty Name="AirportCode" ColumnName="AirportCode" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PostCodeZip" ColumnName="PostCodeZip" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Near" ColumnName="Near" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="Axml" ColumnName="Axml" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccomodationSupplier2Tmp">
+            <EntityTypeMapping TypeName="MapDbModel.AccomodationSupplier2Tmp">
+              <MappingFragment StoreEntitySet="AccomodationSupplier2Tmp">
+                <ScalarProperty Name="AccomodationSupplierID" ColumnName="AccomodationSupplierID" />
+                <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ProviderType" ColumnName="ProviderType" />
+                <ScalarProperty Name="ProviderCode" ColumnName="ProviderCode" />
+                <ScalarProperty Name="ProviderValue" ColumnName="ProviderValue" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccomodationSupplierTmps">
+            <EntityTypeMapping TypeName="MapDbModel.AccomodationSupplierTmp">
+              <MappingFragment StoreEntitySet="AccomodationSupplierTmp">
+                <ScalarProperty Name="AccomodationSupplierID" ColumnName="AccomodationSupplierID" />
+                <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ProviderType" ColumnName="ProviderType" />
+                <ScalarProperty Name="ProviderCode" ColumnName="ProviderCode" />
+                <ScalarProperty Name="ProviderValue" ColumnName="ProviderValue" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Airports">
+            <EntityTypeMapping TypeName="MapDbModel.Airport">
+              <MappingFragment StoreEntitySet="Airport">
+                <ScalarProperty Name="AirportID" ColumnName="AirportID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeActiveAccommodations">
+            <EntityTypeMapping TypeName="MapDbModel.DeActiveAccommodation">
+              <MappingFragment StoreEntitySet="DeActiveAccommodation">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AccommodationlD" ColumnName="AccommodationlD" />
+                <ScalarProperty Name="Counter" ColumnName="Counter" />
+                <ScalarProperty Name="ISDeactive" ColumnName="ISDeactive" />
+                <ScalarProperty Name="MovedToAccommodationlD" ColumnName="MovedToAccommodationlD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LocationHotelsBeds">
+            <EntityTypeMapping TypeName="MapDbModel.LocationHotelsBed">
+              <MappingFragment StoreEntitySet="LocationHotelsBed">
+                <ScalarProperty Name="LocationHotelsBedID" ColumnName="LocationHotelsBedID" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="ResortID" ColumnName="ResortID" />
+                <ScalarProperty Name="Resort" ColumnName="Resort" />
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="LocationRegionID" ColumnName="LocationRegionID" />
+                <ScalarProperty Name="LocationResortID" ColumnName="LocationResortID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LocationLogTbs">
+            <EntityTypeMapping TypeName="MapDbModel.LocationLogTb">
+              <MappingFragment StoreEntitySet="LocationLogTb">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="NewName" ColumnName="NewName" />
+                <ScalarProperty Name="NewCountryCode" ColumnName="NewCountryCode" />
+                <ScalarProperty Name="NewCityName" ColumnName="NewCityName" />
+                <ScalarProperty Name="OldName" ColumnName="OldName" />
+                <ScalarProperty Name="OldCountryCode" ColumnName="OldCountryCode" />
+                <ScalarProperty Name="OldCityName" ColumnName="OldCityName" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LocationTmps">
+            <EntityTypeMapping TypeName="MapDbModel.LocationTmp">
+              <MappingFragment StoreEntitySet="LocationTmp">
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="ParentLocationID" ColumnName="ParentLocationID" />
+                <ScalarProperty Name="LocationTypeID" ColumnName="LocationTypeID" />
+                <ScalarProperty Name="SubClass" ColumnName="SubClass" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="NameLong" ColumnName="NameLong" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LocationTmp2">
+            <EntityTypeMapping TypeName="MapDbModel.LocationTmp2">
+              <MappingFragment StoreEntitySet="LocationTmp2">
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="ParentLocationID" ColumnName="ParentLocationID" />
+                <ScalarProperty Name="LocationTypeID" ColumnName="LocationTypeID" />
+                <ScalarProperty Name="SubClass" ColumnName="SubClass" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="NameLong" ColumnName="NameLong" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mgh_Air">
+            <EntityTypeMapping TypeName="MapDbModel.Mgh_Air">
+              <MappingFragment StoreEntitySet="Mgh_Air">
+                <ScalarProperty Name="AirCode" ColumnName="AirCode" />
+                <ScalarProperty Name="City_name" ColumnName="City_name" />
+                <ScalarProperty Name="Airport_Code" ColumnName="Airport_Code" />
+                <ScalarProperty Name="Airport_Name" ColumnName="Airport_Name" />
+                <ScalarProperty Name="Country_name" ColumnName="Country_name" />
+                <ScalarProperty Name="Country_Abbrev" ColumnName="Country_Abbrev" />
+                <ScalarProperty Name="World_Area_Code" ColumnName="World_Area_Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblBs">
+            <EntityTypeMapping TypeName="MapDbModel.TblB">
+              <MappingFragment StoreEntitySet="TblB">
+                <ScalarProperty Name="Bid" ColumnName="Bid" />
+                <ScalarProperty Name="Bdesc" ColumnName="Bdesc" />
+                <ScalarProperty Name="Bcount" ColumnName="Bcount" />
+                <ScalarProperty Name="Btype" ColumnName="Btype" />
+                <ScalarProperty Name="Bdate" ColumnName="Bdate" />
+                <ScalarProperty Name="Bcode" ColumnName="Bcode" />
+                <ScalarProperty Name="Brow" ColumnName="Brow" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Accommodations">
+            <EntityTypeMapping TypeName="MapDbModel.Accommodation">
+              <MappingFragment StoreEntitySet="Accommodation">
+                <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
+                <ScalarProperty Name="ChainID" ColumnName="ChainID" />
+                <ScalarProperty Name="AirportCode" ColumnName="AirportCode" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PostCodeZip" ColumnName="PostCodeZip" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Near" ColumnName="Near" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="Resort" ColumnName="Resort" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="DestinationId" ColumnName="DestinationId" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="HotelArea" ColumnName="HotelArea" />
+                <ScalarProperty Name="HotelImages" ColumnName="HotelImages" />
+                <ScalarProperty Name="HotelLocation" ColumnName="HotelLocation" />
+                <ScalarProperty Name="HotelInfo" ColumnName="HotelInfo" />
+                <ScalarProperty Name="PAmenities" ColumnName="PAmenities" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="DateVerified" ColumnName="DateVerified" />
+                <ScalarProperty Name="IsVerified" ColumnName="IsVerified" />
+                <ScalarProperty Name="IsError" ColumnName="IsError" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccommodationAirports">
+            <EntityTypeMapping TypeName="MapDbModel.AccommodationAirport">
+              <MappingFragment StoreEntitySet="AccommodationAirport">
+                <ScalarProperty Name="AccommodationAirportID" ColumnName="AccommodationAirportID" />
+                <ScalarProperty Name="AirportID" ColumnName="AirportID" />
+                <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
+                <ScalarProperty Name="AirportCode" ColumnName="AirportCode" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="destinationId" ColumnName="destinationId" />
+                <ScalarProperty Name="DestinationCode" ColumnName="DestinationCode" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccommodationDiffs">
+            <EntityTypeMapping TypeName="MapDbModel.AccommodationDiff">
+              <MappingFragment StoreEntitySet="AccommodationDiff">
+                <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
+                <ScalarProperty Name="ChainID" ColumnName="ChainID" />
+                <ScalarProperty Name="AirportCode" ColumnName="AirportCode" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PostCodeZip" ColumnName="PostCodeZip" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Near" ColumnName="Near" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccommodationLocations">
+            <EntityTypeMapping TypeName="MapDbModel.AccommodationLocation">
+              <MappingFragment StoreEntitySet="AccommodationLocation">
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="AccommodationID" ColumnName="AccommodationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccommodationTmp951109">
+            <EntityTypeMapping TypeName="MapDbModel.AccommodationTmp951109">
+              <MappingFragment StoreEntitySet="AccommodationTmp951109">
+                <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
+                <ScalarProperty Name="ChainID" ColumnName="ChainID" />
+                <ScalarProperty Name="AirportCode" ColumnName="AirportCode" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PostCodeZip" ColumnName="PostCodeZip" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Near" ColumnName="Near" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="Axml" ColumnName="Axml" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="destinationId" ColumnName="destinationId" />
+                <ScalarProperty Name="DestinationCode" ColumnName="DestinationCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccomodationSuppliers">
+            <EntityTypeMapping TypeName="MapDbModel.AccomodationSupplier">
+              <MappingFragment StoreEntitySet="AccomodationSupplier">
+                <ScalarProperty Name="AccomodationSupplierID" ColumnName="AccomodationSupplierID" />
+                <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ProviderType" ColumnName="ProviderType" />
+                <ScalarProperty Name="ProviderCode" ColumnName="ProviderCode" />
+                <ScalarProperty Name="ProviderValue" ColumnName="ProviderValue" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="MapDbModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="ParentLocationID" ColumnName="ParentLocationID" />
+                <ScalarProperty Name="LocationTypeID" ColumnName="LocationTypeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="NameLong" ColumnName="NameLong" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="AirportCodeNear" ColumnName="AirportCodeNear" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LocationInfoes">
+            <EntityTypeMapping TypeName="MapDbModel.LocationInfo">
+              <MappingFragment StoreEntitySet="LocationInfo">
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="ParentLocationID" ColumnName="ParentLocationID" />
+                <ScalarProperty Name="LocationTypeID" ColumnName="LocationTypeID" />
+                <ScalarProperty Name="SubClass" ColumnName="SubClass" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="NameLong" ColumnName="NameLong" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="AirportCode" ColumnName="AirportCode" />
+                <ScalarProperty Name="NamePath" ColumnName="NamePath" />
+                <ScalarProperty Name="destinationId" ColumnName="destinationId" />
+                <ScalarProperty Name="DestinationCode" ColumnName="DestinationCode" />
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="ParentLocation2ID" ColumnName="ParentLocation2ID" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="GeoLocation" ColumnName="GeoLocation" />
+                <ScalarProperty Name="AirportCodeNear" ColumnName="AirportCodeNear" />
+                <ScalarProperty Name="HotelsProRegion" ColumnName="HotelsProRegion" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

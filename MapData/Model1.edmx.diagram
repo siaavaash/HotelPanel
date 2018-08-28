@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="11aefe4fd86d4efa9ae2be380163d3dc" Name="Diagram1">
+        <EntityTypeShape EntityType="MapDbModel.Acc_Airport" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.AccommodationAlternativeName" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.AccommodationLocationTmp" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.AccommodationLogTable" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.AccommodationproviderXml" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.AccommodationTmp" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.AccommodationTmp2" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.AccomodationSupplier2Tmp" Width="1.5" PointX="6.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.AccomodationSupplierTmp" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.Airport" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.DeActiveAccommodation" Width="1.5" PointX="8.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.LocationHotelsBed" Width="1.5" PointX="8.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.LocationLogTb" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.LocationTmp" Width="1.5" PointX="10.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.LocationTmp2" Width="1.5" PointX="10.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.Mgh_Air" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.TblB" Width="1.5" PointX="2.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.Accommodation" Width="1.5" PointX="12.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.AccommodationAirport" Width="1.5" PointX="4.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.AccommodationDiff" Width="1.5" PointX="6.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.AccommodationLocation" Width="1.5" PointX="8.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.AccommodationTmp951109" Width="1.5" PointX="10.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.AccomodationSupplier" Width="1.5" PointX="12.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.Location" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MapDbModel.LocationInfo" Width="1.5" PointX="14.75" PointY="4.75" IsExpanded="true" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

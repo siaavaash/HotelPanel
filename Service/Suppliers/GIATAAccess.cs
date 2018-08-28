@@ -1,10 +1,9 @@
-﻿using Newtonsoft.Json;
-using Service.ServiceModel.GIATAModels;
+﻿using Service.ServiceModel.GIATAModels;
 using Service.ServiceModel.PublicModels;
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Xml;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace Service.Suppliers
@@ -12,7 +11,7 @@ namespace Service.Suppliers
     public class GIATAAccess
     {
         // GIATA web service url
-        private const string serviceUrl = "http://multicodes.giatamedia.com/webservice/rest/1.0/properties/";
+        private const string serviceUrl = "http://multicodes.giatamedia.com/webservice/rest/1.latest/properties/";
 
         /// <summary>
         /// Get Properties by id
@@ -23,7 +22,7 @@ namespace Service.Suppliers
         {
             try
             {
-                HttpStatusCode statusCode = GetXML(serviceUrl + id, out Stream response);
+                var (statusCode, data) = GetXML(serviceUrl + id);
 
                 if (statusCode == HttpStatusCode.OK)
                 {
@@ -31,11 +30,11 @@ namespace Service.Suppliers
                     return new ResultDataModel
                     {
                         Success = true,
-                        Model = (properties)propertySerializer.Deserialize(response),
+                        Model = (properties)propertySerializer.Deserialize(data),
                     };
                 }
                 var serializer = new XmlSerializer(typeof(error));
-                var model = (error)serializer.Deserialize(response);
+                var model = (error)serializer.Deserialize(data);
                 if (statusCode == HttpStatusCode.MovedPermanently)
                     return new ResultDataModel
                     {
@@ -48,7 +47,7 @@ namespace Service.Suppliers
                     Error = new Error
                     {
                         Code = model.code.ToString(),
-                        Text = model.description,
+                        Text = model.description.Value,
                     },
                 };
             }
@@ -82,7 +81,7 @@ namespace Service.Suppliers
         /// </summary>
         /// <param name="url">server url</param>
         /// <returns></returns>
-        public HttpStatusCode GetXML(string url, out Stream data)
+        public (HttpStatusCode statusCode, Stream data) GetXML(string url)
         {
             try
             {
@@ -90,8 +89,7 @@ namespace Service.Suppliers
                 {
                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "bmV2aWxsZXxpdG91cnMubm86cDZNUkVLcHg =");
                     var response = client.GetAsync(url).Result;
-                    data = response.Content.ReadAsStreamAsync().Result;
-                    return response.StatusCode;
+                    return (response.StatusCode, response.Content.ReadAsStreamAsync().Result);
                 }
             }
             catch (System.Exception ex)

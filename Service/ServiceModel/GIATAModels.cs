@@ -9,13 +9,15 @@ namespace Service.ServiceModel.GIATAModels
     public interface IResponse { }
 
 
+
+
     // NOTE: Generated code may require at least .NET Framework 4.5 or .NET Core/Standard 2.0.
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
-    public partial class properties
+    public partial class properties : IResponse
     {
 
         private propertiesProperty propertyField;
@@ -43,9 +45,19 @@ namespace Service.ServiceModel.GIATAModels
 
         private string nameField;
 
+        private propertiesPropertyAlternativeName[] alternativeNamesField;
+
         private propertiesPropertyCity cityField;
 
+        private propertiesPropertyDestination destinationField;
+
         private string countryField;
+
+        private byte categoryField;
+
+        private propertiesPropertyRatings ratingsField;
+
+        private propertiesPropertyAirport[] airportsField;
 
         private propertiesPropertyAddresses addressesField;
 
@@ -81,6 +93,20 @@ namespace Service.ServiceModel.GIATAModels
         }
 
         /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("alternativeName", IsNullable = false)]
+        public propertiesPropertyAlternativeName[] alternativeNames
+        {
+            get
+            {
+                return this.alternativeNamesField;
+            }
+            set
+            {
+                this.alternativeNamesField = value;
+            }
+        }
+
+        /// <remarks/>
         public propertiesPropertyCity city
         {
             get
@@ -94,6 +120,19 @@ namespace Service.ServiceModel.GIATAModels
         }
 
         /// <remarks/>
+        public propertiesPropertyDestination destination
+        {
+            get
+            {
+                return this.destinationField;
+            }
+            set
+            {
+                this.destinationField = value;
+            }
+        }
+
+        /// <remarks/>
         public string country
         {
             get
@@ -103,6 +142,46 @@ namespace Service.ServiceModel.GIATAModels
             set
             {
                 this.countryField = value;
+            }
+        }
+
+        /// <remarks/>
+        public byte category
+        {
+            get
+            {
+                return this.categoryField;
+            }
+            set
+            {
+                this.categoryField = value;
+            }
+        }
+
+        /// <remarks/>
+        public propertiesPropertyRatings ratings
+        {
+            get
+            {
+                return this.ratingsField;
+            }
+            set
+            {
+                this.ratingsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("airport", IsNullable = false)]
+        public propertiesPropertyAirport[] airports
+        {
+            get
+            {
+                return this.airportsField;
+            }
+            set
+            {
+                this.airportsField = value;
             }
         }
 
@@ -245,6 +324,80 @@ namespace Service.ServiceModel.GIATAModels
     [System.SerializableAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class propertiesPropertyAlternativeName
+    {
+
+        private string alternativeNameTypeField;
+
+        private System.DateTime? effectiveDateField;
+
+        private bool effectiveDateFieldSpecified;
+
+        private string valueField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string alternativeNameType
+        {
+            get
+            {
+                return this.alternativeNameTypeField;
+            }
+            set
+            {
+                this.alternativeNameTypeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore]
+        //[System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
+
+        public System.DateTime? effectiveDate
+        {
+            get
+            {
+                return this.effectiveDateField;
+            }
+            set
+            {
+                this.effectiveDateField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool effectiveDateSpecified
+        {
+            get
+            {
+                return this.effectiveDateFieldSpecified;
+            }
+            set
+            {
+                this.effectiveDateFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlTextAttribute()]
+        public string Value
+        {
+            get
+            {
+                return this.valueField;
+            }
+            set
+            {
+                this.valueField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
     public partial class propertiesPropertyCity
     {
 
@@ -277,6 +430,133 @@ namespace Service.ServiceModel.GIATAModels
             set
             {
                 this.valueField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class propertiesPropertyDestination
+    {
+
+        private ushort destinationIdField;
+
+        private string valueField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public ushort destinationId
+        {
+            get
+            {
+                return this.destinationIdField;
+            }
+            set
+            {
+                this.destinationIdField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlTextAttribute()]
+        public string Value
+        {
+            get
+            {
+                return this.valueField;
+            }
+            set
+            {
+                this.valueField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class propertiesPropertyRatings
+    {
+
+        private propertiesPropertyRatingsRating ratingField;
+
+        /// <remarks/>
+        public propertiesPropertyRatingsRating rating
+        {
+            get
+            {
+                return this.ratingField;
+            }
+            set
+            {
+                this.ratingField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class propertiesPropertyRatingsRating
+    {
+
+        private byte valueField;
+
+        private bool isDefaultField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public byte value
+        {
+            get
+            {
+                return this.valueField;
+            }
+            set
+            {
+                this.valueField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public bool isDefault
+        {
+            get
+            {
+                return this.isDefaultField;
+            }
+            set
+            {
+                this.isDefaultField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class propertiesPropertyAirport
+    {
+
+        private string iataField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string iata
+        {
+            get
+            {
+                return this.iataField;
+            }
+            set
+            {
+                this.iataField = value;
             }
         }
     }
@@ -583,15 +863,15 @@ namespace Service.ServiceModel.GIATAModels
     public partial class propertiesPropertyProvider
     {
 
-        private propertiesPropertyProviderCodeValue[][] codeField;
+        private propertiesPropertyProviderCode[] codeField;
 
         private string providerCodeField;
 
         private string providerTypeField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("value", typeof(propertiesPropertyProviderCodeValue), IsNullable = false)]
-        public propertiesPropertyProviderCodeValue[][] code
+        [System.Xml.Serialization.XmlElementAttribute("code")]
+        public propertiesPropertyProviderCode[] code
         {
             get
             {
@@ -628,6 +908,46 @@ namespace Service.ServiceModel.GIATAModels
             set
             {
                 this.providerTypeField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class propertiesPropertyProviderCode
+    {
+
+        private propertiesPropertyProviderCodeValue[] valueField;
+
+        private string statusField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("value")]
+        public propertiesPropertyProviderCodeValue[] value
+        {
+            get
+            {
+                return this.valueField;
+            }
+            set
+            {
+                this.valueField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string status
+        {
+            get
+            {
+                return this.statusField;
+            }
+            set
+            {
+                this.statusField = value;
             }
         }
     }
@@ -760,10 +1080,6 @@ namespace Service.ServiceModel.GIATAModels
     }
 
 
-
-
-
-
     // NOTE: Generated code may require at least .NET Framework 4.5 or .NET Core/Standard 2.0.
     /// <remarks/>
     [System.SerializableAttribute()]
@@ -775,7 +1091,7 @@ namespace Service.ServiceModel.GIATAModels
 
         private ushort codeField;
 
-        private string descriptionField;
+        private errorDescription descriptionField;
 
         /// <remarks/>
         public ushort code
@@ -791,7 +1107,7 @@ namespace Service.ServiceModel.GIATAModels
         }
 
         /// <remarks/>
-        public string description
+        public errorDescription description
         {
             get
             {
@@ -804,8 +1120,51 @@ namespace Service.ServiceModel.GIATAModels
         }
     }
 
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class errorDescription
+    {
+
+        private string hrefField;
+
+        private string valueField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = "http://www.w3.org/1999/xlink")]
+        public string href
+        {
+            get
+            {
+                return this.hrefField;
+            }
+            set
+            {
+                this.hrefField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlTextAttribute()]
+        public string Value
+        {
+            get
+            {
+                return this.valueField;
+            }
+            set
+            {
+                this.valueField = value;
+            }
+        }
+    }
+
+
+
 
     #endregion
+
     /// <summary>
     /// GIATA Database Transfer Model
     /// </summary>
@@ -834,18 +1193,14 @@ namespace Service.ServiceModel.GIATAModels
         public string Category { get; set; }
         public string Url { get; set; }
         public List<AlternativeName> AlternativeNames { get; set; }
-        public List<Airport> Airports { get; set; }
+        public List<propertiesPropertyAirport> Airports { get; set; }
         public List<AccommodationSupplier> Suppliers { get; set; }
     }
     public class AlternativeName
     {
         public string Name { get; set; }
-        public DateTime EffectiveDate { get; set; }
+        public DateTime? EffectiveDate { get; set; }
         public string Type { get; set; }
-    }
-    public class AccommodationAirport
-    {
-        public string AirportCode { get; set; }
     }
     public class AccommodationSupplier
     {
@@ -854,5 +1209,12 @@ namespace Service.ServiceModel.GIATAModels
         public string ProviderType { get; set; }
         public string ProviderCode { get; set; }
         public string ProviderValue { get; set; }
+    }
+
+    public class MapResult
+    {
+        public long Id { get; set; }
+        public string Message { get; set; }
+        public bool Success { get; set; }
     }
 }

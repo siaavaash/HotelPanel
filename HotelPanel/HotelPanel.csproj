@@ -292,7 +292,7 @@
     <Content Include="Views\Accommodation\AddFacility.cshtml" />
     <Content Include="Views\Accommodation\EditFacility.cshtml" />
     <Content Include="Views\Accommodation\ListFacility.cshtml" />
-	<Content Include="Views\GIATA\Index.cshtml" />
+    <Content Include="Views\GIATA\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -327,6 +327,10 @@
     <ProjectReference Include="..\Logic\Logic.csproj">
       <Project>{ebc51139-7ca3-4029-88ad-f54656a400e4}</Project>
       <Name>Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Service\Service.csproj">
+      <Project>{9BBA4ED2-D855-4439-905C-5594BA8E7CFB}</Project>
+      <Name>Service</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
