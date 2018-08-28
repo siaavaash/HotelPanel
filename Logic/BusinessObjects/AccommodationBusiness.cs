@@ -23,7 +23,7 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                return DataContext.Context.Accommodations.ToList();
+                return DataContext.Context.accommodationimages.ToList();
             }
             catch (Exception exeption)
             {
@@ -39,7 +39,7 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                return DataContext.Context.Accommodations.Where(x => x.AccommodationlID == AccommodationID).FirstOrDefault();
+                return DataContext.Context.accommodationimages.Where(x => x.AccommodationlID == AccommodationID).FirstOrDefault();
             }
             catch (Exception exeption)
             {
@@ -59,7 +59,7 @@ namespace Logic.BusinessObjects
                 {
                     if (Query.Count == 0)
                     {
-                        Query = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == Model.AccommodationID).ToList();
+                        Query = DataContext.Context.accommodationimages.Where(x => x.AccommodationlID == Model.AccommodationID).ToList();
                     }
                     else
                     {
@@ -71,7 +71,7 @@ namespace Logic.BusinessObjects
                 {
                     if (Query.Count == 0)
                     {
-                        Query = DataContext.Context.Accommodations.Where(x => x.Name.ToLower().Contains(Model.Name.ToLower())).ToList();
+                        Query = DataContext.Context.accommodationimages.Where(x => x.Name.ToLower().Contains(Model.Name.ToLower())).ToList();
                     }
                     else
                     {
@@ -83,7 +83,7 @@ namespace Logic.BusinessObjects
                 {
                     if (Query.Count == 0)
                     {
-                        Query = DataContext.Context.Accommodations.Where(x => x.CityName.ToLower().Contains(Model.CityName.ToLower())).ToList();
+                        Query = DataContext.Context.accommodationimages.Where(x => x.CityName.ToLower().Contains(Model.CityName.ToLower())).ToList();
                     }
                     else
                     {
@@ -95,7 +95,7 @@ namespace Logic.BusinessObjects
                 {
                     if (Query.Count == 0)
                     {
-                        Query = DataContext.Context.Accommodations.Where(x => x.Country.ToLower().Contains(Model.Country.ToLower())).ToList();
+                        Query = DataContext.Context.accommodationimages.Where(x => x.Country.ToLower().Contains(Model.Country.ToLower())).ToList();
                     }
                     else
                     {
@@ -107,7 +107,7 @@ namespace Logic.BusinessObjects
                 {
                     if (Query.Count == 0)
                     {
-                        Query = DataContext.Context.Accommodations.Where(x => x.AccommodationlID >= Model.From).ToList();
+                        Query = DataContext.Context.accommodationimages.Where(x => x.AccommodationlID >= Model.From).ToList();
                     }
                     else
                     {
@@ -119,7 +119,7 @@ namespace Logic.BusinessObjects
                 {
                     if (Query.Count == 0)
                     {
-                        Query = DataContext.Context.Accommodations.Where(x => x.AccommodationlID <= Model.To).ToList();
+                        Query = DataContext.Context.accommodationimages.Where(x => x.AccommodationlID <= Model.To).ToList();
                     }
                     else
                     {
@@ -127,17 +127,9 @@ namespace Logic.BusinessObjects
                     }
 
                 }
-                if (Model.Verified != true)
+                if (Model.Verified != true && Query.Count != 0)
                 {
-                    if (Query.Count == 0)
-                    {
-                        Query = DataContext.Context.Accommodations.Where(x => x.IsVerified != true).ToList();
-                    }
-                    else
-                    {
                         Query = Query.Where(x => x.IsVerified != true).ToList();
-                    }
-
                 }
                 return Query.Select(x => new AccommodationModels.ListNameAccommodation
                 {
@@ -162,7 +154,7 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                var Verified = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == AccommodationID).FirstOrDefault().IsVerified;
+                var Verified = DataContext.Context.accommodationimages.Where(x => x.AccommodationlID == AccommodationID).FirstOrDefault().IsVerified;
                 if (!(bool)Verified)
                 {
                     return DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID == AccommodationID && (x.IsActive ?? false)).ToList();
@@ -182,7 +174,7 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                return DataContext.Context.Accommodations.Where(x => x.AccommodationlID == AccommodationID).FirstOrDefault().Facilities.ToList();
+                return DataContext.Context.accommodationimages.Where(x => x.AccommodationlID == AccommodationID).FirstOrDefault().Facilities.ToList();
             }
             catch (Exception exeption)
             {
@@ -193,7 +185,7 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                return DataContext.Context.Accommodations.Where(x => x.AccommodationlID == AccommodationID).FirstOrDefault().Description;
+                return DataContext.Context.accommodationimages.Where(x => x.AccommodationlID == AccommodationID).FirstOrDefault().Description;
             }
             catch (Exception exeption)
             {
@@ -257,11 +249,29 @@ namespace Logic.BusinessObjects
                 throw exeption;
             }
         }
+        public bool ReloadVerify(long AccommodationID)
+        {
+            try
+            {
+                var Accommodation = Data.DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID == AccommodationID).ToList();
+                foreach (var Item in Accommodation)
+                {
+                    Item.IsActive = true;
+                    DataContext.Context.Entry(Item).State = EntityState.Modified;                    
+                }
+                DataContext.Context.SaveChanges();
+                return true;
+            }
+            catch (Exception exeption)
+            {
+                throw exeption;
+            }
+        }
         public bool Verify(long AccommodationID)
         {
             try
             {
-                var Accommodation = Data.DataContext.Context.Accommodations.Where(x => x.AccommodationlID == AccommodationID).FirstOrDefault();
+                var Accommodation = Data.DataContext.Context.accommodationimages.Where(x => x.AccommodationlID == AccommodationID).FirstOrDefault();
                 Accommodation.IsVerified = true;
                 DataContext.Context.SaveChanges();
                 return true;
@@ -275,7 +285,7 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                var Accommodations = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == Model.AccommodationID).FirstOrDefault();
+                var Accommodations = DataContext.Context.accommodationimages.Where(x => x.AccommodationlID == Model.AccommodationID).FirstOrDefault();
                 if (Accommodations != null)
                 {
                     Accommodations.Name = Model.Name;
@@ -293,7 +303,7 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                var Accommodations = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == Model.AccommodationID).FirstOrDefault();
+                var Accommodations = DataContext.Context.accommodationimages.Where(x => x.AccommodationlID == Model.AccommodationID).FirstOrDefault();
                 if (Accommodations != null)
                 {
                     Accommodations.Description = Model.Description;
@@ -311,7 +321,7 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                var Accommodations = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == Model.AccommodationID).FirstOrDefault();
+                var Accommodations = DataContext.Context.accommodationimages.Where(x => x.AccommodationlID == Model.AccommodationID).FirstOrDefault();
                 foreach(var Item in Model.FacilityID)
                 {
                     var Facility = DataContext.Context.Facilities.Where(x => x.FacilityID == Item).FirstOrDefault();
@@ -329,7 +339,7 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                var Accommodations = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == Model.AccommodationID).FirstOrDefault();
+                var Accommodations = DataContext.Context.accommodationimages.Where(x => x.AccommodationlID == Model.AccommodationID).FirstOrDefault();
                 if (Accommodations != null)
                 {
                     var Facility = Accommodations.Facilities.Where(x => x.FacilityID == Model.FacilityID).FirstOrDefault();
