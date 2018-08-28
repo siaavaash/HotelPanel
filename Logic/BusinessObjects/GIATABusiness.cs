@@ -2,6 +2,7 @@
 using Service.ServiceModel.GIATAModels;
 using Service.Suppliers;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,10 +11,42 @@ namespace Logic.BusinessObjects
 {
     public class GIATABusiness
     {
+        private readonly MapDbContext context = new MapDbContext();
         private readonly GIATAAccess giataAccess;
         public GIATABusiness()
         {
             giataAccess = new GIATAAccess();
+        }
+
+        /// <summary>
+        /// Remove All Accommodations in tables
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
+        public bool RemoveAll(long from, long to)
+        {
+            try
+            {
+                var ids = new List<long>();
+                for (long i = from; i <= to; i++)
+                    ids.Add(i);
+                using (var context = new MapDbContext())
+                {
+                    context.AccommodationTmps.RemoveRange(context.AccommodationTmps.Where(x => ids.Contains(x.AccommodationlID)).ToList());
+                    context.AccommodationLocationTmps.RemoveRange(context.AccommodationLocationTmps.Where(x => ids.Contains(x.AccommodationID)).ToList());
+                    context.AccomodationSupplierTmps.RemoveRange(context.AccomodationSupplierTmps.Where(x => ids.Contains(x.AccommodationlID)).ToList());
+                    context.AccomodationSupplier2Tmp.RemoveRange(context.AccomodationSupplier2Tmp.Where(x => ids.Contains(x.AccommodationlID)).ToList());
+                    context.Acc_Airport.RemoveRange(context.Acc_Airport.Where(x => ids.Contains(x.AccommodationlID ?? 0)).ToList());
+                    context.AccommodationAlternativeNames.RemoveRange(context.AccommodationAlternativeNames.Where(x => ids.Contains(x.AccommodationID)).ToList());
+                    context.DeActiveAccommodations.RemoveRange(context.DeActiveAccommodations.Where(x => ids.Contains(x.AccommodationlD)).ToList());
+                    return context.SaveChangesAsync().Result > 0 ? true : false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -24,77 +57,88 @@ namespace Logic.BusinessObjects
         /// <returns></returns>
         public bool MapGIATADataToDb(GIATADbTransferModel model, out string message)
         {
-            bool result = true;
             try
             {
+                var accTmp = new List<AccommodationTmp>();
+                var accLocTmp = new List<AccommodationLocationTmp>();
+                var altList = new ConcurrentBag<AccommodationAlternativeName>();
+                var supplierList = new ConcurrentBag<AccomodationSupplierTmp>();
+                var supplier2List = new ConcurrentBag<AccomodationSupplier2Tmp>();
+                var airportList = new ConcurrentBag<Acc_Airport>();
+                var loc = new List<LocationTmp>();
                 Parallel.Invoke(
                     () =>
                     {
-                        using (var context = new MapDbContext())
+                        accTmp.Add(new AccommodationTmp
                         {
-
-                            context.AccommodationTmps.RemoveRange(context.AccommodationTmps.Where(x => x.AccommodationlID == model.AccommodationId).ToList());
-                            context.AccommodationTmps.Add(new AccommodationTmp
-                            {
-                                AccommodationlID = model.AccommodationId,
-                                Address = model.Address,
-                                AirportCode = model.AirportCode,
-                                Axml = model.Xml,
-                                ChainID = model.ChainId,
-                                CityId = model.CityId,
-                                CityName = model.CityName,
-                                CountryCode = model.CountryCode,
-                                CountryName = model.CountryName,
-                                DestinationCode = model.DestinationCode,
-                                destinationId = model.DestinationId,
-                                Email = model.Email,
-                                Fax = model.Fax,
-                                lastUpdate = model.LastUpdate,
-                                Latitude = model.Latitude,
-                                Longitude = model.Longitude,
-                                Name = model.Name,
-                                Rating = model.Rating,
-                                Telephone = model.Telephone,
-                                Url = model.Url
-                            });
-                            result = context.SaveChangesAsync().Result > 0 ? true : false;
-                        }
+                            AccommodationlID = model.AccommodationId,
+                            Address = model.Address,
+                            AirportCode = model.AirportCode,
+                            Axml = model.Xml,
+                            ChainID = model.ChainId,
+                            CityId = model.CityId,
+                            CityName = model.CityName,
+                            CountryCode = model.CountryCode,
+                            CountryName = model.CountryName,
+                            DestinationCode = model.DestinationCode,
+                            destinationId = model.DestinationId,
+                            Email = model.Email,
+                            Fax = model.Fax,
+                            lastUpdate = model.LastUpdate,
+                            Latitude = model.Latitude,
+                            Longitude = model.Longitude,
+                            Name = model.Name,
+                            Rating = model.Rating,
+                            Telephone = model.Telephone,
+                            Url = model.Url
+                        });
                     },
                     () =>
                     {
-                        using (var context = new MapDbContext())
+                        accLocTmp.Add(new AccommodationLocationTmp
                         {
-                            context.AccommodationLocationTmps.RemoveRange(context.AccommodationLocationTmps.Where(x => x.AccommodationID == model.AccommodationId).ToList());
-                            context.AccommodationLocationTmps.Add(new AccommodationLocationTmp
-                            {
-                                AccommodationID = model.AccommodationId,
-                                CityId = model.CityId,
-                                CityName = model.CityName,
-                                CountryCode = model.CountryCode,
-                                LocationID = 0,
-                                lastUpdate = model.LastUpdate,
-                            });
-                            context.LocationTmps.Add(new LocationTmp
-                            {
-                                CityId = model.CityId,
-                                CityName = model.CityName,
-                                lastUpdate = model.LastUpdate,
-                                Name = model.CityName,
-                                LocationTypeID = 4,
-                                ParentLocationID = model.CountryId + 20000000,
-                                CountryCode = model.CountryCode,
-                            });
-                            result = context.SaveChangesAsync().Result > 0 ? true : false;
-                        }
+                            AccommodationID = model.AccommodationId,
+                            CityId = model.CityId,
+                            CityName = model.CityName,
+                            CountryCode = model.CountryCode,
+                            LocationID = 0,
+                            lastUpdate = model.LastUpdate,
+                        });
                     },
-                () =>
-                {
-                    if (model.Suppliers == null) return;
-                    using (var context = new MapDbContext())
+                    () =>
                     {
-                        foreach (var supplier in model.Suppliers)
+                        loc.Add(new LocationTmp
+                        {
+                            CityId = model.CityId,
+                            CityName = model.CityName,
+                            lastUpdate = model.LastUpdate,
+                            Name = model.CityName,
+                            LocationTypeID = 4,
+                            ParentLocationID = model.CountryId + 20000000,
+                            CountryCode = model.CountryCode,
+                        });
+                    },
+                    () =>
+                    {
+                        if (model.Suppliers == null) return;
+                        Parallel.ForEach(model.Suppliers, supplier =>
                         {
                             var supplierId = -1;
+                            supplier2List.Add(new AccomodationSupplier2Tmp
+                            {
+                                AccommodationlID = model.AccommodationId,
+                                SupplierID = -1,
+                                Active = supplier.Active,
+                                Code = supplier.Code,
+                                ProviderCode = supplier.ProviderCode,
+                                ProviderType = supplier.ProviderType,
+                                ProviderValue = supplier.ProviderValue,
+                                CityId = model.CityId,
+                                CityName = model.CityName,
+                                CountryName = model.CountryName,
+                                lastUpdate = model.LastUpdate,
+                                CountryCode = model.CountryCode,
+                            });
                             switch (supplier.ProviderCode)
                             {
                                 case "metglobal2":
@@ -130,8 +174,7 @@ namespace Logic.BusinessObjects
                             }
                             if (supplierId != -1)
                             {
-                                context.AccomodationSupplierTmps.RemoveRange(context.AccomodationSupplierTmps.Where(x => x.AccommodationlID == model.AccommodationId).ToList());
-                                context.AccomodationSupplierTmps.Add(new AccomodationSupplierTmp
+                                supplierList.Add(new AccomodationSupplierTmp
                                 {
                                     CountryCode = model.CountryCode,
                                     AccommodationlID = model.AccommodationId,
@@ -147,46 +190,14 @@ namespace Logic.BusinessObjects
                                     SupplierID = supplierId,
                                 });
                             }
-                        }
-                        result = context.SaveChangesAsync().Result > 0 ? true : false;
-                    }
-                },
-                () =>
-                {
-                    if (model.Suppliers == null) return;
-                    using (var context = new MapDbContext())
+                        });
+                    },
+                    () =>
                     {
-                        foreach (var supplier in model.Suppliers)
+                        if (model.Airports == null) return;
+                        Parallel.ForEach(model.Airports, airport =>
                         {
-                            context.AccomodationSupplier2Tmp.RemoveRange(context.AccomodationSupplier2Tmp.Where(x => x.AccommodationlID == model.AccommodationId).ToList());
-                            context.AccomodationSupplier2Tmp.Add(new AccomodationSupplier2Tmp
-                            {
-                                AccommodationlID = model.AccommodationId,
-                                SupplierID = -1,
-                                Active = supplier.Active,
-                                Code = supplier.Code,
-                                ProviderCode = supplier.ProviderCode,
-                                ProviderType = supplier.ProviderType,
-                                ProviderValue = supplier.ProviderValue,
-                                CityId = model.CityId,
-                                CityName = model.CityName,
-                                CountryName = model.CountryName,
-                                lastUpdate = model.LastUpdate,
-                                CountryCode = model.CountryCode,
-                            });
-                        }
-                        result = context.SaveChangesAsync().Result > 0 ? true : false;
-                    }
-                },
-                () =>
-                {
-                    if (model.Airports == null) return;
-                    using (var context = new MapDbContext())
-                    {
-                        foreach (var airport in model.Airports)
-                        {
-                            context.Acc_Airport.RemoveRange(context.Acc_Airport.Where(x => x.AccommodationlID == model.AccommodationId).ToList());
-                            context.Acc_Airport.Add(new Acc_Airport
+                            airportList.Add(new Acc_Airport
                             {
                                 AccommodationlID = model.AccommodationId,
                                 CityId = model.CityId,
@@ -199,38 +210,43 @@ namespace Logic.BusinessObjects
                                 category = model.Category,
                                 AirPort_Code = airport.iata,
                             });
-                        }
-                        result = context.SaveChangesAsync().Result > 0 ? true : false;
-                    }
-                },
-                () =>
-                {
-                    if (model.AlternativeNames == null) return;
-                    using (var context = new MapDbContext())
+                        });
+                    },
+                    () =>
                     {
-                        foreach (var altName in model.AlternativeNames)
+                        if (model.AlternativeNames == null) return;
+                        Parallel.ForEach(model.AlternativeNames, altName =>
                         {
-                            context.AccommodationAlternativeNames.RemoveRange(context.AccommodationAlternativeNames.Where(x => x.AccommodationID == model.AccommodationId).ToList());
-                            context.AccommodationAlternativeNames.Add(new AccommodationAlternativeName
+                            altList.Add(new AccommodationAlternativeName
                             {
                                 AccommodationID = model.AccommodationId,
                                 AlternativeName = altName.Name,
                                 EffectiveDate = altName.EffectiveDate,
                                 AlternativeNameType = altName.Type,
                             });
-                        }
-                        result = context.SaveChangesAsync().Result > 0 ? true : false;
+                        });
+                    });
+                using (var context = new MapDbContext())
+                {
+
+                    context.AccommodationTmps.AddRange(accTmp);
+                    context.AccommodationLocationTmps.AddRange(accLocTmp);
+                    context.LocationTmps.AddRange(loc);
+                    context.Acc_Airport.AddRange(airportList);
+                    context.AccommodationAlternativeNames.AddRange(altList);
+                    context.AccomodationSupplierTmps.AddRange(supplierList);
+                    context.AccomodationSupplier2Tmp.AddRange(supplier2List);
+
+                    if (context.SaveChangesAsync().Result > 0)
+                    {
+                        message = null;
+                        return true;
                     }
-                });
-                if (result)
-                {
-                    message = null;
-                    return result;
-                }
-                else
-                {
-                    message = "Map GIATA Data to Database failed.";
-                    return result;
+                    else
+                    {
+                        message = "Map GIATA Data to Database failed.";
+                        return false;
+                    }
                 }
             }
             catch (Exception ex)
@@ -252,8 +268,6 @@ namespace Logic.BusinessObjects
             {
                 using (var context = new MapDbContext())
                 {
-                    var accommodation = context.DeActiveAccommodations.FirstOrDefault(x => x.AccommodationlD == id);
-                    if (accommodation != null) context.DeActiveAccommodations.Remove(accommodation);
                     if (deactive.HasValue)
                     {
                         if (deactive.Value)
@@ -284,7 +298,7 @@ namespace Logic.BusinessObjects
                             ISDeactive = true,
                         });
                     }
-                    context.SaveChangesAsync();
+                    context.SaveChanges();
                 }
             }
             catch (Exception ex)
@@ -407,9 +421,9 @@ namespace Logic.BusinessObjects
         {
             if (from > to)
                 throw new ArgumentException("Invalid parameter(s).");
+            if (!RemoveAll(from, to)) throw new Exception("Remove Recent Accommodations Failed.");
             var returnList = new List<MapResult>();
-            for (long i = from; i <= to; i++)
-            //Parallel.For(from, to + 1, i =>
+            Parallel.For(from, to + 1, i =>
             {
                 var mapRs = Map(i);
                 if (!mapRs.Item1)
@@ -423,7 +437,7 @@ namespace Logic.BusinessObjects
                             Message = tryMapRs.Item2,
                             Success = false,
                         });
-                        continue;
+                        return;
                     }
                 }
                 returnList.Add(new MapResult
@@ -432,7 +446,7 @@ namespace Logic.BusinessObjects
                     Message = mapRs.Item2,
                     Success = true,
                 });
-            }
+            });
             return returnList;
         }
         /// <summary>
@@ -446,7 +460,7 @@ namespace Logic.BusinessObjects
             string message = null;
             try
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 2; i++)
                 {
                     var mapRs = Map(id);
                     message = mapRs.Item2;
