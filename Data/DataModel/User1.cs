@@ -89,6 +89,7 @@ namespace Data.DataModel
             this.Wallets1 = new HashSet<Wallet>();
             this.WebSites = new HashSet<WebSite>();
             this.Roles = new HashSet<Role>();
+            this.InsuranceContracts2 = new HashSet<InsuranceContract>();
         }
     
         public long UserID { get; set; }
@@ -262,5 +263,7 @@ namespace Data.DataModel
         public virtual ICollection<WebSite> WebSites { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Role> Roles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InsuranceContract> InsuranceContracts2 { get; set; }
     }
 }

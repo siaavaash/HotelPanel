@@ -493,6 +493,12 @@
         <AssociationConnector Association="ContextModel.AccommodationLocation" ManuallyRouted="false" />
         <AssociationConnector Association="ContextModel.UserRole" ManuallyRouted="false" />
         <AssociationConnector Association="ContextModel.OfflineAccommodationFacility" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ContextModel.AccommodationLatLong" Width="1.5" PointX="25.375" PointY="35.75" />
+        <AssociationConnector Association="ContextModel.FK_Discount_Accommodation" />
+        <AssociationConnector Association="ContextModel.FK_Discount_Location" />
+        <AssociationConnector Association="ContextModel.FK_FlightContract_Supplier" />
+        <AssociationConnector Association="ContextModel.FK_InsuranceContract_Supplier" />
+        <AssociationConnector Association="ContextModel.FK_InsuranceContract_User_CancellationUserID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

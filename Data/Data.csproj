@@ -82,6 +82,9 @@
     <Compile Include="DataModel\AccommodationItoursSupplier.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\AccommodationLatLong.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\AccommodationLocation1.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>

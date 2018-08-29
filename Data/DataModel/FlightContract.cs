@@ -35,10 +35,12 @@ namespace Data.DataModel
         public Nullable<long> TicketStatusID { get; set; }
         public string RPHKey { get; set; }
         public string BillTicket { get; set; }
+        public Nullable<long> SupplierID { get; set; }
     
         public virtual Contract Contract { get; set; }
         public virtual TicketStatu TicketStatu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FlightTicket> FlightTickets { get; set; }
+        public virtual Supplier Supplier { get; set; }
     }
 }
