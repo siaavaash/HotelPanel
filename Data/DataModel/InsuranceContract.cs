@@ -40,6 +40,10 @@ namespace Data.DataModel
         public Nullable<System.DateTime> ModificationTime { get; set; }
         public Nullable<long> UserID { get; set; }
         public Nullable<long> ModifyUserID { get; set; }
+        public Nullable<byte> Status { get; set; }
+        public Nullable<System.DateTime> CancellationTime { get; set; }
+        public Nullable<long> CancellationUserID { get; set; }
+        public Nullable<long> SupplierID { get; set; }
     
         public virtual Contract Contract { get; set; }
         public virtual Currency Currency { get; set; }
@@ -48,5 +52,7 @@ namespace Data.DataModel
         public virtual User1 User11 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InsuranceTicket> InsuranceTickets { get; set; }
+        public virtual Supplier Supplier { get; set; }
+        public virtual User1 User12 { get; set; }
     }
 }

@@ -32,6 +32,7 @@ namespace Data.DataModel
             this.ServiceContracts = new HashSet<ServiceContract>();
             this.ServiceLocations = new HashSet<ServiceLocation>();
             this.Accommodations = new HashSet<Accommodation>();
+            this.Discounts = new HashSet<Discount>();
         }
     
         public long LocationID { get; set; }
@@ -75,5 +76,7 @@ namespace Data.DataModel
         public virtual ICollection<ServiceLocation> ServiceLocations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Accommodation> Accommodations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Discount> Discounts { get; set; }
     }
 }

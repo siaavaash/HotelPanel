@@ -28,6 +28,7 @@ namespace Data.DataModel
             this.Pages = new HashSet<Page>();
             this.Facilities = new HashSet<Facility>();
             this.Locations = new HashSet<Location>();
+            this.Discounts = new HashSet<Discount>();
         }
     
         public long AccommodationlID { get; set; }
@@ -88,5 +89,7 @@ namespace Data.DataModel
         public virtual ICollection<Facility> Facilities { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Location> Locations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Discount> Discounts { get; set; }
     }
 }

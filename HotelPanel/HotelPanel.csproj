@@ -159,7 +159,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AirportController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\GIATAController.cs" />
+    <Compile Include="Controllers\MappingController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="Global.asax.cs">
@@ -292,7 +292,8 @@
     <Content Include="Views\Accommodation\AddFacility.cshtml" />
     <Content Include="Views\Accommodation\EditFacility.cshtml" />
     <Content Include="Views\Accommodation\ListFacility.cshtml" />
-    <Content Include="Views\GIATA\Index.cshtml" />
+    <Content Include="Views\Mapping\GIATA.cshtml" />
+    <Content Include="Views\Mapping\Geocode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -24,6 +24,10 @@ namespace Data.DataModel
         public Nullable<long> UserID { get; set; }
         public Nullable<System.DateTime> DateActive { get; set; }
         public string OriginalLink { get; set; }
+        public Nullable<bool> IsVerified { get; set; }
+        public Nullable<System.DateTime> VerifiedDate { get; set; }
+        public Nullable<bool> IsReported { get; set; }
+        public Nullable<int> NumberOfReports { get; set; }
     
         public virtual Accommodation Accommodation { get; set; }
     }

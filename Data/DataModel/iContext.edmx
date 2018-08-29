@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ContextModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ContextModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AccommodationCommission">
           <Key>
             <PropertyRef Name="AccommodationCommissionID" />
@@ -21,6 +21,51 @@
           <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="IRRPercent" Type="float" />
           <Property Name="NokPercent" Type="float" />
+        </EntityType>
+        <EntityType Name="AccommodationLatLong">
+          <Key>
+            <PropertyRef Name="AccommodationlID" />
+          </Key>
+          <Property Name="AccommodationlID" Type="bigint" Nullable="false" />
+          <Property Name="ChainID" Type="bigint" />
+          <Property Name="AirportCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="Type" Type="tinyint" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Rating" Type="nvarchar" MaxLength="10" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="PostCodeZip" Type="nvarchar" MaxLength="255" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="50" />
+          <Property Name="Latitude" Type="nvarchar" MaxLength="50" />
+          <Property Name="Longitude" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Near" Type="nvarchar" MaxLength="255" />
+          <Property Name="lastUpdate" Type="datetime" />
+          <Property Name="CountryCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="300" />
+          <Property Name="CityId" Type="bigint" />
+          <Property Name="Resort" Type="nvarchar" MaxLength="300" />
+          <Property Name="Region" Type="nvarchar" MaxLength="300" />
+          <Property Name="DestinationId" Type="nvarchar" MaxLength="50" />
+          <Property Name="Destination" Type="nvarchar" MaxLength="250" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="HotelArea" Type="nvarchar" MaxLength="500" />
+          <Property Name="HotelImages" Type="varchar" MaxLength="5000" />
+          <Property Name="HotelLocation" Type="nvarchar" MaxLength="500" />
+          <Property Name="HotelInfo" Type="varchar" MaxLength="5000" />
+          <Property Name="PAmenities" Type="varchar" MaxLength="5000" />
+          <Property Name="Email" Type="varchar" MaxLength="5000" />
+          <Property Name="Url" Type="varchar" MaxLength="5000" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="UserID" Type="bigint" />
+          <Property Name="DateVerified" Type="datetime" />
+          <Property Name="IsVerified" Type="bit" />
+          <Property Name="IsError" Type="bit" />
+          <Property Name="LocationNameLong" Type="nvarchar" MaxLength="800" />
+          <Property Name="FormattedAddress" Type="nvarchar" MaxLength="4000" />
+          <Property Name="PlaceId" Type="nvarchar" MaxLength="4000" />
+          <Property Name="LocationType" Type="nvarchar" MaxLength="4000" />
+          <Property Name="IsValid" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DBMainTest.cnv.AccommodationLocation960612' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -179,11 +224,6 @@ warning 6002: The table/view 'DBMainTest.cnv.AirportSupplierConfig_970317' does 
           <Property Name="MaxStay" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'DBMainTest.cnv.AllDeactiveImages' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="AllDeactiveImages">
-          <Property Name="AccommodationlID" Type="bigint" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'DBMainTest.cnv.Company' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Company">
           <Key>
@@ -240,19 +280,6 @@ warning 6002: The table/view 'DBMainTest.cnv.ExchangeDetails_970317' does not ha
           <Property Name="SupplierID" Type="bigint" Nullable="false" />
           <Property Name="CreationTime" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBMainTest.cnv.FacilityTemp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="FacilityTemp">
-          <Key>
-            <PropertyRef Name="FacilityID" />
-            <PropertyRef Name="Name" />
-          </Key>
-          <Property Name="FacilityID" Type="bigint" Nullable="false" />
-          <Property Name="Category" Type="nvarchar" MaxLength="200" />
-          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="PersianCategory" Type="nvarchar" MaxLength="200" />
-          <Property Name="PersianName" Type="nvarchar" MaxLength="500" />
-        </EntityType>
         <EntityType Name="GetHotelAvailInfo">
           <Key>
             <PropertyRef Name="ID" />
@@ -265,177 +292,6 @@ warning 6002: The table/view 'DBMainTest.cnv.FacilityTemp' does not have a prima
           <Property Name="TableDatax" Type="nvarchar(max)" />
           <Property Name="Locations" Type="xml" />
         </EntityType>
-        <EntityType Name="gtaFileNames">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NAME" Type="nvarchar" MaxLength="4000" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'DBMainTest.cnv.gtaHotelErrors' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="gtaHotelErrors">
-          <Property Name="ErrorNumber" Type="nvarchar" MaxLength="1000" />
-          <Property Name="ErrorSeverity" Type="nvarchar" MaxLength="1000" />
-          <Property Name="ErrorState" Type="nvarchar" MaxLength="1000" />
-          <Property Name="ErrorProcedure" Type="nvarchar" MaxLength="1000" />
-          <Property Name="ErrorLine" Type="nvarchar" MaxLength="1000" />
-          <Property Name="ErrorMessage" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Id" Type="bigint" />
-        </EntityType>-->
-        <EntityType Name="gtaHotelFileName">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NAME" Type="nvarchar" MaxLength="4000" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'DBMainTest.cnv.gtaHotelInfo' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="gtaHotelInfo">
-          <Property Name="CityName" Type="nvarchar" MaxLength="4000" />
-          <Property Name="CityCode" Type="nvarchar" MaxLength="4000" />
-          <Property Name="HotelName" Type="nvarchar" MaxLength="4000" />
-          <Property Name="HotelCode" Type="nvarchar" MaxLength="4000" />
-          <Property Name="ADDRESSLine1" Type="nvarchar" MaxLength="4000" />
-          <Property Name="ADDRESSLine2" Type="nvarchar" MaxLength="4000" />
-          <Property Name="ADDRESSLine3" Type="nvarchar" MaxLength="4000" />
-          <Property Name="Telephone" Type="nvarchar" MaxLength="4000" />
-          <Property Name="Website" Type="nvarchar" MaxLength="4000" />
-          <Property Name="StarRating" Type="nvarchar" MaxLength="4000" />
-          <Property Name="Category" Type="nvarchar" MaxLength="4000" />
-          <Property Name="Reports" Type="nvarchar" MaxLength="4000" />
-          <Property Name="Latitude" Type="nvarchar" MaxLength="4000" />
-          <Property Name="Longitude" Type="nvarchar" MaxLength="4000" />
-          <Property Name="FacilityCode" Type="nvarchar" MaxLength="4000" />
-          <Property Name="FacilityName" Type="nvarchar" MaxLength="4000" />
-          <Property Name="RoomTypeCode" Type="nvarchar" MaxLength="4000" />
-          <Property Name="RoomTypeName" Type="nvarchar" MaxLength="4000" />
-          <Property Name="RoomFacilityCode" Type="nvarchar" MaxLength="4000" />
-          <Property Name="RoomFacilityName" Type="nvarchar" MaxLength="4000" />
-          <Property Name="MapPageLink" Type="nvarchar" MaxLength="4000" />
-          <Property Name="ImageLinkText" Type="nvarchar" MaxLength="4000" />
-          <Property Name="ImageLinkThumbNail" Type="nvarchar" MaxLength="4000" />
-          <Property Name="ImageLinkImage" Type="nvarchar" MaxLength="4000" />
-        </EntityType>-->
-        <EntityType Name="gtaHotelInfoOnly">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="CityName" Type="nvarchar" MaxLength="4000" />
-          <Property Name="CityCode" Type="nvarchar" MaxLength="4000" />
-          <Property Name="HotelName" Type="nvarchar" MaxLength="4000" />
-          <Property Name="HotelCode" Type="nvarchar" MaxLength="4000" />
-          <Property Name="ADDRESSLine1" Type="nvarchar" MaxLength="4000" />
-          <Property Name="ADDRESSLine2" Type="nvarchar" MaxLength="4000" />
-          <Property Name="ADDRESSLine3" Type="nvarchar" MaxLength="4000" />
-          <Property Name="Telephone" Type="nvarchar" MaxLength="4000" />
-          <Property Name="Website" Type="nvarchar" MaxLength="4000" />
-          <Property Name="StarRating" Type="nvarchar" MaxLength="4000" />
-          <Property Name="Category" Type="nvarchar" MaxLength="4000" />
-          <Property Name="Reports" Type="nvarchar" MaxLength="4000" />
-          <Property Name="Latitude" Type="nvarchar" MaxLength="4000" />
-          <Property Name="Longitude" Type="nvarchar" MaxLength="4000" />
-          <Property Name="FacilityCode" Type="nvarchar" MaxLength="4000" />
-          <Property Name="FacilityName" Type="nvarchar" MaxLength="4000" />
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'DBMainTest.cnv.gtaHotelLinks' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="gtaHotelLinks">
-          <Property Name="CityName" Type="nvarchar" MaxLength="4000" />
-          <Property Name="CityCode" Type="nvarchar" MaxLength="4000" />
-          <Property Name="HotelName" Type="nvarchar" MaxLength="4000" />
-          <Property Name="HotelCode" Type="nvarchar" MaxLength="4000" />
-          <Property Name="MapPageLink" Type="nvarchar" MaxLength="4000" />
-          <Property Name="ImageLinkText" Type="nvarchar" MaxLength="4000" />
-          <Property Name="ImageLinkThumbNail" Type="nvarchar" MaxLength="4000" />
-          <Property Name="ImageLinkImage" Type="nvarchar" MaxLength="4000" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'DBMainTest.cnv.gtaHotelRoomFacility' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="gtaHotelRoomFacility">
-          <Property Name="CityName" Type="nvarchar" MaxLength="4000" />
-          <Property Name="CityCode" Type="nvarchar" MaxLength="4000" />
-          <Property Name="HotelName" Type="nvarchar" MaxLength="4000" />
-          <Property Name="HotelCode" Type="nvarchar" MaxLength="4000" />
-          <Property Name="RoomFacilityCode" Type="nvarchar" MaxLength="4000" />
-          <Property Name="RoomFacilityName" Type="nvarchar" MaxLength="4000" />
-        </EntityType>-->
-        <EntityType Name="gtaHotelRoomType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="CityName" Type="nvarchar" MaxLength="4000" />
-          <Property Name="CityCode" Type="nvarchar" MaxLength="4000" />
-          <Property Name="HotelName" Type="nvarchar" MaxLength="4000" />
-          <Property Name="HotelCode" Type="nvarchar" MaxLength="4000" />
-          <Property Name="RoomTypeCode" Type="nvarchar" MaxLength="4000" />
-          <Property Name="RoomTypeName" Type="nvarchar" MaxLength="4000" />
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-        </EntityType>
-        <EntityType Name="gtaHotels">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CityCode" Type="nvarchar" MaxLength="1000" />
-          <Property Name="CityName" Type="nvarchar" MaxLength="1000" />
-          <Property Name="HotelCode" Type="nvarchar" MaxLength="1000" />
-          <Property Name="HotelName" Type="nvarchar" MaxLength="1000" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBMainTest.cnv.gtaLocationData' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="gtaLocationData">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="IsInserted" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CountryCode" Type="nvarchar" MaxLength="20" />
-          <Property Name="CountryName" Type="nvarchar" MaxLength="4000" />
-          <Property Name="Citycode" Type="nvarchar" MaxLength="20" />
-          <Property Name="CityName" Type="nvarchar" MaxLength="50" />
-          <Property Name="CitiesArray" Type="nvarchar(max)" />
-          <Property Name="LocationID" Type="bigint" />
-          <Property Name="MyCountryName" Type="nvarchar" MaxLength="4000" />
-          <Property Name="IsInserted" Type="bit" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBMainTest.cnv.gtaLocationData_970313' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="gtaLocationData_970313">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CountryCode" Type="nvarchar" MaxLength="20" />
-          <Property Name="CountryName" Type="nvarchar" MaxLength="4000" />
-          <Property Name="Citycode" Type="nvarchar" MaxLength="20" />
-          <Property Name="CityName" Type="nvarchar" MaxLength="50" />
-          <Property Name="CitiesArray" Type="nvarchar(max)" />
-          <Property Name="LocationID" Type="bigint" />
-          <Property Name="MyCountryName" Type="nvarchar" MaxLength="4000" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DBMainTest.cnv.gtaLocationDataTemp' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="gtaLocationDataTemp">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="CountryCode" Type="nvarchar" MaxLength="20" />
-          <Property Name="CountryName" Type="nvarchar" MaxLength="4000" />
-          <Property Name="Citycode" Type="nvarchar" MaxLength="20" />
-          <Property Name="CityName" Type="nvarchar" MaxLength="50" />
-          <Property Name="CitiesArray" Type="nvarchar(max)" />
-          <Property Name="LocationID" Type="bigint" />
-          <Property Name="MyCountryName" Type="nvarchar" MaxLength="4000" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'DBMainTest.cnv.gtaXmlData' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="gtaXmlData">
-          <Property Name="T" Type="xml" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DBMainTest.cnv.Inbox' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Inbox">
@@ -720,11 +576,6 @@ warning 6002: The table/view 'DBMainTest.cnv.RolePrivilege_970414' does not have
           <Property Name="PrivilegeID" Type="bigint" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'DBMainTest.cnv.Temp' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Temp">
-          <Property Name="VALUE" Type="nvarchar" MaxLength="50" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'DBMainTest.cnv.User' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="User">
           <Key>
@@ -941,6 +792,10 @@ warning 6002: The table/view 'DBMainTest.cnv.User' does not have a primary key d
           <Property Name="UserID" Type="bigint" />
           <Property Name="DateActive" Type="datetime" />
           <Property Name="OriginalLink" Type="nvarchar" MaxLength="400" />
+          <Property Name="IsVerified" Type="bit" />
+          <Property Name="VerifiedDate" Type="datetime" />
+          <Property Name="IsReported" Type="bit" />
+          <Property Name="NumberOfReports" Type="int" />
         </EntityType>
         <EntityType Name="AccomodationRoomImage">
           <Key>
@@ -963,6 +818,10 @@ warning 6002: The table/view 'DBMainTest.cnv.User' does not have a primary key d
           <Property Name="UserID" Type="bigint" />
           <Property Name="DateActive" Type="datetime" />
           <Property Name="OriginalLink" Type="nvarchar" MaxLength="400" />
+          <Property Name="IsVerified" Type="bit" />
+          <Property Name="VerifiedDate" Type="datetime" />
+          <Property Name="IsReported" Type="bit" />
+          <Property Name="NumberOfReports" Type="int" />
         </EntityType>
         <EntityType Name="AccomodationSupplier">
           <Key>
@@ -1578,6 +1437,9 @@ warning 6002: The table/view 'DBMainTest.dbo.AirportSupplierConfig970121' does n
           <Property Name="ModificationUserID" Type="bigint" />
           <Property Name="ModificationDate" Type="datetime" />
           <Property Name="DiscountInUse" Type="tinyint" />
+          <Property Name="AccommodationId" Type="bigint" />
+          <Property Name="Rating" Type="nvarchar" MaxLength="10" />
+          <Property Name="LocationID" Type="bigint" />
         </EntityType>
         <EntityType Name="Documents">
           <Key>
@@ -1669,6 +1531,7 @@ warning 6002: The table/view 'DBMainTest.dbo.AirportSupplierConfig970121' does n
           <Property Name="TicketStatusID" Type="bigint" />
           <Property Name="RPHKey" Type="varchar" MaxLength="32" />
           <Property Name="BillTicket" Type="nvarchar(max)" />
+          <Property Name="SupplierID" Type="bigint" />
         </EntityType>
         <EntityType Name="FlightContractPassenger">
           <Key>
@@ -1962,7 +1825,7 @@ warning 6002: The table/view 'DBMainTest.dbo.AirportSupplierConfig970121' does n
           <Property Name="HelpId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ActionName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="ControllerName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="HelpText" Type="nvarchar" MaxLength="4000" />
+          <Property Name="HelpText" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="HotelIndex">
           <Key>
@@ -2042,6 +1905,10 @@ warning 6002: The table/view 'DBMainTest.dbo.AirportSupplierConfig970121' does n
           <Property Name="ModificationTime" Type="datetime" />
           <Property Name="UserID" Type="bigint" />
           <Property Name="ModifyUserID" Type="bigint" />
+          <Property Name="Status" Type="tinyint" />
+          <Property Name="CancellationTime" Type="datetime" />
+          <Property Name="CancellationUserID" Type="bigint" />
+          <Property Name="SupplierID" Type="bigint" />
         </EntityType>
         <EntityType Name="InsuranceLocation">
           <Key>
@@ -2174,12 +2041,6 @@ warning 6002: The table/view 'DBMainTest.dbo.Location961114' does not have a pri
           <Property Name="HotelsProRegion" Type="nvarchar" MaxLength="4000" />
           <Property Name="FullName" Type="nvarchar" MaxLength="800" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'DBMainTest.dbo.LocationAirportType' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="LocationAirportType">
-          <Property Name="TypeId" Type="int" />
-          <Property Name="Type" Type="nvarchar" MaxLength="4000" />
-        </EntityType>-->
         <EntityType Name="LocationCnv">
           <Key>
             <PropertyRef Name="LocationID" />
@@ -3576,13 +3437,6 @@ warning 6002: The table/view 'DBMainTest.exe.AccommodationLocationDuP2' does not
           <Property Name="City_code" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'DBMainTest.exe.AirportsGiatamedia' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="AirportsGiatamedia">
-          <Property Name="iata" Type="varchar" MaxLength="100" />
-          <Property Name="airportName" Type="varchar" MaxLength="100" />
-          <Property Name="countryCode" Type="varchar" MaxLength="100" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'DBMainTest.exe.AirportSupplier961213' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="AirportSupplier961213">
           <Key>
@@ -3699,22 +3553,6 @@ warning 6002: The table/view 'DBMainTest.exe.AirportSupplierConfig_970317' does 
           <Property Name="MinStay" Type="nvarchar" MaxLength="50" />
           <Property Name="MaxStay" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'DBMainTest.exe.CountryT' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="CountryT">
-          <Property Name="country_code" Type="char" MaxLength="2" />
-          <Property Name="country_name" Type="varchar" MaxLength="45" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'DBMainTest.exe.Destinations' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Destinations">
-          <Property Name="Country" Type="varchar" MaxLength="50" />
-          <Property Name="DestinationId" Type="varchar" MaxLength="50" />
-          <Property Name="Destination" Type="varchar" MaxLength="50" />
-          <Property Name="ResortID" Type="varchar" MaxLength="50" />
-          <Property Name="Resort" Type="varchar" MaxLength="50" />
-          <Property Name="State" Type="varchar" MaxLength="50" />
-        </EntityType>-->
         <EntityType Name="Facility1">
           <Key>
             <PropertyRef Name="ID" />
@@ -3794,108 +3632,6 @@ warning 6002: The table/view 'DBMainTest.exe.Help' does not have a primary key d
           <Property Name="ControllerName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="HelpText" Type="nvarchar" MaxLength="4000" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'DBMainTest.exe.Hotelamenities' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Hotelamenities">
-          <Property Name="HotelCode" Type="varchar" MaxLength="50" />
-          <Property Name="OldHotelId" Type="varchar" MaxLength="50" />
-          <Property Name="PAmenities" Type="varchar" MaxLength="5000" />
-          <Property Name="RAmenities" Type="varchar" MaxLength="5000" />
-          <Property Name="RoomsNumber" Type="varchar" MaxLength="50" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'DBMainTest.exe.Hoteldescr' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Hoteldescr">
-          <Property Name="HotelCode" Type="varchar" MaxLength="50" />
-          <Property Name="OldHotelId" Type="varchar" MaxLength="50" />
-          <Property Name="HotelLocation" Type="varchar" MaxLength="500" />
-          <Property Name="HotelInfo" Type="varchar" MaxLength="5000" />
-          <Property Name="HotelType" Type="varchar" MaxLength="500" />
-          <Property Name="HotelCategory" Type="varchar" MaxLength="500" />
-          <Property Name="HotelStyle" Type="varchar" MaxLength="500" />
-          <Property Name="HotelTheme" Type="varchar" MaxLength="500" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'DBMainTest.exe.HotelLatLong' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="HotelLatLong">
-          <Property Name="IsRecive" Type="int" />
-          <Property Name="id" Type="varchar" MaxLength="5000" />
-          <Property Name="name" Type="varchar" MaxLength="5000" />
-          <Property Name="HotelId" Type="bigint" />
-          <Property Name="hotel_url" Type="varchar" MaxLength="5000" />
-          <Property Name="Lat" Type="nvarchar" MaxLength="500" />
-          <Property Name="Long" Type="nvarchar" MaxLength="500" />
-          <Property Name="latitude" Type="varchar" MaxLength="500" />
-          <Property Name="longitude" Type="varchar" MaxLength="500" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'DBMainTest.exe.HotelLatLong2' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="HotelLatLong2">
-          <Property Name="id" Type="varchar" MaxLength="5000" />
-          <Property Name="name" Type="varchar" MaxLength="5000" />
-          <Property Name="HotelId" Type="bigint" />
-          <Property Name="hotel_url" Type="varchar" MaxLength="5000" />
-          <Property Name="Lat" Type="nvarchar" MaxLength="500" />
-          <Property Name="Long" Type="nvarchar" MaxLength="500" />
-          <Property Name="latitude" Type="varchar" MaxLength="500" />
-          <Property Name="longitude" Type="varchar" MaxLength="500" />
-          <Property Name="IsRecive" Type="int" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'DBMainTest.exe.HotelLatLong4' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="HotelLatLong4">
-          <Property Name="id" Type="varchar" MaxLength="5000" />
-          <Property Name="name" Type="varchar" MaxLength="5000" />
-          <Property Name="HotelId" Type="bigint" />
-          <Property Name="hotel_url" Type="varchar" MaxLength="5000" />
-          <Property Name="Lat" Type="nvarchar" MaxLength="500" />
-          <Property Name="Long" Type="nvarchar" MaxLength="500" />
-          <Property Name="latitude" Type="varchar" MaxLength="500" />
-          <Property Name="longitude" Type="varchar" MaxLength="500" />
-          <Property Name="IsRecive" Type="int" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'DBMainTest.exe.HotelLatLong5' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="HotelLatLong5">
-          <Property Name="id" Type="varchar" MaxLength="5000" />
-          <Property Name="name" Type="varchar" MaxLength="5000" />
-          <Property Name="HotelId" Type="bigint" />
-          <Property Name="hotel_url" Type="varchar" MaxLength="5000" />
-          <Property Name="Lat" Type="nvarchar" MaxLength="500" />
-          <Property Name="Long" Type="nvarchar" MaxLength="500" />
-          <Property Name="latitude" Type="varchar" MaxLength="500" />
-          <Property Name="longitude" Type="varchar" MaxLength="500" />
-          <Property Name="IsRecive" Type="int" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'DBMainTest.exe.Hotellist' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Hotellist">
-          <Property Name="HotelCode" Type="varchar" MaxLength="50" />
-          <Property Name="HotelName" Type="varchar" MaxLength="500" />
-          <Property Name="StarRating" Type="varchar" MaxLength="50" />
-          <Property Name="DestinationId" Type="varchar" MaxLength="50" />
-          <Property Name="Destination" Type="varchar" MaxLength="250" />
-          <Property Name="Country" Type="varchar" MaxLength="50" />
-          <Property Name="HotelAddress" Type="varchar" MaxLength="500" />
-          <Property Name="HotelPhoneNumber" Type="varchar" MaxLength="20" />
-          <Property Name="OldHotelId" Type="varchar" MaxLength="500" />
-          <Property Name="HotelPostalCode" Type="varchar" MaxLength="50" />
-          <Property Name="HotelArea" Type="varchar" MaxLength="500" />
-          <Property Name="Chain" Type="varchar" MaxLength="50" />
-          <Property Name="Latitude" Type="varchar" MaxLength="50" />
-          <Property Name="Longitude" Type="varchar" MaxLength="50" />
-          <Property Name="HotelImages" Type="varchar" MaxLength="5000" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'DBMainTest.exe.HotelsBedLocation' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="HotelsBedLocation">
-          <Property Name="country" Type="nvarchar" MaxLength="100" />
-          <Property Name="Region" Type="nvarchar" MaxLength="100" />
-          <Property Name="Resort" Type="nvarchar" MaxLength="100" />
-          <Property Name="Code1" Type="nvarchar" MaxLength="50" />
-          <Property Name="Code2" Type="nvarchar" MaxLength="50" />
-          <Property Name="Type" Type="bit" />
-        </EntityType>-->
         <EntityType Name="IataAirport">
           <Key>
             <PropertyRef Name="Id" />
@@ -4280,11 +4016,6 @@ warning 6002: The table/view 'DBMainTest.exe.Tblrank' does not have a primary ke
           <Property Name="LocationID" Type="bigint" Nullable="false" />
           <Property Name="Rank" Type="bigint" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'DBMainTest.exe.trex' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="trex">
-          <Property Name="s" Type="nvarchar(max)" />
-        </EntityType>-->
         <EntityType Name="trexd">
           <Key>
             <PropertyRef Name="Id" />
@@ -5629,6 +5360,18 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Discount_Accommodation">
+          <End Role="Accommodation" Type="Self.Accommodation" Multiplicity="0..1" />
+          <End Role="Discount" Type="Self.Discount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accommodation">
+              <PropertyRef Name="AccommodationlID" />
+            </Principal>
+            <Dependent Role="Discount">
+              <PropertyRef Name="AccommodationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Discount_Company">
           <End Role="Company1" Type="Self.Company1" Multiplicity="0..1" />
           <End Role="Discount" Type="Self.Discount" Multiplicity="*" />
@@ -5650,6 +5393,18 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
             </Principal>
             <Dependent Role="Discount">
               <PropertyRef Name="CurrencyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Discount_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
+          <End Role="Discount" Type="Self.Discount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationID" />
+            </Principal>
+            <Dependent Role="Discount">
+              <PropertyRef Name="LocationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5746,6 +5501,18 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
             </Principal>
             <Dependent Role="FlightContract">
               <PropertyRef Name="ContractID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FlightContract_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="FlightContract" Type="Self.FlightContract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="FlightContract">
+              <PropertyRef Name="SupplierID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6013,6 +5780,18 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_InsuranceContract_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="InsuranceContract" Type="Self.InsuranceContract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="InsuranceContract">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_InsuranceContract_User">
           <End Role="User1" Type="Self.User1" Multiplicity="0..1" />
           <End Role="InsuranceContract" Type="Self.InsuranceContract" Multiplicity="*" />
@@ -6022,6 +5801,18 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
             </Principal>
             <Dependent Role="InsuranceContract">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InsuranceContract_User_CancellationUserID">
+          <End Role="User1" Type="Self.User1" Multiplicity="0..1" />
+          <End Role="InsuranceContract" Type="Self.InsuranceContract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User1">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="InsuranceContract">
+              <PropertyRef Name="CancellationUserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7419,12 +7210,8 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
         </Association>
         <EntityContainer Name="ContextModelStoreContainer">
           <EntitySet Name="AccommodationCommission" EntityType="Self.AccommodationCommission" Schema="cnv" store:Type="Tables" />
+          <EntitySet Name="AccommodationLatLong" EntityType="Self.AccommodationLatLong" Schema="cnv" store:Type="Tables" />
           <EntitySet Name="GetHotelAvailInfo" EntityType="Self.GetHotelAvailInfo" Schema="cnv" store:Type="Tables" />
-          <EntitySet Name="gtaFileNames" EntityType="Self.gtaFileNames" Schema="cnv" store:Type="Tables" />
-          <EntitySet Name="gtaHotelFileName" EntityType="Self.gtaHotelFileName" Schema="cnv" store:Type="Tables" />
-          <EntitySet Name="gtaHotelInfoOnly" EntityType="Self.gtaHotelInfoOnly" Schema="cnv" store:Type="Tables" />
-          <EntitySet Name="gtaHotelRoomType" EntityType="Self.gtaHotelRoomType" Schema="cnv" store:Type="Tables" />
-          <EntitySet Name="gtaHotels" EntityType="Self.gtaHotels" Schema="cnv" store:Type="Tables" />
           <EntitySet Name="InsuranceCities" EntityType="Self.InsuranceCities" Schema="cnv" store:Type="Tables" />
           <EntitySet Name="InsuranceCountries" EntityType="Self.InsuranceCountries" Schema="cnv" store:Type="Tables" />
           <EntitySet Name="InsurancePlans" EntityType="Self.InsurancePlans" Schema="cnv" store:Type="Tables" />
@@ -7772,52 +7559,6 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
     [ExchangeDetails_970317].[SupplierID] AS [SupplierID], 
     [ExchangeDetails_970317].[CreationTime] AS [CreationTime]
     FROM [cnv].[ExchangeDetails_970317] AS [ExchangeDetails_970317]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="FacilityTemp" EntityType="Self.FacilityTemp" store:Type="Tables" store:Schema="cnv">
-            <DefiningQuery>SELECT 
-    [FacilityTemp].[FacilityID] AS [FacilityID], 
-    [FacilityTemp].[Category] AS [Category], 
-    [FacilityTemp].[Name] AS [Name], 
-    [FacilityTemp].[PersianCategory] AS [PersianCategory], 
-    [FacilityTemp].[PersianName] AS [PersianName]
-    FROM [cnv].[FacilityTemp] AS [FacilityTemp]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="gtaLocationData" EntityType="Self.gtaLocationData" store:Type="Tables" store:Schema="cnv">
-            <DefiningQuery>SELECT 
-    [gtaLocationData].[Id] AS [Id], 
-    [gtaLocationData].[CountryCode] AS [CountryCode], 
-    [gtaLocationData].[CountryName] AS [CountryName], 
-    [gtaLocationData].[Citycode] AS [Citycode], 
-    [gtaLocationData].[CityName] AS [CityName], 
-    [gtaLocationData].[CitiesArray] AS [CitiesArray], 
-    [gtaLocationData].[LocationID] AS [LocationID], 
-    [gtaLocationData].[MyCountryName] AS [MyCountryName], 
-    [gtaLocationData].[IsInserted] AS [IsInserted]
-    FROM [cnv].[gtaLocationData] AS [gtaLocationData]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="gtaLocationData_970313" EntityType="Self.gtaLocationData_970313" store:Type="Tables" store:Schema="cnv">
-            <DefiningQuery>SELECT 
-    [gtaLocationData_970313].[Id] AS [Id], 
-    [gtaLocationData_970313].[CountryCode] AS [CountryCode], 
-    [gtaLocationData_970313].[CountryName] AS [CountryName], 
-    [gtaLocationData_970313].[Citycode] AS [Citycode], 
-    [gtaLocationData_970313].[CityName] AS [CityName], 
-    [gtaLocationData_970313].[CitiesArray] AS [CitiesArray], 
-    [gtaLocationData_970313].[LocationID] AS [LocationID], 
-    [gtaLocationData_970313].[MyCountryName] AS [MyCountryName]
-    FROM [cnv].[gtaLocationData_970313] AS [gtaLocationData_970313]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="gtaLocationDataTemp" EntityType="Self.gtaLocationDataTemp" store:Type="Tables" store:Schema="cnv">
-            <DefiningQuery>SELECT 
-    [gtaLocationDataTemp].[Id] AS [Id], 
-    [gtaLocationDataTemp].[CountryCode] AS [CountryCode], 
-    [gtaLocationDataTemp].[CountryName] AS [CountryName], 
-    [gtaLocationDataTemp].[Citycode] AS [Citycode], 
-    [gtaLocationDataTemp].[CityName] AS [CityName], 
-    [gtaLocationDataTemp].[CitiesArray] AS [CitiesArray], 
-    [gtaLocationDataTemp].[LocationID] AS [LocationID], 
-    [gtaLocationDataTemp].[MyCountryName] AS [MyCountryName]
-    FROM [cnv].[gtaLocationDataTemp] AS [gtaLocationDataTemp]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="Inbox" EntityType="Self.Inbox" store:Type="Tables" store:Schema="cnv">
             <DefiningQuery>SELECT 
@@ -8903,12 +8644,20 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
             <End Role="User1" EntitySet="User1" />
             <End Role="DevelopmentRequest" EntitySet="DevelopmentRequest" />
           </AssociationSet>
+          <AssociationSet Name="FK_Discount_Accommodation" Association="Self.FK_Discount_Accommodation">
+            <End Role="Accommodation" EntitySet="Accommodation" />
+            <End Role="Discount" EntitySet="Discount" />
+          </AssociationSet>
           <AssociationSet Name="FK_Discount_Company" Association="Self.FK_Discount_Company">
             <End Role="Company1" EntitySet="Company1" />
             <End Role="Discount" EntitySet="Discount" />
           </AssociationSet>
           <AssociationSet Name="FK_Discount_Currency" Association="Self.FK_Discount_Currency">
             <End Role="Currency" EntitySet="Currency" />
+            <End Role="Discount" EntitySet="Discount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Discount_Location" Association="Self.FK_Discount_Location">
+            <End Role="Location" EntitySet="Location" />
             <End Role="Discount" EntitySet="Discount" />
           </AssociationSet>
           <AssociationSet Name="FK_Discount_User" Association="Self.FK_Discount_User">
@@ -8941,6 +8690,10 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
           </AssociationSet>
           <AssociationSet Name="FK_FlightContract_Contract" Association="Self.FK_FlightContract_Contract">
             <End Role="Contract" EntitySet="Contract" />
+            <End Role="FlightContract" EntitySet="FlightContract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FlightContract_Supplier" Association="Self.FK_FlightContract_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
             <End Role="FlightContract" EntitySet="FlightContract" />
           </AssociationSet>
           <AssociationSet Name="FK_FlightContractPassenger_Contacts" Association="Self.FK_FlightContractPassenger_Contacts">
@@ -9031,7 +8784,15 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
             <End Role="User1" EntitySet="User1" />
             <End Role="InsuranceContract" EntitySet="InsuranceContract" />
           </AssociationSet>
+          <AssociationSet Name="FK_InsuranceContract_Supplier" Association="Self.FK_InsuranceContract_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="InsuranceContract" EntitySet="InsuranceContract" />
+          </AssociationSet>
           <AssociationSet Name="FK_InsuranceContract_User" Association="Self.FK_InsuranceContract_User">
+            <End Role="User1" EntitySet="User1" />
+            <End Role="InsuranceContract" EntitySet="InsuranceContract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InsuranceContract_User_CancellationUserID" Association="Self.FK_InsuranceContract_User_CancellationUserID">
             <End Role="User1" EntitySet="User1" />
             <End Role="InsuranceContract" EntitySet="InsuranceContract" />
           </AssociationSet>
@@ -9500,8 +9261,7 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
             <End Role="WebSites" EntitySet="WebSites" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ContextModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -9738,6 +9498,7 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
           <NavigationProperty Name="Pages" Relationship="Self.FK_Pages_Accommodations" FromRole="Accommodation" ToRole="Pages" />
           <NavigationProperty Name="Facilities" Relationship="Self.AccommodationFacility" FromRole="Accommodation" ToRole="Facility" />
           <NavigationProperty Name="Locations" Relationship="Self.AccommodationLocation" FromRole="Accommodation" ToRole="Location" />
+          <NavigationProperty Name="Discounts" Relationship="ContextModel.FK_Discount_Accommodation" FromRole="Accommodation" ToRole="Discount" />
         </EntityType>
         <EntityType Name="AccommodationAttribute">
           <Key>
@@ -9895,6 +9656,10 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
           <Property Name="DateActive" Type="DateTime" Precision="3" />
           <Property Name="OriginalLink" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Accommodation" Relationship="Self.FK_AccomodationImage_Accommodation" FromRole="AccomodationImage" ToRole="Accommodation" />
+          <Property Name="IsVerified" Type="Boolean" />
+          <Property Name="VerifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsReported" Type="Boolean" />
+          <Property Name="NumberOfReports" Type="Int32" />
         </EntityType>
         <EntityType Name="AccomodationRoomImage">
           <Key>
@@ -9918,6 +9683,10 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
           <Property Name="DateActive" Type="DateTime" Precision="3" />
           <Property Name="OriginalLink" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Accommodation" Relationship="Self.FK_AccomodationRoomImage_Accommodation" FromRole="AccomodationRoomImage" ToRole="Accommodation" />
+          <Property Name="IsVerified" Type="Boolean" />
+          <Property Name="VerifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsReported" Type="Boolean" />
+          <Property Name="NumberOfReports" Type="Int32" />
         </EntityType>
         <EntityType Name="AccomodationSupplier">
           <Key>
@@ -10599,6 +10368,11 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
           <NavigationProperty Name="Currency" Relationship="Self.FK_Discount_Currency" FromRole="Discount" ToRole="Currency" />
           <NavigationProperty Name="User1" Relationship="Self.FK_Discount_User" FromRole="Discount" ToRole="User1" />
           <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_Discount" FromRole="Discount" ToRole="Payment" />
+          <Property Name="AccommodationId" Type="Int64" />
+          <Property Name="Rating" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="LocationID" Type="Int64" />
+          <NavigationProperty Name="Accommodation" Relationship="ContextModel.FK_Discount_Accommodation" FromRole="Discount" ToRole="Accommodation" />
+          <NavigationProperty Name="Location" Relationship="ContextModel.FK_Discount_Location" FromRole="Discount" ToRole="Location" />
         </EntityType>
         <EntityType Name="Document">
           <Key>
@@ -10703,6 +10477,8 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
           <NavigationProperty Name="Contract" Relationship="Self.FK_FlightContract_Contract" FromRole="FlightContract" ToRole="Contract" />
           <NavigationProperty Name="TicketStatu" Relationship="Self.FK__FlightCon__Ticke__24285DB4" FromRole="FlightContract" ToRole="TicketStatus" />
           <NavigationProperty Name="FlightTickets" Relationship="Self.FK_FlightTicket_FlightContract" FromRole="FlightContract" ToRole="FlightTicket" />
+          <Property Name="SupplierID" Type="Int64" />
+          <NavigationProperty Name="Supplier" Relationship="ContextModel.FK_FlightContract_Supplier" FromRole="FlightContract" ToRole="Supplier" />
         </EntityType>
         <EntityType Name="FlightContractPassenger">
           <Key>
@@ -11016,7 +10792,7 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
           <Property Name="HelpId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ActionName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ControllerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="HelpText" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="HelpText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="HotelIndex">
           <Key>
@@ -11106,6 +10882,12 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
           <NavigationProperty Name="User1" Relationship="Self.FK_InsuranceContract_ModifyUser" FromRole="InsuranceContract" ToRole="User1" />
           <NavigationProperty Name="User11" Relationship="Self.FK_InsuranceContract_User" FromRole="InsuranceContract" ToRole="User1" />
           <NavigationProperty Name="InsuranceTickets" Relationship="Self.FK_InsuranceTicket_InsuranceContract" FromRole="InsuranceContract" ToRole="InsuranceTicket" />
+          <Property Name="Status" Type="Byte" />
+          <Property Name="CancellationTime" Type="DateTime" Precision="3" />
+          <Property Name="CancellationUserID" Type="Int64" />
+          <Property Name="SupplierID" Type="Int64" />
+          <NavigationProperty Name="Supplier" Relationship="ContextModel.FK_InsuranceContract_Supplier" FromRole="InsuranceContract" ToRole="Supplier" />
+          <NavigationProperty Name="User12" Relationship="ContextModel.FK_InsuranceContract_User_CancellationUserID" FromRole="InsuranceContract" ToRole="User1" />
         </EntityType>
         <EntityType Name="InsuranceLocation">
           <Key>
@@ -11245,6 +11027,7 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
           <NavigationProperty Name="ServiceContracts" Relationship="Self.FK_ServiceContract_Location" FromRole="Location" ToRole="ServiceContract" />
           <NavigationProperty Name="ServiceLocations" Relationship="Self.FK_ServiceLocation_Location" FromRole="Location" ToRole="ServiceLocation" />
           <NavigationProperty Name="Accommodations" Relationship="Self.AccommodationLocation" FromRole="Location" ToRole="Accommodation" />
+          <NavigationProperty Name="Discounts" Relationship="ContextModel.FK_Discount_Location" FromRole="Location" ToRole="Discount" />
         </EntityType>
         <EntityType Name="LocationCnv">
           <Key>
@@ -12038,6 +11821,8 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
           <NavigationProperty Name="LocationSuppliers" Relationship="Self.FK_LocationSupplier_Supplier" FromRole="Supplier" ToRole="LocationSupplier" />
           <NavigationProperty Name="PNR_RPH" Relationship="Self.FK_PNR_RPH_Supplier" FromRole="Supplier" ToRole="PNR_RPH" />
           <NavigationProperty Name="RailwayContracts" Relationship="Self.FK_RailwayContract_Supplier" FromRole="Supplier" ToRole="RailwayContract" />
+          <NavigationProperty Name="FlightContracts" Relationship="ContextModel.FK_FlightContract_Supplier" FromRole="Supplier" ToRole="FlightContract" />
+          <NavigationProperty Name="InsuranceContracts" Relationship="ContextModel.FK_InsuranceContract_Supplier" FromRole="Supplier" ToRole="InsuranceContract" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -12373,6 +12158,7 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
           <NavigationProperty Name="Wallets1" Relationship="Self.FK_Wallet_User1" FromRole="User1" ToRole="Wallet" />
           <NavigationProperty Name="WebSites" Relationship="Self.FK_WebSites_User" FromRole="User1" ToRole="WebSites" />
           <NavigationProperty Name="Roles" Relationship="Self.UserRole" FromRole="User1" ToRole="Role" />
+          <NavigationProperty Name="InsuranceContracts2" Relationship="ContextModel.FK_InsuranceContract_User_CancellationUserID" FromRole="User1" ToRole="InsuranceContract" />
         </EntityType>
         <EntityType Name="UserLog">
           <Key>
@@ -18142,7 +17928,133 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
             <End Role="OfflineAccommodation" EntitySet="OfflineAccommodations" />
             <End Role="Facility" EntitySet="Facilities" />
           </AssociationSet>
+          <EntitySet Name="AccommodationLatLongs" EntityType="ContextModel.AccommodationLatLong" />
+          <AssociationSet Name="FK_Discount_Accommodation" Association="ContextModel.FK_Discount_Accommodation">
+            <End Role="Accommodation" EntitySet="Accommodations" />
+            <End Role="Discount" EntitySet="Discounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Discount_Location" Association="ContextModel.FK_Discount_Location">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="Discount" EntitySet="Discounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FlightContract_Supplier" Association="ContextModel.FK_FlightContract_Supplier">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="FlightContract" EntitySet="FlightContracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InsuranceContract_Supplier" Association="ContextModel.FK_InsuranceContract_Supplier">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="InsuranceContract" EntitySet="InsuranceContracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InsuranceContract_User_CancellationUserID" Association="ContextModel.FK_InsuranceContract_User_CancellationUserID">
+            <End Role="User1" EntitySet="User1" />
+            <End Role="InsuranceContract" EntitySet="InsuranceContracts" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="AccommodationLatLong">
+          <Key>
+            <PropertyRef Name="AccommodationlID" />
+          </Key>
+          <Property Name="AccommodationlID" Type="Int64" Nullable="false" />
+          <Property Name="ChainID" Type="Int64" />
+          <Property Name="AirportCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="Byte" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Rating" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PostCodeZip" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Near" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="lastUpdate" Type="DateTime" Precision="3" />
+          <Property Name="CountryCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int64" />
+          <Property Name="Resort" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Region" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="DestinationId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Destination" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HotelArea" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="HotelImages" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="HotelLocation" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="HotelInfo" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="PAmenities" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="Url" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="UserID" Type="Int64" />
+          <Property Name="DateVerified" Type="DateTime" Precision="3" />
+          <Property Name="IsVerified" Type="Boolean" />
+          <Property Name="IsError" Type="Boolean" />
+          <Property Name="LocationNameLong" Type="String" MaxLength="800" FixedLength="false" Unicode="true" />
+          <Property Name="FormattedAddress" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="PlaceId" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="LocationType" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="IsValid" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_Discount_Accommodation">
+          <End Type="ContextModel.Accommodation" Role="Accommodation" Multiplicity="0..1" />
+          <End Type="ContextModel.Discount" Role="Discount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accommodation">
+              <PropertyRef Name="AccommodationlID" />
+            </Principal>
+            <Dependent Role="Discount">
+              <PropertyRef Name="AccommodationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Discount_Location">
+          <End Type="ContextModel.Location" Role="Location" Multiplicity="0..1" />
+          <End Type="ContextModel.Discount" Role="Discount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationID" />
+            </Principal>
+            <Dependent Role="Discount">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FlightContract_Supplier">
+          <End Type="ContextModel.Supplier" Role="Supplier" Multiplicity="0..1" />
+          <End Type="ContextModel.FlightContract" Role="FlightContract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="FlightContract">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InsuranceContract_Supplier">
+          <End Type="ContextModel.Supplier" Role="Supplier" Multiplicity="0..1" />
+          <End Type="ContextModel.InsuranceContract" Role="InsuranceContract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="InsuranceContract">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InsuranceContract_User_CancellationUserID">
+          <End Type="ContextModel.User1" Role="User1" Multiplicity="0..1" />
+          <End Type="ContextModel.InsuranceContract" Role="InsuranceContract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User1">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="InsuranceContract">
+              <PropertyRef Name="CancellationUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -18177,69 +18089,6 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
                 <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="TableDatax" ColumnName="TableDatax" />
                 <ScalarProperty Name="Locations" ColumnName="Locations" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="gtaFileNames">
-            <EntityTypeMapping TypeName="ContextModel.gtaFileName">
-              <MappingFragment StoreEntitySet="gtaFileNames">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="NAME" ColumnName="NAME" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="gtaHotelFileNames">
-            <EntityTypeMapping TypeName="ContextModel.gtaHotelFileName">
-              <MappingFragment StoreEntitySet="gtaHotelFileName">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="NAME" ColumnName="NAME" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="gtaHotelInfoOnlies">
-            <EntityTypeMapping TypeName="ContextModel.gtaHotelInfoOnly">
-              <MappingFragment StoreEntitySet="gtaHotelInfoOnly">
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
-                <ScalarProperty Name="CityCode" ColumnName="CityCode" />
-                <ScalarProperty Name="HotelName" ColumnName="HotelName" />
-                <ScalarProperty Name="HotelCode" ColumnName="HotelCode" />
-                <ScalarProperty Name="ADDRESSLine1" ColumnName="ADDRESSLine1" />
-                <ScalarProperty Name="ADDRESSLine2" ColumnName="ADDRESSLine2" />
-                <ScalarProperty Name="ADDRESSLine3" ColumnName="ADDRESSLine3" />
-                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
-                <ScalarProperty Name="Website" ColumnName="Website" />
-                <ScalarProperty Name="StarRating" ColumnName="StarRating" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
-                <ScalarProperty Name="Reports" ColumnName="Reports" />
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-                <ScalarProperty Name="FacilityCode" ColumnName="FacilityCode" />
-                <ScalarProperty Name="FacilityName" ColumnName="FacilityName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="gtaHotelRoomTypes">
-            <EntityTypeMapping TypeName="ContextModel.gtaHotelRoomType">
-              <MappingFragment StoreEntitySet="gtaHotelRoomType">
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
-                <ScalarProperty Name="CityCode" ColumnName="CityCode" />
-                <ScalarProperty Name="HotelName" ColumnName="HotelName" />
-                <ScalarProperty Name="HotelCode" ColumnName="HotelCode" />
-                <ScalarProperty Name="RoomTypeCode" ColumnName="RoomTypeCode" />
-                <ScalarProperty Name="RoomTypeName" ColumnName="RoomTypeName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="gtaHotels">
-            <EntityTypeMapping TypeName="ContextModel.gtaHotel">
-              <MappingFragment StoreEntitySet="gtaHotels">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CityCode" ColumnName="CityCode" />
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
-                <ScalarProperty Name="HotelCode" ColumnName="HotelCode" />
-                <ScalarProperty Name="HotelName" ColumnName="HotelName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -18513,6 +18362,10 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
           <EntitySetMapping Name="AccomodationImages">
             <EntityTypeMapping TypeName="ContextModel.AccomodationImage">
               <MappingFragment StoreEntitySet="AccomodationImage">
+                <ScalarProperty Name="NumberOfReports" ColumnName="NumberOfReports" />
+                <ScalarProperty Name="IsReported" ColumnName="IsReported" />
+                <ScalarProperty Name="VerifiedDate" ColumnName="VerifiedDate" />
+                <ScalarProperty Name="IsVerified" ColumnName="IsVerified" />
                 <ScalarProperty Name="ImageID" ColumnName="ImageID" />
                 <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
@@ -18529,6 +18382,10 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
           <EntitySetMapping Name="AccomodationRoomImages">
             <EntityTypeMapping TypeName="ContextModel.AccomodationRoomImage">
               <MappingFragment StoreEntitySet="AccomodationRoomImage">
+                <ScalarProperty Name="NumberOfReports" ColumnName="NumberOfReports" />
+                <ScalarProperty Name="IsReported" ColumnName="IsReported" />
+                <ScalarProperty Name="VerifiedDate" ColumnName="VerifiedDate" />
+                <ScalarProperty Name="IsVerified" ColumnName="IsVerified" />
                 <ScalarProperty Name="AccomodationRoomImageID" ColumnName="AccomodationRoomImageID" />
                 <ScalarProperty Name="AccommodationID" ColumnName="AccommodationID" />
                 <ScalarProperty Name="RoomTypeId" ColumnName="RoomTypeId" />
@@ -19120,6 +18977,9 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
           <EntitySetMapping Name="Discounts">
             <EntityTypeMapping TypeName="ContextModel.Discount">
               <MappingFragment StoreEntitySet="Discount">
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="AccommodationId" ColumnName="AccommodationId" />
                 <ScalarProperty Name="DiscountID" ColumnName="DiscountID" />
                 <ScalarProperty Name="DiscountCode" ColumnName="DiscountCode" />
                 <ScalarProperty Name="DiscountDescription" ColumnName="DiscountDescription" />
@@ -19219,6 +19079,7 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
           <EntitySetMapping Name="FlightContracts">
             <EntityTypeMapping TypeName="ContextModel.FlightContract">
               <MappingFragment StoreEntitySet="FlightContract">
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="FlightContractID" ColumnName="FlightContractID" />
                 <ScalarProperty Name="ContractID" ColumnName="ContractID" />
                 <ScalarProperty Name="RPHKey_Old" ColumnName="RPHKey_Old" />
@@ -19603,6 +19464,10 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
           <EntitySetMapping Name="InsuranceContracts">
             <EntityTypeMapping TypeName="ContextModel.InsuranceContract">
               <MappingFragment StoreEntitySet="InsuranceContract">
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="CancellationUserID" ColumnName="CancellationUserID" />
+                <ScalarProperty Name="CancellationTime" ColumnName="CancellationTime" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="InsuranceContractID" ColumnName="InsuranceContractID" />
                 <ScalarProperty Name="ContractID" ColumnName="ContractID" />
                 <ScalarProperty Name="InsuranceRPHKey" ColumnName="InsuranceRPHKey" />
@@ -21554,60 +21419,6 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FacilityTemps">
-            <EntityTypeMapping TypeName="ContextModel.FacilityTemp">
-              <MappingFragment StoreEntitySet="FacilityTemp">
-                <ScalarProperty Name="FacilityID" ColumnName="FacilityID" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="PersianCategory" ColumnName="PersianCategory" />
-                <ScalarProperty Name="PersianName" ColumnName="PersianName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="gtaLocationDatas">
-            <EntityTypeMapping TypeName="ContextModel.gtaLocationData">
-              <MappingFragment StoreEntitySet="gtaLocationData">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
-                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
-                <ScalarProperty Name="Citycode" ColumnName="Citycode" />
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
-                <ScalarProperty Name="CitiesArray" ColumnName="CitiesArray" />
-                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-                <ScalarProperty Name="MyCountryName" ColumnName="MyCountryName" />
-                <ScalarProperty Name="IsInserted" ColumnName="IsInserted" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="gtaLocationData_970313">
-            <EntityTypeMapping TypeName="ContextModel.gtaLocationData_970313">
-              <MappingFragment StoreEntitySet="gtaLocationData_970313">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
-                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
-                <ScalarProperty Name="Citycode" ColumnName="Citycode" />
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
-                <ScalarProperty Name="CitiesArray" ColumnName="CitiesArray" />
-                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-                <ScalarProperty Name="MyCountryName" ColumnName="MyCountryName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="gtaLocationDataTemps">
-            <EntityTypeMapping TypeName="ContextModel.gtaLocationDataTemp">
-              <MappingFragment StoreEntitySet="gtaLocationDataTemp">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
-                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
-                <ScalarProperty Name="Citycode" ColumnName="Citycode" />
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
-                <ScalarProperty Name="CitiesArray" ColumnName="CitiesArray" />
-                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-                <ScalarProperty Name="MyCountryName" ColumnName="MyCountryName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Inboxes">
             <EntityTypeMapping TypeName="ContextModel.Inbox">
               <MappingFragment StoreEntitySet="Inbox">
@@ -22454,6 +22265,52 @@ warning 6002: The table/view 'DBMainTest.exe.UserRole_970202' does not have a pr
               <ScalarProperty Name="FacilityID" ColumnName="FacilityID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="AccommodationLatLongs">
+            <EntityTypeMapping TypeName="ContextModel.AccommodationLatLong">
+              <MappingFragment StoreEntitySet="AccommodationLatLong">
+                <ScalarProperty Name="IsValid" ColumnName="IsValid" />
+                <ScalarProperty Name="LocationType" ColumnName="LocationType" />
+                <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+                <ScalarProperty Name="FormattedAddress" ColumnName="FormattedAddress" />
+                <ScalarProperty Name="LocationNameLong" ColumnName="LocationNameLong" />
+                <ScalarProperty Name="IsError" ColumnName="IsError" />
+                <ScalarProperty Name="IsVerified" ColumnName="IsVerified" />
+                <ScalarProperty Name="DateVerified" ColumnName="DateVerified" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PAmenities" ColumnName="PAmenities" />
+                <ScalarProperty Name="HotelInfo" ColumnName="HotelInfo" />
+                <ScalarProperty Name="HotelLocation" ColumnName="HotelLocation" />
+                <ScalarProperty Name="HotelImages" ColumnName="HotelImages" />
+                <ScalarProperty Name="HotelArea" ColumnName="HotelArea" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="DestinationId" ColumnName="DestinationId" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Resort" ColumnName="Resort" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+                <ScalarProperty Name="Near" ColumnName="Near" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="PostCodeZip" ColumnName="PostCodeZip" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="AirportCode" ColumnName="AirportCode" />
+                <ScalarProperty Name="ChainID" ColumnName="ChainID" />
+                <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

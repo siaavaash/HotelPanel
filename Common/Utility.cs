@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Text;
@@ -41,7 +43,7 @@ namespace Common
             double Unit = 1.60934;
             double Entry = double.Parse(mph);
             double Calculate = Entry * Unit;
-            var round = (int)RoundUpValue(Calculate,2);
+            var round = (int)RoundUpValue(Calculate, 2);
             return round;
         }
         public static double RoundUpValue(double value, int decimalpoint)
@@ -51,7 +53,7 @@ namespace Common
             {
                 result += Math.Pow(10, -decimalpoint);
             }
-            return result; 
+            return result;
         }
         public static int FahrenheitToCentigrade(string value)
         {
@@ -144,6 +146,33 @@ namespace Common
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Send GET Request to web service and deserialize json response to class
+        /// </summary>
+        /// <typeparam name="TResult">Result Class</typeparam>
+        /// <param name="url">Web Service Url</param>
+        /// <returns></returns>
+        public static TResult GetJson<TResult>(string url)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    var response = client.GetAsync(url).Result;
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        return JsonConvert.DeserializeObject<TResult>(response.Content.ReadAsStringAsync().Result);
+                    }
+                    throw new Exception($"Response status code is {response.StatusCode}");
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }
