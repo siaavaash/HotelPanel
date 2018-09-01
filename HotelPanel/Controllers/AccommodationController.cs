@@ -12,7 +12,37 @@ namespace HotelPanel.Controllers
 {
     public class AccommodationController : BaseController
     {
+
         AccommodationBusiness _AccommodationBusiness = new AccommodationBusiness();
+
+        [HttpGet]
+        public JsonResult GetCountries(string query)
+        {
+            try
+            {
+                return Json(new { success = true, data = _AccommodationBusiness.GetCountries(query) }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpGet]
+        public JsonResult GetCities(string query)
+        {
+            try
+            {
+                return Json(new { success = true, data = _AccommodationBusiness.GetCities(query) }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
         // GET: Accommodation
         public ActionResult Index()
         {
@@ -54,12 +84,12 @@ namespace HotelPanel.Controllers
         public JsonResult Filter(AccommodationModels.FilterImages Model)
         {
             bool ResultClear = _AccommodationBusiness.ReloadVerify(Model.AccommodationID);
-            bool Result =  _AccommodationBusiness.FilterImages(Model.ImageID);
+            bool Result = _AccommodationBusiness.FilterImages(Model.ImageID);
             bool Verify = _AccommodationBusiness.Verify(Model.AccommodationID);
             if (Result && Verify)
             {
                 iUserStorage.Store(PublicConstants.Session.Message_Success, "Your Accommodation Images Successfully Filtered");
-                return Json(Result,JsonRequestBehavior.AllowGet);
+                return Json(Result, JsonRequestBehavior.AllowGet);
             }
             return Json(Result, JsonRequestBehavior.AllowGet);
         }
@@ -135,7 +165,7 @@ namespace HotelPanel.Controllers
             return View(Model);
         }
         public ActionResult AddFacility()
-        {            
+        {
             return View();
         }
         [HttpPost]

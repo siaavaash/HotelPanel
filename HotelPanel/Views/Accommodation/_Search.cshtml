@@ -7,21 +7,21 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputEmail4">Accommodation ID</label>
-                        <input type="number" class="form-control" id="inputAccommodationID" name="AccommodationID" placeholder="50620">
+                        <input type="number" class="form-control" id="inputAccommodationID" name="AccommodationID">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputPassword4">Name</label>
-                        <input type="text" class="form-control" id="inputName" name="Name" placeholder="Hilton">
+                        <input type="text" class="form-control" id="inputName" name="Name">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputAddress">City</label>
-                        <input type="text" class="form-control" id="inputCity" name="CityName" placeholder="Istanbul">
+                        <input type="text" class="form-control" id="inputCity" name="CityName" autocomplete="off">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="inputAddress2">Country</label>
-                        <input type="text" class="form-control" id="inputCountry" name="Country" placeholder="Turkey">
+                        <input type="text" class="form-control" id="inputCountry" name="Country" autocomplete="off">
                     </div>
                 </div>
                 <div class="checkbox checkbox-circle checkbox-info peers ai-c mB-15">
@@ -32,3 +32,23 @@
             </form>
         </div>
     </div>
+<script>
+    $("#inputCity").autocomplete({
+        source: function(request, response) {
+            $.get("/Accommodation/GetCities", {
+                query: request.term
+            }, function (data) {
+                response(data.data);
+            });
+        },
+    });
+    $("#inputCountry").autocomplete({
+        source: function(request, response) {
+            $.get("/Accommodation/GetCountries", {
+                query: request.term
+            }, function (data) {
+                response(data.data);
+            });
+        },
+    });
+</script>
