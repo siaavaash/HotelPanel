@@ -40,12 +40,12 @@ namespace Data.DataModel
         public string Rating { get; set; }
         public Nullable<long> LocationID { get; set; }
     
+        public virtual Accommodation Accommodation { get; set; }
         public virtual Company1 Company1 { get; set; }
         public virtual Currency Currency { get; set; }
+        public virtual Location Location { get; set; }
         public virtual User1 User1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payment> Payments { get; set; }
-        public virtual Accommodation Accommodation { get; set; }
-        public virtual Location Location { get; set; }
     }
 }

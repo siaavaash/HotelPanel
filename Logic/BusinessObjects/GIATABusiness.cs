@@ -1,4 +1,4 @@
-﻿using MapData;
+﻿using Data.DataModel;
 using Service.ServiceModel.GIATAModels;
 using Service.Suppliers;
 using System;
@@ -11,7 +11,7 @@ namespace Logic.BusinessObjects
 {
     public class GIATABusiness
     {
-        private readonly MapDbContext context = new MapDbContext();
+        private readonly Context2 context = new Context2();
         private readonly GIATAAccess giataAccess;
         public GIATABusiness()
         {
@@ -31,7 +31,7 @@ namespace Logic.BusinessObjects
                 var ids = new List<long>();
                 for (long i = from; i <= to; i++)
                     ids.Add(i);
-                using (var context = new MapDbContext())
+                using (var context = new Context2())
                 {
                     context.AccommodationTmps.RemoveRange(context.AccommodationTmps.Where(x => ids.Contains(x.AccommodationlID)).ToList());
                     context.AccommodationLocationTmps.RemoveRange(context.AccommodationLocationTmps.Where(x => ids.Contains(x.AccommodationID)).ToList());
@@ -226,7 +226,7 @@ namespace Logic.BusinessObjects
                             });
                         });
                     });
-                using (var context = new MapDbContext())
+                using (var context = new Context2())
                 {
 
                     context.AccommodationTmps.AddRange(accTmp);
@@ -266,7 +266,7 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                using (var context = new MapDbContext())
+                using (var context = new Context2())
                 {
                     if (deactive.HasValue)
                     {

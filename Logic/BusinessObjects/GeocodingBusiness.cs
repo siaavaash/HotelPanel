@@ -17,7 +17,7 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                using (var context = new Context())
+                using (var context = new Entities())
                 {
                     var accommodation = context.AccommodationLatLongs.FirstOrDefault(x => x.AccommodationlID == id);
                     if (accommodation != null)
@@ -41,7 +41,7 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                using (var context = new Context())
+                using (var context = new Entities())
                 {
                     var accommodation = context.AccommodationLatLongs.FirstOrDefault(x => x.AccommodationlID == id);
                     if (accommodation != null)
@@ -74,6 +74,7 @@ namespace Logic.BusinessObjects
                     {
 
                     });
+                return result;
             }
             catch (Exception)
             {

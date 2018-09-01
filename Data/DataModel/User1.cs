@@ -53,6 +53,7 @@ namespace Data.DataModel
             this.Inbox11 = new HashSet<Inbox1>();
             this.InsuranceContracts = new HashSet<InsuranceContract>();
             this.InsuranceContracts1 = new HashSet<InsuranceContract>();
+            this.InsuranceContracts2 = new HashSet<InsuranceContract>();
             this.InsuranceLocations = new HashSet<InsuranceLocation>();
             this.InsuranceLocations1 = new HashSet<InsuranceLocation>();
             this.InsuranceTickets = new HashSet<InsuranceTicket>();
@@ -66,6 +67,8 @@ namespace Data.DataModel
             this.Payments = new HashSet<Payment>();
             this.PaymentTickets = new HashSet<PaymentTicket>();
             this.PNRs = new HashSet<PNR>();
+            this.ProductExtensions = new HashSet<ProductExtension>();
+            this.ProductExtensions1 = new HashSet<ProductExtension>();
             this.Questions = new HashSet<Question>();
             this.RailwayContracts = new HashSet<RailwayContract>();
             this.RequestUsers = new HashSet<RequestUser>();
@@ -77,19 +80,12 @@ namespace Data.DataModel
             this.Tickets = new HashSet<Ticket>();
             this.Tutorials = new HashSet<Tutorial>();
             this.Tutorials1 = new HashSet<Tutorial>();
-            this.RequestObjects = new HashSet<RequestObject>();
-            this.RequestObjects1 = new HashSet<RequestObject>();
-            this.RequestTours = new HashSet<RequestTour>();
-            this.RequestTours1 = new HashSet<RequestTour>();
             this.ServiceLocations = new HashSet<ServiceLocation>();
-            this.Tours = new HashSet<Tour>();
-            this.Tours1 = new HashSet<Tour>();
             this.User11 = new HashSet<User1>();
             this.Wallets = new HashSet<Wallet>();
             this.Wallets1 = new HashSet<Wallet>();
             this.WebSites = new HashSet<WebSite>();
             this.Roles = new HashSet<Role>();
-            this.InsuranceContracts2 = new HashSet<InsuranceContract>();
         }
     
         public long UserID { get; set; }
@@ -189,6 +185,8 @@ namespace Data.DataModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InsuranceContract> InsuranceContracts1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InsuranceContract> InsuranceContracts2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InsuranceLocation> InsuranceLocations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InsuranceLocation> InsuranceLocations1 { get; set; }
@@ -216,6 +214,10 @@ namespace Data.DataModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PNR> PNRs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductExtension> ProductExtensions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductExtension> ProductExtensions1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Question> Questions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RailwayContract> RailwayContracts { get; set; }
@@ -238,19 +240,7 @@ namespace Data.DataModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tutorial> Tutorials1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequestObject> RequestObjects { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequestObject> RequestObjects1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequestTour> RequestTours { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequestTour> RequestTours1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ServiceLocation> ServiceLocations { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tour> Tours { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tour> Tours1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User1> User11 { get; set; }
         public virtual User1 User12 { get; set; }
@@ -263,7 +253,5 @@ namespace Data.DataModel
         public virtual ICollection<WebSite> WebSites { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Role> Roles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InsuranceContract> InsuranceContracts2 { get; set; }
     }
 }

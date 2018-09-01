@@ -27,12 +27,12 @@ namespace Data.DataModel
             this.AirportSuppliers = new HashSet<AirportSupplier>();
             this.AirportSupplierConfig1 = new HashSet<AirportSupplierConfig1>();
             this.CompanySupplierAccesses = new HashSet<CompanySupplierAccess>();
+            this.FlightContracts = new HashSet<FlightContract>();
             this.FlightDiscounts = new HashSet<FlightDiscount>();
+            this.InsuranceContracts = new HashSet<InsuranceContract>();
             this.LocationSuppliers = new HashSet<LocationSupplier>();
             this.PNR_RPH = new HashSet<PNR_RPH>();
             this.RailwayContracts = new HashSet<RailwayContract>();
-            this.FlightContracts = new HashSet<FlightContract>();
-            this.InsuranceContracts = new HashSet<InsuranceContract>();
         }
     
         public long SupplierID { get; set; }
@@ -69,16 +69,16 @@ namespace Data.DataModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CompanySupplierAccess> CompanySupplierAccesses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FlightContract> FlightContracts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FlightDiscount> FlightDiscounts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InsuranceContract> InsuranceContracts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LocationSupplier> LocationSuppliers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PNR_RPH> PNR_RPH { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RailwayContract> RailwayContracts { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FlightContract> FlightContracts { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InsuranceContract> InsuranceContracts { get; set; }
     }
 }

@@ -49,10 +49,10 @@ namespace Data.DataModel
         public virtual Currency Currency { get; set; }
         public virtual Location Location { get; set; }
         public virtual User1 User1 { get; set; }
+        public virtual Supplier Supplier { get; set; }
         public virtual User1 User11 { get; set; }
+        public virtual User1 User12 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InsuranceTicket> InsuranceTickets { get; set; }
-        public virtual Supplier Supplier { get; set; }
-        public virtual User1 User12 { get; set; }
     }
 }

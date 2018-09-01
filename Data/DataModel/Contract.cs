@@ -25,8 +25,6 @@ namespace Data.DataModel
             this.Payments = new HashSet<Payment>();
             this.PNRs = new HashSet<PNR>();
             this.RailwayContracts = new HashSet<RailwayContract>();
-            this.RequestObjects = new HashSet<RequestObject>();
-            this.RequestTours = new HashSet<RequestTour>();
             this.ReserveRefounds = new HashSet<ReserveRefound>();
             this.ServiceContracts = new HashSet<ServiceContract>();
             this.TransferContracts = new HashSet<TransferContract>();
@@ -63,10 +61,6 @@ namespace Data.DataModel
         public virtual ICollection<PNR> PNRs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RailwayContract> RailwayContracts { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequestObject> RequestObjects { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequestTour> RequestTours { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReserveRefound> ReserveRefounds { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

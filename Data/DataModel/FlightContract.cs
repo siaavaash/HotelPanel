@@ -39,8 +39,8 @@ namespace Data.DataModel
     
         public virtual Contract Contract { get; set; }
         public virtual TicketStatu TicketStatu { get; set; }
+        public virtual Supplier Supplier { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FlightTicket> FlightTickets { get; set; }
-        public virtual Supplier Supplier { get; set; }
     }
 }

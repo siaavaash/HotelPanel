@@ -21,8 +21,6 @@ namespace Data.DataModel
             this.Addresses = new HashSet<Address>();
             this.FlightContractPassengers = new HashSet<FlightContractPassenger>();
             this.InsuranceTickets = new HashSet<InsuranceTicket>();
-            this.RequestObjects = new HashSet<RequestObject>();
-            this.RequestTours = new HashSet<RequestTour>();
             this.Telephones = new HashSet<Telephone>();
             this.TelephoneUs = new HashSet<TelephoneU>();
             this.User1 = new HashSet<User1>();
@@ -56,10 +54,6 @@ namespace Data.DataModel
         public virtual ICollection<FlightContractPassenger> FlightContractPassengers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InsuranceTicket> InsuranceTickets { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequestObject> RequestObjects { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequestTour> RequestTours { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Telephone> Telephones { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

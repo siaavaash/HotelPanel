@@ -8,25 +8,25 @@ using System.Web;
 
 namespace Data
 {
-    public class DataContext
+    public class DataContext2
     {
 
         /// <summary>
         /// شی مربوط به پایگاه داده
         /// </summary>
-        public static Entities Context
+        public static Context2 Context2
         {
             get
             {
                 try
                 {
                     if (HttpContext.Current == null)
-                        return new Entities();
+                        return new Context2();
 
                     var ocKey = "ocm_" + HttpContext.Current.GetHashCode().ToString("x");
                     if (!HttpContext.Current.Items.Contains(ocKey))
-                        HttpContext.Current.Items.Add(ocKey, new Entities());
-                    return HttpContext.Current.Items[ocKey] as Entities;
+                        HttpContext.Current.Items.Add(ocKey, new Context2());
+                    return HttpContext.Current.Items[ocKey] as Context2;
                 }
                 catch
                 {

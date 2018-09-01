@@ -18,7 +18,6 @@ namespace Data.DataModel
         public Facility()
         {
             this.Accommodations = new HashSet<Accommodation>();
-            this.OfflineAccommodations = new HashSet<OfflineAccommodation>();
         }
     
         public long FacilityID { get; set; }
@@ -31,7 +30,5 @@ namespace Data.DataModel
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Accommodation> Accommodations { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OfflineAccommodation> OfflineAccommodations { get; set; }
     }
 }

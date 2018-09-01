@@ -36,7 +36,7 @@ namespace HotelPanel.Controllers
         {
             try
             {
-
+                return Json(new { success = false, message = "" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

@@ -13,10 +13,10 @@ namespace Data.DataModel
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Context : DbContext
+    public partial class Entities : DbContext
     {
-        public Context()
-            : base("name=Context")
+        public Entities()
+            : base("name=Entities")
         {
         }
     
@@ -26,12 +26,10 @@ namespace Data.DataModel
         }
     
         public virtual DbSet<AccommodationCommission> AccommodationCommissions { get; set; }
+        public virtual DbSet<AccommodationLatLong> AccommodationLatLongs { get; set; }
+        public virtual DbSet<AvailHotelCode> AvailHotelCodes { get; set; }
+        public virtual DbSet<FileName> FileNames { get; set; }
         public virtual DbSet<GetHotelAvailInfo> GetHotelAvailInfoes { get; set; }
-        public virtual DbSet<gtaFileName> gtaFileNames { get; set; }
-        public virtual DbSet<gtaHotelFileName> gtaHotelFileNames { get; set; }
-        public virtual DbSet<gtaHotelInfoOnly> gtaHotelInfoOnlies { get; set; }
-        public virtual DbSet<gtaHotelRoomType> gtaHotelRoomTypes { get; set; }
-        public virtual DbSet<gtaHotel> gtaHotels { get; set; }
         public virtual DbSet<InsuranceCity> InsuranceCities { get; set; }
         public virtual DbSet<InsuranceCountry> InsuranceCountries { get; set; }
         public virtual DbSet<InsurancePlan> InsurancePlans { get; set; }
@@ -42,6 +40,7 @@ namespace Data.DataModel
         public virtual DbSet<RailwayStationTemp> RailwayStationTemps { get; set; }
         public virtual DbSet<RailwayStationTemp2> RailwayStationTemp2 { get; set; }
         public virtual DbSet<Accommodation> Accommodations { get; set; }
+        public virtual DbSet<AccommodationAirport> AccommodationAirports { get; set; }
         public virtual DbSet<AccommodationAttribute> AccommodationAttributes { get; set; }
         public virtual DbSet<AccommodationCommission1> AccommodationCommission1 { get; set; }
         public virtual DbSet<AccommodationDescription> AccommodationDescriptions { get; set; }
@@ -146,6 +145,7 @@ namespace Data.DataModel
         public virtual DbSet<PNR> PNRs { get; set; }
         public virtual DbSet<PNR_RPH> PNR_RPH { get; set; }
         public virtual DbSet<Privilege> Privileges { get; set; }
+        public virtual DbSet<ProductExtension> ProductExtensions { get; set; }
         public virtual DbSet<Question_status> Question_status { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<RailwayContract> RailwayContracts { get; set; }
@@ -187,52 +187,25 @@ namespace Data.DataModel
         public virtual DbSet<WeatherLocationSearch> WeatherLocationSearches { get; set; }
         public virtual DbSet<WebSite> WebSites { get; set; }
         public virtual DbSet<Zone> Zones { get; set; }
-        public virtual DbSet<Accommodation_Booking> Accommodation_Booking { get; set; }
-        public virtual DbSet<Accommodation_Booking2> Accommodation_Booking2 { get; set; }
-        public virtual DbSet<Accommodation_Booking3> Accommodation_Booking3 { get; set; }
-        public virtual DbSet<Accommodation_Booking4> Accommodation_Booking4 { get; set; }
-        public virtual DbSet<Accommodation_Booking5> Accommodation_Booking5 { get; set; }
-        public virtual DbSet<Airportflyinghobo> Airportflyinghobos { get; set; }
-        public virtual DbSet<Facility1> Facility1 { get; set; }
-        public virtual DbSet<GC> GCs { get; set; }
-        public virtual DbSet<GCMAPOld> GCMAPOlds { get; set; }
-        public virtual DbSet<GCMAP> GCMAPS { get; set; }
-        public virtual DbSet<GCMAPXmlNode> GCMAPXmlNodes { get; set; }
-        public virtual DbSet<IataAirport> IataAirports { get; set; }
-        public virtual DbSet<OtherAirport> OtherAirports { get; set; }
-        public virtual DbSet<Propertyv3> Propertyv3 { get; set; }
-        public virtual DbSet<Propertyv4> Propertyv4 { get; set; }
-        public virtual DbSet<TblAirPortAlirezaMap> TblAirPortAlirezaMaps { get; set; }
-        public virtual DbSet<TblAllAirport> TblAllAirports { get; set; }
-        public virtual DbSet<TblDiff> TblDiffs { get; set; }
-        public virtual DbSet<TblFac> TblFacs { get; set; }
-        public virtual DbSet<trexd> trexds { get; set; }
-        public virtual DbSet<TSAirport> TSAirports { get; set; }
-        public virtual DbSet<TSLocation> TSLocations { get; set; }
-        public virtual DbSet<TSProperty> TSProperties { get; set; }
-        public virtual DbSet<Webservicex> Webservicexes { get; set; }
-        public virtual DbSet<CharteInfo> CharteInfoes { get; set; }
-        public virtual DbSet<OfflineAccommodation> OfflineAccommodations { get; set; }
-        public virtual DbSet<OfflineAccomodationImage> OfflineAccomodationImages { get; set; }
-        public virtual DbSet<RequestObject> RequestObjects { get; set; }
-        public virtual DbSet<RequestTour> RequestTours { get; set; }
-        public virtual DbSet<Tour> Tours { get; set; }
+        public virtual DbSet<Accommodation_970527> Accommodation_970527 { get; set; }
+        public virtual DbSet<AccommodationAirport_970527> AccommodationAirport_970527 { get; set; }
+        public virtual DbSet<AccommodationLocation_970527> AccommodationLocation_970527 { get; set; }
         public virtual DbSet<AccommodationLocation960612> AccommodationLocation960612 { get; set; }
         public virtual DbSet<AccommodationMap3> AccommodationMap3 { get; set; }
+        public virtual DbSet<AccomodationSupplier_970527> AccomodationSupplier_970527 { get; set; }
         public virtual DbSet<AccomodationSupplier960616> AccomodationSupplier960616 { get; set; }
         public virtual DbSet<AirportSupplier961110> AirportSupplier961110 { get; set; }
         public virtual DbSet<AirportSupplierConfig> AirportSupplierConfigs { get; set; }
         public virtual DbSet<AirportSupplierConfig_970317> AirportSupplierConfig_970317 { get; set; }
+        public virtual DbSet<BookingHotelTemp> BookingHotelTemps { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<ExchangeDetails_970317> ExchangeDetails_970317 { get; set; }
-        public virtual DbSet<FacilityTemp> FacilityTemps { get; set; }
-        public virtual DbSet<gtaLocationData> gtaLocationDatas { get; set; }
-        public virtual DbSet<gtaLocationData_970313> gtaLocationData_970313 { get; set; }
-        public virtual DbSet<gtaLocationDataTemp> gtaLocationDataTemps { get; set; }
         public virtual DbSet<Inbox> Inboxes { get; set; }
         public virtual DbSet<Inbox2> Inbox2 { get; set; }
+        public virtual DbSet<Location_970527> Location_970527 { get; set; }
         public virtual DbSet<Location960627> Location960627 { get; set; }
+        public virtual DbSet<LocationMistakeName_970516> LocationMistakeName_970516 { get; set; }
         public virtual DbSet<Pages_970424> Pages_970424 { get; set; }
         public virtual DbSet<Privilege_970414> Privilege_970414 { get; set; }
         public virtual DbSet<RailwayStation_970306> RailwayStation_970306 { get; set; }
@@ -243,40 +216,14 @@ namespace Data.DataModel
         public virtual DbSet<AirportSupplierConfig961220> AirportSupplierConfig961220 { get; set; }
         public virtual DbSet<AirportSupplierConfig970121> AirportSupplierConfig970121 { get; set; }
         public virtual DbSet<Location961114> Location961114 { get; set; }
+        public virtual DbSet<LocationMistakeName_970528> LocationMistakeName_970528 { get; set; }
         public virtual DbSet<LocationMistakeName961114> LocationMistakeName961114 { get; set; }
+        public virtual DbSet<Pages_970513> Pages_970513 { get; set; }
         public virtual DbSet<Privilege_970421> Privilege_970421 { get; set; }
         public virtual DbSet<Privilege_970508> Privilege_970508 { get; set; }
         public virtual DbSet<RolePrivilege_970421> RolePrivilege_970421 { get; set; }
         public virtual DbSet<ServiceLocation> ServiceLocations { get; set; }
         public virtual DbSet<TimeZone> TimeZones { get; set; }
         public virtual DbSet<UserRole961221> UserRole961221 { get; set; }
-        public virtual DbSet<Accommodation1> Accommodation1 { get; set; }
-        public virtual DbSet<Accommodation960605> Accommodation960605 { get; set; }
-        public virtual DbSet<Accommodation960726> Accommodation960726 { get; set; }
-        public virtual DbSet<AccommodationLocation1> AccommodationLocation1 { get; set; }
-        public virtual DbSet<AccommodationLocationDuP> AccommodationLocationDuPs { get; set; }
-        public virtual DbSet<AccommodationLocationDuP2> AccommodationLocationDuP2 { get; set; }
-        public virtual DbSet<AirportSupplier961213> AirportSupplier961213 { get; set; }
-        public virtual DbSet<AirportSupplierConfig2> AirportSupplierConfig2 { get; set; }
-        public virtual DbSet<AirportSupplierConfig_970219> AirportSupplierConfig_970219 { get; set; }
-        public virtual DbSet<AirportSupplierConfig_9703171> AirportSupplierConfig_9703171 { get; set; }
-        public virtual DbSet<Help1> Help1 { get; set; }
-        public virtual DbSet<Location960605> Location960605 { get; set; }
-        public virtual DbSet<LocationMistakeName960524> LocationMistakeName960524 { get; set; }
-        public virtual DbSet<LocationSupplier_970227> LocationSupplier_970227 { get; set; }
-        public virtual DbSet<LocationSupplier24> LocationSupplier24 { get; set; }
-        public virtual DbSet<Payment1> Payment1 { get; set; }
-        public virtual DbSet<Payment970410> Payment970410 { get; set; }
-        public virtual DbSet<Privilege_970202> Privilege_970202 { get; set; }
-        public virtual DbSet<Role_970202> Role_970202 { get; set; }
-        public virtual DbSet<RolePrivilege_970202> RolePrivilege_970202 { get; set; }
-        public virtual DbSet<Supplier960615> Supplier960615 { get; set; }
-        public virtual DbSet<Tbl> Tbls { get; set; }
-        public virtual DbSet<TblDiff2> TblDiff2 { get; set; }
-        public virtual DbSet<TblDiff3> TblDiff3 { get; set; }
-        public virtual DbSet<Tblrank> Tblranks { get; set; }
-        public virtual DbSet<trexd2> trexd2 { get; set; }
-        public virtual DbSet<UserRole_970202> UserRole_970202 { get; set; }
-        public virtual DbSet<AccommodationLatLong> AccommodationLatLongs { get; set; }
     }
 }

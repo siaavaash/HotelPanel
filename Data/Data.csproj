@@ -52,17 +52,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context.cs" />
+    <Compile Include="Context2.cs" />
     <Compile Include="DataModel\Accommodation.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\Accommodation1.cs">
+    <Compile Include="DataModel\AccommodationAirport.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\Accommodation960605.cs">
+    <Compile Include="DataModel\AccommodationAirport_970527.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\Accommodation960726.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
+    <Compile Include="DataModel\AccommodationAlternativeName.cs">
+      <DependentUpon>iContext2.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\AccommodationAttribute.cs">
       <DependentUpon>iContext.tt</DependentUpon>
@@ -85,16 +86,13 @@
     <Compile Include="DataModel\AccommodationLatLong.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\AccommodationLocation1.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\AccommodationLocation960612.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\AccommodationLocationDuP.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
+    <Compile Include="DataModel\AccommodationLocationTmp.cs">
+      <DependentUpon>iContext2.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\AccommodationLocationDuP2.cs">
+    <Compile Include="DataModel\AccommodationLocation_970527.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\AccommodationMap3.cs">
@@ -103,19 +101,10 @@
     <Compile Include="DataModel\AccommodationReview.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\Accommodation_Booking.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
+    <Compile Include="DataModel\AccommodationTmp.cs">
+      <DependentUpon>iContext2.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\Accommodation_Booking2.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\Accommodation_Booking3.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\Accommodation_Booking4.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\Accommodation_Booking5.cs">
+    <Compile Include="DataModel\Accommodation_970527.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\AccomodationImage.cs">
@@ -127,7 +116,16 @@
     <Compile Include="DataModel\AccomodationSupplier.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\AccomodationSupplier2Tmp.cs">
+      <DependentUpon>iContext2.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\AccomodationSupplier960616.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccomodationSupplierTmp.cs">
+      <DependentUpon>iContext2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AccomodationSupplier_970527.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\AccomodationVoucher.cs">
@@ -138,6 +136,9 @@
     </Compile>
     <Compile Include="DataModel\AccomodatonContractPassenger.cs">
       <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Acc_Airport.cs">
+      <DependentUpon>iContext2.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Address.cs">
       <DependentUpon>iContext.tt</DependentUpon>
@@ -163,16 +164,10 @@
     <Compile Include="DataModel\Airport.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\Airportflyinghobo.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\AirportSupplier.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\AirportSupplier961110.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\AirportSupplier961213.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\AirportSupplierConfig.cs">
@@ -181,22 +176,13 @@
     <Compile Include="DataModel\AirportSupplierConfig1.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\AirportSupplierConfig2.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\AirportSupplierConfig961220.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\AirportSupplierConfig970121.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\AirportSupplierConfig_970219.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\AirportSupplierConfig_970317.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\AirportSupplierConfig_9703171.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\AirPortUnMap.cs">
@@ -206,6 +192,9 @@
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\ArrivalDetail.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AvailHotelCode.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Bank.cs">
@@ -218,6 +207,9 @@
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\BookingAirport.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\BookingHotelTemp.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\CarFee.cs">
@@ -233,9 +225,6 @@
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\CarTrawelerSizeCode.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\CharteInfo.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Company.cs">
@@ -277,6 +266,9 @@
     <Compile Include="DataModel\Currency.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\DeActiveAccommodation.cs">
+      <DependentUpon>iContext2.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\DevelopmentRequest.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
@@ -310,10 +302,7 @@
     <Compile Include="DataModel\Facility.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\Facility1.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\FacilityTemp.cs">
+    <Compile Include="DataModel\FileName.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\FlightContract.cs">
@@ -355,55 +344,13 @@
     <Compile Include="DataModel\FlightTicketTaxesFareBreakdown.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\GC.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\GCMAP.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\GCMAPOld.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\GCMAPXmlNode.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\GetHotelAvailInfo.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\gtaFileName.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\gtaHotel.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\gtaHotelFileName.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\gtaHotelInfoOnly.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\gtaHotelRoomType.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\gtaLocationData.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\gtaLocationDataTemp.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\gtaLocationData_970313.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Help.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\Help1.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\HotelIndex.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\IataAirport.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\iContext.Context.cs">
@@ -420,6 +367,21 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>iContext.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\iContext2.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>iContext2.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\iContext2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>iContext2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\iContext2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>iContext2.edmx</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Inbox.cs">
       <DependentUpon>iContext.tt</DependentUpon>
@@ -469,9 +431,6 @@
     <Compile Include="DataModel\Location.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\Location960605.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\Location960627.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
@@ -490,22 +449,25 @@
     <Compile Include="DataModel\LocationMistakeName.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\LocationMistakeName960524.cs">
+    <Compile Include="DataModel\LocationMistakeName961114.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\LocationMistakeName961114.cs">
+    <Compile Include="DataModel\LocationMistakeName_970516.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\LocationMistakeName_970528.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\LocationSupplier.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\LocationSupplier24.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\LocationSupplier_970227.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
+    <Compile Include="DataModel\LocationTmp.cs">
+      <DependentUpon>iContext2.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\LocationType.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Location_970527.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\LoginLog.cs">
@@ -529,15 +491,6 @@
     <Compile Include="DataModel\Newsletter.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\OfflineAccommodation.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\OfflineAccomodationImage.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\OtherAirport.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\PackagesIndex.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
@@ -547,13 +500,10 @@
     <Compile Include="DataModel\Pages_970424.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\Pages_970513.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\Payment.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\Payment1.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\Payment970410.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\PaymentCard.cs">
@@ -586,9 +536,6 @@
     <Compile Include="DataModel\Privilege.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\Privilege_970202.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\Privilege_970414.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
@@ -598,10 +545,7 @@
     <Compile Include="DataModel\Privilege_970508.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\Propertyv3.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\Propertyv4.cs">
+    <Compile Include="DataModel\ProductExtension.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Question.cs">
@@ -640,12 +584,6 @@
     <Compile Include="DataModel\RequestLog.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\RequestObject.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\RequestTour.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\RequestUser.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
@@ -658,16 +596,10 @@
     <Compile Include="DataModel\RolePrivilege.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\RolePrivilege_970202.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\RolePrivilege_970414.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\RolePrivilege_970421.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\Role_970202.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Role_970414.cs">
@@ -700,34 +632,7 @@
     <Compile Include="DataModel\Supplier.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\Supplier960615.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\sysdiagram.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\Tbl.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\TblAirPortAlirezaMap.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\TblAllAirport.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\TblDiff.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\TblDiff2.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\TblDiff3.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\TblFac.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\Tblrank.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Telephone.cs">
@@ -751,9 +656,6 @@
     <Compile Include="DataModel\Token.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\Tour.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\Tpsa.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
@@ -764,21 +666,6 @@
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\TransferTelephone.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\trexd.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\trexd2.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\TSAirport.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\TSLocation.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\TSProperty.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Tutorial.cs">
@@ -802,9 +689,6 @@
     <Compile Include="DataModel\UserRole961221.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\UserRole_970202.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\VoucherRoom.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
@@ -815,9 +699,6 @@
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\WeatherLocationSearch.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\Webservicex.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\WebSite.cs">
@@ -834,31 +715,43 @@
     <Compile Include="ViewModel\WeatherModels.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
+    <EntityDeploy Include="DataModel\iContext2.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>iContext2.Designer.cs</LastGenOutput>
+    </EntityDeploy>
     <EntityDeploy Include="DataModel\iContext.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>iContext.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>Data.DataModel</CustomToolNamespace>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
     <None Include="DataModel\iContext.edmx.diagram">
       <DependentUpon>iContext.edmx</DependentUpon>
+    </None>
+    <None Include="DataModel\iContext2.edmx.diagram">
+      <DependentUpon>iContext2.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DataModel\iContext.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>iContext.Context.cs</LastGenOutput>
       <DependentUpon>iContext.edmx</DependentUpon>
-      <CustomToolNamespace>Data.DataModel</CustomToolNamespace>
+      <LastGenOutput>iContext.Context.cs</LastGenOutput>
     </Content>
     <Content Include="DataModel\iContext.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>iContext.edmx</DependentUpon>
       <LastGenOutput>iContext.cs</LastGenOutput>
-      <CustomToolNamespace>Data.DataModel</CustomToolNamespace>
+    </Content>
+    <Content Include="DataModel\iContext2.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>iContext2.edmx</DependentUpon>
+      <LastGenOutput>iContext2.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataModel\iContext2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>iContext2.edmx</DependentUpon>
+      <LastGenOutput>iContext2.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

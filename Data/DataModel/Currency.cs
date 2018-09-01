@@ -27,7 +27,6 @@ namespace Data.DataModel
             this.PaymentTickets = new HashSet<PaymentTicket>();
             this.RequestUsers = new HashSet<RequestUser>();
             this.Suggestions = new HashSet<Suggestion>();
-            this.Tours = new HashSet<Tour>();
             this.Wallets = new HashSet<Wallet>();
             this.Wallets1 = new HashSet<Wallet>();
         }
@@ -58,8 +57,6 @@ namespace Data.DataModel
         public virtual ICollection<RequestUser> RequestUsers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Suggestion> Suggestions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tour> Tours { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Wallet> Wallets { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

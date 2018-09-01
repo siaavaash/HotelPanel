@@ -20,6 +20,7 @@ namespace Data.DataModel
             this.AccommodationCommissions = new HashSet<AccommodationCommission>();
             this.AccommodationCommission1 = new HashSet<AccommodationCommission1>();
             this.Airports = new HashSet<Airport>();
+            this.Discounts = new HashSet<Discount>();
             this.InsuranceContracts = new HashSet<InsuranceContract>();
             this.InsuranceLocations = new HashSet<InsuranceLocation>();
             this.IPs = new HashSet<IP>();
@@ -32,7 +33,6 @@ namespace Data.DataModel
             this.ServiceContracts = new HashSet<ServiceContract>();
             this.ServiceLocations = new HashSet<ServiceLocation>();
             this.Accommodations = new HashSet<Accommodation>();
-            this.Discounts = new HashSet<Discount>();
         }
     
         public long LocationID { get; set; }
@@ -50,6 +50,8 @@ namespace Data.DataModel
         public virtual ICollection<AccommodationCommission1> AccommodationCommission1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Airport> Airports { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Discount> Discounts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InsuranceContract> InsuranceContracts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -76,7 +78,5 @@ namespace Data.DataModel
         public virtual ICollection<ServiceLocation> ServiceLocations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Accommodation> Accommodations { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Discount> Discounts { get; set; }
     }
 }
