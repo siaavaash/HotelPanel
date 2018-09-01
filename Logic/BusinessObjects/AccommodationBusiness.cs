@@ -15,6 +15,32 @@ namespace Logic.BusinessObjects
 {
     public class AccommodationBusiness
     {
+        public List<string> GetCountries(string query)
+        {
+            try
+            {
+                return DataContext.Context.Locations.Where(x => x.LocationTypeID == 2 && x.Name.StartsWith(query)).OrderBy(x => x.Name).Take(20).Select(x => x.Name).ToList();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public List<string> GetCities(string query)
+        {
+            try
+            {
+                return DataContext.Context.Locations.Where(x => x.LocationTypeID == 4 && x.Name.StartsWith(query)).OrderBy(x => x.Name).Take(20).Select(x => x.Name).ToList();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
         /// <summary>
         /// Get All Accommodation List
         /// </summary>
@@ -129,7 +155,7 @@ namespace Logic.BusinessObjects
                 }
                 if (Model.Verified != true && Query.Count != 0)
                 {
-                        Query = Query.Where(x => x.IsVerified != true).ToList();
+                    Query = Query.Where(x => x.IsVerified != true).ToList();
                 }
                 return Query.Select(x => new AccommodationModels.ListNameAccommodation
                 {
@@ -163,7 +189,7 @@ namespace Logic.BusinessObjects
                 {
                     return DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID == AccommodationID).ToList();
                 }
-                
+
             }
             catch (Exception exeption)
             {
@@ -257,7 +283,7 @@ namespace Logic.BusinessObjects
                 foreach (var Item in Accommodation)
                 {
                     Item.IsActive = true;
-                    DataContext.Context.Entry(Item).State = EntityState.Modified;                    
+                    DataContext.Context.Entry(Item).State = EntityState.Modified;
                 }
                 DataContext.Context.SaveChanges();
                 return true;
@@ -292,7 +318,7 @@ namespace Logic.BusinessObjects
                     DataContext.Context.Entry(Accommodations).State = EntityState.Modified;
                     DataContext.Context.SaveChanges();
                     return true;
-                }                
+                }
             }
             catch
             {
@@ -322,7 +348,7 @@ namespace Logic.BusinessObjects
             try
             {
                 var Accommodations = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == Model.AccommodationID).FirstOrDefault();
-                foreach(var Item in Model.FacilityID)
+                foreach (var Item in Model.FacilityID)
                 {
                     var Facility = DataContext.Context.Facilities.Where(x => x.FacilityID == Item).FirstOrDefault();
                     Accommodations.Facilities.Add(Facility);
