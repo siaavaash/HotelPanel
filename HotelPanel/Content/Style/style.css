@@ -1,6 +1,13 @@
 svg {
     touch-action: none
 }
+.wrapper {
+    width:100%;
+    background-color:#eee;
+    padding:15px;
+    margin:5px;
+    height:auto;
+}
 
 .jvectormap-container {
     width: 100%;
@@ -1849,4 +1856,51 @@ a.fc-more {
 .main-content {
     padding: 85px 20px 20px;
      min-height: initial !important; 
+}
+
+.wrapper .box_parent{
+    width:100%;
+    background-color:white;
+    min-height:400px;
+    padding:20px;
+    text-align:center;
+    margin-bottom:15px;
+}
+    .wrapper .box_parent .img_box{
+        width:40%;
+        background-color:antiquewhite;
+        margin:10px;
+        display:inline-block;
+    }
+.owl-carousel .owl-dot, .owl-carousel .owl-nav .owl-next, .owl-carousel .owl-nav .owl-prev{
+    display:inline-block;
+    margin:0 5px;
+}
+.Lat_box{
+    /*column-count:4;*/
+    text-align:left;
+    margin-top:30px;
+    width:45%;
+    display:inline-block;
+}
+.Lat_box .filed i{
+    margin-left:10px;
+}
+    .Lat_box .filed label {
+        font-size:15px;
+        font-weight:bold;
+    }
+    .Lat_box .filed {
+        margin:8px 0;
+    }
+.hidden {
+    margin-left: 10px;
+    border: none;
+    background-color:#eee;
+}
+.show-border {
+    border: solid 1px gray;
+    border-radius: 3px;
+    background-color:#fff;
+    box-shadow: inset 1px 2px 4px rgba(0, 0, 0, 0.01), 0px 0px 8px rgba(0, 0, 0, 0.2);
 }
