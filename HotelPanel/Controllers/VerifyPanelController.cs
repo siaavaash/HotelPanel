@@ -9,9 +9,6 @@ namespace HotelPanel.Controllers
     public class VerifyPanelController : Controller
     {
         // GET: VerifyPanel
-        public ActionResult Index(long? accommodationId)
-        {
-            return View();
-        }
+        public ActionResult Index() => View();
     }
 }
