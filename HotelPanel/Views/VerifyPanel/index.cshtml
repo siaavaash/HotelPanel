@@ -1,0 +1,116 @@
+﻿@model Data.ViewModel.AccommodationModels.AccommodationFacility
+
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="wrapper">
+    <div class="box_parent">
+        <h2>Images</h2>
+        <div class="img_box">
+            <div class="owl-carousel owl-theme">
+                <div class="item"><h4>1</h4></div>
+                <div class="item"><h4>2</h4></div>
+                <div class="item"><h4>3</h4></div>
+            </div>
+        </div>
+        <div class="img_box">
+            <div class="owl-carousel owl-theme">
+                <div class="item"><h4>1</h4></div>
+                <div class="item"><h4>2</h4></div>
+                <div class="item"><h4>3</h4></div>
+            </div>
+        </div>
+    </div>
+    <div class="box_parent">
+        <h2>Descripion</h2>
+        <textarea name="editor1" id="editor1">
+                This is my textarea to be replaced with CKEditor.
+        </textarea>
+    </div>
+    <div class="box_parent">
+        <div class="Lat_box">
+            <h2>Lat&Long</h2>
+
+            <div class="filed">
+                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+            </div>
+            <div class="filed">
+                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+            </div>
+            <div class="filed">
+                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+            </div>
+            <div class="filed">
+                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+            </div>
+            <div class="filed">
+                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+            </div>
+            <div class="filed">
+                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+            </div>
+            <div class="filed">
+                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+            </div>
+
+        </div>
+        <div class="Lat_box">
+            <h2>Facility</h2>
+
+            <div class="filed">
+                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+            </div>
+            <div class="filed">
+                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+            </div>
+            <div class="filed">
+                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+            </div>
+            <div class="filed">
+                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+            </div>
+            <div class="filed">
+                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+            </div>
+            <div class="filed">
+                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+            </div>
+            <div class="filed">
+                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.owl-carousel').owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 1
+            },
+            1000: {
+                items: 1
+            }
+        }
+    });
+
+    CKEDITOR.replace('editor1');
+    $("body").on("click", ".fa-pencil-alt", function () {
+        $(this).parent().find("input.hidden").addClass("show-border");
+        $(this).parent().find("input.hidden").attr("readonly",false);
+    })
+    $("body").on("blur",".hidden", function () {
+        $(this).removeClass("show-border");
+        $(this).attr("readonly", true);
+
+    })
+</script>
