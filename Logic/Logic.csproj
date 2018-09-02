@@ -58,6 +58,7 @@
     <Compile Include="BusinessObjects\GIATABusiness.cs" />
     <Compile Include="BusinessObjects\PublicBusiness.cs" />
     <Compile Include="BusinessObjects\UserBusiness.cs" />
+    <Compile Include="BusinessObjects\VerifyPanelBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

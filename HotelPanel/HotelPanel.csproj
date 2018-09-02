@@ -162,6 +162,7 @@
     <Compile Include="Controllers\MappingController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
+    <Compile Include="Controllers\VerifyPanelController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -345,6 +346,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\VerifyPanel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Fonts\icons\fontawesome\fontawesome-webfont.eot" />
