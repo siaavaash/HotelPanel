@@ -40,7 +40,7 @@ namespace HotelPanel
             get { try { return iUserStorage.Retrive<long>(PublicConstants.Session.CurrentLanguage); } catch { return 0; } }
             set => iUserStorage.Store(PublicConstants.Session.CurrentLanguage, value);
         }
-        public static Language CurrentLanguage
+        public static Data.DataModel.Language CurrentLanguage
         {
             get => new PublicBusiness().GetLanguage(CurrentLanguageId);
             set => CurrentLanguageId = value.LanguageID;

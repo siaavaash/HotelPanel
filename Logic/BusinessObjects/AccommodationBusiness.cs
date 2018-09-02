@@ -390,5 +390,73 @@ namespace Logic.BusinessObjects
                 throw exeption;
             }
         }
+        public AccommodationDescription GetAccommodationDescription(long AccommodationDescriptionID)
+        {
+            try
+            {
+                return DataContext.Context.AccommodationDescriptions.Where(x => x.AccommodationDescriptionID == AccommodationDescriptionID).FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        public bool AddDescription(AccommodationModels.AddDescription Model)
+        {
+            try
+            {
+                bool Duplicate = DataContext.Context.AccommodationDescriptions.Any(x => x.AccommodationID == Model.AccommodationID && x.LanguageID == Model.LanguageID);
+                if (Duplicate)
+                    return false;
+                var Entry = new AccommodationDescription()
+                {
+                    AccommodationID = Model.AccommodationID,
+                    ModificationTime = DateTime.Now,
+                    ModifyUserID = Model.ModifyUserID,
+                    UserID=Model.UserID,
+                    CreationTime=DateTime.Now,
+                    Description = Model.Description,
+                    LanguageID = Model.LanguageID,
+                };
+                DataContext.Context.AccommodationDescriptions.Add(Entry);
+                DataContext.Context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+            }
+            return false;
+        }
+        public bool ChangeDescription(AccommodationModels.ChangeDescription Model)
+        {
+            try
+            {
+                var Entry = DataContext.Context.AccommodationDescriptions.Where(x => x.AccommodationDescriptionID == Model.AccommodationDescriptionID).FirstOrDefault();
+                Entry.AccommodationID = Model.AccommodationID;
+                Entry.Description = Model.Description;
+                Entry.ModificationTime = DateTime.Now;
+                Entry.ModifyUserID = Model.ModifyUserID;
+                Entry.LanguageID = Model.LanguageID;
+                DataContext.Context.Entry(Entry).State = EntityState.Modified;
+                DataContext.Context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+            }
+            return false;
+        }
+        public List<AccommodationDescription> ListOtherLanguageDescription(long AccommodationID)
+        {
+            try
+            {
+                var Result = DataContext.Context.AccommodationDescriptions.Where(x => x.AccommodationID == AccommodationID).ToList();                
+                return Result;
+            }
+            catch
+            {
+            }
+            return new List<AccommodationDescription>();
+        }
     }
 }

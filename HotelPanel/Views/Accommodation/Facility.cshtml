@@ -21,7 +21,7 @@
     <p>
         @Model.Name
     </p>
-    <h4>Description @Html.ActionLink("Edit", "EditDescription", new { id = Model.AccommodationID }, new { @class = "btn cur-p btn-warning" })</h4>
+    <h4>Description @Html.ActionLink("Edit", "EditDescription", new { id = Model.AccommodationID }, new { @class = "btn cur-p btn-warning" })  @Html.ActionLink("Other Language", "ListLanguageDescription", new { AccommodationID = Model.AccommodationID }, new { @class = "btn cur-p btn-warning" })</h4>
     <p>
         @Html.Raw(Model.Description)
     </p>

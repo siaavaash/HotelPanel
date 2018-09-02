@@ -1,0 +1,31 @@
+﻿@model Data.ViewModel.AccommodationModels.AddDescriptionViewModel
+<script type="text/javascript" src="~/Content/Scripts/jquery.js"></script>
+<!-- Include Editor style. -->
+<link href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.8.4/css/froala_editor.min.css' rel='stylesheet' type='text/css' />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.8.4/css/froala_style.min.css' rel='stylesheet' type='text/css' />
+
+<!-- Include JS file. -->
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.8.4/js/froala_editor.min.js'></script>
+
+<div class="bgc-white p-20 bd">
+    <h6 class="c-grey-900">Edit Accommodation Name</h6>
+    <div class="mT-30">
+        @using (Html.BeginForm("AddDescription", "Accommodation", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(x => x.AccommodationID)
+        <div class="form-group">
+            <label for="LanguageID">Accommodation Description</label>
+            @Html.DropDownList("LanguageID", ViewBag.EnumList as SelectList, new { @class = "form-control", @id = "LanguageID" })
+            <label for="exampleInputEmail1">Accommodation Description</label>
+            @Html.TextAreaFor(x => x.Description, new { @rows = "10", id = "froala-editor" })
+        </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        }
+    </div>
+</div>
+<script>
+    $(function () {
+        $('textarea#froala-editor').froalaEditor();
+    });
+</script>

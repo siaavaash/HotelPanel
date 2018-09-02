@@ -44,9 +44,10 @@ namespace Constants
             public const string Message_Warning = "Message_Warning";
         }
         public static class Message
-        {
+        {            
             public const string Faild = "Sorry, your request could not be completed please try again";
             public const string Success = "Your request has been successfully completed";
+            public const string ModelState = "Your Model State Is Not Valid";
         }
     }
 }

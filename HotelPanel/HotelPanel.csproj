@@ -337,6 +337,9 @@
     <Content Include="Views\Accommodation\ListFacility.cshtml" />
     <Content Include="Views\Mapping\GIATA.cshtml" />
     <Content Include="Views\Mapping\Geocode.cshtml" />
+    <Content Include="Views\Accommodation\AddDescription.cshtml" />
+    <Content Include="Views\Accommodation\ChangeDescription.cshtml" />
+    <Content Include="Views\Accommodation\ListLanguageDescription.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

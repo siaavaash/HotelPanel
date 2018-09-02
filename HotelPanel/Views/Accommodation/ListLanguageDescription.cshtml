@@ -1,0 +1,67 @@
+﻿@model Data.ViewModel.AccommodationModels.ListLanguageDescription
+@{
+    /**/
+
+    string Message_Alert = Common.iUserStorage.Retrive<string>(Constants.PublicConstants.Session.Message_Error);
+    string Message_Success = Common.iUserStorage.Retrive<string>(Constants.PublicConstants.Session.Message_Success);
+    string Message_Warning = Common.iUserStorage.Retrive<string>(Constants.PublicConstants.Session.Message_Warning);
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="bgc-white bd bdrs-3 p-20 mB-20">
+            @if (!String.IsNullOrEmpty(Message_Alert))
+            {
+                <div class="alert alert-danger" role="alert">@Message_Alert</div>
+                Common.iUserStorage.Remove(Constants.PublicConstants.Session.Message_Error);
+            }
+            @if (!String.IsNullOrEmpty(Message_Success))
+            {
+                <div class="alert alert-success" role="alert">@Message_Success</div>
+                Common.iUserStorage.Remove(Constants.PublicConstants.Session.Message_Success);
+            }
+            @if (!String.IsNullOrEmpty(Message_Warning))
+            {
+                <div class="alert alert-warning" role="alert">@Message_Warning</div>
+                Common.iUserStorage.Remove(Constants.PublicConstants.Session.Message_Warning);
+            }
+            <h4 class="c-grey-900 mB-20">Language Description List</h4>
+            <a href="AddDescription/?AccommodationID=@Model.AccommodationID" class="btn cur-p btn-warning">Add</a>
+            <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>Accommodation ID</th>
+                        <th>Language ID</th>
+                        <th>Modification Time</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Accommodation ID</th>
+                        <th>Language ID</th>
+                        <th>Modification Time</th>
+                        <th>Options</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var Item in Model.AccommodationDescriptions)
+                    {
+                        <tr>
+                            <td>@Item.AccommodationID</td>
+                            <td>
+                            @{ 
+                                string Language = Enum.GetName(typeof(Common.Language),
+                                Item.LanguageID);
+                            }
+                                @Language
+                            </td>
+                            <td>@Item.ModificationTime</td>
+                            <td>
+                                <a href="ChangeDescription/?AccommodationDescriptionID=@Item.AccommodationDescriptionID" class="btn cur-p btn-secondary">Edit</a>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

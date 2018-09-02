@@ -71,5 +71,40 @@ namespace Data.ViewModel
             public long FacilityID { get; set; }
             public string Name { get; set; }
         }
+        public class ListLanguageDescription
+        {
+            public long? AccommodationID { get; set; }
+            public List<Data.DataModel.AccommodationDescription> AccommodationDescriptions { get; set; }
+        }
+        public class AddDescriptionViewModel
+        {
+            public long? AccommodationID { get; set; }
+            public string Description { get; set; }
+        }
+        public class EditDescriptionViewModel
+        {
+            public long AccommodationDescriptionID { get; set; }
+            public long? AccommodationID { get; set; }
+            public string Description { get; set; }
+        }
+        public class AddDescription
+        {
+            public long? AccommodationID { get; set; }
+            public long?LanguageID { get; set; }
+            public string Description { get; set; }
+            public System.DateTime? CreationTime { get; set; }
+            public System.DateTime? ModificationTime { get; set; }
+            public long? UserID { get; set; }
+            public long? ModifyUserID { get; set; }
+        }
+        public class ChangeDescription
+        {
+            public long AccommodationDescriptionID { get; set; }
+            public long? AccommodationID { get; set; }
+            public long? LanguageID { get; set; }
+            public string Description { get; set; }
+            public System.DateTime? ModificationTime { get; set; }
+            public long? ModifyUserID { get; set; }
+        }
     }
 }

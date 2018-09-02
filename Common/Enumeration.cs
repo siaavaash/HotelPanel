@@ -58,4 +58,11 @@ namespace Common
         isolated_thundershowers=47,
         not_available= 3200
     }
+    public enum Language
+    {
+        Persian = 1,
+        English = 2,
+        Norway = 3,
+        sweden = 4
+    }
 }

@@ -198,5 +198,77 @@ namespace HotelPanel.Controllers
             iUserStorage.Store(PublicConstants.Session.Message_Error, PublicConstants.Message.Faild);
             return View();
         }
+        public ActionResult ListLanguageDescription(long AccommodationID)
+        {
+            Data.ViewModel.AccommodationModels.ListLanguageDescription Model = new Data.ViewModel.AccommodationModels.ListLanguageDescription()
+            {
+                AccommodationID = AccommodationID,
+                AccommodationDescriptions = _AccommodationBusiness.ListOtherLanguageDescription(AccommodationID)
+            };
+            return View(Model);
+        }        
+        public ActionResult AddDescription(long AccommodationID)
+        {
+            var enumDataType = from Common.Language e in Language.GetValues(typeof(Language)) select new { ID = (int)e, Name = e.ToString() };
+            ViewBag.LanguageID = new SelectList(enumDataType, "ID", "Name");
+            return View(new Data.ViewModel.AccommodationModels.AddDescriptionViewModel() { AccommodationID=AccommodationID});
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
+        public ActionResult AddDescription(AccommodationModels.AddDescription Model)
+        {
+            if (ModelState.IsValid)
+            {
+                var Result = _AccommodationBusiness.AddDescription(Model);                
+                if (Result)
+                {
+                    iUserStorage.Store(PublicConstants.Session.Message_Success, PublicConstants.Message.Success);
+                    return RedirectToAction("ListLanguageDescription",new { AccommodationID = Model.AccommodationID});
+                }
+                else
+                {
+                    iUserStorage.Store(PublicConstants.Session.Message_Error, PublicConstants.Message.Faild);
+                    return RedirectToAction("ListLanguageDescription", new { AccommodationID = Model.AccommodationID });
+                }
+            }
+            iUserStorage.Store(PublicConstants.Session.Message_Warning, PublicConstants.Message.ModelState);
+            return RedirectToAction("ListLanguageDescription", new { AccommodationID = Model.AccommodationID });
+        }
+        public ActionResult ChangeDescription(long AccommodationDescriptionID)
+        {           
+            var AccommodationDescription = _AccommodationBusiness.GetAccommodationDescription(AccommodationDescriptionID);
+            var enumDataType = from Common.Language e in Language.GetValues(typeof(Language)) select new { ID = (int)e, Name = e.ToString() };
+            ViewBag.LanguageID = new SelectList(enumDataType, "ID", "Name",AccommodationDescription.LanguageID);
+            Data.ViewModel.AccommodationModels.EditDescriptionViewModel Model = new AccommodationModels.EditDescriptionViewModel()
+            {
+                AccommodationDescriptionID = AccommodationDescriptionID,
+                Description = AccommodationDescription.Description,
+                AccommodationID = AccommodationDescription.AccommodationID
+            };
+            return View(Model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
+        public ActionResult ChangeDescription(AccommodationModels.ChangeDescription Model)
+        {
+            if (ModelState.IsValid)
+            {
+                var Result = _AccommodationBusiness.ChangeDescription(Model);                
+                if (Result)
+                {
+                    iUserStorage.Store(PublicConstants.Session.Message_Success, PublicConstants.Message.Success);
+                    return RedirectToAction("ListLanguageDescription", new { AccommodationID = Model.AccommodationID });
+                }
+                else
+                {
+                    iUserStorage.Store(PublicConstants.Session.Message_Error, PublicConstants.Message.Faild);
+                    return RedirectToAction("ListLanguageDescription", new { AccommodationID = Model.AccommodationID });
+                }
+            }
+            iUserStorage.Store(PublicConstants.Session.Message_Warning, PublicConstants.Message.ModelState);
+            return RedirectToAction("ListLanguageDescription", new { AccommodationID = Model.AccommodationID });
+        }
     }
 }
