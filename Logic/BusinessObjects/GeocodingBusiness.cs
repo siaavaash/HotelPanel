@@ -1,10 +1,9 @@
 ﻿using Data.DataModel;
-using Service.ServiceModel;
+using Service.ServiceModel.GoogleMapModels;
 using Service.Suppliers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Logic.BusinessObjects
@@ -23,6 +22,7 @@ namespace Logic.BusinessObjects
                     if (accommodation != null)
                     {
                         accommodation.PlaceId = data.PlaceId;
+                        accommodation.FormattedAddress = data.FormattedAddress;
                         accommodation.Latitude = data.Latitude;
                         accommodation.Longitude = data.Longitude;
                         accommodation.LocationType = string.Join(",", data.Types);
@@ -54,6 +54,7 @@ namespace Logic.BusinessObjects
                             {
                                 return (false, "Map to Database failed.");
                             }
+                            return (true, string.Empty);
                         }
                         return (false, result.Error.Text);
                     }
@@ -65,22 +66,63 @@ namespace Logic.BusinessObjects
                 return (false, ex.Message);
             }
         }
-        public List<GetGeocodeResult> GetGeocodeRange(long from, long to)
+        public List<GetGeocodeResult> MapGeocodeRange(long from, long to)
         {
-            try
-            {
-                var result = new List<GetGeocodeResult>();
-                Parallel.For(from, to + 1, i =>
+            var result = new List<GetGeocodeResult>();
+            Parallel.For(from, to + 1, i =>
+                {
+                    try
                     {
+                        var mapResult = GetGeocode(i);
+                        result.Add(new GetGeocodeResult
+                        {
+                            Id = i,
+                            Message = mapResult.message,
+                            Success = mapResult.success
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        result.Add(new GetGeocodeResult
+                        {
+                            Id = i,
+                            Success = false,
+                            Message = ex.Message
+                        });
+                    }
+                });
+            return result;
+        }
 
-                    });
-                return result;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+        public List<GetGeocodeResult> MapGeocodeAll()
+        {
+            var accommodationList = new List<long>();
+            var result = new List<GetGeocodeResult>();
+            using (var context = new Entities())
+                accommodationList = context.AccommodationLatLongs.Select(x => x.AccommodationlID).ToList();
+            Parallel.ForEach(accommodationList, id =>
+             {
+                 try
+                 {
+                     var mapResult = GetGeocode(id);
+                     result.Add(new GetGeocodeResult
+                     {
+                         Id = id,
+                         Message = mapResult.message,
+                         Success = mapResult.success
+                     });
+                 }
+                 catch (Exception ex)
+                 {
+                     result.Add(new GetGeocodeResult
+                     {
+                         Id = id,
+                         Success = false,
+                         Message = ex.Message
+                     });
+                 }
+             });
+            return result;
         }
     }
 }
