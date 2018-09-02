@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.ServiceModel
+namespace Service.ServiceModel.GoogleMapModels
 {
 
     public class ServiceResponse

@@ -1,12 +1,8 @@
 ﻿using Common;
-using Service.ServiceModel;
+using Service.ServiceModel.GoogleMapModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service.Suppliers
 {
@@ -17,7 +13,7 @@ namespace Service.Suppliers
             json,
             xml
         }
-        private string GetValidUrl(OutputFormat outputFormat, string parameters) => $"https://maps.googleapis.com/maps/api/geocode/{outputFormat}?{parameters}";
+        private string GetValidUrl(OutputFormat outputFormat, string parameters) => $"http://maps.google.com/maps/api/geocode/{outputFormat}?{parameters}";
 
         public ServiceResutl GetGeoCode(string parameters)
         {
