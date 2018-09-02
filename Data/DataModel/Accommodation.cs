@@ -66,6 +66,7 @@ namespace Data.DataModel
         public Nullable<System.DateTime> DateVerified { get; set; }
         public Nullable<bool> IsVerified { get; set; }
         public Nullable<bool> IsError { get; set; }
+        public string BookingUrl { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccommodationCommission> AccommodationCommissions { get; set; }
