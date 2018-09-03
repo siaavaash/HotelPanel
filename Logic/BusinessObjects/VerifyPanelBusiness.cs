@@ -15,7 +15,7 @@ namespace Logic.BusinessObjects
             {
                 using (var context = new Entities())
                 {
-                    return context.Accommodations.Where(x => x.AccommodationlID == accommodationId).ToList().Select(x => new HotelInfoViewModel
+                    var result = context.Accommodations.AsNoTracking().Where(x => x.AccommodationlID == accommodationId).Select(x => new HotelInfoViewModel
                     {
                         AccommodationId = x.AccommodationlID,
                         Address = x.Address,
@@ -34,10 +34,11 @@ namespace Logic.BusinessObjects
                         BookingUrl = x.BookingUrl,
                         CityName = x.CityName,
                         CountryName = x.Country,
-                        AccommodationFacilities = GetAccommodationFacilities(x.AccommodationlID),
-                        AccommodationImages = GetAccommodationImages(x.AccommodationlID),
-                        RoomImages = GetRoomImages(x.AccommodationlID),
                     }).FirstOrDefault() ?? throw new Exception("The Accommodation does not exist.");
+                    result.AccommodationFacilities = GetAccommodationFacilities(accommodationId);
+                    result.AccommodationImages = GetAccommodationImages(accommodationId);
+                    result.RoomImages = GetRoomImages(accommodationId);
+                    return result;
                 }
             }
             catch (Exception)
