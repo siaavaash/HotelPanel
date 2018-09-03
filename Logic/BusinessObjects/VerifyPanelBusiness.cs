@@ -12,7 +12,7 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                return DataContext.Context.Accommodations.Where(x => x.AccommodationlID == accommodationId).ToList().Select(x => new HotelInfoViewModel
+                return DataContext.Context.Accommodations.AsParallel().Where(x => x.AccommodationlID == accommodationId).ToList().Select(x => new HotelInfoViewModel
                 {
                     AccommodationId = x.AccommodationlID,
                     Address = x.Address,
@@ -41,11 +41,11 @@ namespace Logic.BusinessObjects
                 throw;
             }
         }
-        public List<Image> GetRoomImages(long accommodationId, bool verified = false, bool reported = false, bool activated = true)
+        public List<Image> GetRoomImages(long accommodationId, bool verified = true, bool reported = false, bool activated = true)
         {
             try
             {
-                return DataContext.Context.AccomodationRoomImages.Where(x => x.AccommodationID == accommodationId && x.IsActive == activated && x.IsReported == reported && x.IsVerified == verified).Select(x => new Image
+                return DataContext.Context.AccomodationRoomImages.AsParallel().Where(x => x.AccommodationID == accommodationId && x.IsActive == activated && (x.IsReported ?? false) == reported && x.IsVerified == verified).Select(x => new Image
                 {
                     Id = x.AccomodationRoomImageID,
                     IsVerified = x.IsVerified,
@@ -63,11 +63,11 @@ namespace Logic.BusinessObjects
                 throw;
             }
         }
-        public List<Image> GetAccommodationImages(long accommodationId, bool verified = false, bool reported = false, bool activated = true)
+        public List<Image> GetAccommodationImages(long accommodationId, bool verified = true, bool reported = false, bool activated = true)
         {
             try
             {
-                return DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID == accommodationId && x.IsActive == activated && x.IsReported == reported && x.IsVerified == verified).Select(x => new Image
+                return DataContext.Context.AccomodationImages.AsParallel().Where(x => x.AccommodationlID == accommodationId && x.IsActive == activated && (x.IsReported ?? false) == reported && x.IsVerified == verified).Select(x => new Image
                 {
                     Id = x.ImageID,
                     IsVerified = x.IsVerified,
@@ -88,7 +88,7 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                return DataContext.Context.Accommodations.FirstOrDefault(x => x.AccommodationlID == accommodationId)?.Facilities.Select(x => new Facility
+                return DataContext.Context.Accommodations.AsParallel().FirstOrDefault(x => x.AccommodationlID == accommodationId)?.Facilities.Select(x => new Facility
                 {
                     AccommodationId = accommodationId,
                     Category = x.Category,
@@ -107,7 +107,7 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                var accommodation = DataContext.Context.Accommodations.FirstOrDefault(x => x.AccommodationlID == model.AccommodationId);
+                var accommodation = DataContext.Context.Accommodations.AsParallel().FirstOrDefault(x => x.AccommodationlID == model.AccommodationId);
                 if (accommodation == null)
                 {
                     message = "The Accommodation does not exist.";
@@ -129,13 +129,13 @@ namespace Logic.BusinessObjects
                 accommodation.IsActive = model.IsActive;
                 foreach (var item in model.AccommodationFacilities)
                 {
-                    var facility = DataContext.Context.Facilities.FirstOrDefault(x => x.FacilityID == item.Id);
+                    var facility = DataContext.Context.Facilities.AsParallel().FirstOrDefault(x => x.FacilityID == item.Id);
                     if (facility != null)
                         accommodation.Facilities.Add(facility);
                 }
                 foreach (var roomImage in model.RoomImages)
                 {
-                    var image = DataContext.Context.AccomodationRoomImages.FirstOrDefault(x => x.AccommodationID == roomImage.AccommodationId);
+                    var image = DataContext.Context.AccomodationRoomImages.AsParallel().FirstOrDefault(x => x.AccommodationID == roomImage.AccommodationId);
                     if (image != null)
                     {
                         image.IsVerified = true;
@@ -146,7 +146,7 @@ namespace Logic.BusinessObjects
                 }
                 foreach (var item in model.AccommodationImages)
                 {
-                    var image = DataContext.Context.AccomodationImages.FirstOrDefault(x => x.AccommodationlID == item.AccommodationId);
+                    var image = DataContext.Context.AccomodationImages.AsParallel().FirstOrDefault(x => x.AccommodationlID == item.AccommodationId);
                     if (image != null)
                     {
                         image.IsVerified = true;
