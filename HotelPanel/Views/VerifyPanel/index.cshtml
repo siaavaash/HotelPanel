@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Data.ViewModel.VerifyPanelViewModels.HotelInfoViewModel
+@{
     ViewBag.Title = "Verify Panel";
 }
 
@@ -7,17 +8,24 @@
         <h2>Images</h2>
         <div class="img_box">
             <div id="hotelimages" class="owl-carousel owl-theme">
+                @foreach (var image in Model.AccommodationImages)
+                {
+                    <img src="@image.Url" />
+                }
             </div>
         </div>
         <div class="img_box">
             <div id="roomimages" class="owl-carousel owl-theme">
+                @foreach (var image in Model.RoomImages)
+                {
+                    <img src="@image.Url" />
+                }
             </div>
         </div>
     </div>
     <div class="box_parent">
         <h2>Descripion</h2>
-        <textarea name="editor1" id="editor1">
-        </textarea>
+        <textarea name="editor1" id="editor1">@Model.Description</textarea>
     </div>
     <div class="box_parent">
         <div class="Lat_box">
@@ -96,23 +104,10 @@
     CKEDITOR.replace('editor1');
     $("body").on("click", ".fa-pencil-alt", function () {
         $(this).parent().find("input.hidden").addClass("show-border");
-        $(this).parent().find("input.hidden").attr("readonly",false);
+        $(this).parent().find("input.hidden").attr("readonly", false);
     })
-    $("body").on("blur",".hidden", function () {
+    $("body").on("blur", ".hidden", function () {
         $(this).removeClass("show-border");
         $(this).attr("readonly", true);
     })
-    @*$(document).ready(function () {
-        $.get("/VerifyPanel/GetAccommodationInfo/" + @Model, function (response) {
-            if (response.success) {
-                $.each(response.data.RoomImages, function () {
-                    $("#roomimages").append('<div class="item"><img src="' + this.Url + '"/></div>');
-                });
-                $.each(response.data.AccommodationImages, function () {
-                    $("#hotelimages").append('<div class="item"><img src="' + this.Url + '"/></div>');
-                });
-                CKEDITOR.instances['editor1'].setData(response.data.Description);
-            }
-        });
-    })*@
 </script>
