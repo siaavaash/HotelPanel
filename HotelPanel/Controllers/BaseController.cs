@@ -95,7 +95,7 @@ namespace HotelPanel.Controllers
                 {
                     var loginPages = Key.Routes.Login.ToLower();
                     var currentUrl = Request.RequestContext.RouteData.Values.Values.First().ToString().ToLower();
-                    Boolean Check= loginPages.Contains(currentUrl);
+                    Boolean Check = loginPages.Contains(currentUrl);
                     return Check;
                 }
                 catch { }
@@ -139,6 +139,12 @@ namespace HotelPanel.Controllers
                 context.Result = new RedirectResult("/Home/AccessDenied");
             base.OnActionExecuting(context);
         }
+
+        // GET: Error/NotFound
+        public ActionResult NotFound() => View();
+
+        // GET: Error/Internal Server Error
+        public ActionResult ServerError() => View();
 
     }
 }
