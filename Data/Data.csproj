@@ -353,6 +353,9 @@
     <Compile Include="DataModel\HotelIndex.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\IataAirport.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\iContext.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

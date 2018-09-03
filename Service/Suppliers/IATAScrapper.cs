@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Common;
+using Service.ServiceModel.IATAScrapperModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +11,36 @@ namespace Service.Suppliers
 {
     public class IATAScrapper
     {
+        private const string IATAUrl = "https://www.iata.org/publications/Pages/code-search.aspx";
+        public IATAResponse GetIATAData(IATASearchBy searchBy, string parameter)
+        {
+            try
+            {
+                using (var browser = new WebBrowser())
+                {
+                    browser.Navigate(IATAUrl);
+                    var options = browser.Document.GetElementsByTagName("select")[0].Document.GetElementsByTagName("option");
+                    foreach (HtmlElement option in options)
+                    {
+                        option.SetAttribute("selected", string.Empty);
+                        if (option.GetAttribute("value") == searchBy.ToString())
+                            option.SetAttribute("selected", "selected");
+                    }
+                    browser.Document.GetElementById("ctl00_SPWebPartManager1_g_e3b09024_878e_4522_bd47_acfefd1000b0_ctl00_txtSearchCriteria").SetAttribute("value", parameter);
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return new IATAResponse
+                {
+                    Error = new ServiceModel.PublicModels.Error
+                    {
+                        Text = ex.Message
+                    },
+                    Success = false,
+                };
+            }
+        }
     }
 }
