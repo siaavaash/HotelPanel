@@ -1,32 +1,22 @@
-﻿@model Data.ViewModel.AccommodationModels.AccommodationFacility
-
-@{
-    ViewBag.Title = "View";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@{
+    ViewBag.Title = "Verify Panel";
 }
 
 <div class="wrapper">
     <div class="box_parent">
         <h2>Images</h2>
         <div class="img_box">
-            <div class="owl-carousel owl-theme">
-                <div class="item"><h4>1</h4></div>
-                <div class="item"><h4>2</h4></div>
-                <div class="item"><h4>3</h4></div>
+            <div id="hotelimages" class="owl-carousel owl-theme">
             </div>
         </div>
         <div class="img_box">
-            <div class="owl-carousel owl-theme">
-                <div class="item"><h4>1</h4></div>
-                <div class="item"><h4>2</h4></div>
-                <div class="item"><h4>3</h4></div>
+            <div id="roomimages" class="owl-carousel owl-theme">
             </div>
         </div>
     </div>
     <div class="box_parent">
         <h2>Descripion</h2>
         <textarea name="editor1" id="editor1">
-                This is my textarea to be replaced with CKEditor.
         </textarea>
     </div>
     <div class="box_parent">
@@ -34,25 +24,25 @@
             <h2>Lat&Long</h2>
 
             <div class="filed">
-                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+                <label>Address :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
             </div>
             <div class="filed">
-                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+                <label>Email :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
             </div>
             <div class="filed">
-                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+                <label>Fax :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
             </div>
             <div class="filed">
-                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+                <label>Latitude :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
             </div>
             <div class="filed">
-                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+                <label>Longitude :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
             </div>
             <div class="filed">
-                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+                <label>Rating :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
             </div>
             <div class="filed">
-                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+                <label>Name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
             </div>
 
         </div>
@@ -60,19 +50,19 @@
             <h2>Facility</h2>
 
             <div class="filed">
-                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+                <label>Url :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
             </div>
             <div class="filed">
-                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+                <label>CityName :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
             </div>
             <div class="filed">
-                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+                <label>Telephone :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
             </div>
             <div class="filed">
-                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+                <label>Verified Date :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
             </div>
             <div class="filed">
-                <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
+                <label>Country :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
             </div>
             <div class="filed">
                 <label>name :</label><input type="text" class="hidden" readonly /><i class="fas fa-pencil-alt"></i>
@@ -111,6 +101,18 @@
     $("body").on("blur",".hidden", function () {
         $(this).removeClass("show-border");
         $(this).attr("readonly", true);
-
     })
+    @*$(document).ready(function () {
+        $.get("/VerifyPanel/GetAccommodationInfo/" + @Model, function (response) {
+            if (response.success) {
+                $.each(response.data.RoomImages, function () {
+                    $("#roomimages").append('<div class="item"><img src="' + this.Url + '"/></div>');
+                });
+                $.each(response.data.AccommodationImages, function () {
+                    $("#hotelimages").append('<div class="item"><img src="' + this.Url + '"/></div>');
+                });
+                CKEDITOR.instances['editor1'].setData(response.data.Description);
+            }
+        });
+    })*@
 </script>
