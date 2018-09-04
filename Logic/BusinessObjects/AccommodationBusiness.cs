@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Service;
 using Common;
+using MoreLinq;
 using static Data.ViewModel.WeatherModels.Forecast;
 
 namespace Logic.BusinessObjects
@@ -457,6 +458,42 @@ namespace Logic.BusinessObjects
             {
             }
             return new List<AccommodationDescription>();
+        }
+        /// <summary>
+        /// Get Top 4 Most Search Results Location
+        /// </summary>
+        /// <returns></returns>
+        public List<Data.PublicModel.AccommodationModels.SearchReport> GetSearchReport()
+        {
+            try
+            {
+                List<Data.PublicModel.AccommodationModels.SearchReport> Result = new List<Data.PublicModel.AccommodationModels.SearchReport>();
+                var Data = DataContext.Context.GetHotelAvailInfoes.AsNoTracking().AsParallel().ToList();
+                var DistincData = Data.Select(x => x.LocationID).Distinct().ToList();
+                foreach(var Item in DistincData)
+                {
+                    Data.PublicModel.AccommodationModels.SearchReport Entry = new Data.PublicModel.AccommodationModels.SearchReport();
+                    Entry.LocationID = Item.Value;
+                    Entry.Count=Data.Where(x => x.LocationID == Item.Value).Count();
+                    Result.Add(Entry);
+                }
+                Result = Result.OrderByDescending(x => x.Count).Take(4).ToList();
+                var Total = Result.Select(x => x.Count).Sum();
+                foreach (var _Item in Result)
+                {
+                    var Locations = DataContext.Context.Locations.Find(_Item.LocationID);
+                    _Item.City = Locations.Name;
+                    _Item.Country = DataContext.Context.Locations.Where(x => x.CityId == Locations.ParentLocationID).FirstOrDefault().Name;
+                    _Item.Percent = (_Item.Count * 100) / Total;
+                }
+
+                return Result;
+            }
+            catch(Exception ex)
+            {
+
+            }
+            return new List<Data.PublicModel.AccommodationModels.SearchReport>();
         }
     }
 }

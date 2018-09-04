@@ -270,5 +270,10 @@ namespace HotelPanel.Controllers
             iUserStorage.Store(PublicConstants.Session.Message_Warning, PublicConstants.Message.ModelState);
             return RedirectToAction("ListLanguageDescription", new { AccommodationID = Model.AccommodationID });
         }
+        public ActionResult SearchReport()
+        {
+            var Result = _AccommodationBusiness.GetSearchReport();
+            return View(Result);
+        }
     }
 }

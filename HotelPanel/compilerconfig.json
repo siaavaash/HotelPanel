@@ -138,5 +138,9 @@
   {
     "outputFile": "UI/assets/styles/spec/screens/index.css",
     "inputFile": "UI/assets/styles/spec/screens/index.scss"
+  },
+  {
+    "outputFile": "Content/Style/Style.css",
+    "inputFile": "Content/Style/Style.scss"
   }
 ]

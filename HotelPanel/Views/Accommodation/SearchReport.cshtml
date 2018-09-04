@@ -1,0 +1,84 @@
+﻿@model List<Data.PublicModel.AccommodationModels.SearchReport>
+<div class="row gap-20 masonry pos-r" style="position: relative; height: 1541px;">
+    <div class="masonry-sizer col-md-6 pos-a">
+
+    </div>
+    <div class="masonry-item col-md-6" style="position: absolute; left: 50%; top: 0px;">
+        <div class="bgc-white p-20 bd">
+            <h6 class="c-grey-900">Most Search Results</h6>
+            <div class="mT-30">
+                <div class="peer bdL p-20 w-30p@lg+ w-100p@lg-">
+                    <div class="layers">
+                        <div class="layer w-100">
+                            <div class="layers">
+                                <div class="layer w-100">
+                                    <h5 class="mB-5">@Model[0].Count</h5><small class="fw-600 c-grey-700">Searching In @Model[0].City @Model[0].Country</small> <span class="pull-right c-grey-600 fsz-sm">@Model[0].Percent%</span>
+                                    <div class="progress mT-10">
+                                        <div class="progress-bar bgc-deep-purple-500" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model[0].Percent%"><span class="sr-only">@Model[0].Percent% Complete</span></div>
+                                    </div>
+                                </div>
+                                <div class="layer w-100 mT-15">
+                                    <h5 class="mB-5">@Model[1].Count</h5><small class="fw-600 c-grey-700">Searching In @Model[1].City @Model[1].Country</small> <span class="pull-right c-grey-600 fsz-sm">@Model[1].Percent%</span>
+                                    <div class="progress mT-10">
+                                        <div class="progress-bar bgc-green-500" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model[1].Percent%"><span class="sr-only">@Model[1].Percent% Complete</span></div>
+                                    </div>
+                                </div>
+                                <div class="layer w-100 mT-15">
+                                    <h5 class="mB-5">@Model[2].Count</h5><small class="fw-600 c-grey-700">Searching In @Model[2].City @Model[2].Country</small> <span class="pull-right c-grey-600 fsz-sm">@Model[2].Percent%</span>
+                                    <div class="progress mT-10">
+                                        <div class="progress-bar bgc-light-blue-500" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model[2].Percent%"><span class="sr-only">@Model[2].Percent% Complete</span></div>
+                                    </div>
+                                </div>
+                                <div class="layer w-100 mT-15">
+                                    <h5 class="mB-5">@Model[3].Count</h5><small class="fw-600 c-grey-700">Searching In @Model[3].City @Model[3].Country</small> <span class="pull-right c-grey-600 fsz-sm">@Model[3].Percent%</span>
+                                    <div class="progress mT-10">
+                                        <div class="progress-bar bgc-blue-grey-500" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:@Model[3].Percent%"><span class="sr-only">@Model[3].Percent% Complete</span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="masonry-item col-md-6" style="position: absolute; left: 50%; top: 1310px;">
+        <div class="bgc-white p-20 bd">
+            <h6 class="c-grey-900">Easy Pie Charts</h6>
+            <div class="mT-30">
+                <div class="peers mT-20 fxw-nw@lg+ jc-sb ta-c gap-10">
+                    <div class="peer">
+                        <div class="easy-pie-chart" data-size="80" data-percent="@Model[0].Percent" data-bar-color="#f44336">
+                            <span>75 %</span>
+                            <canvas height="80" width="80"></canvas>
+                        </div>
+                        <h6 class="fsz-sm">@Model[0].City</h6>
+                    </div>
+                    <div class="peer">
+                        <div class="easy-pie-chart" data-size="80" data-percent="@Model[1].Percent" data-bar-color="#2196f3">
+                            <span>50 %</span>
+                            <canvas height="80" width="80"></canvas>
+                        </div>
+                        <h6 class="fsz-sm">@Model[1].City</h6>
+                    </div>
+                    <div class="peer">
+                        <div class="easy-pie-chart" data-size="80" data-percent="@Model[2].Percent" data-bar-color="#f44336">
+                            <span>65 %</span>
+                            <canvas height="80" width="80"></canvas>
+                        </div>
+                        <h6 class="fsz-sm">@Model[2].City</h6>
+                    </div>
+                    <div class="peer">
+                        <div class="easy-pie-chart" data-size="80" data-percent="@Model[3].Percent" data-bar-color="#ff9800">
+                            <span>90 %</span>
+                            <canvas height="80" width="80"></canvas>
+                        </div>
+                        <h6 class="fsz-sm">@Model[3].City</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
