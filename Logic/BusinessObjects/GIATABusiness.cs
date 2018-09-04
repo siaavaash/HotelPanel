@@ -24,24 +24,81 @@ namespace Logic.BusinessObjects
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <returns></returns>
-        public bool RemoveAll(long from, long to)
+        public void RemoveAll(long from, long to)
         {
             try
             {
-                var ids = new List<long>();
-                for (long i = from; i <= to; i++)
-                    ids.Add(i);
-                using (var context = new Context2())
-                {
-                    context.AccommodationTmps.RemoveRange(context.AccommodationTmps.Where(x => ids.Contains(x.AccommodationlID)).ToList());
-                    context.AccommodationLocationTmps.RemoveRange(context.AccommodationLocationTmps.Where(x => ids.Contains(x.AccommodationID)).ToList());
-                    context.AccomodationSupplierTmps.RemoveRange(context.AccomodationSupplierTmps.Where(x => ids.Contains(x.AccommodationlID)).ToList());
-                    context.AccomodationSupplier2Tmp.RemoveRange(context.AccomodationSupplier2Tmp.Where(x => ids.Contains(x.AccommodationlID)).ToList());
-                    context.Acc_Airport.RemoveRange(context.Acc_Airport.Where(x => ids.Contains(x.AccommodationlID ?? 0)).ToList());
-                    context.AccommodationAlternativeNames.RemoveRange(context.AccommodationAlternativeNames.Where(x => ids.Contains(x.AccommodationID)).ToList());
-                    context.DeActiveAccommodations.RemoveRange(context.DeActiveAccommodations.Where(x => ids.Contains(x.AccommodationlD)).ToList());
-                    return context.SaveChangesAsync().Result > 0 ? true : false;
-                }
+                var ids = new ConcurrentBag<long>();
+                Parallel.For(from, to + 1, i => ids.Add(i));
+                Parallel.Invoke(
+                    () =>
+                    {
+                        using (var context = new Context2())
+                        {
+                            context.AccommodationTmps.RemoveRange(context.AccommodationTmps.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
+                            context.SaveChangesAsync().Wait();
+                        }
+                    },
+                    () =>
+                    {
+                        using (var context = new Context2())
+                        {
+                            context.AccommodationLocationTmps.RemoveRange(context.AccommodationLocationTmps.AsParallel().Where(x => ids.Contains(x.AccommodationID)).ToList());
+                            context.SaveChangesAsync().Wait();
+                        }
+                    },
+                    () =>
+                    {
+                        using (var context = new Context2())
+                        {
+                            context.AccomodationSupplierTmps.RemoveRange(context.AccomodationSupplierTmps.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
+                            context.SaveChangesAsync().Wait();
+                        }
+                    },
+                    () =>
+                    {
+                        using (var context = new Context2())
+                        {
+                            context.AccomodationSupplier2Tmp.RemoveRange(context.AccomodationSupplier2Tmp.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
+                            context.SaveChangesAsync().Wait();
+                        }
+                    },
+                    () =>
+                    {
+                        using (var context = new Context2())
+                        {
+                            context.AccommodationAlternativeNames.RemoveRange(context.AccommodationAlternativeNames.AsParallel().Where(x => ids.Contains(x.AccommodationID)).ToList());
+                            context.SaveChangesAsync().Wait();
+                        }
+                    },
+                    () =>
+                    {
+                        using (var context = new Context2())
+                        {
+                            context.DeActiveAccommodations.RemoveRange(context.DeActiveAccommodations.AsParallel().Where(x => ids.Contains(x.AccommodationlD)).ToList());
+                            context.SaveChangesAsync().Wait();
+                        }
+                    },
+                    () =>
+                    {
+                        using (var context = new Context2())
+                        {
+                            context.Acc_Airport.RemoveRange(context.Acc_Airport.AsParallel().Where(x => ids.Contains(x.AccommodationlID ?? 0)).ToList());
+                            context.SaveChangesAsync().Wait();
+                        }
+                    }
+                    );
+                //using (var context = new Context2())
+                //{
+                //    context.AccommodationTmps.RemoveRange(context.AccommodationTmps.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
+                //    context.AccommodationLocationTmps.RemoveRange(context.AccommodationLocationTmps.AsParallel().Where(x => ids.Contains(x.AccommodationID)).ToList());
+                //    context.AccomodationSupplierTmps.RemoveRange(context.AccomodationSupplierTmps.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
+                //    context.AccomodationSupplier2Tmp.RemoveRange(context.AccomodationSupplier2Tmp.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
+                //    context.Acc_Airport.RemoveRange(context.Acc_Airport.AsParallel().Where(x => ids.Contains(x.AccommodationlID ?? 0)).ToList());
+                //    context.AccommodationAlternativeNames.RemoveRange(context.AccommodationAlternativeNames.AsParallel().Where(x => ids.Contains(x.AccommodationID)).ToList());
+                //    context.DeActiveAccommodations.RemoveRange(context.DeActiveAccommodations.AsParallel().Where(x => ids.Contains(x.AccommodationlD)).ToList());
+                //    context.SaveChangesAsync().Wait();
+                //}
             }
             catch (Exception ex)
             {
@@ -205,7 +262,7 @@ namespace Logic.BusinessObjects
                                 lastUpdate = model.LastUpdate,
                                 CountryCode = model.CountryCode,
                                 DestinationCode = model.DestinationCode,
-                                destinationId = Convert.ToInt64(model.DestinationId),
+                                destinationId = !string.IsNullOrEmpty(model.DestinationId) ? Convert.ToInt64(model.DestinationId) : 0,
                                 rating = model.Rating,
                                 category = model.Category,
                                 AirPort_Code = airport.iata,
@@ -262,7 +319,7 @@ namespace Logic.BusinessObjects
         /// <param name="movedId">Moved Accommodation Id</param>
         /// <param name="active">Is Active</param>
         /// <returns></returns>
-        public void DeactiveAccommodation(long id, bool? deactive, long movedId = 0)
+        public bool DeactiveAccommodation(long id, bool? deactive, long movedId = 0)
         {
             try
             {
@@ -298,7 +355,7 @@ namespace Logic.BusinessObjects
                             ISDeactive = true,
                         });
                     }
-                    context.SaveChanges();
+                    return context.SaveChanges() > 0 ? true : false;
                 }
             }
             catch (Exception ex)
@@ -335,7 +392,7 @@ namespace Logic.BusinessObjects
                     Fax = sourceModel.property.phones?.FirstOrDefault(x => x.tech == "fax")?.Value.ToString(),
                     Latitude = sourceModel.property.geoCodes?.geoCode?.latitude.ToString(),
                     Longitude = sourceModel.property.geoCodes?.geoCode?.longitude.ToString(),
-                    LastUpdate = sourceModel.property.lastUpdate,
+                    LastUpdate = sourceModel.property.lastUpdate ?? DateTime.Now,
                     Name = sourceModel.property.name,
                     Rating = sourceModel.property.ratings?.rating?.value.ToString(),
                     Url = sourceModel.property.urls?.url,
@@ -375,7 +432,7 @@ namespace Logic.BusinessObjects
             }
         }
 
-        public (bool, string) Map(long id)
+        public (bool serviceSuccess, bool dbSuccess, string message) Map(long id)
         {
             string message = null;
             try
@@ -388,26 +445,26 @@ namespace Logic.BusinessObjects
                         if (MapGIATADataToModel((properties)serviceResult.Model, out GIATADbTransferModel mapDb, out message))
                         {
                             if (MapGIATADataToDb(mapDb, out message))
-                                return (true, message);
-                            return (false, message);
+                                return (true, true, message);
                         }
-                        return (false, message);
+                        return (true, false, message);
                     }
                     else
                     {
                         var str = ((error)serviceResult.Model).description.href;
                         var movedId = Convert.ToInt64(str.Substring(str.LastIndexOf('/') + 1));
-                        DeactiveAccommodation(id, null, movedId: movedId);
                         message = ((error)serviceResult.Model).description.Value;
-                        return (true, message);
+                        if (DeactiveAccommodation(id, null, movedId: movedId))
+                            return (true, true, message);
+                        return (true, false, message);
                     }
                 }
                 message = serviceResult.Error.Text;
-                return (false, message);
+                return (false, false, message);
             }
             catch (Exception ex)
             {
-                return (false, ex.Message);
+                return (true, false, ex.Message);
             }
         }
 
@@ -421,12 +478,12 @@ namespace Logic.BusinessObjects
         {
             if (from > to)
                 throw new ArgumentException("Invalid parameter(s).");
-            if (!RemoveAll(from, to)) throw new Exception("Remove Recent Accommodations Failed.");
+            RemoveAll(from, to);
             var returnList = new List<MapResult>();
             Parallel.For(from, to + 1, i =>
             {
                 var mapRs = Map(i);
-                if (!mapRs.Item1)
+                if (!mapRs.serviceSuccess)
                 {
                     var tryMapRs = TryMap(i);
                     if (!tryMapRs.Item1)
@@ -435,16 +492,38 @@ namespace Logic.BusinessObjects
                         {
                             Id = i,
                             Message = tryMapRs.Item2,
-                            Success = false,
+                            MapToDbSuccess = false,
+                            ServiceSuccess = false,
                         });
                         return;
                     }
+                    returnList.Add(new MapResult
+                    {
+                        Id = i,
+                        Message = tryMapRs.Item2,
+                        MapToDbSuccess = true,
+                        ServiceSuccess = true,
+                    });
+                    return;
                 }
+                if (mapRs.dbSuccess)
+                {
+                    returnList.Add(new MapResult
+                    {
+                        Id = i,
+                        Message = mapRs.message,
+                        ServiceSuccess = true,
+                        MapToDbSuccess = true,
+                    });
+                    return;
+                }
+                DeactiveAccommodation(i, deactive: true);
                 returnList.Add(new MapResult
                 {
                     Id = i,
-                    Message = mapRs.Item2,
-                    Success = true,
+                    Message = mapRs.message,
+                    ServiceSuccess = true,
+                    MapToDbSuccess = false,
                 });
             });
             return returnList;
@@ -463,8 +542,8 @@ namespace Logic.BusinessObjects
                 for (int i = 0; i < 2; i++)
                 {
                     var mapRs = Map(id);
-                    message = mapRs.Item2;
-                    if (mapRs.Item1)
+                    message = mapRs.message;
+                    if (mapRs.serviceSuccess && mapRs.dbSuccess)
                         return (true, null);
                 }
                 DeactiveAccommodation(id, deactive: true);

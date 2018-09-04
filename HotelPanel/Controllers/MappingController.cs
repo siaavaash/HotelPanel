@@ -8,10 +8,12 @@ namespace HotelPanel.Controllers
     {
         private readonly GIATABusiness giataBusiness;
         private readonly GeocodingBusiness geocodingBusiness;
+        private readonly IATACodeBusiness iATACodeBusiness;
         public MappingController()
         {
             giataBusiness = new GIATABusiness();
             geocodingBusiness = new GeocodingBusiness();
+            iATACodeBusiness = new IATACodeBusiness();
         }
 
         // GET: GIATA
@@ -56,6 +58,34 @@ namespace HotelPanel.Controllers
             catch (Exception ex)
             {
                 return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        // GET: Map Iata Codes
+        public JsonResult MapIataCode(string code, byte searchBy)
+        {
+            try
+            {
+                var result = iATACodeBusiness.MapIata(code, (Common.IATASearchBy)searchBy);
+                return Json(new { success = result.success, message = result.message }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public JsonResult MapAllIataCodes()
+        {
+            try
+            {
+                var result = iATACodeBusiness.MapIata();
+                return Json(new { success = result.success, message = result.message }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }

@@ -225,5 +225,6 @@ namespace Data.DataModel
         public virtual DbSet<ServiceLocation> ServiceLocations { get; set; }
         public virtual DbSet<TimeZone> TimeZones { get; set; }
         public virtual DbSet<UserRole961221> UserRole961221 { get; set; }
+        public virtual DbSet<IataAirport> IataAirports { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace Service.ServiceModel.GIATAModels
 {
@@ -10,13 +11,12 @@ namespace Service.ServiceModel.GIATAModels
 
 
 
-
     // NOTE: Generated code may require at least .NET Framework 4.5 or .NET Core/Standard 2.0.
     /// <remarks/>
-    [System.SerializableAttribute()]
+    [Serializable()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
+    [XmlType(AnonymousType = true)]
+    [XmlRoot(Namespace = "", IsNullable = true)]
     public partial class properties : IResponse
     {
 
@@ -37,9 +37,9 @@ namespace Service.ServiceModel.GIATAModels
     }
 
     /// <remarks/>
-    [System.SerializableAttribute()]
+    [Serializable()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [XmlType(AnonymousType = true)]
     public partial class propertiesProperty
     {
 
@@ -53,7 +53,7 @@ namespace Service.ServiceModel.GIATAModels
 
         private string countryField;
 
-        private byte categoryField;
+        private byte? categoryField;
 
         private propertiesPropertyRatings ratingsField;
 
@@ -75,9 +75,9 @@ namespace Service.ServiceModel.GIATAModels
 
         private propertiesPropertyGhgml ghgmlField;
 
-        private byte giataIdField;
+        private int giataIdField;
 
-        private System.DateTime lastUpdateField;
+        private System.DateTime? lastUpdateField;
 
         /// <remarks/>
         public string name
@@ -93,7 +93,7 @@ namespace Service.ServiceModel.GIATAModels
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("alternativeName", IsNullable = false)]
+        [XmlArrayItem("alternativeName", IsNullable = true)]
         public propertiesPropertyAlternativeName[] alternativeNames
         {
             get
@@ -146,7 +146,7 @@ namespace Service.ServiceModel.GIATAModels
         }
 
         /// <remarks/>
-        public byte category
+        public byte? category
         {
             get
             {
@@ -172,7 +172,7 @@ namespace Service.ServiceModel.GIATAModels
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("airport", IsNullable = false)]
+        [XmlArrayItem("airport", IsNullable = true)]
         public propertiesPropertyAirport[] airports
         {
             get
@@ -199,7 +199,7 @@ namespace Service.ServiceModel.GIATAModels
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("phone", IsNullable = false)]
+        [XmlArrayItem("phone", IsNullable = true)]
         public propertiesPropertyPhone[] phones
         {
             get
@@ -252,7 +252,7 @@ namespace Service.ServiceModel.GIATAModels
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("provider", IsNullable = false)]
+        [XmlArrayItem("provider", IsNullable = true)]
         public propertiesPropertyProvider[] propertyCodes
         {
             get
@@ -292,8 +292,8 @@ namespace Service.ServiceModel.GIATAModels
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public byte giataId
+        [XmlAttribute()]
+        public int giataId
         {
             get
             {
@@ -306,8 +306,8 @@ namespace Service.ServiceModel.GIATAModels
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public System.DateTime lastUpdate
+        [XmlAttribute()]
+        public System.DateTime? lastUpdate
         {
             get
             {
@@ -321,22 +321,22 @@ namespace Service.ServiceModel.GIATAModels
     }
 
     /// <remarks/>
-    [System.SerializableAttribute()]
+    [Serializable()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [XmlType(AnonymousType = true)]
     public partial class propertiesPropertyAlternativeName
     {
 
         private string alternativeNameTypeField;
 
-        private System.DateTime? effectiveDateField;
+        private DateTime? effectiveDateField;
 
-        private bool effectiveDateFieldSpecified;
+        private bool? effectiveDateFieldSpecified;
 
         private string valueField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute()]
         public string alternativeNameType
         {
             get
@@ -350,9 +350,7 @@ namespace Service.ServiceModel.GIATAModels
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlIgnore]
-        //[System.Xml.Serialization.XmlAttributeAttribute(DataType = "date")]
-
+        //[XmlAttribute(DataType = "date")]
         public System.DateTime? effectiveDate
         {
             get
@@ -366,8 +364,7 @@ namespace Service.ServiceModel.GIATAModels
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool effectiveDateSpecified
+        public bool? effectiveDateSpecified
         {
             get
             {
@@ -395,19 +392,19 @@ namespace Service.ServiceModel.GIATAModels
     }
 
     /// <remarks/>
-    [System.SerializableAttribute()]
+    [Serializable()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [XmlType(AnonymousType = true)]
     public partial class propertiesPropertyCity
     {
 
-        private ushort cityIdField;
+        private ushort? cityIdField;
 
         private string valueField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort cityId
+        [XmlAttribute()]
+        public ushort? cityId
         {
             get
             {
@@ -420,7 +417,7 @@ namespace Service.ServiceModel.GIATAModels
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlTextAttribute()]
+        [XmlText()]
         public string Value
         {
             get
@@ -435,19 +432,19 @@ namespace Service.ServiceModel.GIATAModels
     }
 
     /// <remarks/>
-    [System.SerializableAttribute()]
+    [Serializable()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [XmlType(AnonymousType = true)]
     public partial class propertiesPropertyDestination
     {
 
-        private ushort destinationIdField;
+        private ushort? destinationIdField;
 
         private string valueField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort destinationId
+        [XmlAttribute()]
+        public ushort? destinationId
         {
             get
             {
@@ -475,9 +472,9 @@ namespace Service.ServiceModel.GIATAModels
     }
 
     /// <remarks/>
-    [System.SerializableAttribute()]
+    [Serializable()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [XmlType(AnonymousType = true)]
     public partial class propertiesPropertyRatings
     {
 
@@ -498,19 +495,19 @@ namespace Service.ServiceModel.GIATAModels
     }
 
     /// <remarks/>
-    [System.SerializableAttribute()]
+    [Serializable()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [XmlType(AnonymousType = true)]
     public partial class propertiesPropertyRatingsRating
     {
 
-        private byte valueField;
+        private byte? valueField;
 
-        private bool isDefaultField;
+        private bool? isDefaultField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public byte value
+        [XmlAttribute()]
+        public byte? value
         {
             get
             {
@@ -523,8 +520,8 @@ namespace Service.ServiceModel.GIATAModels
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool isDefault
+        [XmlAttribute()]
+        public bool? isDefault
         {
             get
             {
@@ -660,13 +657,13 @@ namespace Service.ServiceModel.GIATAModels
     public partial class propertiesPropertyAddressesAddressAddressLine
     {
 
-        private byte addressLineNumberField;
+        private byte? addressLineNumberField;
 
         private string valueField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public byte addressLineNumber
+        [XmlAttribute()]
+        public byte? addressLineNumber
         {
             get
             {
@@ -702,10 +699,10 @@ namespace Service.ServiceModel.GIATAModels
 
         private string techField;
 
-        private long valueField;
+        private long? valueField;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [XmlAttribute()]
         public string tech
         {
             get
@@ -719,8 +716,8 @@ namespace Service.ServiceModel.GIATAModels
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlTextAttribute()]
-        public long Value
+        [XmlText()]
+        public long? Value
         {
             get
             {
@@ -757,9 +754,9 @@ namespace Service.ServiceModel.GIATAModels
     }
 
     /// <remarks/>
-    [System.SerializableAttribute()]
+    [Serializable()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [XmlType(AnonymousType = true)]
     public partial class propertiesPropertyUrls
     {
 
@@ -780,9 +777,9 @@ namespace Service.ServiceModel.GIATAModels
     }
 
     /// <remarks/>
-    [System.SerializableAttribute()]
+    [Serializable()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [XmlType(AnonymousType = true)]
     public partial class propertiesPropertyGeoCodes
     {
 
@@ -809,14 +806,14 @@ namespace Service.ServiceModel.GIATAModels
     public partial class propertiesPropertyGeoCodesGeoCode
     {
 
-        private decimal latitudeField;
+        private decimal? latitudeField;
 
-        private decimal longitudeField;
+        private decimal? longitudeField;
 
         private string accuracyField;
 
         /// <remarks/>
-        public decimal latitude
+        public decimal? latitude
         {
             get
             {
@@ -829,7 +826,7 @@ namespace Service.ServiceModel.GIATAModels
         }
 
         /// <remarks/>
-        public decimal longitude
+        public decimal? longitude
         {
             get
             {
@@ -1022,13 +1019,13 @@ namespace Service.ServiceModel.GIATAModels
     public partial class propertiesPropertyChainsChain
     {
 
-        private ushort chainIdField;
+        private ushort? chainIdField;
 
         private string chainNameField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public ushort chainId
+        public ushort? chainId
         {
             get
             {
@@ -1085,16 +1082,16 @@ namespace Service.ServiceModel.GIATAModels
     [System.SerializableAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = true)]
     public partial class error : IResponse
     {
 
-        private ushort codeField;
+        private ushort? codeField;
 
         private errorDescription descriptionField;
 
         /// <remarks/>
-        public ushort code
+        public ushort? code
         {
             get
             {
@@ -1215,6 +1212,7 @@ namespace Service.ServiceModel.GIATAModels
     {
         public long Id { get; set; }
         public string Message { get; set; }
-        public bool Success { get; set; }
+        public bool ServiceSuccess { get; set; }
+        public bool MapToDbSuccess { get; set; }
     }
 }
