@@ -1,0 +1,366 @@
+﻿@model Data.ViewModel.VerifyPanelViewModels.HotelInfoViewModel
+@{
+    ViewBag.Title = "Verify Panel";
+}
+<link href="~/Content/Style/Style.min.css" rel="stylesheet" />
+<div class="wrapper">
+    <div class="box_parent">
+        <div class="img_box" style="vertical-align:top;">
+            <h2>Hotel Images</h2>
+            <div id="hotelimages" class="owl-carousel owl-theme">
+
+                @foreach (var image in Model.AccommodationImages)
+                {
+                    var verify = (image.IsVerified ?? false) ? "checked" : null;
+                    var report = (image.IsReported ?? false) ? "checked" : null;
+                    var active = (image.IsActive ?? false) ? "checked" : null;
+                    <div>
+                        <img src="@image.Url" />
+                        <div class="check">
+                            <input type="checkbox" @verify disabled /><label>verify</label>
+                            <input type="checkbox" @report /><label>report</label>
+                            <input type="checkbox" @active /><label>active</label>
+                        </div>
+                    </div>
+
+
+                }
+            </div>
+
+        </div>
+        <div class="img_box">
+            <h2>Room Images</h2>
+            <div id="roomimages" class="owl-carousel owl-theme room_pic">
+                @foreach (var image in Model.RoomImages)
+                {
+                    var verify = (image.IsVerified ?? false) ? "checked" : null;
+                    var report = (image.IsReported ?? false) ? "checked" : null;
+                    var active = (image.IsActive ?? false) ? "checked" : null;
+                    <div>
+                        <img src="@image.Url" />
+
+                        <div class="check">
+                            <input type="checkbox" @verify disabled /><label>verify</label>
+                            <input type="checkbox" @report /><label>report</label>
+                            <input type="checkbox" @active /><label>active</label>
+                        </div>
+                    </div>
+
+                }
+            </div>
+
+        </div>
+    </div>
+    <div class="box_parent">
+        <h2>Descripion</h2>
+        <div class="information">
+            <div class="paragraf">
+                <div class="show_text">
+                    @Html.Raw(Model.Description)
+                </div>
+                <div class="show_btn txt_right">
+                    <button class="btn_img edit_des" style="margin-top:15px">Edit</button>
+                </div>
+            </div>
+            <div class="txt_area">
+                <textarea name="editor1" id="editor1" rows="30">@Model.Description</textarea>
+                <div  class="txt_right">
+                    <button class="btn_img save_des" style="margin-top:15px">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="box_parent">
+        <h2>Details</h2>
+        <div class="Lat_box information">
+            <table width="100%">
+                @*<thead>
+                    <tr>
+                        <th>label</th>
+                        <th>value</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>*@
+                <tbody>
+                    <tr>
+                        <td width="15%">Address</td>
+                        <td width="35%">
+                            <input type="text" class="hidden" value="@Model.Address" readonly />
+                        </td>
+                        <td>
+                            <i class="fas fa-pencil-alt"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>
+
+                            <input type="text" class="hidden" value="@Model.Email" readonly />
+
+                        </td>
+                        <td>
+                            <i class="fas fa-pencil-alt"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Fax</td>
+                        <td>
+
+                            <input type="text" class="hidden" value="@Model.Fax" readonly />
+
+                        </td>
+                        <td>
+                            <i class="fas fa-pencil-alt"></i>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Latitude</td>
+                        <td>
+
+                            <input type="text" class="hidden" value="@Model.Latitude" readonly />
+
+                        </td>
+                        <td>
+                            <i class="fas fa-pencil-alt"></i>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Longitude</td>
+                        <td>
+
+                            <input type="text" class="hidden" value="@Model.Longitude" readonly />
+
+                        </td>
+                        <td>
+                            <i class="fas fa-pencil-alt"></i>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Rating</td>
+                        <td>
+
+                            <input type="text" class="hidden" value="@Model.Rating" readonly />
+
+                        </td>
+                        <td>
+                            <i class="fas fa-pencil-alt"></i>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Name</td>
+                        <td>
+
+                            <input type="text" class="hidden" value="@Model.Name" readonly />
+
+                        </td>
+                        <td>
+                            <i class="fas fa-pencil-alt"></i>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Url</td>
+                        <td>
+
+                            <input type="text" class="hidden" value="@Model.Url" readonly />
+
+                        </td>
+                        <td>
+                            <i class="fas fa-pencil-alt"></i>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>CityName</td>
+                        <td>
+
+                            <input type="text" class="hidden" value="@Model.CityName" readonly />
+
+                        </td>
+                        <td>
+                            <i class="fas fa-pencil-alt"></i>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Telephone</td>
+                        <td>
+
+                            <input type="text" class="hidden" value="@Model.Telephone" readonly />
+
+                        </td>
+                        <td>
+                            <i class="fas fa-pencil-alt"></i>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Verified Date</td>
+                        <td>
+
+                            <input type="text" class="hidden" value="@Model.VerifiedDate" readonly />
+
+                        </td>
+                        <td>
+                            <i class="fas fa-pencil-alt"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Country</td>
+                        <td>
+
+                            <input type="text" class="hidden" value="@Model.CountryName" readonly />
+
+                        </td>
+                        <td>
+                            <i class="fas fa-pencil-alt"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>CityName</td>
+                        <td>
+
+                            <input type="text" class="hidden" value="@Model.CityName" readonly />
+
+                        </td>
+                        <td>
+                            <i class="fas fa-pencil-alt"></i>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <div class="box_parent">
+        <h2>Facility</h2>
+        <div class="information">
+            <table width="100%" class="Facility">
+                <thead>
+                    <tr>
+                        <th>
+                            id
+                        </th>
+                        <th width="30%">
+                            Name
+                        </th>
+                        <th width="35%">
+                            Category
+                        </th>
+                        <th>
+                            Delete
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var facility in Model.AccommodationFacilities)
+                    {
+                        <tr>
+                            <td>@facility.Id</td>
+                            <td>@facility.Name</td>
+                            <td>@facility.Category</td>
+                            <td>
+                                <i class="fas fa-times"></i>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div style="text-align:right">
+                <button class="btn_img add" style="margin-top:15px">Add</button>
+            </div>
+        </div>
+
+        <div class="add_facility">
+            <div>
+                <input type="hidden" class="id_name" value=""/>
+            </div>
+            <div>
+                <span>Name :</span>
+                <select class="name_fac">
+                    <option>1</option>
+                    <option selected>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                </select>
+            </div>
+            <div>
+                <span>
+                    category :
+                </span>
+                <label class="ctg">category</label>
+            </div>
+            <div class="txt_right" style="text-align:right; margin-right:10px;">
+                <button class="btn_img save_fac">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.owl-carousel').owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: true,
+        navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 1
+            },
+            1000: {
+                items: 1
+            }
+        }
+    });
+
+    CKEDITOR.replace('editor1');
+
+    $("body").on("click", ".fa-pencil-alt", function () {
+        $(this).parent().parent().find("input.hidden").addClass("show-border");
+        $(this).parent().parent().find("input.hidden").attr("readonly", false);
+    })
+    $("body").on("blur", ".hidden", function () {
+        $(this).removeClass("show-border");
+        $(this).attr("readonly", true);
+    })
+
+    $("body").on("click", ".edit_des", function () {
+        $("div.show_text").css("display", "none");
+        $("div.show_btn").css("display", "none");
+        $(".txt_area").css("display", "block");
+    })
+
+    $("body").on("click", ".save_des", function () {
+        var textContent1 = CKEDITOR.instances.editor1.getData();
+        $(".show_text").html(textContent1);
+        $("div.show_text").css("display", "block");
+        $("div.show_btn").css("display", "block");
+        $(".txt_area").css("display", "none");
+    })
+
+    $("body").on("click", ".add", function () {
+        $("div.add_facility").css("display","block")
+    })
+    $("body").on("click", ".fa-times", function () {
+        $(this).parent().parent().remove("tr");
+    })
+
+    var name = $(".name_fac option:selected").val();
+    var category = $(".ctg").text();
+    var id = $("input.id_name").val();
+    $("body").on("click", ".save_fac", function () {
+        $("table.Facility").append('<tr><td>' + id + '</td><td>' + name + '</td><td>' + category + '</td><td><i class="fas fa-times"></i></td></tr>');
+        $(".add_facility").css("display", "none");
+    })
+</script>

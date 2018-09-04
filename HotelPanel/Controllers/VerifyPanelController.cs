@@ -8,11 +8,23 @@ using System.Web.Mvc;
 
 namespace HotelPanel.Controllers
 {
-    public class VerifyPanelController : Controller
+    public class VerifyPanelController : BaseController
     {
         private readonly VerifyPanelBusiness verifyPanelBusiness = new VerifyPanelBusiness();
         // GET: VerifyPanel
-        public ActionResult Index() => View();
+        public ActionResult Index(long? id)
+        {
+            try
+            {
+                if (id != null)
+                    return View(verifyPanelBusiness.GetAccommodationInfo(id.Value));
+                throw new Exception();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
         public JsonResult GetAccommodationInfo(long id)
         {

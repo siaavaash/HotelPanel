@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.DataModel;
 using Data.ViewModel.VerifyPanelViewModels;
 using System;
 using System.Collections.Generic;
@@ -12,50 +13,56 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                return DataContext.Context.Accommodations.Where(x => x.AccommodationlID == accommodationId).ToList().Select(x => new HotelInfoViewModel
+                using (var context = new Entities())
                 {
-                    AccommodationId = x.AccommodationlID,
-                    Address = x.Address,
-                    Email = x.Email,
-                    Fax = x.Fax,
-                    IsVerified = x.IsVerified,
-                    Latitude = x.Latitude,
-                    Longitude = x.Longitude,
-                    Telephone = x.Telephone,
-                    Url = x.Url,
-                    VerifiedDate = x.DateVerified,
-                    Rating = x.Rating,
-                    Name = x.Name,
-                    IsActive = x.IsActive,
-                    Description = x.Description,
-                    BookingUrl = x.BookingUrl,
-                    CityName = x.CityName,
-                    CountryName = x.Country,
-                    AccommodationFacilities = GetAccommodationFacilities(x.AccommodationlID),
-                    AccommodationImages = GetAccommodationImages(x.AccommodationlID),
-                    RoomImages = GetRoomImages(x.AccommodationlID),
-                }).FirstOrDefault() ?? throw new Exception("The Accommodation does not exist.");
+                    return context.Accommodations.Where(x => x.AccommodationlID == accommodationId).ToList().Select(x => new HotelInfoViewModel
+                    {
+                        AccommodationId = x.AccommodationlID,
+                        Address = x.Address,
+                        Email = x.Email,
+                        Fax = x.Fax,
+                        IsVerified = x.IsVerified,
+                        Latitude = x.Latitude,
+                        Longitude = x.Longitude,
+                        Telephone = x.Telephone,
+                        Url = x.Url,
+                        VerifiedDate = x.DateVerified,
+                        Rating = x.Rating,
+                        Name = x.Name,
+                        IsActive = x.IsActive,
+                        Description = x.Description,
+                        BookingUrl = x.BookingUrl,
+                        CityName = x.CityName,
+                        CountryName = x.Country,
+                        AccommodationFacilities = GetAccommodationFacilities(x.AccommodationlID),
+                        AccommodationImages = GetAccommodationImages(x.AccommodationlID),
+                        RoomImages = GetRoomImages(x.AccommodationlID),
+                    }).FirstOrDefault() ?? throw new Exception("The Accommodation does not exist.");
+                }
             }
             catch (Exception)
             {
                 throw;
             }
         }
-        public List<Image> GetRoomImages(long accommodationId, bool verified = false, bool reported = false, bool activated = true)
+        public List<Image> GetRoomImages(long accommodationId, bool verified = true, bool reported = false, bool activated = true)
         {
             try
             {
-                return DataContext.Context.AccomodationRoomImages.Where(x => x.AccommodationID == accommodationId && x.IsActive == activated && x.IsReported == reported && x.IsVerified == verified).Select(x => new Image
+                using (var context = new Entities())
                 {
-                    Id = x.AccomodationRoomImageID,
-                    IsVerified = x.IsVerified,
-                    IsReported = x.IsReported,
-                    VerifiedDate = x.VerifiedDate,
-                    Url = x.RoomImagePhysicalPath,
-                    NumberOfReports = x.NumberOfReports,
-                    IsActive = x.IsActive,
-                    AccommodationId = x.AccommodationID,
-                }).ToList();
+                    return context.AccomodationRoomImages.Where(x => x.AccommodationID == accommodationId && x.IsActive == activated && (x.IsReported ?? false) == reported && x.IsVerified == verified).Select(x => new Image
+                    {
+                        Id = x.AccomodationRoomImageID,
+                        IsVerified = x.IsVerified,
+                        IsReported = x.IsReported,
+                        VerifiedDate = x.VerifiedDate,
+                        Url = x.RoomImagePhysicalPath,
+                        NumberOfReports = x.NumberOfReports,
+                        IsActive = x.IsActive,
+                        AccommodationId = x.AccommodationID,
+                    }).ToList();
+                }
             }
             catch (Exception)
             {
@@ -63,38 +70,44 @@ namespace Logic.BusinessObjects
                 throw;
             }
         }
-        public List<Image> GetAccommodationImages(long accommodationId, bool verified = false, bool reported = false, bool activated = true)
+        public List<Image> GetAccommodationImages(long accommodationId, bool verified = true, bool reported = false, bool activated = true)
         {
             try
             {
-                return DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID == accommodationId && x.IsActive == activated && x.IsReported == reported && x.IsVerified == verified).Select(x => new Image
+                using (var context = new Entities())
                 {
-                    Id = x.ImageID,
-                    IsVerified = x.IsVerified,
-                    IsReported = x.IsReported,
-                    VerifiedDate = x.VerifiedDate,
-                    Url = x.Link,
-                    NumberOfReports = x.NumberOfReports,
-                    IsActive = x.IsActive,
-                    AccommodationId = x.AccommodationlID,
-                }).ToList();
+                    return context.AccomodationImages.Where(x => x.AccommodationlID == accommodationId && x.IsActive == activated && (x.IsReported ?? false) == reported && x.IsVerified == verified).Select(x => new Image
+                    {
+                        Id = x.ImageID,
+                        IsVerified = x.IsVerified,
+                        IsReported = x.IsReported,
+                        VerifiedDate = x.VerifiedDate,
+                        Url = x.Link,
+                        NumberOfReports = x.NumberOfReports,
+                        IsActive = x.IsActive,
+                        AccommodationId = x.AccommodationlID,
+                    }).ToList();
+                }
             }
             catch (Exception)
             {
                 throw;
             }
         }
-        public List<Facility> GetAccommodationFacilities(long accommodationId)
+        public List<Data.ViewModel.VerifyPanelViewModels.Facility> GetAccommodationFacilities(long accommodationId)
         {
             try
             {
-                return DataContext.Context.Accommodations.FirstOrDefault(x => x.AccommodationlID == accommodationId)?.Facilities.Select(x => new Facility
+                using (var context = new Entities())
                 {
-                    AccommodationId = accommodationId,
-                    Category = x.Category,
-                    Id = x.FacilityID,
-                    Name = x.Name
-                }).ToList() ?? throw new Exception("The Accommodation does not exist.");
+                    return context.Accommodations.FirstOrDefault(x => x.AccommodationlID == accommodationId)?.Facilities.Select(x => new Data.ViewModel.VerifyPanelViewModels.Facility
+                    {
+                        AccommodationId = accommodationId,
+                        Category = x.Category,
+                        Id = x.FacilityID,
+                        Name = x.Name
+                    }).ToList() ?? throw new Exception("The Accommodation does not exist.");
+                }
             }
             catch (Exception)
             {
@@ -107,61 +120,64 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                var accommodation = DataContext.Context.Accommodations.FirstOrDefault(x => x.AccommodationlID == model.AccommodationId);
-                if (accommodation == null)
+                using (var context = new Entities())
                 {
-                    message = "The Accommodation does not exist.";
-                    return false;
-                }
-                accommodation.Name = model.Name ?? accommodation.Name;
-                accommodation.Address = model.Address ?? accommodation.Address;
-                accommodation.Rating = model.Rating ?? accommodation.Rating;
-                accommodation.Telephone = model.Telephone ?? accommodation.Telephone;
-                accommodation.Fax = model.Fax ?? accommodation.Fax;
-                accommodation.Email = model.Email ?? accommodation.Email;
-                accommodation.Url = model.Url ?? accommodation.Url;
-                accommodation.Description = model.Description ?? accommodation.Description;
-                accommodation.Latitude = model.Latitude ?? accommodation.Latitude;
-                accommodation.Longitude = model.Longitude ?? accommodation.Longitude;
-                accommodation.BookingUrl = model.BookingUrl ?? accommodation.BookingUrl;
-                accommodation.DateVerified = DateTime.Now.Date;
-                accommodation.IsVerified = true;
-                accommodation.IsActive = model.IsActive;
-                foreach (var item in model.AccommodationFacilities)
-                {
-                    var facility = DataContext.Context.Facilities.FirstOrDefault(x => x.FacilityID == item.Id);
-                    if (facility != null)
-                        accommodation.Facilities.Add(facility);
-                }
-                foreach (var roomImage in model.RoomImages)
-                {
-                    var image = DataContext.Context.AccomodationRoomImages.FirstOrDefault(x => x.AccommodationID == roomImage.AccommodationId);
-                    if (image != null)
+                    var accommodation = DataContext.Context.Accommodations.FirstOrDefault(x => x.AccommodationlID == model.AccommodationId);
+                    if (accommodation == null)
                     {
-                        image.IsVerified = true;
-                        image.IsReported = roomImage.IsReported;
-                        image.IsActive = roomImage.IsActive;
-                        image.VerifiedDate = DateTime.Now.Date;
+                        message = "The Accommodation does not exist.";
+                        return false;
                     }
-                }
-                foreach (var item in model.AccommodationImages)
-                {
-                    var image = DataContext.Context.AccomodationImages.FirstOrDefault(x => x.AccommodationlID == item.AccommodationId);
-                    if (image != null)
+                    accommodation.Name = model.Name ?? accommodation.Name;
+                    accommodation.Address = model.Address ?? accommodation.Address;
+                    accommodation.Rating = model.Rating ?? accommodation.Rating;
+                    accommodation.Telephone = model.Telephone ?? accommodation.Telephone;
+                    accommodation.Fax = model.Fax ?? accommodation.Fax;
+                    accommodation.Email = model.Email ?? accommodation.Email;
+                    accommodation.Url = model.Url ?? accommodation.Url;
+                    accommodation.Description = model.Description ?? accommodation.Description;
+                    accommodation.Latitude = model.Latitude ?? accommodation.Latitude;
+                    accommodation.Longitude = model.Longitude ?? accommodation.Longitude;
+                    accommodation.BookingUrl = model.BookingUrl ?? accommodation.BookingUrl;
+                    accommodation.DateVerified = DateTime.Now.Date;
+                    accommodation.IsVerified = true;
+                    accommodation.IsActive = model.IsActive;
+                    foreach (var item in model.AccommodationFacilities)
                     {
-                        image.IsVerified = true;
-                        image.IsReported = item.IsReported;
-                        image.IsActive = item.IsActive;
-                        image.VerifiedDate = DateTime.Now.Date;
+                        var facility = DataContext.Context.Facilities.FirstOrDefault(x => x.FacilityID == item.Id);
+                        if (facility != null)
+                            accommodation.Facilities.Add(facility);
                     }
+                    foreach (var roomImage in model.RoomImages)
+                    {
+                        var image = DataContext.Context.AccomodationRoomImages.FirstOrDefault(x => x.AccommodationID == roomImage.AccommodationId);
+                        if (image != null)
+                        {
+                            image.IsVerified = true;
+                            image.IsReported = roomImage.IsReported;
+                            image.IsActive = roomImage.IsActive;
+                            image.VerifiedDate = DateTime.Now.Date;
+                        }
+                    }
+                    foreach (var item in model.AccommodationImages)
+                    {
+                        var image = DataContext.Context.AccomodationImages.FirstOrDefault(x => x.AccommodationlID == item.AccommodationId);
+                        if (image != null)
+                        {
+                            image.IsVerified = true;
+                            image.IsReported = item.IsReported;
+                            image.IsActive = item.IsActive;
+                            image.VerifiedDate = DateTime.Now.Date;
+                        }
+                    }
+                    message = null;
+                    if (!(DataContext.Context.SaveChangesAsync().Result > 0))
+                    {
+                        message = "Verify Failed.";
+                        return false;
+                    }
+                    return true;
                 }
-                message = null;
-                if (!(DataContext.Context.SaveChangesAsync().Result > 0))
-                {
-                    message = "Verify Failed.";
-                    return false;
-                }
-                return true;
             }
             catch (Exception ex)
             {
