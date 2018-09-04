@@ -58,12 +58,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceModel\GIATAModels.cs" />
     <Compile Include="ServiceModel\GoogleMapModels.cs" />
-    <Compile Include="ServiceModel\IATAScrapperModels.cs" />
+    <Compile Include="ServiceModel\IATACodeModels.cs" />
     <Compile Include="ServiceModel\PublicModels.cs" />
     <Compile Include="ServiceModel\Weather.cs" />
     <Compile Include="Suppliers\GIATAAccess.cs" />
     <Compile Include="Suppliers\GoogleMapAccess.cs" />
-    <Compile Include="Suppliers\IATAScrapper.cs" />
+    <Compile Include="Suppliers\IATACodeAccess.cs" />
     <Compile Include="WeatherAccess.cs" />
     <Compile Include="WeatherConcreteMapper.cs" />
   </ItemGroup>
