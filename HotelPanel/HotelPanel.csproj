@@ -625,10 +625,16 @@
     <Content Include="Content\Scripts\bundle.js" />
     <Content Include="Content\Scripts\ckeditor.js" />
     <Content Include="Content\Scripts\jquery.js" />
+    <Content Include="Content\Style\Style.css">
+      <DependentUpon>Style.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\Style\Style.min.css">
+      <DependentUpon>Style.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Style\StyleSheet1.css" />
     <Content Include="Scripts\owl.carousel.js" />
     <Content Include="Content\Scripts\vendor.js" />
     <Content Include="Content\Style\owl.carousel.min.css" />
-    <Content Include="Content\Style\style.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -717,6 +723,7 @@
     <Content Include="Content\plugin\ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
     <Content Include="Content\plugin\ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
     <Content Include="Content\plugin\ckeditor\skins\moono-lisa\readme.md" />
+    <Content Include="Content\Style\Style.scss" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
