@@ -94,12 +94,6 @@ table.Facility tr td {
 table.Facility .fa-times {
   color: darkred; }
 
-table.Facility td:first-child {
-  display: none; }
-
-table.Facility th:first-child {
-  display: none; }
-
 .add_facility {
   width: 400px;
   background-color: #fff;

@@ -9,13 +9,19 @@ namespace Logic.BusinessObjects
 {
     public class VerifyPanelBusiness
     {
+        public List<Data.ViewModel.VerifyPanelViewModels.Facility> GetFacilities(long id) => DataContext.Context.Facilities.Where(x => !x.Accommodations.Any(y => y.AccommodationlID == id)).OrderBy(x => x.Name).Select(x => new Data.ViewModel.VerifyPanelViewModels.Facility
+        {
+            Category = x.Category,
+            Id = x.FacilityID,
+            Name = x.Name,
+        }).ToList();
         public HotelInfoViewModel GetAccommodationInfo(long accommodationId)
         {
             try
             {
                 using (var context = new Entities())
                 {
-                    return context.Accommodations.Where(x => x.AccommodationlID == accommodationId).ToList().Select(x => new HotelInfoViewModel
+                    var result = context.Accommodations.AsNoTracking().Where(x => x.AccommodationlID == accommodationId).Select(x => new HotelInfoViewModel
                     {
                         AccommodationId = x.AccommodationlID,
                         Address = x.Address,
@@ -34,10 +40,11 @@ namespace Logic.BusinessObjects
                         BookingUrl = x.BookingUrl,
                         CityName = x.CityName,
                         CountryName = x.Country,
-                        AccommodationFacilities = GetAccommodationFacilities(x.AccommodationlID),
-                        AccommodationImages = GetAccommodationImages(x.AccommodationlID),
-                        RoomImages = GetRoomImages(x.AccommodationlID),
                     }).FirstOrDefault() ?? throw new Exception("The Accommodation does not exist.");
+                    result.AccommodationFacilities = GetAccommodationFacilities(accommodationId);
+                    result.AccommodationImages = GetAccommodationImages(accommodationId);
+                    result.RoomImages = GetRoomImages(accommodationId);
+                    return result;
                 }
             }
             catch (Exception)
@@ -116,67 +123,78 @@ namespace Logic.BusinessObjects
             }
         }
 
-        public bool Verify(HotelInfoViewModel model, out string message)
+        public bool Verify(HotelInfoViewModel model, List<long> newFacilities, List<long> removedFacilities, out string message)
         {
             try
             {
                 using (var context = new Entities())
                 {
-                    var accommodation = DataContext.Context.Accommodations.FirstOrDefault(x => x.AccommodationlID == model.AccommodationId);
-                    if (accommodation == null)
+                    if (model != null)
                     {
-                        message = "The Accommodation does not exist.";
-                        return false;
-                    }
-                    accommodation.Name = model.Name ?? accommodation.Name;
-                    accommodation.Address = model.Address ?? accommodation.Address;
-                    accommodation.Rating = model.Rating ?? accommodation.Rating;
-                    accommodation.Telephone = model.Telephone ?? accommodation.Telephone;
-                    accommodation.Fax = model.Fax ?? accommodation.Fax;
-                    accommodation.Email = model.Email ?? accommodation.Email;
-                    accommodation.Url = model.Url ?? accommodation.Url;
-                    accommodation.Description = model.Description ?? accommodation.Description;
-                    accommodation.Latitude = model.Latitude ?? accommodation.Latitude;
-                    accommodation.Longitude = model.Longitude ?? accommodation.Longitude;
-                    accommodation.BookingUrl = model.BookingUrl ?? accommodation.BookingUrl;
-                    accommodation.DateVerified = DateTime.Now.Date;
-                    accommodation.IsVerified = true;
-                    accommodation.IsActive = model.IsActive;
-                    foreach (var item in model.AccommodationFacilities)
-                    {
-                        var facility = DataContext.Context.Facilities.FirstOrDefault(x => x.FacilityID == item.Id);
-                        if (facility != null)
-                            accommodation.Facilities.Add(facility);
-                    }
-                    foreach (var roomImage in model.RoomImages)
-                    {
-                        var image = DataContext.Context.AccomodationRoomImages.FirstOrDefault(x => x.AccommodationID == roomImage.AccommodationId);
-                        if (image != null)
+                        var accommodation = DataContext.Context.Accommodations.FirstOrDefault(x => x.AccommodationlID == model.AccommodationId);
+                        if (accommodation == null)
                         {
-                            image.IsVerified = true;
-                            image.IsReported = roomImage.IsReported;
-                            image.IsActive = roomImage.IsActive;
-                            image.VerifiedDate = DateTime.Now.Date;
+                            message = "The Accommodation does not exist.";
+                            return false;
                         }
-                    }
-                    foreach (var item in model.AccommodationImages)
-                    {
-                        var image = DataContext.Context.AccomodationImages.FirstOrDefault(x => x.AccommodationlID == item.AccommodationId);
-                        if (image != null)
+                        accommodation.Name = model.Name ?? accommodation.Name;
+                        accommodation.Address = model.Address ?? accommodation.Address;
+                        accommodation.Rating = model.Rating ?? accommodation.Rating;
+                        accommodation.Telephone = model.Telephone ?? accommodation.Telephone;
+                        accommodation.Fax = model.Fax ?? accommodation.Fax;
+                        accommodation.Email = model.Email ?? accommodation.Email;
+                        accommodation.Url = model.Url ?? accommodation.Url;
+                        accommodation.Description = model.Description ?? accommodation.Description;
+                        accommodation.Latitude = model.Latitude ?? accommodation.Latitude;
+                        accommodation.Longitude = model.Longitude ?? accommodation.Longitude;
+                        accommodation.BookingUrl = model.BookingUrl ?? accommodation.BookingUrl;
+                        accommodation.DateVerified = DateTime.Now.Date;
+                        accommodation.IsVerified = true;
+                        accommodation.IsActive = model.IsActive ?? accommodation.IsActive;
+                        foreach (var item in newFacilities ?? new List<long>())
                         {
-                            image.IsVerified = true;
-                            image.IsReported = item.IsReported;
-                            image.IsActive = item.IsActive;
-                            image.VerifiedDate = DateTime.Now.Date;
+                            var facility = DataContext.Context.Facilities.FirstOrDefault(x => x.FacilityID == item);
+                            if (facility != null)
+                                accommodation.Facilities.Add(facility);
                         }
+                        foreach (var item in removedFacilities ?? new List<long>())
+                        {
+                            var facility = DataContext.Context.Facilities.FirstOrDefault(x => x.FacilityID == item);
+                            if (facility != null)
+                                accommodation.Facilities.Remove(facility);
+                        }
+                        //foreach (var roomImage in model.RoomImages)
+                        //{
+                        //    var image = DataContext.Context.AccomodationRoomImages.FirstOrDefault(x => x.AccommodationID == roomImage.AccommodationId);
+                        //    if (image != null)
+                        //    {
+                        //        image.IsVerified = true;
+                        //        image.IsReported = roomImage.IsReported;
+                        //        image.IsActive = roomImage.IsActive;
+                        //        image.VerifiedDate = DateTime.Now.Date;
+                        //    }
+                        //}
+                        //foreach (var item in model.AccommodationImages)
+                        //{
+                        //    var image = DataContext.Context.AccomodationImages.FirstOrDefault(x => x.AccommodationlID == item.AccommodationId);
+                        //    if (image != null)
+                        //    {
+                        //        image.IsVerified = true;
+                        //        image.IsReported = item.IsReported;
+                        //        image.IsActive = item.IsActive;
+                        //        image.VerifiedDate = DateTime.Now.Date;
+                        //    }
+                        //}
+                        message = null;
+                        if (!(DataContext.Context.SaveChangesAsync().Result > 0))
+                        {
+                            message = "Verify Failed.";
+                            return false;
+                        }
+                        return true;
                     }
-                    message = null;
-                    if (!(DataContext.Context.SaveChangesAsync().Result > 0))
-                    {
-                        message = "Verify Failed.";
-                        return false;
-                    }
-                    return true;
+                    message = "Model is inavlid.";
+                    return false;
                 }
             }
             catch (Exception ex)

@@ -9,12 +9,28 @@ namespace HotelPanel
         public static void RegisterBundles(BundleCollection bundles)
         {
 
-            bundles.Add(new ScriptBundle("~/Content/Scripts").Include(
-                      "~/Scripts/vendor.js",
-                      "~/Scripts/bundle.js"));
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                      "~/Scripts/jquery-3.3.1.min.js",
+                      "~/Scripts/jquery-ui-1.12.1.min.js",
+                      "~/Content/Scripts/vendor.js",
+                      "~/Content/Scripts/bundle.js"
+                      ));
 
-            bundles.Add(new StyleBundle("~/Content/Style").Include(
-                      "~/Content/style.css"));
+            bundles.Add(new ScriptBundle("~/bundles/ckeditor").Include(
+                      "~/Content/plugin/ckeditor/styles.js",
+                      "~/Content/plugin/ckeditor/ckeditor.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/owlcarousel").Include(
+                      "~/Scripts/owl.carousel.js"));
+
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                "~/Content/Style/Style.css",
+                "~/Content/Style/StyleSheet1.css",
+                "~/Content/themes/base/jquery-ui.min.css",
+                "~/Content/Style/owl.carousel.min.css"
+                ));
+
+            BundleTable.EnableOptimizations = false;
         }
     }
 }

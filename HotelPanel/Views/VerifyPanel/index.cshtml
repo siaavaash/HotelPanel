@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Verify Panel";
 }
-<link href="~/Content/Style/Style.min.css" rel="stylesheet" />
+<link href="~/Content/Style/owl.carousel.min.css" rel="stylesheet" />
 <div class="wrapper">
     <div class="box_parent">
         <div class="img_box" style="vertical-align:top;">
@@ -15,7 +15,7 @@
                     var report = (image.IsReported ?? false) ? "checked" : null;
                     var active = (image.IsActive ?? false) ? "checked" : null;
                     <div>
-                        <img src="@image.Url" />
+                        <img class="owl-lazy" data-src="@image.Url" />
                         <div class="check">
                             <input type="checkbox" @verify disabled /><label>verify</label>
                             <input type="checkbox" @report /><label>report</label>
@@ -37,7 +37,7 @@
                     var report = (image.IsReported ?? false) ? "checked" : null;
                     var active = (image.IsActive ?? false) ? "checked" : null;
                     <div>
-                        <img src="@image.Url" />
+                        <img class="owl-lazy" data-src="@image.Url" />
 
                         <div class="check">
                             <input type="checkbox" @verify disabled /><label>verify</label>
@@ -64,7 +64,7 @@
             </div>
             <div class="txt_area">
                 <textarea name="editor1" id="editor1" rows="30">@Model.Description</textarea>
-                <div  class="txt_right">
+                <div class="txt_right">
                     <button class="btn_img save_des" style="margin-top:15px">Save</button>
                 </div>
             </div>
@@ -72,183 +72,183 @@
     </div>
 
 
+    @using (Html.BeginForm())
+    {
+        <input type="hidden" name="Description" />
+        <input type="hidden" name="AccommodationId" value="@Model.AccommodationId" />
+        <div class="box_parent">
+            <h2>Details</h2>
+            <div class="Lat_box information">
+                <table width="100%">
+                    @*<thead>
+                            <tr>
+                                <th>label</th>
+                                <th>value</th>
+                                <th>Edit</th>
+                            </tr>
+                        </thead>*@
+                    <tbody>
+                        <tr>
+                            <td width="15%">Address</td>
+                            <td width="35%">
+                                <input type="text" class="hidden" name="Address" value="@Model.Address" readonly />
+                            </td>
+                            <td>
+                                <i class="fas fa-pencil-alt"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>
 
-    <div class="box_parent">
-        <h2>Details</h2>
-        <div class="Lat_box information">
-            <table width="100%">
-                @*<thead>
-                    <tr>
-                        <th>label</th>
-                        <th>value</th>
-                        <th>Edit</th>
-                    </tr>
-                </thead>*@
-                <tbody>
-                    <tr>
-                        <td width="15%">Address</td>
-                        <td width="35%">
-                            <input type="text" class="hidden" value="@Model.Address" readonly />
-                        </td>
-                        <td>
-                            <i class="fas fa-pencil-alt"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Email</td>
-                        <td>
+                                <input type="text" class="hidden" name="Email" value="@Model.Email" readonly />
 
-                            <input type="text" class="hidden" value="@Model.Email" readonly />
+                            </td>
+                            <td>
+                                <i class="fas fa-pencil-alt"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Fax</td>
+                            <td>
 
-                        </td>
-                        <td>
-                            <i class="fas fa-pencil-alt"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Fax</td>
-                        <td>
+                                <input type="text" class="hidden" name="Fax" value="@Model.Fax" readonly />
 
-                            <input type="text" class="hidden" value="@Model.Fax" readonly />
+                            </td>
+                            <td>
+                                <i class="fas fa-pencil-alt"></i>
+                            </td>
+                        </tr>
 
-                        </td>
-                        <td>
-                            <i class="fas fa-pencil-alt"></i>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>Latitude</td>
+                            <td>
 
-                    <tr>
-                        <td>Latitude</td>
-                        <td>
+                                <input type="text" class="hidden" name="Latitude" value="@Model.Latitude" readonly />
 
-                            <input type="text" class="hidden" value="@Model.Latitude" readonly />
+                            </td>
+                            <td>
+                                <i class="fas fa-pencil-alt"></i>
+                            </td>
+                        </tr>
 
-                        </td>
-                        <td>
-                            <i class="fas fa-pencil-alt"></i>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>Longitude</td>
+                            <td>
 
-                    <tr>
-                        <td>Longitude</td>
-                        <td>
+                                <input type="text" class="hidden" name="Longitude" value="@Model.Longitude" readonly />
 
-                            <input type="text" class="hidden" value="@Model.Longitude" readonly />
+                            </td>
+                            <td>
+                                <i class="fas fa-pencil-alt"></i>
+                            </td>
+                        </tr>
 
-                        </td>
-                        <td>
-                            <i class="fas fa-pencil-alt"></i>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>Rating</td>
+                            <td>
 
-                    <tr>
-                        <td>Rating</td>
-                        <td>
+                                <input type="text" class="hidden" name="Rating" value="@Model.Rating" readonly />
 
-                            <input type="text" class="hidden" value="@Model.Rating" readonly />
+                            </td>
+                            <td>
+                                <i class="fas fa-pencil-alt"></i>
+                            </td>
+                        </tr>
 
-                        </td>
-                        <td>
-                            <i class="fas fa-pencil-alt"></i>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>Name</td>
+                            <td>
 
-                    <tr>
-                        <td>Name</td>
-                        <td>
+                                <input type="text" class="hidden" name="Name" value="@Model.Name" readonly />
 
-                            <input type="text" class="hidden" value="@Model.Name" readonly />
+                            </td>
+                            <td>
+                                <i class="fas fa-pencil-alt"></i>
+                            </td>
+                        </tr>
 
-                        </td>
-                        <td>
-                            <i class="fas fa-pencil-alt"></i>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>Url</td>
+                            <td>
 
-                    <tr>
-                        <td>Url</td>
-                        <td>
+                                <input type="text" class="hidden" name="Url" value="@Model.Url" readonly />
 
-                            <input type="text" class="hidden" value="@Model.Url" readonly />
+                            </td>
+                            <td>
+                                <i class="fas fa-pencil-alt"></i>
+                            </td>
+                        </tr>
 
-                        </td>
-                        <td>
-                            <i class="fas fa-pencil-alt"></i>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>CityName</td>
+                            <td>
 
-                    <tr>
-                        <td>CityName</td>
-                        <td>
+                                <input type="text" class="hidden" name="CityName" value="@Model.CityName" readonly />
 
-                            <input type="text" class="hidden" value="@Model.CityName" readonly />
+                            </td>
+                            <td>
+                                <i class="fas fa-pencil-alt"></i>
+                            </td>
+                        </tr>
 
-                        </td>
-                        <td>
-                            <i class="fas fa-pencil-alt"></i>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>Telephone</td>
+                            <td>
 
-                    <tr>
-                        <td>Telephone</td>
-                        <td>
+                                <input type="text" class="hidden" name="Telephone" value="@Model.Telephone" readonly />
 
-                            <input type="text" class="hidden" value="@Model.Telephone" readonly />
+                            </td>
+                            <td>
+                                <i class="fas fa-pencil-alt"></i>
+                            </td>
+                        </tr>
 
-                        </td>
-                        <td>
-                            <i class="fas fa-pencil-alt"></i>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>Verified Date</td>
+                            <td>
 
-                    <tr>
-                        <td>Verified Date</td>
-                        <td>
+                                <input type="text" class="hidden" name="VerifiedDate" value="@Model.VerifiedDate" readonly />
 
-                            <input type="text" class="hidden" value="@Model.VerifiedDate" readonly />
+                            </td>
+                            <td>
+                                <i class="fas fa-pencil-alt"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Country</td>
+                            <td>
 
-                        </td>
-                        <td>
-                            <i class="fas fa-pencil-alt"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Country</td>
-                        <td>
+                                <input type="text" class="hidden" name="CountryName" value="@Model.CountryName" readonly />
 
-                            <input type="text" class="hidden" value="@Model.CountryName" readonly />
+                            </td>
+                            <td>
+                                <i class="fas fa-pencil-alt"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CityName</td>
+                            <td>
 
-                        </td>
-                        <td>
-                            <i class="fas fa-pencil-alt"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>CityName</td>
-                        <td>
+                                <input type="text" class="hidden" name="CityName" value="@Model.CityName" readonly />
 
-                            <input type="text" class="hidden" value="@Model.CityName" readonly />
+                            </td>
+                            <td>
+                                <i class="fas fa-pencil-alt"></i>
+                            </td>
+                        </tr>
+                    </tbody>
 
-                        </td>
-                        <td>
-                            <i class="fas fa-pencil-alt"></i>
-                        </td>
-                    </tr>
-                </tbody>
-
-            </table>
+                </table>
+            </div>
         </div>
-    </div>
-
+    }
     <div class="box_parent">
         <h2>Facility</h2>
         <div class="information">
             <table width="100%" class="Facility">
                 <thead>
                     <tr>
-                        <th>
-                            id
-                        </th>
                         <th width="30%">
                             Name
                         </th>
@@ -263,8 +263,7 @@
                 <tbody>
                     @foreach (var facility in Model.AccommodationFacilities)
                     {
-                        <tr>
-                            <td>@facility.Id</td>
+                        <tr data-id="@facility.Id">
                             <td>@facility.Name</td>
                             <td>@facility.Category</td>
                             <td>
@@ -279,24 +278,20 @@
             </div>
         </div>
 
+        <div>
+            <button type="submit" id="verify_btn">Verify</button>
+        </div>
+
         <div class="add_facility">
             <div>
-                <input type="hidden" class="id_name" value=""/>
-            </div>
-            <div>
                 <span>Name :</span>
-                <select class="name_fac">
-                    <option>1</option>
-                    <option selected>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                </select>
+                <select class="name_fac"></select>
             </div>
             <div>
                 <span>
-                    category :
+                    Category :
                 </span>
-                <label class="ctg">category</label>
+                <label id="facility_category" class="ctg"></label>
             </div>
             <div class="txt_right" style="text-align:right; margin-right:10px;">
                 <button class="btn_img save_fac">Save</button>
@@ -304,12 +299,20 @@
         </div>
     </div>
 </div>
-
+<script src="~/Scripts/owl.carousel.js"></script>
+<script src="~/Content/plugin/ckeditor/ckeditor.js"></script>
+<script src="~/Content/plugin/ckeditor/styles.js"></script>
 <script>
+    var addedfacilities = new Array();
+    var deletedfacilities = new Array();
+    addedfacilities.push(0);
+    deletedfacilities.push(0);
     $('.owl-carousel').owlCarousel({
         loop: true,
         margin: 10,
         nav: true,
+        lazyLoad: true,
+        lazyLoadEager: true,
         navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
         responsive: {
             0: {
@@ -343,6 +346,7 @@
 
     $("body").on("click", ".save_des", function () {
         var textContent1 = CKEDITOR.instances.editor1.getData();
+        $("input[name=Description]").val(textContent1);
         $(".show_text").html(textContent1);
         $("div.show_text").css("display", "block");
         $("div.show_btn").css("display", "block");
@@ -350,17 +354,55 @@
     })
 
     $("body").on("click", ".add", function () {
-        $("div.add_facility").css("display","block")
+            $.get("/VerifyPanel/GetFacilitiesList/@Model.AccommodationId", function (response) {
+                $.each(response, function (index, item) {
+                    $(".name_fac").append('<option data-category="' + item.Category + '" value="' + item.Id + '">' + item.Name + '</option>')
+                })
+            });
+        $("div.add_facility").css("display", "block");
     })
     $("body").on("click", ".fa-times", function () {
         $(this).parent().parent().remove("tr");
     })
+    $("body").on("change", ".name_fac", function () {
+        if ($(".name_fac option:selected").length == 0) {
+            $("#facility_category").text($(".name_fac option:first").data("category"));
+        }
+        $(".name_fac option:selected").each(function () {
+            $("#facility_category").text($(this).data("category"));
+        });
+    })
 
-    var name = $(".name_fac option:selected").val();
-    var category = $(".ctg").text();
-    var id = $("input.id_name").val();
     $("body").on("click", ".save_fac", function () {
-        $("table.Facility").append('<tr><td>' + id + '</td><td>' + name + '</td><td>' + category + '</td><td><i class="fas fa-times"></i></td></tr>');
+        var category = $(".ctg").text();
+        var id = $(".name_fac option:selected").val();
+        var name = $(".name_fac option:selected").text();
+        addedfacilities.push(id);
+        $("table.Facility").append('<tr data-id="' + id + '"><td>' + name + '</td><td>' + category + '</td><td><i class="fas fa-times"></i></td></tr>');
         $(".add_facility").css("display", "none");
     })
+    $("body").on("click", ".fa-times", function () {
+        deletedfacilities.push($(this).parent().parent().data("id"));
+    });
+
+    $("body").on("click", "#verify_btn", function () {
+        var model = $("form").serialize();
+        $.ajax({
+            url: "/VerifyPanel/Verify",
+            data: model + decodeURIComponent($.param({
+                addedFacilities: addedfacilities,
+                removedFacilities: deletedfacilities,
+            })),
+            type: "POST",
+            success: function (response) {
+                if (response.success) {
+                    window.history.back();
+                }
+                else {
+                    alert(response.data);
+                }
+            },
+        })
+    });
+
 </script>
