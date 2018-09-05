@@ -21,7 +21,7 @@ namespace Logic.BusinessObjects
             {
                 using (var context = new Entities())
                 {
-                    var result = context.Accommodations.AsNoTracking().Where(x => x.AccommodationlID == accommodationId).Select(x => new HotelInfoViewModel
+                    var result = context.Accommodations.AsNoTracking().Where(x => x.AccommodationlID == accommodationId).ToList().Select(x => new HotelInfoViewModel
                     {
                         AccommodationId = x.AccommodationlID,
                         Address = x.Address,
@@ -32,7 +32,7 @@ namespace Logic.BusinessObjects
                         Longitude = x.Longitude,
                         Telephone = x.Telephone,
                         Url = x.Url,
-                        VerifiedDate = x.DateVerified,
+                        VerifiedDate = x.DateVerified?.ToString("dd MMM yyyy"),
                         Rating = x.Rating,
                         Name = x.Name,
                         IsActive = x.IsActive,
@@ -163,28 +163,28 @@ namespace Logic.BusinessObjects
                             if (facility != null)
                                 accommodation.Facilities.Remove(facility);
                         }
-                        //foreach (var roomImage in model.RoomImages)
-                        //{
-                        //    var image = DataContext.Context.AccomodationRoomImages.FirstOrDefault(x => x.AccommodationID == roomImage.AccommodationId);
-                        //    if (image != null)
-                        //    {
-                        //        image.IsVerified = true;
-                        //        image.IsReported = roomImage.IsReported;
-                        //        image.IsActive = roomImage.IsActive;
-                        //        image.VerifiedDate = DateTime.Now.Date;
-                        //    }
-                        //}
-                        //foreach (var item in model.AccommodationImages)
-                        //{
-                        //    var image = DataContext.Context.AccomodationImages.FirstOrDefault(x => x.AccommodationlID == item.AccommodationId);
-                        //    if (image != null)
-                        //    {
-                        //        image.IsVerified = true;
-                        //        image.IsReported = item.IsReported;
-                        //        image.IsActive = item.IsActive;
-                        //        image.VerifiedDate = DateTime.Now.Date;
-                        //    }
-                        //}
+                        foreach (var roomImage in model.RoomImages ?? new List<Image>())
+                        {
+                            var image = DataContext.Context.AccomodationRoomImages.FirstOrDefault(x => x.AccommodationID == roomImage.AccommodationId);
+                            if (image != null)
+                            {
+                                image.IsVerified = true;
+                                image.IsReported = roomImage.IsReported;
+                                image.IsActive = roomImage.IsActive;
+                                image.VerifiedDate = DateTime.Now.Date;
+                            }
+                        }
+                        foreach (var item in model.AccommodationImages ?? new List<Image>())
+                        {
+                            var image = DataContext.Context.AccomodationImages.FirstOrDefault(x => x.AccommodationlID == item.AccommodationId);
+                            if (image != null)
+                            {
+                                image.IsVerified = true;
+                                image.IsReported = item.IsReported;
+                                image.IsActive = item.IsActive;
+                                image.VerifiedDate = DateTime.Now.Date;
+                            }
+                        }
                         message = null;
                         if (!(DataContext.Context.SaveChangesAsync().Result > 0))
                         {
