@@ -37,17 +37,33 @@ namespace HotelPanel.Controllers
                 return Json(new { success = false, data = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
-        public JsonResult Verify(HotelInfoViewModel model)
+
+        [HttpPost]
+        public JsonResult Verify(HotelInfoViewModel model, List<long> addedFacilities, List<long> removedFacilities)
         {
             try
             {
-                if (verifyPanelBusiness.Verify(model, out string message))
+                if (verifyPanelBusiness.Verify(model, addedFacilities, removedFacilities, out string message))
                     return Json(new { success = true, data = message }, JsonRequestBehavior.AllowGet);
                 return Json(new { success = false, data = message }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
                 return Json(new { success = false, data = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public JsonResult GetFacilitiesList(long id)
+        {
+            try
+            {
+                return Json(verifyPanelBusiness.GetFacilities(id), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }
