@@ -180,3 +180,48 @@ table.Facility {
         width: 100%;
     }
 }
+a.booking{
+    font-size:12px; 
+    font-weight:bold;
+}
+.delete{
+   color:red !important;
+}
+
+#thumbnails li img{
+    width:400px;
+    height:300px;
+}
+
+.thumb-box {
+    padding: 1.4em 0 1em;
+    margin-left: -1%;
+    width: 102%;
+
+    .thumbs {
+
+
+        li {
+            float: left;
+            width: 25%;
+            text-align: center;
+            padding: 0 1%;
+
+            img {
+                width: 120px;
+                opacity: .8;
+                border-bottom: 4px solid transparent;
+
+                &.active {
+                    opacity: 1;
+                }
+            }
+
+            &:hover {
+                img {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}
