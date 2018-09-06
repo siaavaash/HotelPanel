@@ -12,7 +12,7 @@ namespace HotelPanel.Controllers
     {
         private readonly VerifyPanelBusiness verifyPanelBusiness = new VerifyPanelBusiness();
         // GET: VerifyPanel
-        public ActionResult Index(long? id)
+        public ActionResult Details(long? id)
         {
             try
             {

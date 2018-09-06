@@ -795,7 +795,7 @@
     <Content Include="Views\Accommodation\AddDescription.cshtml" />
     <Content Include="Views\Accommodation\ChangeDescription.cshtml" />
     <Content Include="Views\Accommodation\ListLanguageDescription.cshtml" />
-    <Content Include="Views\VerifyPanel\Index.cshtml" />
+    <Content Include="Views\VerifyPanel\Details.cshtml" />
     <Content Include="Views\Shared\Error\NotFound.cshtml" />
     <Content Include="Views\Shared\Error\ServerError.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />

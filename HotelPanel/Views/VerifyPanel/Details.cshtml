@@ -17,14 +17,13 @@
                     <div>
                         <img class="owl-lazy" data-src="@image.Url" />
                         <div class="check">
-                            <input type="checkbox" @verify disabled /><label>verify</label>
-                            <input type="checkbox" @report /><label>report</label>
-                            <input type="checkbox" @active /><label>active</label>
+                            <input data-id="@image.Id" name="IsVerified" class="hotelImgCheck" type="checkbox" @verify disabled /><label>verify</label>
+                            <input data-id="@image.Id" class="hotelImgCheck" name="IsReported" type="checkbox" @report /><label>report</label>
+                            <input data-id="@image.Id" class="hotelImgCheck" name="IsActive" type="checkbox" @active /><label>active</label>
                         </div>
                     </div>
-
-
                 }
+
             </div>
 
         </div>
@@ -40,9 +39,9 @@
                         <img class="owl-lazy" data-src="@image.Url" />
 
                         <div class="check">
-                            <input type="checkbox" @verify disabled /><label>verify</label>
-                            <input type="checkbox" @report /><label>report</label>
-                            <input type="checkbox" @active /><label>active</label>
+                            <input data-id="@image.Id" class="roomImgCheck" name="IsVerified" type="checkbox" @verify disabled /><label>verify</label>
+                            <input data-id="@image.Id" class="roomImgCheck" name="IsReported" type="checkbox" @report /><label>report</label>
+                            <input data-id="@image.Id" class="roomImgCheck" name="IsActive" type="checkbox" @active /><label>active</label>
                         </div>
                     </div>
 
@@ -51,85 +50,87 @@
 
         </div>
     </div>
-    <div class="box_parent">
-        <h2>Descripion</h2>
-        <div class="information">
-            <div class="paragraf">
-                <div class="show_text">
-                    @Html.Raw(Model.Description)
+    @using (Html.BeginForm())
+    {
+        if (Model.BookingUrl != null)
+        {
+            <div class="box_parent">
+                <h2>Booking Url</h2>
+                <div>
+                    @*<iframe style="width:80%" frameborder="0" data-src="@Model.BookingUrl"></iframe>*@
                 </div>
-                <div class="show_btn txt_right">
-                    <button class="btn_img edit_des" style="margin-top:15px">Edit</button>
+                <div>
+                    <label>Booking Url:</label><input id="booking_url_input" type="text" name="BookingUrl" value="@Model.BookingUrl" class="hidden" readonly />
                 </div>
             </div>
-            <div class="txt_area">
-                <textarea name="editor1" id="editor1" rows="30">@Model.Description</textarea>
-                <div class="txt_right">
-                    <button class="btn_img save_des" style="margin-top:15px">Save</button>
+        }
+        <div class="box_parent">
+            <h2>Descripion</h2>
+            <div class="information">
+                <div class="paragraf">
+                    <div class="show_text">
+                        @Html.Raw(Model.Description)
+                    </div>
+                    <div class="show_btn txt_right">
+                        <button class="btn_img edit_des" style="margin-top:15px">Edit</button>
+                    </div>
+                </div>
+                <div class="txt_area">
+                    <textarea name="editor1" id="editor1" rows="30">@Model.Description</textarea>
+                    <div class="txt_right">
+                        <button class="btn_img save_des" style="margin-top:15px">Save</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
-    @using (Html.BeginForm())
-    {
         <input type="hidden" name="Description" />
         <input type="hidden" name="AccommodationId" value="@Model.AccommodationId" />
         <div class="box_parent">
             <h2>Details</h2>
             <div class="Lat_box information">
                 <table width="100%">
-                    @*<thead>
-                            <tr>
-                                <th>label</th>
-                                <th>value</th>
-                                <th>Edit</th>
-                            </tr>
-                        </thead>*@
                     <tbody>
+                        <tr>
+                            <td>Name</td>
+                            <td>
+
+                                <input type="text" class="hidden" name="Name" value="@Model.Name" readonly />
+
+                            </td>
+                            <td>Url</td>
+                            <td>
+
+                                <input type="text" class="hidden" name="Url" value="@Model.Url" readonly />
+
+                            </td>
+                        </tr>
                         <tr>
                             <td width="15%">Address</td>
                             <td width="35%">
                                 <input type="text" class="hidden" name="Address" value="@Model.Address" readonly />
                             </td>
-                            <td>
-                                <i class="fas fa-pencil-alt"></i>
-                            </td>
-                        </tr>
-                        <tr>
                             <td>Email</td>
                             <td>
 
                                 <input type="text" class="hidden" name="Email" value="@Model.Email" readonly />
 
                             </td>
-                            <td>
-                                <i class="fas fa-pencil-alt"></i>
-                            </td>
                         </tr>
                         <tr>
+                            <td>Telephone</td>
+                            <td>
+
+                                <input type="text" class="hidden" name="Telephone" value="@Model.Telephone" readonly />
+                            </td>
                             <td>Fax</td>
                             <td>
 
                                 <input type="text" class="hidden" name="Fax" value="@Model.Fax" readonly />
 
                             </td>
-                            <td>
-                                <i class="fas fa-pencil-alt"></i>
-                            </td>
-                        </tr>
 
-                        <tr>
-                            <td>Latitude</td>
-                            <td>
-
-                                <input type="text" class="hidden" name="Latitude" value="@Model.Latitude" readonly />
-
-                            </td>
-                            <td>
-                                <i class="fas fa-pencil-alt"></i>
-                            </td>
                         </tr>
 
                         <tr>
@@ -139,9 +140,30 @@
                                 <input type="text" class="hidden" name="Longitude" value="@Model.Longitude" readonly />
 
                             </td>
+                            <td>Latitude</td>
                             <td>
-                                <i class="fas fa-pencil-alt"></i>
+
+                                <input type="text" class="hidden" name="Latitude" value="@Model.Latitude" readonly />
+
                             </td>
+
+                        </tr>
+
+
+                        <tr>
+                            <td>CityName</td>
+                            <td>
+
+                                <input type="text" class="hidden" name="CityName" value="@Model.CityName" readonly />
+
+                            </td>
+                            <td>Country</td>
+                            <td>
+
+                                <input type="text" class="hidden" name="CountryName" value="@Model.CountryName" readonly />
+
+                            </td>
+
                         </tr>
 
                         <tr>
@@ -151,90 +173,26 @@
                                 <input type="text" class="hidden" name="Rating" value="@Model.Rating" readonly />
 
                             </td>
-                            <td>
-                                <i class="fas fa-pencil-alt"></i>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Name</td>
-                            <td>
-
-                                <input type="text" class="hidden" name="Name" value="@Model.Name" readonly />
-
-                            </td>
-                            <td>
-                                <i class="fas fa-pencil-alt"></i>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Url</td>
-                            <td>
-
-                                <input type="text" class="hidden" name="Url" value="@Model.Url" readonly />
-
-                            </td>
-                            <td>
-                                <i class="fas fa-pencil-alt"></i>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>CityName</td>
-                            <td>
-
-                                <input type="text" class="hidden" name="CityName" value="@Model.CityName" readonly />
-
-                            </td>
-                            <td>
-                                <i class="fas fa-pencil-alt"></i>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Telephone</td>
-                            <td>
-
-                                <input type="text" class="hidden" name="Telephone" value="@Model.Telephone" readonly />
-
-                            </td>
-                            <td>
-                                <i class="fas fa-pencil-alt"></i>
-                            </td>
-                        </tr>
-
-                        <tr>
                             <td>Verified Date</td>
                             <td>
 
                                 <input type="text" class="hidden" name="VerifiedDate" value="@Model.VerifiedDate" readonly />
 
                             </td>
-                            <td>
-                                <i class="fas fa-pencil-alt"></i>
-                            </td>
+
                         </tr>
                         <tr>
-                            <td>Country</td>
+                            <td>Is Verified</td>
                             <td>
-
-                                <input type="text" class="hidden" name="CountryName" value="@Model.CountryName" readonly />
-
-                            </td>
-                            <td>
-                                <i class="fas fa-pencil-alt"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>CityName</td>
-                            <td>
-
-                                <input type="text" class="hidden" name="CityName" value="@Model.CityName" readonly />
+                                @{var verify = (Model.IsVerified ?? false) ? "checked" : null;}
+                                <input type="checkbox" class="checkbox" name="IsVerified" @verify disabled />
 
                             </td>
+                            <td>Is Active</td>
                             <td>
-                                <i class="fas fa-pencil-alt"></i>
+
+                                @{var active = (Model.IsActive ?? false) ? "checked" : null;}
+                                <input type="checkbox" class="checkbox" name="IsActive" @active />
                             </td>
                         </tr>
                     </tbody>
@@ -303,8 +261,12 @@
 <script src="~/Content/plugin/ckeditor/ckeditor.js"></script>
 <script src="~/Content/plugin/ckeditor/styles.js"></script>
 <script>
+    var roomImgChangeId = new Array();
+    var hotelImgChangeId = new Array();
     var addedfacilities = new Array();
     var deletedfacilities = new Array();
+    var roomImgChanges = new Array();
+    var hotelImgChanges = new Array();
     addedfacilities.push(0);
     deletedfacilities.push(0);
     $('.owl-carousel').owlCarousel({
@@ -332,6 +294,10 @@
     $("body").on("click", ".fa-pencil-alt", function () {
         $(this).parent().parent().find("input.hidden").addClass("show-border");
         $(this).parent().parent().find("input.hidden").attr("readonly", false);
+    })
+    $("input[type=text]").click(function () {
+        $(this).addClass("show-border");
+        $(this).attr("readonly", false);
     })
     $("body").on("blur", ".hidden", function () {
         $(this).removeClass("show-border");
@@ -386,23 +352,87 @@
     });
 
     $("body").on("click", "#verify_btn", function () {
+        roomImgChangeId = roomImgChangeId.filter((item, index, arr) => {
+            return arr.indexOf(item) == index
+        });
+        hotelImgChangeId = hotelImgChangeId.filter((item, index, arr) => {
+            return arr.indexOf(item) == index
+        });
+        $.each(roomImgChangeId, function () {
+            var active = null;
+            var report = null;
+            $("input.roomImgCheck[data-id=" + $(this)[0] + "]").each(function (index, item) {
+                switch (item.getAttribute("name")) {
+                    case "IsActive":
+                        active = item.checked;
+                        break;
+                    case "IsReported":
+                        report = item.checked;
+                        break;
+                    default:
+                }
+            });
+            roomImgChanges.push({
+                AccommodationId: @Model.AccommodationId,
+                IsActive: active,
+                IsReported: report,
+                Id: $(this)[0]
+            });
+        })
+        $.each(hotelImgChangeId, function () {
+            var active = null;
+            var report = null;
+            $("input.hotelImgCheck[data-id=" + $(this)[0] + "]").each(function (index, item) {
+                switch (item.getAttribute("name")) {
+                    case "IsActive":
+                        active = item.checked;
+                        break;
+                    case "IsReported":
+                        report = item.checked;
+                        break;
+                    default:
+                }
+            });
+            hotelImgChanges.push({
+                AccommodationId: @Model.AccommodationId,
+                IsActive: active,
+                IsReported: report,
+                Id: $(this)[0]
+            });
+        })
         var model = $("form").serialize();
         $.ajax({
             url: "/VerifyPanel/Verify",
-            data: model + decodeURIComponent($.param({
+            data: model + "&" + decodeURIComponent($.param({
                 addedFacilities: addedfacilities,
                 removedFacilities: deletedfacilities,
+                RoomImages: roomImgChanges,
+                AccommodationImages: hotelImgChanges,
             })),
             type: "POST",
             success: function (response) {
                 if (response.success) {
-                    window.history.back();
+                    location.reload();
                 }
                 else {
                     alert(response.data);
                 }
             },
         })
+    });
+    $(window).on("load",function () {
+        var src = $("iframe").data("src");
+        $("iframe").attr("src", src);
+    });
+    $("#booking_url_input").change(function () {
+        $("iframe").attr("src", $(this).val());
+        $("iframe").data("src", $(this).val());
+    })
+    $(".hotelImgCheck").change(function () {
+        hotelImgChangeId.push($(this).data("id"));
+    });
+    $(".roomImgCheck").change(function () {
+        roomImgChangeId.push($(this).data("id"));
     });
 
 </script>

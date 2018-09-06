@@ -24,7 +24,7 @@ namespace Data.ViewModel.VerifyPanelViewModels
         public string BookingUrl { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsVerified { get; set; }
-        public DateTime? VerifiedDate { get; set; }
+        public string VerifiedDate { get; set; }
         public List<Image> RoomImages { get; set; }
         public List<Image> AccommodationImages { get; set; }
         public List<Facility> AccommodationFacilities { get; set; }

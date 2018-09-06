@@ -33,6 +33,25 @@ input.hidden {
   border: none;
   transition: box-shadow .3s, border .3s, -webkit-box-shadow .3s; }
 
+.hide-bullets {
+  list-style: none;
+  margin-left: -40px;
+  margin-top: 20px; }
+
+.thumbnail {
+  padding: 0; }
+
+input.checkbox {
+  background-color: transparent;
+  border-bottom: 1px solid #9e9e9e;
+  border-radius: 2px;
+  outline: none;
+  width: 5%;
+  height: 3rem;
+  font-size: 16px;
+  border: none;
+  transition: box-shadow .3s, border .3s, -webkit-box-shadow .3s; }
+
 /*.show-border {
     border-bottom: 1px solid #26a69a;
     box-shadow: 1px 0 0 #26a69a;
