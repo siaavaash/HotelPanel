@@ -7,92 +7,92 @@
 <script src="~/Content/plugin/slippy/slippry.min.js"></script>
 <div class="wrapper">
     <div class="box_parent">
-       
-            <div class="img_box" style="vertical-align:top;">
-                <h2>Hotel Images</h2>
-                <div id="hotelimages" class="owl-carousel owl-theme">
 
-                    @foreach (var image in Model.AccommodationImages)
-            {
-                var verify = (image.IsVerified ?? false) ? "checked" : null;
-                var report = (image.IsReported ?? false) ? "checked" : null;
-                var active = (image.IsActive ?? false) ? "checked" : null;
-                <div>
-                    <img class="owl-lazy" data-src="@image.Url" />
-                    <div class="check">
-                        <input data-id="@image.Id" name="IsVerified" class="hotelImgCheck" type="checkbox" @verify disabled /><label>verify</label>
-                        <input data-id="@image.Id" class="hotelImgCheck" name="IsReported" type="checkbox" @report /><label>report</label>
-                        <input data-id="@image.Id" class="hotelImgCheck" name="IsActive" type="checkbox" @active /><label>active</label>
-                    </div>
-                </div>
-    }
-
-                </div>
+        <div class="img_box" style="vertical-align:top;">
+            <h2>Hotel Images</h2>
+            <div id="hotelimages" class="owl-carousel owl-theme">
 
                 @foreach (var image in Model.AccommodationImages)
-        {
-            <a data-hash="zero"><img data-src="@image.Url" /></a>
-}
-            </div>
-            <div class="img_box">
-                <h2>Room Images</h2>
-                <div id="roomimages" class="owl-carousel owl-theme room_pic">
-                    @foreach (var image in Model.RoomImages)
-            {
-                var verify = (image.IsVerified ?? false) ? "checked" : null;
-                var report = (image.IsReported ?? false) ? "checked" : null;
-                var active = (image.IsActive ?? false) ? "checked" : null;
-                <div>
-                    <img class="owl-lazy" data-src="@image.Url" />
-
-                    <div class="check">
-                        <input data-id="@image.Id" class="roomImgCheck" name="IsVerified" type="checkbox" @verify disabled /><label>verify</label>
-                        <input data-id="@image.Id" class="roomImgCheck" name="IsReported" type="checkbox" @report /><label>report</label>
-                        <input data-id="@image.Id" class="roomImgCheck" name="IsActive" type="checkbox" @active /><label>active</label>
+                {
+                    var verify = (image.IsVerified ?? false) ? "checked" : null;
+                    var report = (image.IsReported ?? false) ? "checked" : null;
+                    var active = (image.IsActive ?? false) ? "checked" : null;
+                    <div>
+                        <img class="owl-lazy" data-src="@image.Url" />
+                        <div class="check">
+                            <input data-id="@image.Id" name="IsVerified" class="hotelImgCheck" type="checkbox" @verify disabled /><label>verify</label>
+                            <input data-id="@image.Id" class="hotelImgCheck" name="IsReported" type="checkbox" @report /><label>report</label>
+                            <input data-id="@image.Id" class="hotelImgCheck" name="IsActive" type="checkbox" @active /><label>active</label>
+                        </div>
                     </div>
-                </div>
-
-    }
-                </div>
+                }
 
             </div>
-            <div style="text-align:center">
-                <a href="~/Accommodation/Images" class="btn_img" style="padding:8px 30px; ">Edit</a>
 
+            @foreach (var image in Model.AccommodationImages)
+            {
+                <a data-hash="zero"><img data-src="@image.Url" /></a>
+            }
+        </div>
+        <div class="img_box">
+            <h2>Room Images</h2>
+            <div id="roomimages" class="owl-carousel owl-theme room_pic">
+                @foreach (var image in Model.RoomImages)
+                {
+                    var verify = (image.IsVerified ?? false) ? "checked" : null;
+                    var report = (image.IsReported ?? false) ? "checked" : null;
+                    var active = (image.IsActive ?? false) ? "checked" : null;
+                    <div>
+                        <img class="owl-lazy" data-src="@image.Url" />
+
+                        <div class="check">
+                            <input data-id="@image.Id" class="roomImgCheck" name="IsVerified" type="checkbox" @verify disabled /><label>verify</label>
+                            <input data-id="@image.Id" class="roomImgCheck" name="IsReported" type="checkbox" @report /><label>report</label>
+                            <input data-id="@image.Id" class="roomImgCheck" name="IsActive" type="checkbox" @active /><label>active</label>
+                        </div>
+                    </div>
+
+                }
             </div>
+
+        </div>
+        <div style="text-align:center">
+            <a href="~/Accommodation/Images" class="btn_img" style="padding:8px 30px; ">Edit</a>
+
+        </div>
 
 
         @*@{
-            int slide = 0;
-            int slippy = 0;
-        }
-        <div>
-            <ul id="thumbnails">
+                int slide = 0;
+                int slippy = 0;
+            }
+            <div>
+                <ul id="thumbnails">
 
-                @foreach (var image in Model.RoomImages)
-                {
-                    <li>
-                        <a href="#@slide">
-                            <img class="owl-lazy" src="@image.Url" />
-                        </a>
-                    </li>
-
-                    slide = slide + 1;
-
-
-                }
-
-            </ul>
-            <div class="thumb-box">
-                <ul class="thumbs">
                     @foreach (var image in Model.RoomImages)
                     {
-                        <li><a href="#@slippy" data-slide="@slippy"><img src="@image.Url" /></a></li>
-                        slippy = slippy + 1;
+                        <li>
+                            <a href="#@slide">
+                                <img class="owl-lazy" src="@image.Url" />
+                            </a>
+                        </li>
+
+                        slide = slide + 1;
+
+
                     }
+
                 </ul>
-            </div>
-        </div>*@
+                <div class="thumb-box">
+                    <ul class="thumbs">
+                        @foreach (var image in Model.RoomImages)
+                        {
+                            <li><a href="#@slippy" data-slide="@slippy"><img src="@image.Url" /></a></li>
+                            slippy = slippy + 1;
+                        }
+                    </ul>
+                </div>
+            </div>*@
 
     </div>
     @using (Html.BeginForm())
@@ -280,11 +280,10 @@
                             <td>@facility.Name</td>
                             <td>@facility.Category</td>
                             <td>
-                                <button class="dlt cur-p btn-danger">Delete</button>
-                                @*<i class="fas fa-times"></i>*@
+                                <button id="delete_btn" class="dlt cur-p btn-danger">Delete</button>
                             </td>
                             <td>
-                                <button class="cur-p btn-primary undo">Undo</button>
+                                <button id="undo_btn" class="cur-p btn-primary undo">Undo</button>
                             </td>
                         </tr>
                     }
@@ -347,8 +346,6 @@
     var deletedfacilities = new Array();
     var roomImgChanges = new Array();
     var hotelImgChanges = new Array();
-    addedfacilities.push(0);
-    deletedfacilities.push(0);
     $('.owl-carousel').owlCarousel({
         loop: true,
         margin: 10,
@@ -424,6 +421,8 @@
     })
     $("body").on("click", ".undo", function () {
         $(this).parent().parent().removeClass("delete");
+        var index = deletedfacilities.indexOf($(this).parent().parent().data("id"));
+        deletedfacilities.splice(index);
     })
     $("body").on("change", ".name_fac", function () {
         if ($(".name_fac option:selected").length == 0) {
@@ -439,10 +438,10 @@
         var id = $(".name_fac option:selected").val();
         var name = $(".name_fac option:selected").text();
         addedfacilities.push(id);
-        $("table.Facility").append('<tr data-id="' + id + '"><td>' + name + '</td><td>' + category + '</td><td><i class="fas fa-times"></i></td></tr>');
+        $("table.Facility").append('<tr data-id="' + id + '"><td>' + name + '</td><td>' + category + '</td><td><button class="dlt cur-p btn-danger">Delete</button ></td ><td><button class="cur-p btn-primary undo">Undo</button></td></tr>');
         $(".add_facility").css("display", "none");
     })
-    $("body").on("click", ".fa-times", function () {
+    $("body").on("click", "#delete_btn", function () {
         deletedfacilities.push($(this).parent().parent().data("id"));
     });
 
@@ -478,6 +477,9 @@
             var active = null;
             var report = null;
             $("input.hotelImgCheck[data-id=" + $(this)[0] + "]").each(function (index, item) {
+                if (active != null && report != null) {
+                    return false;
+                }
                 switch (item.getAttribute("name")) {
                     case "IsActive":
                         active = item.checked;

@@ -165,7 +165,7 @@ namespace Logic.BusinessObjects
                         }
                         foreach (var roomImage in model.RoomImages ?? new List<Image>())
                         {
-                            var image = DataContext.Context.AccomodationRoomImages.FirstOrDefault(x => x.AccommodationID == roomImage.AccommodationId);
+                            var image = DataContext.Context.AccomodationRoomImages.FirstOrDefault(x => x.AccomodationRoomImageID == roomImage.Id);
                             if (image != null)
                             {
                                 image.IsVerified = true;
@@ -176,7 +176,7 @@ namespace Logic.BusinessObjects
                         }
                         foreach (var item in model.AccommodationImages ?? new List<Image>())
                         {
-                            var image = DataContext.Context.AccomodationImages.FirstOrDefault(x => x.AccommodationlID == item.AccommodationId);
+                            var image = DataContext.Context.AccomodationImages.FirstOrDefault(x => x.ImageID == item.Id);
                             if (image != null)
                             {
                                 image.IsVerified = true;
