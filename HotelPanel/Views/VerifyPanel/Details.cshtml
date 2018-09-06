@@ -3,67 +3,112 @@
     ViewBag.Title = "Verify Panel";
 }
 <link href="~/Content/Style/owl.carousel.min.css" rel="stylesheet" />
+<link href="~/Content/plugin/slippy/slippry.css" rel="stylesheet" />
+<script src="~/Content/plugin/slippy/slippry.min.js"></script>
 <div class="wrapper">
     <div class="box_parent">
-        <div class="img_box" style="vertical-align:top;">
-            <h2>Hotel Images</h2>
-            <div id="hotelimages" class="owl-carousel owl-theme">
+       
+            <div class="img_box" style="vertical-align:top;">
+                <h2>Hotel Images</h2>
+                <div id="hotelimages" class="owl-carousel owl-theme">
+
+                    @foreach (var image in Model.AccommodationImages)
+            {
+                var verify = (image.IsVerified ?? false) ? "checked" : null;
+                var report = (image.IsReported ?? false) ? "checked" : null;
+                var active = (image.IsActive ?? false) ? "checked" : null;
+                <div>
+                    <img class="owl-lazy" data-src="@image.Url" />
+                    <div class="check">
+                        <input data-id="@image.Id" name="IsVerified" class="hotelImgCheck" type="checkbox" @verify disabled /><label>verify</label>
+                        <input data-id="@image.Id" class="hotelImgCheck" name="IsReported" type="checkbox" @report /><label>report</label>
+                        <input data-id="@image.Id" class="hotelImgCheck" name="IsActive" type="checkbox" @active /><label>active</label>
+                    </div>
+                </div>
+    }
+
+                </div>
 
                 @foreach (var image in Model.AccommodationImages)
-                {
-                    var verify = (image.IsVerified ?? false) ? "checked" : null;
-                    var report = (image.IsReported ?? false) ? "checked" : null;
-                    var active = (image.IsActive ?? false) ? "checked" : null;
-                    <div>
-                        <img class="owl-lazy" data-src="@image.Url" />
-                        <div class="check">
-                            <input data-id="@image.Id" name="IsVerified" class="hotelImgCheck" type="checkbox" @verify disabled /><label>verify</label>
-                            <input data-id="@image.Id" class="hotelImgCheck" name="IsReported" type="checkbox" @report /><label>report</label>
-                            <input data-id="@image.Id" class="hotelImgCheck" name="IsActive" type="checkbox" @active /><label>active</label>
-                        </div>
+        {
+            <a data-hash="zero"><img data-src="@image.Url" /></a>
+}
+            </div>
+            <div class="img_box">
+                <h2>Room Images</h2>
+                <div id="roomimages" class="owl-carousel owl-theme room_pic">
+                    @foreach (var image in Model.RoomImages)
+            {
+                var verify = (image.IsVerified ?? false) ? "checked" : null;
+                var report = (image.IsReported ?? false) ? "checked" : null;
+                var active = (image.IsActive ?? false) ? "checked" : null;
+                <div>
+                    <img class="owl-lazy" data-src="@image.Url" />
+
+                    <div class="check">
+                        <input data-id="@image.Id" class="roomImgCheck" name="IsVerified" type="checkbox" @verify disabled /><label>verify</label>
+                        <input data-id="@image.Id" class="roomImgCheck" name="IsReported" type="checkbox" @report /><label>report</label>
+                        <input data-id="@image.Id" class="roomImgCheck" name="IsActive" type="checkbox" @active /><label>active</label>
                     </div>
-                }
+                </div>
+
+    }
+                </div>
+
+            </div>
+            <div style="text-align:center">
+                <a href="~/Accommodation/Images" class="btn_img" style="padding:8px 30px; ">Edit</a>
 
             </div>
 
-        </div>
-        <div class="img_box">
-            <h2>Room Images</h2>
-            <div id="roomimages" class="owl-carousel owl-theme room_pic">
+
+        @*@{
+            int slide = 0;
+            int slippy = 0;
+        }
+        <div>
+            <ul id="thumbnails">
+
                 @foreach (var image in Model.RoomImages)
                 {
-                    var verify = (image.IsVerified ?? false) ? "checked" : null;
-                    var report = (image.IsReported ?? false) ? "checked" : null;
-                    var active = (image.IsActive ?? false) ? "checked" : null;
-                    <div>
-                        <img class="owl-lazy" data-src="@image.Url" />
+                    <li>
+                        <a href="#@slide">
+                            <img class="owl-lazy" src="@image.Url" />
+                        </a>
+                    </li>
 
-                        <div class="check">
-                            <input data-id="@image.Id" class="roomImgCheck" name="IsVerified" type="checkbox" @verify disabled /><label>verify</label>
-                            <input data-id="@image.Id" class="roomImgCheck" name="IsReported" type="checkbox" @report /><label>report</label>
-                            <input data-id="@image.Id" class="roomImgCheck" name="IsActive" type="checkbox" @active /><label>active</label>
-                        </div>
-                    </div>
+                    slide = slide + 1;
+
 
                 }
-            </div>
 
-        </div>
+            </ul>
+            <div class="thumb-box">
+                <ul class="thumbs">
+                    @foreach (var image in Model.RoomImages)
+                    {
+                        <li><a href="#@slippy" data-slide="@slippy"><img src="@image.Url" /></a></li>
+                        slippy = slippy + 1;
+                    }
+                </ul>
+            </div>
+        </div>*@
+
     </div>
     @using (Html.BeginForm())
     {
-        if (Model.BookingUrl != null)
-        {
-            <div class="box_parent">
-                <h2>Booking Url</h2>
-                <div>
-                    @*<iframe style="width:80%" frameborder="0" data-src="@Model.BookingUrl"></iframe>*@
+        @*if (Model.BookingUrl != null)
+            {
+                <div class="box_parent">
+                    <h2>Booking Url</h2>
+                    <div>
+                        <iframe style="width:80%; overflow-y:auto; height:500px;" frameborder="0" data-src="@Model.BookingUrl"></iframe>
+                    </div>
+                    <div class="booking">
+                        <label>Booking Url:</label><input id="booking_url_input" type="text" name="BookingUrl" value="@Model.BookingUrl" class="hidden" readonly />
+                    </div>
                 </div>
-                <div>
-                    <label>Booking Url:</label><input id="booking_url_input" type="text" name="BookingUrl" value="@Model.BookingUrl" class="hidden" readonly />
-                </div>
-            </div>
-        }
+            }*@
         <div class="box_parent">
             <h2>Descripion</h2>
             <div class="information">
@@ -72,13 +117,13 @@
                         @Html.Raw(Model.Description)
                     </div>
                     <div class="show_btn txt_right">
-                        <button class="btn_img edit_des" style="margin-top:15px">Edit</button>
+                        <button class="btn_img edit_des" type="button" style="margin-top:15px">Edit</button>
                     </div>
                 </div>
                 <div class="txt_area">
-                    <textarea name="editor1" id="editor1" rows="30">@Model.Description</textarea>
+                    <textarea name="editor1" id="editor1" rows="60">@Model.Description</textarea>
                     <div class="txt_right">
-                        <button class="btn_img save_des" style="margin-top:15px">Save</button>
+                        <button class="btn_img save_des" type="button" style="margin-top:15px">Save</button>
                     </div>
                 </div>
             </div>
@@ -195,6 +240,12 @@
                                 <input type="checkbox" class="checkbox" name="IsActive" @active />
                             </td>
                         </tr>
+                        <tr>
+                            <td>Booking URL</td>
+                            <td colspan="3" style="padding: 10px 10px;">
+                                <a href="@Model.BookingUrl" target="_blank" class="booking">@Model.BookingUrl</a>
+                            </td>
+                        </tr>
                     </tbody>
 
                 </table>
@@ -204,7 +255,10 @@
     <div class="box_parent">
         <h2>Facility</h2>
         <div class="information">
-            <table width="100%" class="Facility">
+
+
+
+            <table id="dataTable" class="table table-striped table-bordered Facility" cellspacing="0" width="100%">
                 <thead>
                     <tr>
                         <th width="30%">
@@ -216,6 +270,7 @@
                         <th>
                             Delete
                         </th>
+                        <th>Undo</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -225,20 +280,26 @@
                             <td>@facility.Name</td>
                             <td>@facility.Category</td>
                             <td>
-                                <i class="fas fa-times"></i>
+                                <button class="dlt cur-p btn-danger">Delete</button>
+                                @*<i class="fas fa-times"></i>*@
+                            </td>
+                            <td>
+                                <button class="cur-p btn-primary undo">Undo</button>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
+
             <div style="text-align:right">
                 <button class="btn_img add" style="margin-top:15px">Add</button>
             </div>
+
+        </div>
+        <div>
+            <button type="submit" id="verify_btn" class="btn_img" style="width:120px; margin-top:30px;">Verify</button>
         </div>
 
-        <div>
-            <button type="submit" id="verify_btn">Verify</button>
-        </div>
 
         <div class="add_facility">
             <div>
@@ -261,6 +322,25 @@
 <script src="~/Content/plugin/ckeditor/ckeditor.js"></script>
 <script src="~/Content/plugin/ckeditor/styles.js"></script>
 <script>
+    var thumbs = jQuery('#thumbnails').slippry({
+        // general elements & wrapper
+        slippryWrapper: '<div class="slippry_box thumbnails" />',
+        // options
+        transition: 'horizontal',
+        pager: false,
+        auto: false,
+        onSlideBefore: function (el, index_old, index_new) {
+            jQuery('.thumbs a img').removeClass('active');
+            jQuery('img', jQuery('.thumbs a')[index_new]).addClass('active');
+        }
+    });
+
+    jQuery('.thumbs a').click(function () {
+        thumbs.goToSlide($(this).data('slide'));
+        return false;
+    });
+</script>
+<script>
     var roomImgChangeId = new Array();
     var hotelImgChangeId = new Array();
     var addedfacilities = new Array();
@@ -275,6 +355,9 @@
         nav: true,
         lazyLoad: true,
         lazyLoadEager: true,
+        URLhashListener: true,
+        autoplayHoverPause: true,
+        startPosition: 'URLHash',
         navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
         responsive: {
             0: {
@@ -288,8 +371,17 @@
             }
         }
     });
+    $(function () {
+        $('#home_demo').desoSlide({
+  mainImage: '#home_main_image',
+  insertion: 'replace',
+        });
+    });
 
-    CKEDITOR.replace('editor1');
+    CKEDITOR.replace("editor1",
+        {
+            height: 550
+        });
 
     $("body").on("click", ".fa-pencil-alt", function () {
         $(this).parent().parent().find("input.hidden").addClass("show-border");
@@ -327,8 +419,11 @@
             });
         $("div.add_facility").css("display", "block");
     })
-    $("body").on("click", ".fa-times", function () {
-        $(this).parent().parent().remove("tr");
+    $("body").on("click", ".dlt", function () {
+        $(this).parent().parent().addClass("delete");
+    })
+    $("body").on("click", ".undo", function () {
+        $(this).parent().parent().removeClass("delete");
     })
     $("body").on("change", ".name_fac", function () {
         if ($(".name_fac option:selected").length == 0) {
