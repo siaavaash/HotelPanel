@@ -26,15 +26,15 @@ namespace Service.Suppliers
 
                 if (statusCode == HttpStatusCode.OK)
                 {
-                    var propertySerializer = new XmlSerializer(typeof(properties));
+                    var propertySerializer = new XmlSerializer(typeof(Properties));
                     return new ResultDataModel
                     {
                         Success = true,
-                        Model = (properties)propertySerializer.Deserialize(data),
+                        Model = (Properties)propertySerializer.Deserialize(data),
                     };
                 }
-                var serializer = new XmlSerializer(typeof(error));
-                var model = (error)serializer.Deserialize(data);
+                var serializer = new XmlSerializer(typeof(ServiceModel.GIATAModels.Error));
+                var model = (ServiceModel.GIATAModels.Error)serializer.Deserialize(data);
                 if (statusCode == HttpStatusCode.MovedPermanently)
                     return new ResultDataModel
                     {
@@ -44,10 +44,10 @@ namespace Service.Suppliers
                 return new ResultDataModel
                 {
                     Success = false,
-                    Error = new Error
+                    Error = new ServiceModel.PublicModels.Error
                     {
-                        Code = model.code.ToString(),
-                        Text = model.description.Value,
+                        Code = model.Code,
+                        Text = model.Description.Text,
                     },
                 };
             }
@@ -56,7 +56,7 @@ namespace Service.Suppliers
                 return new ResultDataModel
                 {
                     Success = false,
-                    Error = new Error
+                    Error = new ServiceModel.PublicModels.Error
                     {
                         Text = httpEx.Message,
                         IsApiError = true,
@@ -68,7 +68,7 @@ namespace Service.Suppliers
                 return new ResultDataModel
                 {
                     Success = false,
-                    Error = new Error
+                    Error = new ServiceModel.PublicModels.Error
                     {
                         Text = ex.Message
                     },
