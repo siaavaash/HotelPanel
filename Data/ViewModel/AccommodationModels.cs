@@ -27,6 +27,12 @@ namespace Data.ViewModel
             public long AccommodationID { get; set; }
             public List<AccomodationImage> AccomodationImages { get; set; }
         }
+        public class RoomImagesViewModel
+        {
+            public long AccommodationID { get; set; }
+            public List<AccomodationRoomImage> RoomImages { get; set; }
+        }
+
         public class SearchAccommodation
         {
             public long? AccommodationID { get; set; }
