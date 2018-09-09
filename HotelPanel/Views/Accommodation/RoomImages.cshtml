@@ -16,28 +16,29 @@
     <div class="alert alert-success" role="alert">@Message_Success</div>
     Common.iUserStorage.Remove(Constants.PublicConstants.Session.Message_Success);
 }
-<div>
-    <div class="button_head">
-        <button class="btn_img deactive">Deactive</button>
-        <button class="btn_img report">Report</button>
-        <button id="back" class="btn_img" type="submit" onclick="window.history.back();">Back</button>
-
-    </div>
-    @foreach (var Item in Model.RoomImages)
-    {
     <div>
-        <div class="gallery"  style="margin-top:50px;">
-            @if (Item.IsActive == false)
-        {
-            <label class="myCheckbox">
-                <span class="img_child"><i class="fas fa-times clos"></i></span>
-                <img src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" class="select-image desc">
-                <input type="checkbox" value="delete" class="select_check" />
-            </label>
+        <div class="button_head">
+            <button class="btn_img deactive">Deactive</button>
+            <button class="btn_img report">Report</button>
+            <button id="back" class="btn_img" type="submit" onclick="window.history.back();">Back</button>
 
-    }
-    else if (Item.IsReported == true)
+        </div>
+        <div style="margin-top:50px;">
+            @foreach (var Item in Model.RoomImages)
     {
+
+        <div class="gallery">
+            @if (Item.IsActive == false)
+    {
+        <label class="myCheckbox">
+            <span class="img_child"><i class="fas fa-times clos"></i></span>
+            <img src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" class="select-image desc">
+            <input type="checkbox" value="delete" class="select_check" />
+        </label>
+
+}
+else if (Item.IsReported == true)
+{
         <label class="myCheckbox">
             <span class="img_child"><i class="fas fa-check"></i></span>
             <img src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" class="select-image desc">
@@ -46,18 +47,18 @@
 }
 else
 {
-    <label class="myCheckbox">
-        <span class="img_child"><i class="fas fa-check"></i></span>
-        <img src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" class="select-image">
-        <input type="checkbox" value="delete" class="select_check" />
-    </label>
+        <label class="myCheckbox">
+            <span class="img_child"><i class="fas fa-check"></i></span>
+            <img src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" class="select-image">
+            <input type="checkbox" value="delete" class="select_check" />
+        </label>
 
 }
         </div>
-    </div>
-    }
 
-</div>
+}
+        </div>
+        </div>
 
 
 <script type="text/javascript" src="~/Content/Scripts/jquery.js"></script>
