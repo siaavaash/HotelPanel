@@ -39,6 +39,7 @@ namespace HotelPanel.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public JsonResult Verify(HotelInfoViewModel model, List<long> addedFacilities, List<long> removedFacilities)
         {
             try
