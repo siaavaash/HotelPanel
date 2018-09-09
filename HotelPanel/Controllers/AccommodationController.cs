@@ -95,17 +95,26 @@ namespace HotelPanel.Controllers
             return View(Model);
         }
         [HttpPost]
-        public JsonResult Filter(AccommodationModels.FilterImages Model)
+        public JsonResult Filter(FilterImagesView model)
         {
-            bool ResultClear = _AccommodationBusiness.ReloadVerify(Model.AccommodationID);
-            bool Result = _AccommodationBusiness.FilterImages(Model.ImageID);
-            bool Verify = _AccommodationBusiness.Verify(Model.AccommodationID);
-            if (Result && Verify)
+            try
             {
-                iUserStorage.Store(PublicConstants.Session.Message_Success, "Your Accommodation Images Successfully Filtered");
-                return Json(Result, JsonRequestBehavior.AllowGet);
+                if (model != null)
+                {
+                    var result = _AccommodationBusiness.VerifyAccommodationImages(model);
+                    if (result)
+                    {
+                        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                    }
+                    return Json(new { success = false, message = "Verify Accommodation Images failed." }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { success = false, message = "Model is invalid." }, JsonRequestBehavior.AllowGet);
             }
-            return Json(Result, JsonRequestBehavior.AllowGet);
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         public ActionResult Facility(long AccommodationID)
         {
