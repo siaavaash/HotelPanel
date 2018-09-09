@@ -23,7 +23,7 @@
         <button id="report_btn" class="btn_img">Report</button>
         <button id="unreport_btn" class="btn_img">Unreport</button>
         <button id="back" class="btn_img" type="submit" onclick="window.history.back();">Back</button>
-        @*<div class="alert alert-success" role="alert">Success</div>*@
+        <div class="status"></div>
     </div>
     <div style="margin-top:50px;">
         @foreach (var Item in Model.RoomImages)
@@ -147,10 +147,14 @@
             type: "POST",
             data: $.param(dataModel),
             success: function (data) {
-                location.reload(true);
+                if (data.success) {
+                    $(".status").html('<div class="alert alert-success" role="alert">Success</div>');
+                } else {
+                    $(".status").html('<div class="alert alert-danger" role="alert">Failed</div>');
+                }
             },
             error: function (ex) {
-
+                $(".status").html('<div class="alert alert-danger" role="alert">Failed</div>');
             }
         });
     }
