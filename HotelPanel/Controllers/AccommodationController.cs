@@ -75,11 +75,11 @@ namespace HotelPanel.Controllers
             };
             return View(Model);
         }
-        public ActionResult RoomImages(long accommodationId)
+        public ActionResult RoomImages(long id)
         {
             try
             {
-                return View(_AccommodationBusiness.GetRoomImageByAccId(accommodationId));
+                return View(_AccommodationBusiness.GetRoomImageByAccId(id));
             }
             catch (Exception)
             {

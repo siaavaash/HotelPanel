@@ -9,25 +9,25 @@
 <div class="wrapper">
     <div class="box_parent">
         @{
-        int id = 1;
-        int thumb = 1;
+            int id = 1;
+            int thumb = 1;
         }
         <div class="information">
             <h2>Hotel Images</h2>
             <ul id="thumbnail">
 
                 @foreach (var image in Model.AccommodationImages)
-        {
-            <li>
-                <a href=@("#slid"+id)>
-                    <img src="@image.Url" />
-                </a>
-            </li>
+                {
+                    <li>
+                        <a href=@("#slid"+id)>
+                            <img src="@image.Url" />
+                        </a>
+                    </li>
 
-    id = id + 1;
+                    id = id + 1;
 
 
-}
+                }
 
             </ul>
             <div class="thumb-box">
@@ -35,55 +35,55 @@
                     <div class="container">
                         <ul class="thumbe">
                             @foreach (var image in Model.AccommodationImages)
-                    {
-                        <li class="single-item"><a href="#@thumb" data-slide="@thumb"><img src="@image.Url" /></a></li>
-                thumb = thumb + 1;
-            }
+                            {
+                                <li class="single-item"><a href="#@thumb" data-slide="@thumb"><img src="@image.Url" /></a></li>
+                                thumb = thumb + 1;
+                            }
                         </ul>
                     </div>
                 </div>
             </div>
-            <button class="btn_img">Filter Room Images</button>
+            <button onclick="window.open('/Accommodation/RoomImages/@Model.AccommodationId','_blank')" class="btn_img">Filter Room Images</button>
         </div>
 
-        
+
 
         @*@{
-        int slides = 2000;
-        int slippy = 2000;
-        }
-        <div class="information" style="margin-top:50px;">
-            <h2>Room Images</h2>
-            <ul id="thumbnailss">
+            int slides = 2000;
+            int slippy = 2000;
+            }
+            <div class="information" style="margin-top:50px;">
+                <h2>Room Images</h2>
+                <ul id="thumbnailss">
 
-                @foreach (var image in Model.RoomImages)
-            {   
-                <li>
-                    <a href=@("#slide"+slides)>
-                        <img  src="@image.Url" />
-                    </a>
-                </li>
+                    @foreach (var image in Model.RoomImages)
+                {
+                    <li>
+                        <a href=@("#slide"+slides)>
+                            <img  src="@image.Url" />
+                        </a>
+                    </li>
 
-            slides = slides + 1;
+                slides = slides + 1;
 
 
-        }
+            }
 
-            </ul>
-            <div class="thumb-boxs">
-                <div class="conts">
-                    <div class="containers">
-                        <ul class="thumbs">
-                            @foreach (var image in Model.RoomImages)
-                        {
-                            <li class="single-items"><a href="#@slippy" data-id="@slippy" class="link"><img src="@image.Url"/></a></li>
-                        slippy = slippy + 1;
-                    }
-                        </ul>
+                </ul>
+                <div class="thumb-boxs">
+                    <div class="conts">
+                        <div class="containers">
+                            <ul class="thumbs">
+                                @foreach (var image in Model.RoomImages)
+                            {
+                                <li class="single-items"><a href="#@slippy" data-id="@slippy" class="link"><img src="@image.Url"/></a></li>
+                            slippy = slippy + 1;
+                        }
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>*@
+            </div>*@
     </div>
     @using (Html.BeginForm())
     {
@@ -331,144 +331,144 @@
     });
 </script>
 @*<script>
-    var thumbs = jQuery('#thumbnailss').slippry({
-        // general elements & wrapper
-        slippryWrapper: '<div class="slippry_boxs thumbnails" />',
-        // options
-        transition: 'horizontal',
-        pager: false,
-        auto: false,
-        onSlideBefore: function (el, index_old, index_new) {
-            jQuery('.thumbs a.link img').removeClass('active');
-            jQuery('img', jQuery('.thumbs a.link')[index_new]).addClass('active');
-        }
-    });
+        var thumbs = jQuery('#thumbnailss').slippry({
+            // general elements & wrapper
+            slippryWrapper: '<div class="slippry_boxs thumbnails" />',
+            // options
+            transition: 'horizontal',
+            pager: false,
+            auto: false,
+            onSlideBefore: function (el, index_old, index_new) {
+                jQuery('.thumbs a.link img').removeClass('active');
+                jQuery('img', jQuery('.thumbs a.link')[index_new]).addClass('active');
+            }
+        });
 
-    jQuery('.thumbs a.link').click(function () {
-        thumbs.goToSlide($(this).data('slide'));
-        return false;
-    });
-</script>*@
+        jQuery('.thumbs a.link').click(function () {
+            thumbs.goToSlide($(this).data('slide'));
+            return false;
+        });
+    </script>*@
 <script>
-    (function($) {
-	var pagify = {
-		items: {},
-		container: null,
-		totalPages: 1,
-		perPage: 3,
-		currentPage: 0,
-		createNavigation: function() {
-			this.totalPages = Math.ceil(this.items.length / this.perPage);
+    (function ($) {
+        var pagify = {
+            items: {},
+            container: null,
+            totalPages: 1,
+            perPage: 3,
+            currentPage: 0,
+            createNavigation: function () {
+                this.totalPages = Math.ceil(this.items.length / this.perPage);
 
-			$('.pagination', this.container.parent()).remove();
-			var pagination = $('<div class="pagination"></div>').append('<a class="nav prev disabled" data-next="false"><</a>');
+                $('.pagination', this.container.parent()).remove();
+                var pagination = $('<div class="pagination"></div>').append('<a class="nav prev disabled" data-next="false"><</a>');
 
-			for (var i = 0; i < this.totalPages; i++) {
-				var pageElClass = "page";
-				if (!i)
-					pageElClass = "page current";
-				var pageEl = '<a class="' + pageElClass + '" data-page="' + (
-				i + 1) + '">' + (
-				i + 1) + "</a>";
-				pagination.append(pageEl);
-			}
-			pagination.append('<a class="nav next" data-next="true">></a>');
+                for (var i = 0; i < this.totalPages; i++) {
+                    var pageElClass = "page";
+                    if (!i)
+                        pageElClass = "page current";
+                    var pageEl = '<a class="' + pageElClass + '" data-page="' + (
+                        i + 1) + '">' + (
+                            i + 1) + "</a>";
+                    pagination.append(pageEl);
+                }
+                pagination.append('<a class="nav next" data-next="true">></a>');
 
-			this.container.after(pagination);
+                this.container.after(pagination);
 
-			var that = this;
-			$("body").off("click", ".nav");
-			this.navigator = $("body").on("click", ".nav", function() {
-				var el = $(this);
-				that.navigate(el.data("next"));
-			});
+                var that = this;
+                $("body").off("click", ".nav");
+                this.navigator = $("body").on("click", ".nav", function () {
+                    var el = $(this);
+                    that.navigate(el.data("next"));
+                });
 
-			$("body").off("click", ".page");
-			this.pageNavigator = $("body").on("click", ".page", function() {
-				var el = $(this);
-				that.goToPage(el.data("page"));
-			});
-		},
-		navigate: function(next) {
-			// default perPage to 5
-			if (isNaN(next) || next === undefined) {
-				next = true;
-			}
-			$(".pagination .nav").removeClass("disabled");
-			if (next) {
-				this.currentPage++;
-				if (this.currentPage > (this.totalPages - 1))
-					this.currentPage = (this.totalPages - 1);
-				if (this.currentPage == (this.totalPages - 1))
-					$(".pagination .nav.next").addClass("disabled");
-				}
-			else {
-				this.currentPage--;
-				if (this.currentPage < 0)
-					this.currentPage = 0;
-				if (this.currentPage == 0)
-					$(".pagination .nav.prev").addClass("disabled");
-				}
+                $("body").off("click", ".page");
+                this.pageNavigator = $("body").on("click", ".page", function () {
+                    var el = $(this);
+                    that.goToPage(el.data("page"));
+                });
+            },
+            navigate: function (next) {
+                // default perPage to 5
+                if (isNaN(next) || next === undefined) {
+                    next = true;
+                }
+                $(".pagination .nav").removeClass("disabled");
+                if (next) {
+                    this.currentPage++;
+                    if (this.currentPage > (this.totalPages - 1))
+                        this.currentPage = (this.totalPages - 1);
+                    if (this.currentPage == (this.totalPages - 1))
+                        $(".pagination .nav.next").addClass("disabled");
+                }
+                else {
+                    this.currentPage--;
+                    if (this.currentPage < 0)
+                        this.currentPage = 0;
+                    if (this.currentPage == 0)
+                        $(".pagination .nav.prev").addClass("disabled");
+                }
 
-			this.showItems();
-		},
-		updateNavigation: function() {
+                this.showItems();
+            },
+            updateNavigation: function () {
 
-			var page = $(".pagination .page");
-			page.removeClass("current");
-			$('.pagination .page[data-page="' + (
-			this.currentPage + 1) + '"]').addClass("current");
-		},
-		goToPage: function(page) {
+                var page = $(".pagination .page");
+                page.removeClass("current");
+                $('.pagination .page[data-page="' + (
+                    this.currentPage + 1) + '"]').addClass("current");
+            },
+            goToPage: function (page) {
 
-			this.currentPage = page - 1;
+                this.currentPage = page - 1;
 
-			$(".pagination .nav").removeClass("disabled");
-			if (this.currentPage == (this.totalPages - 1))
-				$(".pagination .nav.next").addClass("disabled");
+                $(".pagination .nav").removeClass("disabled");
+                if (this.currentPage == (this.totalPages - 1))
+                    $(".pagination .nav.next").addClass("disabled");
 
-			if (this.currentPage == 0)
-				$(".pagination .nav.prev").addClass("disabled");
-			this.showItems();
-		},
-		showItems: function() {
-			this.items.hide();
-			var base = this.perPage * this.currentPage;
-			this.items.slice(base, base + this.perPage).show();
+                if (this.currentPage == 0)
+                    $(".pagination .nav.prev").addClass("disabled");
+                this.showItems();
+            },
+            showItems: function () {
+                this.items.hide();
+                var base = this.perPage * this.currentPage;
+                this.items.slice(base, base + this.perPage).show();
 
-			this.updateNavigation();
-		},
-		init: function(container, items, perPage) {
-			this.container = container;
-			this.currentPage = 0;
-			this.totalPages = 1;
-			this.perPage = perPage;
-			this.items = items;
-			this.createNavigation();
-			this.showItems();
-		}
-	};
+                this.updateNavigation();
+            },
+            init: function (container, items, perPage) {
+                this.container = container;
+                this.currentPage = 0;
+                this.totalPages = 1;
+                this.perPage = perPage;
+                this.items = items;
+                this.createNavigation();
+                this.showItems();
+            }
+        };
 
-	// stuff it all into a jQuery method!
-	$.fn.pagify = function(perPage, itemSelector) {
-		var el = $(this);
-		var items = $(itemSelector, el);
+        // stuff it all into a jQuery method!
+        $.fn.pagify = function (perPage, itemSelector) {
+            var el = $(this);
+            var items = $(itemSelector, el);
 
-		// default perPage to 5
-		if (isNaN(perPage) || perPage === undefined) {
-			perPage = 3;
-		}
+            // default perPage to 5
+            if (isNaN(perPage) || perPage === undefined) {
+                perPage = 3;
+            }
 
-		// don't fire if fewer items than perPage
-		if (items.length <= perPage) {
-			return true;
-		}
+            // don't fire if fewer items than perPage
+            if (items.length <= perPage) {
+                return true;
+            }
 
-		pagify.init(el, items, perPage);
-	};
-})(jQuery);
+            pagify.init(el, items, perPage);
+        };
+    })(jQuery);
 
-$(".container").pagify(28, ".single-item");
+    $(".container").pagify(28, ".single-item");
 
 </script>
 <script>
@@ -594,196 +594,196 @@ $(".container").pagify(28, ".single-item");
 
 </script>
 <script>
-    var roomImgChangeId = new Array();
-    var hotelImgChangeId = new Array();
-    var addedfacilities = new Array();
-    var deletedfacilities = new Array();
-    var roomImgChanges = new Array();
-    var hotelImgChanges = new Array();
-    $('.owl-carousel').owlCarousel({
-        loop: true,
-        margin: 10,
-        nav: true,
-        lazyLoad: true,
-        lazyLoadEager: true,
-        URLhashListener: true,
-        autoplayHoverPause: true,
-        startPosition: 'URLHash',
-        navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-        responsive: {
-            0: {
-                items: 1
-            },
-            600: {
-                items: 1
-            },
-            1000: {
-                items: 1
-            }
-        }
-    });
-    $(function () {
-        $('#home_demo').desoSlide({
+	var roomImgChangeId = new Array();
+	var hotelImgChangeId = new Array();
+	var addedfacilities = new Array();
+	var deletedfacilities = new Array();
+	var roomImgChanges = new Array();
+	var hotelImgChanges = new Array();
+	$('.owl-carousel').owlCarousel({
+		loop: true,
+		margin: 10,
+		nav: true,
+		lazyLoad: true,
+		lazyLoadEager: true,
+		URLhashListener: true,
+		autoplayHoverPause: true,
+		startPosition: 'URLHash',
+		navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+		responsive: {
+			0: {
+				items: 1
+			},
+			600: {
+				items: 1
+			},
+			1000: {
+				items: 1
+			}
+		}
+	});
+	$(function () {
+		$('#home_demo').desoSlide({
   mainImage: '#home_main_image',
   insertion: 'replace',
-        });
-    });
+		});
+	});
 
-    CKEDITOR.replace("editor1",
-        {
-            height: 550
-        });
+	CKEDITOR.replace("editor1",
+		{
+			height: 550
+		});
 
-    $("body").on("click", ".fa-pencil-alt", function () {
-        $(this).parent().parent().find("input.hidden").addClass("show-border");
-        $(this).parent().parent().find("input.hidden").attr("readonly", false);
-    })
-    $("input[type=text]").click(function () {
-        $(this).addClass("show-border");
-        $(this).attr("readonly", false);
-    })
-    $("body").on("blur", ".hidden", function () {
-        $(this).removeClass("show-border");
-        $(this).attr("readonly", true);
-    })
+	$("body").on("click", ".fa-pencil-alt", function () {
+		$(this).parent().parent().find("input.hidden").addClass("show-border");
+		$(this).parent().parent().find("input.hidden").attr("readonly", false);
+	})
+	$("input[type=text]").click(function () {
+		$(this).addClass("show-border");
+		$(this).attr("readonly", false);
+	})
+	$("body").on("blur", ".hidden", function () {
+		$(this).removeClass("show-border");
+		$(this).attr("readonly", true);
+	})
 
-    $("body").on("click", ".edit_des", function () {
-        $("div.show_text").css("display", "none");
-        $("div.show_btn").css("display", "none");
-        $(".txt_area").css("display", "block");
-    })
+	$("body").on("click", ".edit_des", function () {
+		$("div.show_text").css("display", "none");
+		$("div.show_btn").css("display", "none");
+		$(".txt_area").css("display", "block");
+	})
 
-    $("body").on("click", ".save_des", function () {
-        var textContent1 = CKEDITOR.instances.editor1.getData();
-        $("input[name=Description]").val(textContent1);
-        $(".show_text").html(textContent1);
-        $("div.show_text").css("display", "block");
-        $("div.show_btn").css("display", "block");
-        $(".txt_area").css("display", "none");
-    })
+	$("body").on("click", ".save_des", function () {
+		var textContent1 = CKEDITOR.instances.editor1.getData();
+		$("input[name=Description]").val(textContent1);
+		$(".show_text").html(textContent1);
+		$("div.show_text").css("display", "block");
+		$("div.show_btn").css("display", "block");
+		$(".txt_area").css("display", "none");
+	})
 
-    $("body").on("click", ".add", function () {
-            $.get("/VerifyPanel/GetFacilitiesList/@Model.AccommodationId", function (response) {
-                $.each(response, function (index, item) {
-                    $(".name_fac").append('<option data-category="' + item.Category + '" value="' + item.Id + '">' + item.Name + '</option>')
-                })
-            });
-        $("div.add_facility").css("display", "block");
-    })
-    $("body").on("click", ".dlt", function () {
-        $(this).parent().parent().addClass("delete");
-    })
-    $("body").on("click", ".undo", function () {
-        $(this).parent().parent().removeClass("delete");
-        var index = deletedfacilities.indexOf($(this).parent().parent().data("id"));
-        deletedfacilities.splice(index);
-    })
-    $("body").on("change", ".name_fac", function () {
-        if ($(".name_fac option:selected").length == 0) {
-            $("#facility_category").text($(".name_fac option:first").data("category"));
-        }
-        $(".name_fac option:selected").each(function () {
-            $("#facility_category").text($(this).data("category"));
-        });
-    })
+	$("body").on("click", ".add", function () {
+			$.get("/VerifyPanel/GetFacilitiesList/@Model.AccommodationId", function (response) {
+				$.each(response, function (index, item) {
+					$(".name_fac").append('<option data-category="' + item.Category + '" value="' + item.Id + '">' + item.Name + '</option>')
+				})
+			});
+		$("div.add_facility").css("display", "block");
+	})
+	$("body").on("click", ".dlt", function () {
+		$(this).parent().parent().addClass("delete");
+	})
+	$("body").on("click", ".undo", function () {
+		$(this).parent().parent().removeClass("delete");
+		var index = deletedfacilities.indexOf($(this).parent().parent().data("id"));
+		deletedfacilities.splice(index);
+	})
+	$("body").on("change", ".name_fac", function () {
+		if ($(".name_fac option:selected").length == 0) {
+			$("#facility_category").text($(".name_fac option:first").data("category"));
+		}
+		$(".name_fac option:selected").each(function () {
+			$("#facility_category").text($(this).data("category"));
+		});
+	})
 
-    $("body").on("click", ".save_fac", function () {
-        var category = $(".ctg").text();
-        var id = $(".name_fac option:selected").val();
-        var name = $(".name_fac option:selected").text();
-        addedfacilities.push(id);
-        $("table.Facility").append('<tr data-id="' + id + '"><td>' + name + '</td><td>' + category + '</td><td><button class="dlt cur-p btn-danger">Delete</button ></td ><td><button class="cur-p btn-primary undo">Undo</button></td></tr>');
-        $(".add_facility").css("display", "none");
-    })
-    $("body").on("click", "#delete_btn", function () {
-        deletedfacilities.push($(this).parent().parent().data("id"));
-    });
+	$("body").on("click", ".save_fac", function () {
+		var category = $(".ctg").text();
+		var id = $(".name_fac option:selected").val();
+		var name = $(".name_fac option:selected").text();
+		addedfacilities.push(id);
+		$("table.Facility").append('<tr data-id="' + id + '"><td>' + name + '</td><td>' + category + '</td><td><button class="dlt cur-p btn-danger">Delete</button ></td ><td><button class="cur-p btn-primary undo">Undo</button></td></tr>');
+		$(".add_facility").css("display", "none");
+	})
+	$("body").on("click", "#delete_btn", function () {
+		deletedfacilities.push($(this).parent().parent().data("id"));
+	});
 
-    $("body").on("click", "#verify_btn", function () {
-        roomImgChangeId = roomImgChangeId.filter((item, index, arr) => {
-            return arr.indexOf(item) == index
-        });
-        hotelImgChangeId = hotelImgChangeId.filter((item, index, arr) => {
-            return arr.indexOf(item) == index
-        });
-        $.each(roomImgChangeId, function () {
-            var active = null;
-            var report = null;
-            $("input.roomImgCheck[data-id=" + $(this)[0] + "]").each(function (index, item) {
-                switch (item.getAttribute("name")) {
-                    case "IsActive":
-                        active = item.checked;
-                        break;
-                    case "IsReported":
-                        report = item.checked;
-                        break;
-                    default:
-                }
-            });
-            roomImgChanges.push({
-                AccommodationId: @Model.AccommodationId,
-                IsActive: active,
-                IsReported: report,
-                Id: $(this)[0]
-            });
-        })
-        $.each(hotelImgChangeId, function () {
-            var active = null;
-            var report = null;
-            $("input.hotelImgCheck[data-id=" + $(this)[0] + "]").each(function (index, item) {
-                if (active != null && report != null) {
-                    return false;
-                }
-                switch (item.getAttribute("name")) {
-                    case "IsActive":
-                        active = item.checked;
-                        break;
-                    case "IsReported":
-                        report = item.checked;
-                        break;
-                    default:
-                }
-            });
-            hotelImgChanges.push({
-                AccommodationId: @Model.AccommodationId,
-                IsActive: active,
-                IsReported: report,
-                Id: $(this)[0]
-            });
-        })
-        var model = $("form").serialize();
-        $.ajax({
-            url: "/VerifyPanel/Verify",
-            data: model + "&" + decodeURIComponent($.param({
-                addedFacilities: addedfacilities,
-                removedFacilities: deletedfacilities,
-                RoomImages: roomImgChanges,
-                AccommodationImages: hotelImgChanges,
-            })),
-            type: "POST",
-            success: function (response) {
-                if (response.success) {
-                    location.reload();
-                }
-                else {
-                    alert(response.data);
-                }
-            },
-        })
-    });
-    $(window).on("load",function () {
-        var src = $("iframe").data("src");
-        $("iframe").attr("src", src);
-    });
-    $("#booking_url_input").change(function () {
-        $("iframe").attr("src", $(this).val());
-        $("iframe").data("src", $(this).val());
-    })
-    $(".hotelImgCheck").change(function () {
-        hotelImgChangeId.push($(this).data("id"));
-    });
-    $(".roomImgCheck").change(function () {
-        roomImgChangeId.push($(this).data("id"));
-    });
+	$("body").on("click", "#verify_btn", function () {
+		roomImgChangeId = roomImgChangeId.filter((item, index, arr) => {
+			return arr.indexOf(item) == index
+		});
+		hotelImgChangeId = hotelImgChangeId.filter((item, index, arr) => {
+			return arr.indexOf(item) == index
+		});
+		$.each(roomImgChangeId, function () {
+			var active = null;
+			var report = null;
+			$("input.roomImgCheck[data-id=" + $(this)[0] + "]").each(function (index, item) {
+				switch (item.getAttribute("name")) {
+					case "IsActive":
+						active = item.checked;
+						break;
+					case "IsReported":
+						report = item.checked;
+						break;
+					default:
+				}
+			});
+			roomImgChanges.push({
+				AccommodationId: @Model.AccommodationId,
+				IsActive: active,
+				IsReported: report,
+				Id: $(this)[0]
+			});
+		})
+		$.each(hotelImgChangeId, function () {
+			var active = null;
+			var report = null;
+			$("input.hotelImgCheck[data-id=" + $(this)[0] + "]").each(function (index, item) {
+				if (active != null && report != null) {
+					return false;
+				}
+				switch (item.getAttribute("name")) {
+					case "IsActive":
+						active = item.checked;
+						break;
+					case "IsReported":
+						report = item.checked;
+						break;
+					default:
+				}
+			});
+			hotelImgChanges.push({
+				AccommodationId: @Model.AccommodationId,
+				IsActive: active,
+				IsReported: report,
+				Id: $(this)[0]
+			});
+		})
+		var model = $("form").serialize();
+		$.ajax({
+			url: "/VerifyPanel/Verify",
+			data: model + "&" + decodeURIComponent($.param({
+				addedFacilities: addedfacilities,
+				removedFacilities: deletedfacilities,
+				RoomImages: roomImgChanges,
+				AccommodationImages: hotelImgChanges,
+			})),
+			type: "POST",
+			success: function (response) {
+				if (response.success) {
+					location.reload();
+				}
+				else {
+					alert(response.data);
+				}
+			},
+		})
+	});
+	$(window).on("load",function () {
+		var src = $("iframe").data("src");
+		$("iframe").attr("src", src);
+	});
+	$("#booking_url_input").change(function () {
+		$("iframe").attr("src", $(this).val());
+		$("iframe").data("src", $(this).val());
+	})
+	$(".hotelImgCheck").change(function () {
+		hotelImgChangeId.push($(this).data("id"));
+	});
+	$(".roomImgCheck").change(function () {
+		roomImgChangeId.push($(this).data("id"));
+	});
 
 </script>

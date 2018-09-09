@@ -16,123 +16,142 @@
     <div class="alert alert-success" role="alert">@Message_Success</div>
     Common.iUserStorage.Remove(Constants.PublicConstants.Session.Message_Success);
 }
-    <div>
-        <div class="button_head">
-            <button class="btn_img deactive">Deactive</button>
-            <button class="btn_img report">Report</button>
-            <button id="back" class="btn_img" type="submit" onclick="window.history.back();">Back</button>
+<div>
+    <div class="button_head">
+        <button id="active_btn" class="btn_img">Active</button>
+        <button id="deactive_btn" class="btn_img">Deactive</button>
+        <button id="report_btn" class="btn_img">Report</button>
+        <button id="unreport_btn" class="btn_img">Unreport</button>
+        <button id="back" class="btn_img" type="submit" onclick="window.history.back();">Back</button>
+        @*<div class="alert alert-success" role="alert">Success</div>*@
+    </div>
+    <div style="margin-top:50px;">
+        @foreach (var Item in Model.RoomImages)
+        {
 
-        </div>
-        <div style="margin-top:50px;">
-            @foreach (var Item in Model.RoomImages)
-    {
+            <div class="gallery">
+                @if (Item.IsActive == false)
+                {
+                    <label class="myCheckbox">
+                        <span class="img_child"><i class="fas fa-times clos"></i></span>
+                        <img src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" class="select-image">
+                    </label>
 
-        <div class="gallery">
-            @if (Item.IsActive == false)
-    {
-        <label class="myCheckbox">
-            <span class="img_child"><i class="fas fa-times clos"></i></span>
-            <img src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" class="select-image desc">
-            <input type="checkbox" value="delete" class="select_check" />
-        </label>
+                }
+                else if (Item.IsReported == true)
+                {
+                    <label class="myCheckbox">
+                        <span class="img_child"><i class="fas fa-check"></i></span>
+                        <img src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" class="select-image">
+                    </label>
+                }
+                else
+                {
+                    <label class="myCheckbox">
+                        <span class="img_child"><i class="fas"></i></span>
+                        <img src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" class="select-image">
+                    </label>
 
-}
-else if (Item.IsReported == true)
-{
-        <label class="myCheckbox">
-            <span class="img_child"><i class="fas fa-check"></i></span>
-            <img src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" class="select-image desc">
-            <input type="checkbox" value="delete" class="select_check" />
-        </label>
-}
-else
-{
-        <label class="myCheckbox">
-            <span class="img_child"><i class="fas fa-check"></i></span>
-            <img src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" class="select-image">
-            <input type="checkbox" value="delete" class="select_check" />
-        </label>
+                }
+            </div>
 
-}
-        </div>
-
-}
-        </div>
-        </div>
+        }
+    </div>
+</div>
 
 
 <script type="text/javascript" src="~/Content/Scripts/jquery.js"></script>
 
 <script>
-    $("body").on("click", ".deactive", function () {
-        $("img.desc").parent().find(".clos").addClass("dis");
-    })
-    $("body").on("click", ".report", function () {
-        $("img.desc").parent().find(".fa-check").addClass("dis");
-    })
     var filtered = new Array();
+    $("body").on("click", "#deactive_btn", function () {
+        $("img.desc").parent().find("i").addClass("fa-times clos");
+        $("img.desc").removeClass("desc");
+        var images = new Array();
+        $.each(filtered, function (index, item) {
+            images.push({
+                AccomodationRoomImageID: item,
+                IsActive: false,
+            });
+        });
+        var model = {
+            AccommodationID: @(Model.AccommodationID),
+            RoomImages: images,
+        };
+        SendReq(model);
+    })
+    $("body").on("click", "#report_btn", function () {
+        $("img.desc").parent().find("i").addClass("fa-check");
+        $("img.desc").removeClass("desc");
+        var images = new Array();
+        $.each(filtered, function (index, item) {
+            images.push({
+                AccomodationRoomImageID: item,
+                IsReported: true,
+            });
+        });
+        var model = {
+            AccommodationID: @(Model.AccommodationID),
+            RoomImages: images,
+        };
+        SendReq(model);
+    })
+    $("body").on("click", "#unreport_btn", function () {
+        $("img.desc").parent().find("i").removeClass("fa-check");
+        $("img.desc").removeClass("desc");
+        var images = new Array();
+        $.each(filtered, function (index, item) {
+            images.push({
+                AccomodationRoomImageID: item,
+                IsReported: false,
+            });
+        });
+        var model = {
+            AccommodationID: @(Model.AccommodationID),
+            RoomImages: images,
+        };
+        SendReq(model);
+    })
+    $("body").on("click", "#active_btn", function () {
+        $("img.desc").parent().find("i").removeClass("fa-times clos");
+        $("img.desc").removeClass("desc");
+        var images = new Array();
+        $.each(filtered, function (index, item) {
+            images.push({
+                AccomodationRoomImageID: item,
+                IsActive: true,
+            });
+        });
+        var model = {
+            AccommodationID: @(Model.AccommodationID),
+            RoomImages: images,
+        };
+        SendReq(model);
+    });
     $(window).on('beforeunload', function () {
         $(window).scrollTop(0);
     });
-    $(document).ready(function () {
-        $(".desc").parent().find(".fa-check").addClass('dis');
-        $(".desc").parent().find('.select_check').prop('checked', true);
-        $('.myCheckbox').each(function(img , item){
-            if ($(item).children("input.select_check").prop("checked")) {
-                var a = $(this).children("img").attr("id");
-                filtered.push(a);
-            }
-        })
-
+    $(".myCheckbox").click(function () {
+        var Id = $(this).children("img.select-image").attr("id");
+        if ($(this).children("img.select-image").hasClass("desc")) {
+            $(this).parent().find(".select-image").removeClass('desc');
+            filtered.splice(filtered.indexOf(Id));
+        } else {
+            $(this).parent().find(".select-image").addClass('desc');
+            filtered.push(Id);
+        }
     });
-    $(document).ready(function () {
-        $(".desc").parent().find(".fa-times").addClass('dis');
-        $(".desc").parent().find('.select_check').prop('checked', true);
-        $('.myCheckbox').each(function (img, item) {
-            if ($(item).children("input.select_check").prop("checked")) {
-                var a = $(this).children("img").attr("id");
-                filtered.push(a);
-            }
-        })
+    function SendReq(dataModel) {
+        $.ajax({
+            url: "/Accommodation/VerifyRoomImage",
+            type: "POST",
+            data: $.param(dataModel),
+            success: function (data) {
+                location.reload(true);
+            },
+            error: function (ex) {
 
-    });
-
-        $(".myCheckbox").click(function () {
-            if ($(this).children("img.select-image").hasClass("desc")) {
-                $(this).parent().find(".select-image").removeClass('desc');
-                $(this).children("input.select_check").prop('checked', false);
-                var ID = $(this).children("img.select-image").attr("id");
-                for (var i = filtered.length ; i--;) {
-                    if (filtered[i] == ID) filtered.splice(i, 1);
-                }
-            } else {
-                $(this).parent().find(".select-image").addClass('desc');
-                $(this).children("input.select_check").prop('checked', true);
-                var Id = $(this).children("img.select-image").attr("id");
-                filtered.push(Id);
             }
-            return false;
         });
-
-
-
-        $("#send").click(function () {
-            var model = {
-                AccommodationID:@(Model.AccommodationID),
-
-            }
-            $.ajax({
-                url: "/Accommodation/VerifyRoomImage",
-                type: "POST",
-                data: { ImageID: filtered, AccommodationID:@(Model.AccommodationID) },
-                success: function (data) {
-                    location.reload(true);
-                },
-                error: function (ex) {
-
-                }
-            });
-        })
-
-
+    }
 </script>

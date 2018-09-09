@@ -9,6 +9,9 @@
 .txt_area {
   display: none; }
 
+.img_child {
+  position: absolute; }
+
 .btn_img {
   text-decoration: none;
   color: #fff;
@@ -308,7 +311,7 @@ a.booking {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  display: none;
+  display: block;
   text-align: center; }
 
 div.gallery {
@@ -339,7 +342,7 @@ i.fa-check {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  display: none;
+  display: block;
   text-align: center; }
 
 .dis {

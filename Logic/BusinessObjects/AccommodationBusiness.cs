@@ -497,11 +497,14 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                return new RoomImagesViewModel
+                using (var context = new Entities())
                 {
-                    AccommodationID = accommodationId,
-                    RoomImages = DataContext.Context.AccomodationRoomImages.Where(x => x.AccommodationID == accommodationId).ToList()
-                };
+                    return new RoomImagesViewModel
+                    {
+                        AccommodationID = accommodationId,
+                        RoomImages = context.AccomodationRoomImages.Where(x => x.AccommodationID == accommodationId).ToList()
+                    };
+                }
             }
             catch (Exception)
             {
@@ -519,8 +522,8 @@ namespace Logic.BusinessObjects
                     if (image != null)
                     {
                         image.IsVerified = true;
-                        image.IsReported = roomImage.IsReported;
-                        image.IsActive = roomImage.IsActive;
+                        image.IsReported = roomImage.IsReported ?? image.IsReported;
+                        image.IsActive = roomImage.IsActive ?? image.IsActive;
                         image.VerifiedDate = DateTime.Now.Date;
                     }
                 }
