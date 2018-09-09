@@ -570,7 +570,7 @@ namespace Logic.BusinessObjects
         {
             if (from > to)
                 throw new ArgumentException("Invalid parameter(s).");
-            RemoveAll(from, to);
+            //RemoveAll(from, to);
             var returnList = new ConcurrentBag<MapResult>();
             Parallel.For(from, to + 1, i =>
              {
