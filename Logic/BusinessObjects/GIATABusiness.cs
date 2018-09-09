@@ -30,74 +30,152 @@ namespace Logic.BusinessObjects
             {
                 var ids = new ConcurrentBag<long>();
                 Parallel.For(from, to + 1, i => ids.Add(i));
+
                 Parallel.Invoke(
                     () =>
                     {
                         using (var context = new Context2())
                         {
-                            context.AccommodationTmps.RemoveRange(context.AccommodationTmps.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
-                            context.SaveChangesAsync().Wait();
+                            context.BulkDelete(context.AccommodationTmps.AsParallel().Join(ids.AsParallel(), x => x.AccommodationlID, y => y, (x, y) => x).ToList());
                         }
                     },
                     () =>
                     {
                         using (var context = new Context2())
                         {
-                            context.AccommodationLocationTmps.RemoveRange(context.AccommodationLocationTmps.AsParallel().Where(x => ids.Contains(x.AccommodationID)).ToList());
-                            context.SaveChangesAsync().Wait();
+                            context.BulkDelete(context.AccommodationLocationTmps.AsParallel().Join(ids.AsParallel(), x => x.AccommodationID, y => y, (x, y) => x).ToList());
                         }
                     },
                     () =>
                     {
                         using (var context = new Context2())
                         {
-                            context.AccomodationSupplierTmps.RemoveRange(context.AccomodationSupplierTmps.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
-                            context.SaveChangesAsync().Wait();
+                            context.BulkDelete(context.AccomodationSupplierTmps.AsParallel().Join(ids.AsParallel(), x => x.AccommodationlID, y => y, (x, y) => x).ToList());
                         }
                     },
                     () =>
                     {
                         using (var context = new Context2())
                         {
-                            context.AccomodationSupplier2Tmp.RemoveRange(context.AccomodationSupplier2Tmp.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
-                            context.SaveChangesAsync().Wait();
+                            context.BulkDelete(context.AccomodationSupplier2Tmp.AsParallel().Join(ids.AsParallel(), x => x.AccommodationlID, y => y, (x, y) => x).ToList());
                         }
                     },
                     () =>
                     {
                         using (var context = new Context2())
                         {
-                            context.AccommodationAlternativeNames.RemoveRange(context.AccommodationAlternativeNames.AsParallel().Where(x => ids.Contains(x.AccommodationID)).ToList());
-                            context.SaveChangesAsync().Wait();
+                            context.BulkDelete(context.AccommodationAlternativeNames.AsParallel().Join(ids.AsParallel(), x => x.AccommodationID, y => y, (x, y) => x).ToList());
                         }
                     },
                     () =>
                     {
                         using (var context = new Context2())
                         {
-                            context.DeActiveAccommodations.RemoveRange(context.DeActiveAccommodations.AsParallel().Where(x => ids.Contains(x.AccommodationlD)).ToList());
-                            context.SaveChangesAsync().Wait();
+                            context.BulkDelete(context.DeActiveAccommodations.AsParallel().Join(ids.AsParallel(), x => x.AccommodationlD, y => y, (x, y) => x).ToList());
                         }
                     },
                     () =>
                     {
                         using (var context = new Context2())
                         {
-                            context.Acc_Airport.RemoveRange(context.Acc_Airport.AsParallel().Where(x => ids.Contains(x.AccommodationlID ?? 0)).ToList());
-                            context.SaveChangesAsync().Wait();
+                            context.BulkDelete(context.Acc_Airport.AsParallel().Join(ids.AsParallel(), x => x.AccommodationlID, y => y, (x, y) => x).ToList());
                         }
                     }
                     );
+
+
+
+                //Parallel.Invoke(
+                //    () =>
+                //    {
+                //        using (var context = new Context2())
+                //        {
+                //            context.Configuration.AutoDetectChangesEnabled = false;
+                //            context.AccommodationTmps.RemoveRange(context.AccommodationTmps.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
+                //            context.ChangeTracker.DetectChanges();
+                //            context.SaveChanges();
+                //        }
+                //    },
+                //    () =>
+                //    {
+                //        using (var context = new Context2())
+                //        {
+                //            context.Configuration.AutoDetectChangesEnabled = false;
+                //            context.AccommodationLocationTmps.RemoveRange(context.AccommodationLocationTmps.AsParallel().Where(x => ids.Contains(x.AccommodationID)).ToList());
+                //            context.ChangeTracker.DetectChanges();
+                //            context.SaveChanges();
+                //        }
+                //    },
+                //    () =>
+                //    {
+                //        using (var context = new Context2())
+                //        {
+                //            context.Configuration.AutoDetectChangesEnabled = false;
+                //            context.AccomodationSupplierTmps.RemoveRange(context.AccomodationSupplierTmps.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
+                //            context.ChangeTracker.DetectChanges();
+                //            context.SaveChanges();
+                //        }
+                //    },
+                //    () =>
+                //    {
+                //        using (var context = new Context2())
+                //        {
+                //            context.Configuration.AutoDetectChangesEnabled = false;
+                //            context.AccomodationSupplier2Tmp.RemoveRange(context.AccomodationSupplier2Tmp.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
+                //            context.ChangeTracker.DetectChanges();
+                //            context.SaveChanges();
+                //        }
+                //    },
+                //    () =>
+                //    {
+                //        using (var context = new Context2())
+                //        {
+                //            context.Configuration.AutoDetectChangesEnabled = false;
+                //            context.AccommodationAlternativeNames.RemoveRange(context.AccommodationAlternativeNames.AsParallel().Where(x => ids.Contains(x.AccommodationID)).ToList());
+                //            context.ChangeTracker.DetectChanges();
+                //            context.SaveChanges();
+                //        }
+                //    },
+                //    () =>
+                //    {
+                //        using (var context = new Context2())
+                //        {
+                //            context.Configuration.AutoDetectChangesEnabled = false;
+                //            context.DeActiveAccommodations.RemoveRange(context.DeActiveAccommodations.AsParallel().Where(x => ids.Contains(x.AccommodationlD)).ToList());
+                //            context.ChangeTracker.DetectChanges();
+                //            context.SaveChanges();
+                //        }
+                //    },
+                //    () =>
+                //    {
+                //        using (var context = new Context2())
+                //        {
+                //            context.Configuration.AutoDetectChangesEnabled = false;
+                //            context.Acc_Airport.RemoveRange(context.Acc_Airport.AsParallel().Where(x => ids.Contains(x.AccommodationlID ?? 0)).ToList());
+                //            context.ChangeTracker.DetectChanges();
+                //            context.SaveChanges();
+                //        }
+                //    }
+                //    );
                 //using (var context = new Context2())
                 //{
-                //    context.AccommodationTmps.RemoveRange(context.AccommodationTmps.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
-                //    context.AccommodationLocationTmps.RemoveRange(context.AccommodationLocationTmps.AsParallel().Where(x => ids.Contains(x.AccommodationID)).ToList());
-                //    context.AccomodationSupplierTmps.RemoveRange(context.AccomodationSupplierTmps.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
-                //    context.AccomodationSupplier2Tmp.RemoveRange(context.AccomodationSupplier2Tmp.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
-                //    context.Acc_Airport.RemoveRange(context.Acc_Airport.AsParallel().Where(x => ids.Contains(x.AccommodationlID ?? 0)).ToList());
-                //    context.AccommodationAlternativeNames.RemoveRange(context.AccommodationAlternativeNames.AsParallel().Where(x => ids.Contains(x.AccommodationID)).ToList());
-                //    context.DeActiveAccommodations.RemoveRange(context.DeActiveAccommodations.AsParallel().Where(x => ids.Contains(x.AccommodationlD)).ToList());
-                //    context.SaveChangesAsync().Wait();
+                //    //context.AccommodationTmps.RemoveRange(context.AccommodationTmps.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
+                //    //context.AccommodationLocationTmps.RemoveRange(context.AccommodationLocationTmps.AsParallel().Where(x => ids.Contains(x.AccommodationID)).ToList());
+                //    //context.AccomodationSupplierTmps.RemoveRange(context.AccomodationSupplierTmps.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
+                //    //context.AccomodationSupplier2Tmp.RemoveRange(context.AccomodationSupplier2Tmp.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
+                //    //context.Acc_Airport.RemoveRange(context.Acc_Airport.AsParallel().Where(x => ids.Contains(x.AccommodationlID ?? 0)).ToList());
+                //    //context.AccommodationAlternativeNames.RemoveRange(context.AccommodationAlternativeNames.AsParallel().Where(x => ids.Contains(x.AccommodationID)).ToList());
+                //    //context.DeActiveAccommodations.RemoveRange(context.DeActiveAccommodations.AsParallel().Where(x => ids.Contains(x.AccommodationlD)).ToList());
+                //    //context.SaveChangesAsync().Wait();
+
+
+                //    context.AccommodationTmps.Where(x => ids.Contains(x.AccommodationlID)).DeleteFromQuery();
+                //    context.AccommodationLocationTmps.Where(x => ids.Contains(x.AccommodationID)).DeleteFromQuery();
+                //    context.AccomodationSupplierTmps.Where(x => ids.Contains(x.AccommodationlID)).DeleteFromQuery();
+                //    context.AccomodationSupplier2Tmp.Where(x => ids.Contains(x.AccommodationlID)).DeleteFromQuery();
+                //    context.Acc_Airport.Where(x => ids.Contains(x.AccommodationlID ?? 0)).DeleteFromQuery();
+                //    context.AccommodationAlternativeNames.Where(x => ids.Contains(x.AccommodationID)).DeleteFromQuery();
+                //    context.DeActiveAccommodations.Where(x => ids.Contains(x.AccommodationlD)).DeleteFromQuery();
                 //}
             }
             catch (Exception ex)
@@ -116,13 +194,13 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                var accTmp = new List<AccommodationTmp>();
-                var accLocTmp = new List<AccommodationLocationTmp>();
+                var accTmp = new ConcurrentBag<AccommodationTmp>();
+                var accLocTmp = new ConcurrentBag<AccommodationLocationTmp>();
                 var altList = new ConcurrentBag<AccommodationAlternativeName>();
                 var supplierList = new ConcurrentBag<AccomodationSupplierTmp>();
                 var supplier2List = new ConcurrentBag<AccomodationSupplier2Tmp>();
                 var airportList = new ConcurrentBag<Acc_Airport>();
-                var loc = new List<LocationTmp>();
+                var loc = new ConcurrentBag<LocationTmp>();
                 Parallel.Invoke(
                     () =>
                     {
@@ -171,7 +249,7 @@ namespace Logic.BusinessObjects
                             lastUpdate = model.LastUpdate,
                             Name = model.CityName,
                             LocationTypeID = 4,
-                            ParentLocationID = model.CountryId + 20000000,
+                            ParentLocationID = model.CountryId ?? 0 + 20000000,
                             CountryCode = model.CountryCode,
                         });
                     },
@@ -265,7 +343,7 @@ namespace Logic.BusinessObjects
                                 destinationId = !string.IsNullOrEmpty(model.DestinationId) ? Convert.ToInt64(model.DestinationId) : 0,
                                 rating = model.Rating,
                                 category = model.Category,
-                                AirPort_Code = airport.iata,
+                                AirPort_Code = airport.Iata,
                             });
                         });
                     },
@@ -285,25 +363,39 @@ namespace Logic.BusinessObjects
                     });
                 using (var context = new Context2())
                 {
+                    context.BulkInsert(accTmp);
+                    context.BulkInsert(accLocTmp);
+                    context.BulkInsert(loc);
+                    context.BulkInsert(airportList);
+                    context.BulkInsert(altList);
+                    context.BulkInsert(supplierList);
+                    context.BulkInsert(supplier2List);
 
-                    context.AccommodationTmps.AddRange(accTmp);
-                    context.AccommodationLocationTmps.AddRange(accLocTmp);
-                    context.LocationTmps.AddRange(loc);
-                    context.Acc_Airport.AddRange(airportList);
-                    context.AccommodationAlternativeNames.AddRange(altList);
-                    context.AccomodationSupplierTmps.AddRange(supplierList);
-                    context.AccomodationSupplier2Tmp.AddRange(supplier2List);
+                    message = null;
+                    return true;
 
-                    if (context.SaveChangesAsync().Result > 0)
-                    {
-                        message = null;
-                        return true;
-                    }
-                    else
-                    {
-                        message = "Map GIATA Data to Database failed.";
-                        return false;
-                    }
+                    //context.Configuration.AutoDetectChangesEnabled = false;
+
+                    //context.AccommodationTmps.AddRange(accTmp);
+                    //context.AccommodationLocationTmps.AddRange(accLocTmp);
+                    //context.LocationTmps.AddRange(loc);
+                    //context.Acc_Airport.AddRange(airportList);
+                    //context.AccommodationAlternativeNames.AddRange(altList);
+                    //context.AccomodationSupplierTmps.AddRange(supplierList);
+                    //context.AccomodationSupplier2Tmp.AddRange(supplier2List);
+
+                    //context.ChangeTracker.DetectChanges();
+
+                    //if (context.SaveChanges() > 0)
+                    //{
+                    //    message = null;
+                    //    return true;
+                    //}
+                    //else
+                    //{
+                    //    message = "Map GIATA Data to Database failed.";
+                    //    return false;
+                    //}
                 }
             }
             catch (Exception ex)
@@ -371,64 +463,63 @@ namespace Logic.BusinessObjects
         /// <param name="resultModel"></param>
         /// <param name="message"></param>
         /// <returns></returns>
-        public bool MapGIATADataToModel(properties sourceModel, out GIATADbTransferModel resultModel, out string message)
+        public (bool success, GIATADbTransferModel resultModel) MapGIATADataToModel(Properties sourceModel, out string message)
         {
+            var resultModel = new GIATADbTransferModel();
             try
             {
-                var address = sourceModel.property.addresses?.address;
+                var address = sourceModel.Property.Addresses?.Address;
                 resultModel = new GIATADbTransferModel
                 {
-                    AccommodationId = Convert.ToInt64(sourceModel.property.giataId),
-                    Address = address?.addressLine[0]?.Value + " " + address?.addressLine[1]?.Value,
-                    AirportCode = sourceModel.property.airports?[0].iata,
-                    Category = sourceModel.property.category.ToString(),
-                    ChainId = Convert.ToInt64(sourceModel.property.chains?.chain?.chainId),
-                    CityId = Convert.ToInt64(sourceModel.property.city?.cityId),
-                    CityName = sourceModel.property.city?.Value,
-                    CountryCode = sourceModel.property.country,
+                    AccommodationId = long.Parse(sourceModel.Property.GiataId),
+                    Address = address?.AddressLine[0]?.Text + " " + address?.AddressLine[1]?.Text,
+                    AirportCode = sourceModel.Property.Airports?.Airport[0]?.Iata,
+                    Category = sourceModel.Property.Category,
+                    ChainId = string.IsNullOrEmpty(sourceModel.Property.Chains?.Chain?.ChainId) ? (long?)null : long.Parse(sourceModel.Property.Chains?.Chain?.ChainId),
+                    CityId = string.IsNullOrEmpty(sourceModel.Property.City?.CityId) ? (long?)null : long.Parse(sourceModel.Property.City?.CityId),
+                    CityName = sourceModel.Property.City?.Text,
+                    CountryCode = sourceModel.Property.Country,
                     CountryId = 0,
-                    CountryName = sourceModel.property.country,
-                    Email = sourceModel.property.emails?.email,
-                    Fax = sourceModel.property.phones?.FirstOrDefault(x => x.tech == "fax")?.Value.ToString(),
-                    Latitude = sourceModel.property.geoCodes?.geoCode?.latitude.ToString(),
-                    Longitude = sourceModel.property.geoCodes?.geoCode?.longitude.ToString(),
-                    LastUpdate = sourceModel.property.lastUpdate ?? DateTime.Now,
-                    Name = sourceModel.property.name,
-                    Rating = sourceModel.property.ratings?.rating?.value.ToString(),
-                    Url = sourceModel.property.urls?.url,
-                    Telephone = sourceModel.property.phones?.FirstOrDefault(x => x.tech == "voice")?.Value.ToString(),
-                    DestinationId = sourceModel.property.destination?.destinationId.ToString(),
-                    DestinationCode = sourceModel.property.destination?.Value,
-                    Suppliers = new List<AccommodationSupplier>(),
-                    AlternativeNames = sourceModel.property.alternativeNames?.ToList().Select(x => new AlternativeName
+                    CountryName = sourceModel.Property.Country,
+                    Email = sourceModel.Property.Emails?.Email,
+                    Fax = sourceModel.Property.Phones?.Phone.FirstOrDefault(x => x.Tech == "fax")?.Text,
+                    Latitude = sourceModel.Property.GeoCodes?.GeoCode?.Latitude,
+                    Longitude = sourceModel.Property.GeoCodes?.GeoCode?.Longitude,
+                    LastUpdate = string.IsNullOrEmpty(sourceModel.Property.LastUpdate) ? (DateTime?)null : DateTime.Parse(sourceModel.Property.LastUpdate),
+                    Name = sourceModel.Property.Name,
+                    Rating = sourceModel.Property.Ratings?.Rating?.Value,
+                    Url = sourceModel.Property.Urls?.Url,
+                    Telephone = sourceModel.Property.Phones?.Phone?.FirstOrDefault(x => x.Tech == "voice")?.Text,
+                    DestinationId = sourceModel.Property.Destination?.DestinationId,
+                    DestinationCode = sourceModel.Property.Destination?.Text,
+                    Suppliers = new ConcurrentBag<AccommodationSupplier>(),
+                    AlternativeNames = sourceModel.Property.AlternativeNames?.AlternativeName?.Select(x => new AlternativeNameViewModel
                     {
-                        EffectiveDate = x.effectiveDate,
-                        Name = x.Value,
-                        Type = x.alternativeNameType,
+                        EffectiveDate = string.IsNullOrEmpty(x.EffectiveDate) ? (DateTime?)null : DateTime.Parse(x.EffectiveDate),
+                        Name = x.Text,
+                        Type = x.AlternativeNameType,
                     }).ToList(),
-                    Airports = sourceModel.property.airports?.ToList().Select(x => new propertiesPropertyAirport
-                    {
-                        iata = x.iata,
-                    }).ToList(),
+                    Airports = sourceModel.Property.Airports?.Airport?.ToList(),
                 };
-                foreach (var provider in sourceModel.property.propertyCodes)
-                    foreach (var code in provider.code)
+                Parallel.ForEach(sourceModel.Property.PropertyCodes?.Provider ?? new List<Provider>(), provider =>
+                {
+                    foreach (var code in provider.Code)
                         resultModel.Suppliers.Add(new AccommodationSupplier
                         {
-                            Active = code.status == null ? false : true,
-                            Code = code.value.First().Value,
-                            ProviderCode = provider.providerCode,
-                            ProviderType = provider.providerType,
-                            ProviderValue = code.value.First().Value,
+                            Active = code.Status == null ? false : true,
+                            Code = code.Value?.FirstOrDefault(x => x.Name == "Hotel Code")?.Text ?? code.Value[0]?.Text,
+                            ProviderCode = provider.ProviderCode,
+                            ProviderType = provider.ProviderType,
+                            ProviderValue = code.Value.FirstOrDefault(x => x.Name == "Hotel Code")?.Text ?? code.Value[0]?.Text,
                         });
+                });
                 message = null;
-                return true;
+                return (true, resultModel);
             }
             catch (Exception ex)
             {
-                resultModel = null;
                 message = ex.Message;
-                return false;
+                return (false, null);
             }
         }
 
@@ -440,20 +531,21 @@ namespace Logic.BusinessObjects
                 var serviceResult = giataAccess.GetPropertiesById(id);
                 if (serviceResult.Success)
                 {
-                    if (serviceResult.Model is properties)
+                    if (serviceResult.Model is Properties)
                     {
-                        if (MapGIATADataToModel((properties)serviceResult.Model, out GIATADbTransferModel mapDb, out message))
+                        var getData = MapGIATADataToModel((Properties)serviceResult.Model, out message);
+                        if (getData.success)
                         {
-                            if (MapGIATADataToDb(mapDb, out message))
+                            if (MapGIATADataToDb(getData.resultModel, out message))
                                 return (true, true, message);
                         }
                         return (true, false, message);
                     }
                     else
                     {
-                        var str = ((error)serviceResult.Model).description.href;
+                        var str = ((Error)serviceResult.Model).Description.Href;
                         var movedId = Convert.ToInt64(str.Substring(str.LastIndexOf('/') + 1));
-                        message = ((error)serviceResult.Model).description.Value;
+                        message = ((Error)serviceResult.Model).Description.Text;
                         if (DeactiveAccommodation(id, null, movedId: movedId))
                             return (true, true, message);
                         return (true, false, message);
@@ -474,58 +566,58 @@ namespace Logic.BusinessObjects
         /// <param name="from">from giata id</param>
         /// <param name="to">to giata id</param>
         /// <returns>giata ids that failed</returns>
-        public List<MapResult> MapRange(long from, long to)
+        public ConcurrentBag<MapResult> MapRange(long from, long to)
         {
             if (from > to)
                 throw new ArgumentException("Invalid parameter(s).");
             RemoveAll(from, to);
-            var returnList = new List<MapResult>();
+            var returnList = new ConcurrentBag<MapResult>();
             Parallel.For(from, to + 1, i =>
-            {
-                var mapRs = Map(i);
-                if (!mapRs.serviceSuccess)
-                {
-                    var tryMapRs = TryMap(i);
-                    if (!tryMapRs.Item1)
-                    {
-                        returnList.Add(new MapResult
-                        {
-                            Id = i,
-                            Message = tryMapRs.Item2,
-                            MapToDbSuccess = false,
-                            ServiceSuccess = false,
-                        });
-                        return;
-                    }
-                    returnList.Add(new MapResult
-                    {
-                        Id = i,
-                        Message = tryMapRs.Item2,
-                        MapToDbSuccess = true,
-                        ServiceSuccess = true,
-                    });
-                    return;
-                }
-                if (mapRs.dbSuccess)
-                {
-                    returnList.Add(new MapResult
-                    {
-                        Id = i,
-                        Message = mapRs.message,
-                        ServiceSuccess = true,
-                        MapToDbSuccess = true,
-                    });
-                    return;
-                }
-                DeactiveAccommodation(i, deactive: true);
-                returnList.Add(new MapResult
-                {
-                    Id = i,
-                    Message = mapRs.message,
-                    ServiceSuccess = true,
-                    MapToDbSuccess = false,
-                });
-            });
+             {
+                 var mapRs = Map(i);
+                 if (!mapRs.serviceSuccess)
+                 {
+                     var tryMapRs = TryMap(i);
+                     if (!tryMapRs.Item1)
+                     {
+                         returnList.Add(new MapResult
+                         {
+                             Id = i,
+                             Message = tryMapRs.Item2,
+                             MapToDbSuccess = false,
+                             ServiceSuccess = false,
+                         });
+                         return;
+                     }
+                     returnList.Add(new MapResult
+                     {
+                         Id = i,
+                         Message = tryMapRs.Item2,
+                         MapToDbSuccess = true,
+                         ServiceSuccess = true,
+                     });
+                     return;
+                 }
+                 if (mapRs.dbSuccess)
+                 {
+                     returnList.Add(new MapResult
+                     {
+                         Id = i,
+                         Message = mapRs.message,
+                         ServiceSuccess = true,
+                         MapToDbSuccess = true,
+                     });
+                     return;
+                 }
+                 DeactiveAccommodation(i, deactive: true);
+                 returnList.Add(new MapResult
+                 {
+                     Id = i,
+                     Message = mapRs.message,
+                     ServiceSuccess = true,
+                     MapToDbSuccess = false,
+                 });
+             });
             return returnList;
         }
         /// <summary>

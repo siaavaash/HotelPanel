@@ -1,5 +1,6 @@
 ﻿using Logic.BusinessObjects;
 using System;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace HotelPanel.Controllers
@@ -24,7 +25,7 @@ namespace HotelPanel.Controllers
         {
             try
             {
-                return Json(new { success = true, data = giataBusiness.MapRange(from, to) }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, data = giataBusiness.MapRange(from, to).OrderBy(x => x.Id) }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
