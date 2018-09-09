@@ -348,7 +348,7 @@ i.fa-check {
 .dis {
   display: block !important; }
 
-.btn {
+.btn-info {
   display: block;
   padding: 0 30px;
   text-align: center;
@@ -357,8 +357,7 @@ i.fa-check {
   color: #fff;
   margin: 20px 5px;
   border-radius: 5px;
-  cursor: pointer;
-  width: 200px; }
+  cursor: pointer; }
 
 .select_check {
   width: 50px;
@@ -367,4 +366,28 @@ i.fa-check {
   top: 10px;
   left: 0;
   display: none; }
+
+.alert-success {
+  color: #285b2a;
+  background-color: #dbefdc;
+  border-color: #cde9ce;
+  width: 64%;
+  display: inline-block;
+  margin-bottom: 20px;
+  margin-top: -6px;
+  padding: 7px !important; }
+
+.alert-danger {
+  color: #7f231c;
+  background-color: #fdd9d7;
+  border-color: #fccac7;
+  width: 64%;
+  display: inline-block;
+  margin-bottom: 20px;
+  margin-top: -6px;
+  padding: 7px !important; }
+
+.status {
+  display: inline-block;
+  width: 75%; }
 

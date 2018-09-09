@@ -535,5 +535,28 @@ namespace Logic.BusinessObjects
                 throw;
             }
         }
+        public bool VerifyAccommodationImages(FilterImagesView model)
+        {
+            try
+            {
+                foreach (var accImage in model.AccomodationImages ?? new List<AccomodationImage>())
+                {
+                    var image = DataContext.Context.AccomodationImages.FirstOrDefault(x => x.ImageID == accImage.ImageID);
+                    if (image != null)
+                    {
+                        image.IsVerified = true;
+                        image.IsReported = accImage.IsReported ?? image.IsReported;
+                        image.IsActive = accImage.IsActive ?? image.IsActive;
+                        image.VerifiedDate = DateTime.Now.Date;
+                    }
+                }
+                return DataContext.Context.SaveChanges() > 0 ? true : false;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
