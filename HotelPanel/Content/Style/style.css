@@ -296,7 +296,8 @@ a.booking {
   position: fixed;
   z-index: 1000;
   padding: 7px 7px;
-  border: solid 1px #eee; }
+  border: solid 1px #eee;
+  top: 65px; }
 
 .clos {
   color: red;
