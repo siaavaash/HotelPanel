@@ -5,95 +5,85 @@
 <link href="~/Content/Style/owl.carousel.min.css" rel="stylesheet" />
 <link href="~/Content/plugin/slippy/slippry.css" rel="stylesheet" />
 <script src="~/Content/plugin/slippy/slippry.min.js"></script>
+
 <div class="wrapper">
     <div class="box_parent">
-
-        <div class="img_box" style="vertical-align:top;">
+        @{
+        int id = 1;
+        int thumb = 1;
+        }
+        <div class="information">
             <h2>Hotel Images</h2>
-            <div id="hotelimages" class="owl-carousel owl-theme">
+            <ul id="thumbnail">
 
                 @foreach (var image in Model.AccommodationImages)
-                {
-                    var verify = (image.IsVerified ?? false) ? "checked" : null;
-                    var report = (image.IsReported ?? false) ? "checked" : null;
-                    var active = (image.IsActive ?? false) ? "checked" : null;
-                    <div>
-                        <img class="owl-lazy" data-src="@image.Url" />
-                        <div class="check">
-                            <input data-id="@image.Id" name="IsVerified" class="hotelImgCheck" type="checkbox" @verify disabled /><label>verify</label>
-                            <input data-id="@image.Id" class="hotelImgCheck" name="IsReported" type="checkbox" @report /><label>report</label>
-                            <input data-id="@image.Id" class="hotelImgCheck" name="IsActive" type="checkbox" @active /><label>active</label>
-                        </div>
-                    </div>
-                }
+        {
+            <li>
+                <a href=@("#slid"+id)>
+                    <img src="@image.Url" />
+                </a>
+            </li>
 
-            </div>
+    id = id + 1;
 
-            @foreach (var image in Model.AccommodationImages)
-            {
-                <a data-hash="zero"><img data-src="@image.Url" /></a>
+
+}
+
+            </ul>
+            <div class="thumb-box">
+                <div class="cont">
+                    <div class="container">
+                        <ul class="thumbe">
+                            @foreach (var image in Model.AccommodationImages)
+                    {
+                        <li class="single-item"><a href="#@thumb" data-slide="@thumb"><img src="@image.Url" /></a></li>
+                thumb = thumb + 1;
             }
-        </div>
-        <div class="img_box">
-            <h2>Room Images</h2>
-            <div id="roomimages" class="owl-carousel owl-theme room_pic">
-                @foreach (var image in Model.RoomImages)
-                {
-                    var verify = (image.IsVerified ?? false) ? "checked" : null;
-                    var report = (image.IsReported ?? false) ? "checked" : null;
-                    var active = (image.IsActive ?? false) ? "checked" : null;
-                    <div>
-                        <img class="owl-lazy" data-src="@image.Url" />
-
-                        <div class="check">
-                            <input data-id="@image.Id" class="roomImgCheck" name="IsVerified" type="checkbox" @verify disabled /><label>verify</label>
-                            <input data-id="@image.Id" class="roomImgCheck" name="IsReported" type="checkbox" @report /><label>report</label>
-                            <input data-id="@image.Id" class="roomImgCheck" name="IsActive" type="checkbox" @active /><label>active</label>
-                        </div>
+                        </ul>
                     </div>
-
-                }
+                </div>
             </div>
-
-        </div>
-        <div style="text-align:center">
-            <a target="_blank" href="~/Accommodation/Images/?AccommodationID=@Model.AccommodationId" class="btn_img" style="padding:8px 30px; ">Edit</a>
-
+            <button class="btn_img">Filter Room Images</button>
         </div>
 
+        
 
         @*@{
-                int slide = 0;
-                int slippy = 0;
-            }
-            <div>
-                <ul id="thumbnails">
+        int slides = 2000;
+        int slippy = 2000;
+        }
+        <div class="information" style="margin-top:50px;">
+            <h2>Room Images</h2>
+            <ul id="thumbnailss">
 
-                    @foreach (var image in Model.RoomImages)
-                    {
-                        <li>
-                            <a href="#@slide">
-                                <img class="owl-lazy" src="@image.Url" />
-                            </a>
-                        </li>
+                @foreach (var image in Model.RoomImages)
+            {   
+                <li>
+                    <a href=@("#slide"+slides)>
+                        <img  src="@image.Url" />
+                    </a>
+                </li>
 
-                        slide = slide + 1;
+            slides = slides + 1;
 
 
-                    }
+        }
 
-                </ul>
-                <div class="thumb-box">
-                    <ul class="thumbs">
-                        @foreach (var image in Model.RoomImages)
+            </ul>
+            <div class="thumb-boxs">
+                <div class="conts">
+                    <div class="containers">
+                        <ul class="thumbs">
+                            @foreach (var image in Model.RoomImages)
                         {
-                            <li><a href="#@slippy" data-slide="@slippy"><img src="@image.Url" /></a></li>
-                            slippy = slippy + 1;
-                        }
-                    </ul>
+                            <li class="single-items"><a href="#@slippy" data-id="@slippy" class="link"><img src="@image.Url"/></a></li>
+                        slippy = slippy + 1;
+                    }
+                        </ul>
+                    </div>
                 </div>
-            </div>*@
-
+            </div>
+        </div>*@
     </div>
     @using (Html.BeginForm())
     {
@@ -320,24 +310,288 @@
 <script src="~/Scripts/owl.carousel.js"></script>
 <script src="~/Content/plugin/ckeditor/ckeditor.js"></script>
 <script src="~/Content/plugin/ckeditor/styles.js"></script>
+
 <script>
-    var thumbs = jQuery('#thumbnails').slippry({
+    var thumbe = jQuery('#thumbnail').slippry({
         // general elements & wrapper
-        slippryWrapper: '<div class="slippry_box thumbnails" />',
+        slippryWrapper: '<div class="slippry_box thumbnail" />',
         // options
         transition: 'horizontal',
         pager: false,
         auto: false,
         onSlideBefore: function (el, index_old, index_new) {
-            jQuery('.thumbs a img').removeClass('active');
-            jQuery('img', jQuery('.thumbs a')[index_new]).addClass('active');
+            jQuery('.thumbe a img').removeClass('actives');
+            jQuery('img', jQuery('.thumbe a')[index_new]).addClass('actives');
         }
     });
 
-    jQuery('.thumbs a').click(function () {
+    jQuery('.thumbe a').click(function () {
+        thumbe.goToSlide($(this).data('slide'));
+        return false;
+    });
+</script>
+@*<script>
+    var thumbs = jQuery('#thumbnailss').slippry({
+        // general elements & wrapper
+        slippryWrapper: '<div class="slippry_boxs thumbnails" />',
+        // options
+        transition: 'horizontal',
+        pager: false,
+        auto: false,
+        onSlideBefore: function (el, index_old, index_new) {
+            jQuery('.thumbs a.link img').removeClass('active');
+            jQuery('img', jQuery('.thumbs a.link')[index_new]).addClass('active');
+        }
+    });
+
+    jQuery('.thumbs a.link').click(function () {
         thumbs.goToSlide($(this).data('slide'));
         return false;
     });
+</script>*@
+<script>
+    (function($) {
+	var pagify = {
+		items: {},
+		container: null,
+		totalPages: 1,
+		perPage: 3,
+		currentPage: 0,
+		createNavigation: function() {
+			this.totalPages = Math.ceil(this.items.length / this.perPage);
+
+			$('.pagination', this.container.parent()).remove();
+			var pagination = $('<div class="pagination"></div>').append('<a class="nav prev disabled" data-next="false"><</a>');
+
+			for (var i = 0; i < this.totalPages; i++) {
+				var pageElClass = "page";
+				if (!i)
+					pageElClass = "page current";
+				var pageEl = '<a class="' + pageElClass + '" data-page="' + (
+				i + 1) + '">' + (
+				i + 1) + "</a>";
+				pagination.append(pageEl);
+			}
+			pagination.append('<a class="nav next" data-next="true">></a>');
+
+			this.container.after(pagination);
+
+			var that = this;
+			$("body").off("click", ".nav");
+			this.navigator = $("body").on("click", ".nav", function() {
+				var el = $(this);
+				that.navigate(el.data("next"));
+			});
+
+			$("body").off("click", ".page");
+			this.pageNavigator = $("body").on("click", ".page", function() {
+				var el = $(this);
+				that.goToPage(el.data("page"));
+			});
+		},
+		navigate: function(next) {
+			// default perPage to 5
+			if (isNaN(next) || next === undefined) {
+				next = true;
+			}
+			$(".pagination .nav").removeClass("disabled");
+			if (next) {
+				this.currentPage++;
+				if (this.currentPage > (this.totalPages - 1))
+					this.currentPage = (this.totalPages - 1);
+				if (this.currentPage == (this.totalPages - 1))
+					$(".pagination .nav.next").addClass("disabled");
+				}
+			else {
+				this.currentPage--;
+				if (this.currentPage < 0)
+					this.currentPage = 0;
+				if (this.currentPage == 0)
+					$(".pagination .nav.prev").addClass("disabled");
+				}
+
+			this.showItems();
+		},
+		updateNavigation: function() {
+
+			var page = $(".pagination .page");
+			page.removeClass("current");
+			$('.pagination .page[data-page="' + (
+			this.currentPage + 1) + '"]').addClass("current");
+		},
+		goToPage: function(page) {
+
+			this.currentPage = page - 1;
+
+			$(".pagination .nav").removeClass("disabled");
+			if (this.currentPage == (this.totalPages - 1))
+				$(".pagination .nav.next").addClass("disabled");
+
+			if (this.currentPage == 0)
+				$(".pagination .nav.prev").addClass("disabled");
+			this.showItems();
+		},
+		showItems: function() {
+			this.items.hide();
+			var base = this.perPage * this.currentPage;
+			this.items.slice(base, base + this.perPage).show();
+
+			this.updateNavigation();
+		},
+		init: function(container, items, perPage) {
+			this.container = container;
+			this.currentPage = 0;
+			this.totalPages = 1;
+			this.perPage = perPage;
+			this.items = items;
+			this.createNavigation();
+			this.showItems();
+		}
+	};
+
+	// stuff it all into a jQuery method!
+	$.fn.pagify = function(perPage, itemSelector) {
+		var el = $(this);
+		var items = $(itemSelector, el);
+
+		// default perPage to 5
+		if (isNaN(perPage) || perPage === undefined) {
+			perPage = 3;
+		}
+
+		// don't fire if fewer items than perPage
+		if (items.length <= perPage) {
+			return true;
+		}
+
+		pagify.init(el, items, perPage);
+	};
+})(jQuery);
+
+$(".container").pagify(28, ".single-item");
+
+</script>
+<script>
+    (function ($) {
+        var pagify = {
+            items: {},
+            container: null,
+            totalPages: 1,
+            perPage: 3,
+            currentPage: 0,
+            createNavigation: function () {
+                this.totalPages = Math.ceil(this.items.length / this.perPage);
+
+                $('.paginationse', this.container.parent()).remove();
+                var paginations = $('<div class="paginationse"></div>').append('<a class="navs prev disableds" data-next="false"><</a>');
+
+                for (var i = 0; i < this.totalPages; i++) {
+                    var pageElClass = "page";
+                    if (!i)
+                        pageElClass = "page current";
+                    var pageEl = '<a class="' + pageElClass + '" data-page="' + (
+                        i + 1) + '">' + (
+                            i + 1) + "</a>";
+                    paginations.append(pageEl);
+                }
+                paginations.append('<a class="navs next" data-next="true">></a>');
+
+                this.container.after(paginations);
+
+                var that = this;
+                $("body").off("click", ".navs");
+                this.navigator = $("body").on("click", ".navs", function () {
+                    var el = $(this);
+                    that.navigate(el.data("next"));
+                });
+
+                $("body").off("click", ".page");
+                this.pageNavigator = $("body").on("click", ".page", function () {
+                    var el = $(this);
+                    that.goToPage(el.data("page"));
+                });
+            },
+            navigate: function (next) {
+                // default perPage to 5
+                if (isNaN(next) || next === undefined) {
+                    next = true;
+                }
+                $(".paginationse .navs").removeClass("disableds");
+                if (next) {
+                    this.currentPage++;
+                    if (this.currentPage > (this.totalPages - 1))
+                        this.currentPage = (this.totalPages - 1);
+                    if (this.currentPage == (this.totalPages - 1))
+                        $(".paginationse .navs.next").addClass("disableds");
+                }
+                else {
+                    this.currentPage--;
+                    if (this.currentPage < 0)
+                        this.currentPage = 0;
+                    if (this.currentPage == 0)
+                        $(".paginationse .navs.prev").addClass("disableds");
+                }
+
+                this.showItems();
+            },
+            updateNavigation: function () {
+
+                var page = $(".paginationse .page");
+                page.removeClass("current");
+                $('.paginationse .page[data-page="' + (
+                    this.currentPage + 1) + '"]').addClass("current");
+            },
+            goToPage: function (page) {
+
+                this.currentPage = page - 1;
+
+                $(".paginationse .navs").removeClass("disableds");
+                if (this.currentPage == (this.totalPages - 1))
+                    $(".paginationse .navs.next").addClass("disableds");
+
+                if (this.currentPage == 0)
+                    $(".paginationse .navs.prev").addClass("disableds");
+                this.showItems();
+            },
+            showItems: function () {
+                this.items.hide();
+                var base = this.perPage * this.currentPage;
+                this.items.slice(base, base + this.perPage).show();
+
+                this.updateNavigation();
+            },
+            init: function (container, items, perPage) {
+                this.container = container;
+                this.currentPage = 0;
+                this.totalPages = 1;
+                this.perPage = perPage;
+                this.items = items;
+                this.createNavigation();
+                this.showItems();
+            }
+        };
+
+        // stuff it all into a jQuery method!
+        $.fn.pagify = function (perPage, itemSelector) {
+            var el = $(this);
+            var items = $(itemSelector, el);
+
+            // default perPage to 5
+            if (isNaN(perPage) || perPage === undefined) {
+                perPage = 3;
+            }
+
+            // don't fire if fewer items than perPage
+            if (items.length <= perPage) {
+                return true;
+            }
+
+            pagify.init(el, items, perPage);
+        };
+    })(jQuery);
+
+    $(".containers").pagify(28, ".single-items");
+
 </script>
 <script>
     var roomImgChangeId = new Array();

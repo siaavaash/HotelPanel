@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static Data.ViewModel.AccommodationModels;
 
 namespace HotelPanel.Controllers
 {
@@ -74,6 +75,19 @@ namespace HotelPanel.Controllers
             };
             return View(Model);
         }
+        public ActionResult RoomImages(long accommodationId)
+        {
+            try
+            {
+                return View(_AccommodationBusiness.GetRoomImageByAccId(accommodationId));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public ActionResult Weather(string AccommodationID)
         {
             long Entry = AccommodationID.IsNormalized() ? long.Parse(AccommodationID) : 0;
@@ -206,12 +220,12 @@ namespace HotelPanel.Controllers
                 AccommodationDescriptions = _AccommodationBusiness.ListOtherLanguageDescription(AccommodationID)
             };
             return View(Model);
-        }        
+        }
         public ActionResult AddDescription(long AccommodationID)
         {
             var enumDataType = from Common.Language e in Language.GetValues(typeof(Language)) select new { ID = (int)e, Name = e.ToString() };
             ViewBag.LanguageID = new SelectList(enumDataType, "ID", "Name");
-            return View(new Data.ViewModel.AccommodationModels.AddDescriptionViewModel() { AccommodationID=AccommodationID});
+            return View(new Data.ViewModel.AccommodationModels.AddDescriptionViewModel() { AccommodationID = AccommodationID });
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -220,11 +234,11 @@ namespace HotelPanel.Controllers
         {
             if (ModelState.IsValid)
             {
-                var Result = _AccommodationBusiness.AddDescription(Model);                
+                var Result = _AccommodationBusiness.AddDescription(Model);
                 if (Result)
                 {
                     iUserStorage.Store(PublicConstants.Session.Message_Success, PublicConstants.Message.Success);
-                    return RedirectToAction("ListLanguageDescription",new { AccommodationID = Model.AccommodationID});
+                    return RedirectToAction("ListLanguageDescription", new { AccommodationID = Model.AccommodationID });
                 }
                 else
                 {
@@ -236,10 +250,10 @@ namespace HotelPanel.Controllers
             return RedirectToAction("ListLanguageDescription", new { AccommodationID = Model.AccommodationID });
         }
         public ActionResult ChangeDescription(long AccommodationDescriptionID)
-        {           
+        {
             var AccommodationDescription = _AccommodationBusiness.GetAccommodationDescription(AccommodationDescriptionID);
             var enumDataType = from Common.Language e in Language.GetValues(typeof(Language)) select new { ID = (int)e, Name = e.ToString() };
-            ViewBag.LanguageID = new SelectList(enumDataType, "ID", "Name",AccommodationDescription.LanguageID);
+            ViewBag.LanguageID = new SelectList(enumDataType, "ID", "Name", AccommodationDescription.LanguageID);
             Data.ViewModel.AccommodationModels.EditDescriptionViewModel Model = new AccommodationModels.EditDescriptionViewModel()
             {
                 AccommodationDescriptionID = AccommodationDescriptionID,
@@ -255,7 +269,7 @@ namespace HotelPanel.Controllers
         {
             if (ModelState.IsValid)
             {
-                var Result = _AccommodationBusiness.ChangeDescription(Model);                
+                var Result = _AccommodationBusiness.ChangeDescription(Model);
                 if (Result)
                 {
                     iUserStorage.Store(PublicConstants.Session.Message_Success, PublicConstants.Message.Success);
@@ -274,6 +288,29 @@ namespace HotelPanel.Controllers
         {
             var Result = _AccommodationBusiness.GetSearchReport();
             return View(Result);
+        }
+
+        [HttpPost]
+        public JsonResult VerifyRoomImage(RoomImagesViewModel model)
+        {
+            try
+            {
+                if (model != null)
+                {
+                    var result = _AccommodationBusiness.VerifyRoomImages(model);
+                    if (result)
+                    {
+                        return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                    }
+                    return Json(new { success = false, message = "Verify Room Images failed." }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { success = false, message = "Model is invalid." }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

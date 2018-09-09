@@ -48,6 +48,9 @@ input.hidden {
 .thumbnail {
     padding: 0;
 }
+.thumbnailss {
+    padding: 0;
+}
 input.checkbox {
     background-color: transparent;
     border-bottom: 1px solid #9e9e9e;
@@ -188,29 +191,80 @@ a.booking{
    color:red !important;
 }
 
-#thumbnails li img{
+#thumbnailss li img{
     width:400px;
-    height:300px;
+    height:320px;
+}
+#thumbnail li img {
+    width: 400px;
+    height: 320px;
+}
+.slippry_box {
+    width: 48%;
+    display: inline-block;
+    position:absolute;
+    right:-85px;
+}
+.slippry_boxs {
+    width: 48%;
+    display: inline-block;
+    position: absolute;
+    right: -85px;
+}
+.sy-slides-wrap {
+    width: 50% !important;
 }
 
 .thumb-box {
-    padding: 1.4em 0 1em;
     margin-left: -1%;
-    width: 102%;
+    width: 49%;
+
+    .thumbe {
+
+
+        li {
+            float: left;
+            text-align: center;
+            padding: 0 1%;
+            list-style: none;
+
+            img {
+                width: 150px;
+                opacity: .8;
+                border-bottom: 4px solid transparent;
+                height: 100px;
+
+                &.actives {
+                    opacity: 1;
+                }
+            }
+
+            &:hover {
+                img {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}
+.thumb-boxs {
+    margin-left: -1%;
+    width: 49%;
 
     .thumbs {
 
 
         li {
             float: left;
-            width: 25%;
             text-align: center;
             padding: 0 1%;
+            list-style: none;
 
             img {
-                width: 120px;
+                width: 150px;
                 opacity: .8;
                 border-bottom: 4px solid transparent;
+                height: 100px;
 
                 &.active {
                     opacity: 1;
@@ -224,4 +278,185 @@ a.booking{
             }
         }
     }
+
+
+}
+.cont {
+    width: 720px;
+}
+.conts {
+    width: 720px;
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 720px;
+    justify-content: flex-start;
+}
+.containers {
+    display: flex;
+    flex-wrap: wrap;
+    width: 720px;
+    justify-content: flex-start;
+}
+.single-item {
+    width: 150px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f3f3;
+    margin: 5px;
+    border-radius: 10px;
+    color: #888;
+}
+.single-items {
+    width: 150px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f3f3;
+    margin: 5px;
+    border-radius: 10px;
+    color: #888;
+}
+.pagination {
+    padding: 20px;
+    padding-left:50px !important;
+    &,
+    * {
+        user-select: none;
+    }
+
+    a {
+        display: inline-block;
+        padding: 0 10px;
+        cursor: pointer;
+
+        &.disabled {
+            opacity: .3;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+
+        &.current {
+            background: #f3f3f3;
+        }
+    }
+    }
+
+.paginations {
+    padding: 20px;
+    padding-left: 50px !important;
+
+    &,
+    * {
+        user-select: none;
+    }
+
+    a {
+        display: inline-block;
+        padding: 0 10px;
+        cursor: pointer;
+
+        &.disableds {
+            opacity: .3;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+
+        &.currents {
+            background: #f3f3f3;
+        }
+    }
+}
+
+
+
+//roomImage
+
+.button_head {
+    width: 100%;
+    height: 50px;
+    background-color: #fff;
+    position: fixed;
+    z-index: 1000;
+    padding: 7px 7px;
+    border: solid 1px #eee;
+}
+.clos {
+    color: red;
+    font-size: 18px;
+    position: absolute;
+    z-index: 50;
+    background-color: #fff;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: none;
+    text-align: center;
+  
+}
+
+div.gallery {
+    margin: 5px;
+    border: 1px solid #ccc;
+    float: left;
+    width: 250px ;
+    height: 180px ;
+    margin-bottom:5px !important;
+}
+
+div.gallery img {
+    width: 250px ;
+    height: 180px ;
+    cursor: pointer;
+}
+
+div.gallery:hover {
+    border: 1px solid #777;
+}
+
+.desc {
+    filter: brightness(0.5);
+}
+
+i.fa-check {
+    color: green;
+    font-size: 18px;
+    position: absolute;
+    z-index: 5;
+    background-color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: none;
+    text-align: center;
+}
+
+.dis {
+    display: block !important
+}
+
+.btn {
+    display: block;
+    padding: 0 30px;
+    text-align: center;
+    line-height: 32px;
+    background: #22b6b7;
+    color: #fff;
+    margin: 20px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 200px;
+}
+
+.select_check {
+    width: 50px;
+    height: 20px;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    display: none;
 }

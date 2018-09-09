@@ -8,6 +8,7 @@ using System.Linq;
 using Service;
 using Common;
 using static Data.ViewModel.WeatherModels.Forecast;
+using static Data.ViewModel.AccommodationModels;
 
 namespace Logic.BusinessObjects
 {
@@ -411,8 +412,8 @@ namespace Logic.BusinessObjects
                     AccommodationID = Model.AccommodationID,
                     ModificationTime = DateTime.Now,
                     ModifyUserID = Model.ModifyUserID,
-                    UserID=Model.UserID,
-                    CreationTime=DateTime.Now,
+                    UserID = Model.UserID,
+                    CreationTime = DateTime.Now,
                     Description = Model.Description,
                     LanguageID = Model.LanguageID,
                 };
@@ -448,7 +449,7 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                var Result = DataContext.Context.AccommodationDescriptions.Where(x => x.AccommodationID == AccommodationID).ToList();                
+                var Result = DataContext.Context.AccommodationDescriptions.Where(x => x.AccommodationID == AccommodationID).ToList();
                 return Result;
             }
             catch
@@ -467,11 +468,11 @@ namespace Logic.BusinessObjects
                 List<Data.PublicModel.AccommodationModels.SearchReport> Result = new List<Data.PublicModel.AccommodationModels.SearchReport>();
                 var Data = DataContext.Context.GetHotelAvailInfoes.AsNoTracking().AsParallel().ToList();
                 var DistincData = Data.Select(x => x.LocationID).Distinct().ToList();
-                foreach(var Item in DistincData)
+                foreach (var Item in DistincData)
                 {
                     Data.PublicModel.AccommodationModels.SearchReport Entry = new Data.PublicModel.AccommodationModels.SearchReport();
                     Entry.LocationID = Item.Value;
-                    Entry.Count=Data.Where(x => x.LocationID == Item.Value).Count();
+                    Entry.Count = Data.Where(x => x.LocationID == Item.Value).Count();
                     Result.Add(Entry);
                 }
                 Result = Result.OrderByDescending(x => x.Count).Take(4).ToList();
@@ -486,11 +487,50 @@ namespace Logic.BusinessObjects
 
                 return Result;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
             return new List<Data.PublicModel.AccommodationModels.SearchReport>();
+        }
+        public RoomImagesViewModel GetRoomImageByAccId(long accommodationId)
+        {
+            try
+            {
+                return new RoomImagesViewModel
+                {
+                    AccommodationID = accommodationId,
+                    RoomImages = DataContext.Context.AccomodationRoomImages.Where(x => x.AccommodationID == accommodationId).ToList()
+                };
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public bool VerifyRoomImages(RoomImagesViewModel roomImages)
+        {
+            try
+            {
+                foreach (var roomImage in roomImages.RoomImages ?? new List<AccomodationRoomImage>())
+                {
+                    var image = DataContext.Context.AccomodationRoomImages.FirstOrDefault(x => x.AccomodationRoomImageID == roomImage.AccomodationRoomImageID);
+                    if (image != null)
+                    {
+                        image.IsVerified = true;
+                        image.IsReported = roomImage.IsReported;
+                        image.IsActive = roomImage.IsActive;
+                        image.VerifiedDate = DateTime.Now.Date;
+                    }
+                }
+                return DataContext.Context.SaveChanges() > 0 ? true : false;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

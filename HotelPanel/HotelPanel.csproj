@@ -622,6 +622,7 @@
     <Content Include="Content\plugin\ckeditor\skins\moono-lisa\images\refresh.png" />
     <Content Include="Content\plugin\ckeditor\skins\moono-lisa\images\spinner.gif" />
     <Content Include="Content\plugin\ckeditor\styles.js" />
+    <Content Include="Content\plugin\lazyload\jquery.lazy.min.js" />
     <Content Include="Content\plugin\lightslider\css\lightslider.min.css" />
     <Content Include="Content\plugin\lightslider\lightslider.min.js" />
     <Content Include="Content\plugin\slippy\slippry.css" />
@@ -804,6 +805,7 @@
     <Content Include="Views\Shared\Error\ServerError.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Accommodation\SearchReport.cshtml" />
+    <Content Include="Views\Accommodation\RoomImages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
