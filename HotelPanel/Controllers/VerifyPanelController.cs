@@ -1,4 +1,5 @@
-﻿using Data.ViewModel.VerifyPanelViewModels;
+﻿using Data.DataModel;
+using Data.ViewModel.VerifyPanelViewModels;
 using Logic.BusinessObjects;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,30 @@ namespace HotelPanel.Controllers
     public class VerifyPanelController : BaseController
     {
         private readonly VerifyPanelBusiness verifyPanelBusiness = new VerifyPanelBusiness();
+
+        public JsonResult GetCities(string term)
+        {
+            try
+            {
+                return Json(new { success = true, data = verifyPanelBusiness.GetCities(term) }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult GetCountries(string term)
+        {
+            try
+            {
+                return Json(new { success = true, data = verifyPanelBusiness.GetCountries(term) }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         // GET: VerifyPanel
         public ActionResult Details(long? id)
         {
@@ -39,6 +64,7 @@ namespace HotelPanel.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public JsonResult Verify(HotelInfoViewModel model, List<long> addedFacilities, List<long> removedFacilities)
         {
             try

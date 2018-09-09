@@ -12,21 +12,20 @@
             <button type="submit" id="verify_btn" class="btn_img" style="width:120px;">Verify</button>
             <a href="~/Accommodation/Images/?AccommodationID=@Model.AccommodationId" target="_blank" class="btn cur-p btn-info">Accommodation Images</a>
             <a href="~/Accommodation/RoomImages/@Model.AccommodationId" target="_blank" class="btn cur-p btn-warning">Room Images</a>
+            <div class="status"></div>
         </div>
     </div>
-    @using (Html.BeginForm())
-    {
         @*if (Model.BookingUrl != null)
             {
-                <div class="box_parent">
-                    <h2>Booking Url</h2>
-                    <div>
-                        <iframe style="width:80%; overflow-y:auto; height:500px;" frameborder="0" data-src="@Model.BookingUrl"></iframe>
-                    </div>
-                    <div class="booking">
-                        <label>Booking Url:</label><input id="booking_url_input" type="text" name="BookingUrl" value="@Model.BookingUrl" class="hidden" readonly />
-                    </div>
+            <div class="box_parent">
+                <h2>Booking Url</h2>
+                <div>
+                    <iframe style="width:80%; overflow-y:auto; height:500px;" frameborder="0" data-src="@Model.BookingUrl"></iframe>
                 </div>
+                <div class="booking">
+                    <label>Booking Url:</label><input id="booking_url_input" type="text" name="BookingUrl" value="@Model.BookingUrl" class="hidden" readonly />
+                </div>
+            </div>
             }*@
         <div class="box_parent">
             <h2>Descripion</h2>
@@ -49,6 +48,9 @@
         </div>
 
 
+    @using (Html.BeginForm())
+    {
+        <input type="hidden" name="CityId" />
         <input type="hidden" name="Description" />
         <input type="hidden" name="AccommodationId" value="@Model.AccommodationId" />
         <div class="box_parent">
@@ -85,7 +87,7 @@
                         <tr>
                             <td>Telephone</td>
                             <td>
-                                <input type="number" class="hidden" name="Telephone" value="@Model.Telephone" />
+                                <input type="tel" class="hidden" name="Telephone" value="@Model.Telephone" />
                             </td>
                             <td>Fax</td>
                             <td>
@@ -133,7 +135,7 @@
                             <td>Rating</td>
                             <td>
 
-                                <input type="text" class="hidden" name="Rating" value="@Model.Rating" readonly />
+                                <input type="number" class="hidden" name="Rating" value="@Model.Rating" readonly />
 
                             </td>
                             <td>Verified Date</td>
@@ -155,7 +157,7 @@
                             <td>
 
                                 @{var active = (Model.IsActive ?? false) ? "checked" : null;}
-                                <input type="checkbox" class="checkbox" name="IsActive" @active />
+                                <input type="checkbox" class="checkbox" name="IsActive" value="true" @active />
                             </td>
                         </tr>
                         <tr>
@@ -213,7 +215,7 @@
             </div>
 
         </div>
-      
+
 
 
         <div class="add_facility">
@@ -238,196 +240,241 @@
 <script src="~/Content/plugin/ckeditor/styles.js"></script>
 
 <script>
-	var roomImgChangeId = new Array();
-	var hotelImgChangeId = new Array();
-	var addedfacilities = new Array();
-	var deletedfacilities = new Array();
-	var roomImgChanges = new Array();
-	var hotelImgChanges = new Array();
-	$('.owl-carousel').owlCarousel({
-		loop: true,
-		margin: 10,
-		nav: true,
-		lazyLoad: true,
-		lazyLoadEager: true,
-		URLhashListener: true,
-		autoplayHoverPause: true,
-		startPosition: 'URLHash',
-		navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-		responsive: {
-			0: {
-				items: 1
-			},
-			600: {
-				items: 1
-			},
-			1000: {
-				items: 1
-			}
-		}
-	});
-	$(function () {
-		$('#home_demo').desoSlide({
+    var roomImgChangeId = new Array();
+    var hotelImgChangeId = new Array();
+    var addedfacilities = new Array();
+    var deletedfacilities = new Array();
+    var roomImgChanges = new Array();
+    var hotelImgChanges = new Array();
+    $('.owl-carousel').owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: true,
+        lazyLoad: true,
+        lazyLoadEager: true,
+        URLhashListener: true,
+        autoplayHoverPause: true,
+        startPosition: 'URLHash',
+        navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 1
+            },
+            1000: {
+                items: 1
+            }
+        }
+    });
+    $(function () {
+        $('#home_demo').desoSlide({
   mainImage: '#home_main_image',
   insertion: 'replace',
-		});
-	});
+        });
+    });
 
-	CKEDITOR.replace("editor1",
-		{
-			height: 550
-		});
+    CKEDITOR.replace("editor1",
+        {
+            height: 550
+        });
 
-	$("body").on("click", ".fa-pencil-alt", function () {
-		$(this).parent().parent().find("input.hidden").addClass("show-border");
-		$(this).parent().parent().find("input.hidden").attr("readonly", false);
-	})
-	$("input[type=text]").click(function () {
-		$(this).addClass("show-border");
-		$(this).attr("readonly", false);
-	})
-	$("body").on("blur", ".hidden", function () {
-		$(this).removeClass("show-border");
-		$(this).attr("readonly", true);
-	})
+    $("body").on("click", ".fa-pencil-alt", function () {
+        $(this).parent().parent().find("input.hidden").addClass("show-border");
+        $(this).parent().parent().find("input.hidden").attr("readonly", false);
+    })
+    $("input[type=text]").click(function () {
+        $(this).addClass("show-border");
+        $(this).attr("readonly", false);
+    })
+    $("body").on("blur", ".hidden", function () {
+        $(this).removeClass("show-border");
+        $(this).attr("readonly", true);
+    })
 
-	$("body").on("click", ".edit_des", function () {
-		$("div.show_text").css("display", "none");
-		$("div.show_btn").css("display", "none");
-		$(".txt_area").css("display", "block");
-	})
+    $("body").on("click", ".edit_des", function () {
+        $("div.show_text").css("display", "none");
+        $("div.show_btn").css("display", "none");
+        $(".txt_area").css("display", "block");
+    })
 
-	$("body").on("click", ".save_des", function () {
-		var textContent1 = CKEDITOR.instances.editor1.getData();
-		$("input[name=Description]").val(textContent1);
-		$(".show_text").html(textContent1);
-		$("div.show_text").css("display", "block");
-		$("div.show_btn").css("display", "block");
-		$(".txt_area").css("display", "none");
-	})
+    $("body").on("click", ".save_des", function () {
+        var textContent1 = CKEDITOR.instances.editor1.getData();
+        $("input[name=Description]").val(textContent1);
+        $(".show_text").html(textContent1);
+        $("div.show_text").css("display", "block");
+        $("div.show_btn").css("display", "block");
+        $(".txt_area").css("display", "none");
+    })
 
-	$("body").on("click", ".add", function () {
-			$.get("/VerifyPanel/GetFacilitiesList/@Model.AccommodationId", function (response) {
-				$.each(response, function (index, item) {
-					$(".name_fac").append('<option data-category="' + item.Category + '" value="' + item.Id + '">' + item.Name + '</option>')
-				})
-			});
-		$("div.add_facility").css("display", "block");
-	})
-	$("body").on("click", ".dlt", function () {
-		$(this).parent().parent().addClass("delete");
-	})
-	$("body").on("click", ".undo", function () {
-		$(this).parent().parent().removeClass("delete");
-		var index = deletedfacilities.indexOf($(this).parent().parent().data("id"));
-		deletedfacilities.splice(index);
-	})
-	$("body").on("change", ".name_fac", function () {
-		if ($(".name_fac option:selected").length == 0) {
-			$("#facility_category").text($(".name_fac option:first").data("category"));
-		}
-		$(".name_fac option:selected").each(function () {
-			$("#facility_category").text($(this).data("category"));
-		});
-	})
+    $("body").on("click", ".add", function () {
+            $.get("/VerifyPanel/GetFacilitiesList/@Model.AccommodationId", function (response) {
+                $.each(response, function (index, item) {
+                    $(".name_fac").append('<option data-category="' + item.Category + '" value="' + item.Id + '">' + item.Name + '</option>')
+                })
+            });
+        $("div.add_facility").css("display", "block");
+    })
+    $("body").on("click", ".dlt", function () {
+        $(this).parent().parent().addClass("delete");
+    })
+    $("body").on("click", ".undo", function () {
+        $(this).parent().parent().removeClass("delete");
+        var index = deletedfacilities.indexOf($(this).parent().parent().data("id"));
+        deletedfacilities.splice(index);
+    })
+    $("body").on("change", ".name_fac", function () {
+        if ($(".name_fac option:selected").length == 0) {
+            $("#facility_category").text($(".name_fac option:first").data("category"));
+        }
+        $(".name_fac option:selected").each(function () {
+            $("#facility_category").text($(this).data("category"));
+        });
+    })
 
-	$("body").on("click", ".save_fac", function () {
-		var category = $(".ctg").text();
-		var id = $(".name_fac option:selected").val();
-		var name = $(".name_fac option:selected").text();
-		addedfacilities.push(id);
-		$("table.Facility").append('<tr data-id="' + id + '"><td>' + name + '</td><td>' + category + '</td><td><button class="dlt cur-p btn-danger">Delete</button ></td ><td><button class="cur-p btn-primary undo">Undo</button></td></tr>');
-		$(".add_facility").css("display", "none");
-	})
-	$("body").on("click", "#delete_btn", function () {
-		deletedfacilities.push($(this).parent().parent().data("id"));
-	});
+    $("body").on("click", ".save_fac", function () {
+        var category = $(".ctg").text();
+        var id = $(".name_fac option:selected").val();
+        var name = $(".name_fac option:selected").text();
+        addedfacilities.push(id);
+        $("table.Facility").append('<tr data-id="' + id + '"><td>' + name + '</td><td>' + category + '</td><td><button class="dlt cur-p btn-danger">Delete</button ></td ><td><button class="cur-p btn-primary undo">Undo</button></td></tr>');
+        $(".add_facility").css("display", "none");
+    })
+    $("body").on("click", "#delete_btn", function () {
+        deletedfacilities.push($(this).parent().parent().data("id"));
+    });
 
-	$("body").on("click", "#verify_btn", function () {
-		roomImgChangeId = roomImgChangeId.filter((item, index, arr) => {
-			return arr.indexOf(item) == index
-		});
-		hotelImgChangeId = hotelImgChangeId.filter((item, index, arr) => {
-			return arr.indexOf(item) == index
-		});
-		$.each(roomImgChangeId, function () {
-			var active = null;
-			var report = null;
-			$("input.roomImgCheck[data-id=" + $(this)[0] + "]").each(function (index, item) {
-				switch (item.getAttribute("name")) {
-					case "IsActive":
-						active = item.checked;
-						break;
-					case "IsReported":
-						report = item.checked;
-						break;
-					default:
-				}
-			});
-			roomImgChanges.push({
-				AccommodationId: @Model.AccommodationId,
-				IsActive: active,
-				IsReported: report,
-				Id: $(this)[0]
-			});
-		})
-		$.each(hotelImgChangeId, function () {
-			var active = null;
-			var report = null;
-			$("input.hotelImgCheck[data-id=" + $(this)[0] + "]").each(function (index, item) {
-				if (active != null && report != null) {
-					return false;
-				}
-				switch (item.getAttribute("name")) {
-					case "IsActive":
-						active = item.checked;
-						break;
-					case "IsReported":
-						report = item.checked;
-						break;
-					default:
-				}
-			});
-			hotelImgChanges.push({
-				AccommodationId: @Model.AccommodationId,
-				IsActive: active,
-				IsReported: report,
-				Id: $(this)[0]
-			});
-		})
-		var model = $("form").serialize();
-		$.ajax({
-			url: "/VerifyPanel/Verify",
-			data: model + "&" + decodeURIComponent($.param({
-				addedFacilities: addedfacilities,
-				removedFacilities: deletedfacilities,
-				RoomImages: roomImgChanges,
-				AccommodationImages: hotelImgChanges,
-			})),
-			type: "POST",
-			success: function (response) {
-				if (response.success) {
-					location.reload();
-				}
-				else {
-					alert(response.data);
-				}
-			},
-		})
-	});
-	$(window).on("load",function () {
-		var src = $("iframe").data("src");
-		$("iframe").attr("src", src);
-	});
-	$("#booking_url_input").change(function () {
-		$("iframe").attr("src", $(this).val());
-		$("iframe").data("src", $(this).val());
-	})
-	$(".hotelImgCheck").change(function () {
-		hotelImgChangeId.push($(this).data("id"));
-	});
-	$(".roomImgCheck").change(function () {
-		roomImgChangeId.push($(this).data("id"));
-	});
+    $("body").on("click", "#verify_btn", function () {
+        roomImgChangeId = roomImgChangeId.filter((item, index, arr) => {
+            return arr.indexOf(item) == index
+        });
+        hotelImgChangeId = hotelImgChangeId.filter((item, index, arr) => {
+            return arr.indexOf(item) == index
+        });
+        $.each(roomImgChangeId, function () {
+            var active = null;
+            var report = null;
+            $("input.roomImgCheck[data-id=" + $(this)[0] + "]").each(function (index, item) {
+                switch (item.getAttribute("name")) {
+                    case "IsActive":
+                        active = item.checked;
+                        break;
+                    case "IsReported":
+                        report = item.checked;
+                        break;
+                    default:
+                }
+            });
+            roomImgChanges.push({
+                AccommodationId: @Model.AccommodationId,
+                IsActive: active,
+                IsReported: report,
+                Id: $(this)[0]
+            });
+        })
+        $.each(hotelImgChangeId, function () {
+            var active = null;
+            var report = null;
+            $("input.hotelImgCheck[data-id=" + $(this)[0] + "]").each(function (index, item) {
+                if (active != null && report != null) {
+                    return false;
+                }
+                switch (item.getAttribute("name")) {
+                    case "IsActive":
+                        active = item.checked;
+                        break;
+                    case "IsReported":
+                        report = item.checked;
+                        break;
+                    default:
+                }
+            });
+            hotelImgChanges.push({
+                AccommodationId: @Model.AccommodationId,
+                IsActive: active,
+                IsReported: report,
+                Id: $(this)[0]
+            });
+        })
+        var model = $("form").serialize();
+        $.ajax({
+            url: "/VerifyPanel/Verify",
+            data: model + "&" + decodeURIComponent($.param({
+                addedFacilities: addedfacilities,
+                removedFacilities: deletedfacilities,
+                RoomImages: roomImgChanges,
+                AccommodationImages: hotelImgChanges,
+            })),
+            type: "POST",
+            success: function (response) {
+                if (response.success) {
+                    $(".status").html('<div class="alert alert-success" role="alert">Success</div>');
+                }
+                else {
+                    $(".status").html('<div class="alert alert-danger" role="alert">' + response.data + '</div>');
+                }
+            },
+            error: function (ex) {
+                $(".status").html('<div class="alert alert-danger" role="alert">' + ex.statusText + '</div>');
+            }
+        })
+    });
+    $(window).on("load",function () {
+        var src = $("iframe").data("src");
+        $("iframe").attr("src", src);
+    });
+    $("#booking_url_input").change(function () {
+        $("iframe").attr("src", $(this).val());
+        $("iframe").data("src", $(this).val());
+    })
+    $(".hotelImgCheck").change(function () {
+        hotelImgChangeId.push($(this).data("id"));
+    });
+    $(".roomImgCheck").change(function () {
+        roomImgChangeId.push($(this).data("id"));
+    });
+
+
+
+    $("input[name=CityName]").autocomplete({
+        select: function (e, u) {
+            $(this).val(u.item.Name);
+            $("input[name=CountryName]").val(u.item.country);
+            $("input[name=CityId]").val(u.item.cityId);
+        },
+        source: function (request, response) {
+            $.get("/VerifyPanel/GetCities", {
+                term: request.term
+            }, function (data) {
+                if (data.success) {
+                    response($.map(data.data, function (item) {
+                        return {
+                            cityId: item.Id,
+                            country: item.Country,
+                            label: item.NameLong,
+                            value: item.Text
+                        }
+                    }));
+                }
+            });
+        }
+    });
+    $("input[name=CountryName]").autocomplete({
+        source: function (request, response) {
+            $.get("/VerifyPanel/GetCountries", {
+                term: request.term
+            }, function (data) {
+                if (data.success) {
+                    response($.map(data.data, function (item) {
+                        return {
+                            label: item.NameLong,
+                            value: item.Text
+                        }
+                    }));
+                }
+            });
+        },
+    });
 
 </script>

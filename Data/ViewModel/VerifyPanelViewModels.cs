@@ -22,6 +22,7 @@ namespace Data.ViewModel.VerifyPanelViewModels
         public string Latitude { get; set; }
         public string Longitude { get; set; }
         public string BookingUrl { get; set; }
+        public long? CityId { get; set; }
         public bool? IsActive { get; set; }
         public bool? IsVerified { get; set; }
         public string VerifiedDate { get; set; }
@@ -46,5 +47,12 @@ namespace Data.ViewModel.VerifyPanelViewModels
         public long AccommodationId { get; set; }
         public string Name { get; set; }
         public string Category { get; set; }
+    }
+    public class AutocompleteViewModel
+    {
+        public string Country { get; set; }
+        public string NameLong { get; set; }
+        public string Text { get; set; }
+        public long Id { get; set; }
     }
 }

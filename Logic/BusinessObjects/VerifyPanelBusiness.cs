@@ -9,6 +9,19 @@ namespace Logic.BusinessObjects
 {
     public class VerifyPanelBusiness
     {
+        public List<AutocompleteViewModel> GetCities(string term) => DataContext.Context.Locations.Where(x => x.LocationTypeID == 4 && x.Name.StartsWith(term)).OrderBy(x => x.Name).Take(15).ToList().Select(x => new AutocompleteViewModel
+        {
+            Country = x.NameLong.Substring(x.NameLong.LastIndexOf(", ") + 2),
+            Id = x.CityId ?? 0,
+            Text = x.Name,
+            NameLong = x.NameLong,
+        }).ToList();
+        public List<AutocompleteViewModel> GetCountries(string term) => DataContext.Context.Locations.Where(x => x.LocationTypeID == 2 && x.Name.StartsWith(term)).OrderBy(x => x.Name).Select(x => new AutocompleteViewModel
+        {
+            Id = x.LocationID,
+            Text = x.Name,
+            NameLong = x.NameLong,
+        }).ToList();
         public List<Data.ViewModel.VerifyPanelViewModels.Facility> GetFacilities(long id) => DataContext.Context.Facilities.Where(x => !x.Accommodations.Any(y => y.AccommodationlID == id)).OrderBy(x => x.Name).Select(x => new Data.ViewModel.VerifyPanelViewModels.Facility
         {
             Category = x.Category,
@@ -39,6 +52,7 @@ namespace Logic.BusinessObjects
                         Description = x.Description,
                         BookingUrl = x.BookingUrl,
                         CityName = x.CityName,
+                        CityId = x.CityId,
                         CountryName = x.Country,
                     }).FirstOrDefault() ?? throw new Exception("The Accommodation does not exist.");
                     result.AccommodationFacilities = GetAccommodationFacilities(accommodationId);
@@ -138,6 +152,9 @@ namespace Logic.BusinessObjects
                             return false;
                         }
                         accommodation.Name = model.Name ?? accommodation.Name;
+                        accommodation.CityName = model.CityName ?? accommodation.CityName;
+                        accommodation.Country = model.CountryName ?? accommodation.Country;
+                        accommodation.CityId = model.CityId ?? accommodation.CityId;
                         accommodation.Address = model.Address ?? accommodation.Address;
                         accommodation.Rating = model.Rating ?? accommodation.Rating;
                         accommodation.Telephone = model.Telephone ?? accommodation.Telephone;
@@ -150,7 +167,7 @@ namespace Logic.BusinessObjects
                         accommodation.BookingUrl = model.BookingUrl ?? accommodation.BookingUrl;
                         accommodation.DateVerified = DateTime.Now.Date;
                         accommodation.IsVerified = true;
-                        accommodation.IsActive = model.IsActive ?? accommodation.IsActive;
+                        accommodation.IsActive = model.IsActive ?? false;
                         foreach (var item in newFacilities ?? new List<long>())
                         {
                             var facility = DataContext.Context.Facilities.FirstOrDefault(x => x.FacilityID == item);
@@ -188,7 +205,7 @@ namespace Logic.BusinessObjects
                         message = null;
                         if (!(DataContext.Context.SaveChangesAsync().Result > 0))
                         {
-                            message = "Verify Failed.";
+                            message = "Nothing to Save.";
                             return false;
                         }
                         return true;
