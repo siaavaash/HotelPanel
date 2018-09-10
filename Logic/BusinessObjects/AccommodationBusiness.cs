@@ -527,6 +527,7 @@ namespace Logic.BusinessObjects
                         image.VerifiedDate = DateTime.Now.Date;
                     }
                 }
+                DataContext.Context.Accommodations.First(x => x.AccommodationlID == roomImages.AccommodationID).IsVerified = true;
                 return DataContext.Context.SaveChanges() > 0 ? true : false;
             }
             catch (Exception)
@@ -550,6 +551,7 @@ namespace Logic.BusinessObjects
                         image.VerifiedDate = DateTime.Now.Date;
                     }
                 }
+                DataContext.Context.Accommodations.First(x => x.AccommodationlID == model.AccommodationID).IsVerified = true;
                 return DataContext.Context.SaveChanges() > 0 ? true : false;
             }
             catch (Exception)
