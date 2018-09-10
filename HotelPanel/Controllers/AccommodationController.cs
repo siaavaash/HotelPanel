@@ -51,7 +51,7 @@ namespace HotelPanel.Controllers
         }
         public ActionResult List()
         {
-            IEnumerable<AccommodationModels.ListNameAccommodation> Result = null;
+            IEnumerable<ListNameAccommodation> Result = null;
             return View(Result);
         }
         [HttpPost]
