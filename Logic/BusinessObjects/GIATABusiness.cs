@@ -506,7 +506,7 @@ namespace Logic.BusinessObjects
                     foreach (var code in provider.Code)
                         resultModel.Suppliers.Add(new AccommodationSupplier
                         {
-                            Active = code.Status == null ? false : true,
+                            Active = code.Status == "inactive" ? false : true,
                             Code = code.Value?.FirstOrDefault(x => x.Name == "Hotel Code")?.Text ?? code.Value[0]?.Text,
                             ProviderCode = provider.ProviderCode,
                             ProviderType = provider.ProviderType,
