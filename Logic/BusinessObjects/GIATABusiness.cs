@@ -349,7 +349,7 @@ namespace Logic.BusinessObjects
                             ISDeactive = true,
                         });
                     }
-                    return context.SaveChanges() > 0 ? true : false;
+                    return context.SaveChangesAsync().Result > 0 ? true : false;
                 }
             }
             catch (Exception ex)
@@ -474,52 +474,105 @@ namespace Logic.BusinessObjects
                 throw new ArgumentException("Invalid parameter(s).");
             RemoveAll(from, to);
             var returnList = new ConcurrentBag<MapResult>();
+            var actions = new ConcurrentBag<Action>();
             Parallel.For(from, to + 1, i =>
-             {
-                 var mapRs = Map(i);
-                 if (!mapRs.serviceSuccess)
-                 {
-                     var tryMapRs = TryMap(i);
-                     if (!tryMapRs.Item1)
-                     {
-                         returnList.Add(new MapResult
-                         {
-                             Id = i,
-                             Message = tryMapRs.Item2,
-                             MapToDbSuccess = false,
-                             ServiceSuccess = false,
-                         });
-                         return;
-                     }
-                     returnList.Add(new MapResult
-                     {
-                         Id = i,
-                         Message = tryMapRs.Item2,
-                         MapToDbSuccess = true,
-                         ServiceSuccess = true,
-                     });
-                     return;
-                 }
-                 if (mapRs.dbSuccess)
-                 {
-                     returnList.Add(new MapResult
-                     {
-                         Id = i,
-                         Message = mapRs.message,
-                         ServiceSuccess = true,
-                         MapToDbSuccess = true,
-                     });
-                     return;
-                 }
-                 DeactiveAccommodation(i, deactive: true);
-                 returnList.Add(new MapResult
-                 {
-                     Id = i,
-                     Message = mapRs.message,
-                     ServiceSuccess = true,
-                     MapToDbSuccess = false,
-                 });
-             });
+            {
+                actions.Add(() =>
+                        {
+                            var mapRs = Map(i);
+                            if (!mapRs.serviceSuccess)
+                            {
+                                var tryMapRs = TryMap(i);
+                                if (!tryMapRs.Item1)
+                                {
+                                    returnList.Add(new MapResult
+                                    {
+                                        Id = i,
+                                        Message = tryMapRs.Item2,
+                                        MapToDbSuccess = false,
+                                        ServiceSuccess = false,
+                                    });
+                                    return;
+                                }
+                                returnList.Add(new MapResult
+                                {
+                                    Id = i,
+                                    Message = tryMapRs.Item2,
+                                    MapToDbSuccess = true,
+                                    ServiceSuccess = true,
+                                });
+                                return;
+                            }
+                            if (mapRs.dbSuccess)
+                            {
+                                returnList.Add(new MapResult
+                                {
+                                    Id = i,
+                                    Message = mapRs.message,
+                                    ServiceSuccess = true,
+                                    MapToDbSuccess = true,
+                                });
+                                return;
+                            }
+                            DeactiveAccommodation(i, deactive: true);
+                            returnList.Add(new MapResult
+                            {
+                                Id = i,
+                                Message = mapRs.message,
+                                ServiceSuccess = true,
+                                MapToDbSuccess = false,
+                            });
+                        });
+            });
+            Parallel.Invoke(actions.ToArray());
+
+
+            //Parallel.For(from, to + 1, i =>
+            // {
+            //     var mapRs = Map(i);
+            //     if (!mapRs.serviceSuccess)
+            //     {
+            //         var tryMapRs = TryMap(i);
+            //         if (!tryMapRs.Item1)
+            //         {
+            //             returnList.Add(new MapResult
+            //             {
+            //                 Id = i,
+            //                 Message = tryMapRs.Item2,
+            //                 MapToDbSuccess = false,
+            //                 ServiceSuccess = false,
+            //             });
+            //             return;
+            //         }
+            //         returnList.Add(new MapResult
+            //         {
+            //             Id = i,
+            //             Message = tryMapRs.Item2,
+            //             MapToDbSuccess = true,
+            //             ServiceSuccess = true,
+            //         });
+            //         return;
+            //     }
+            //     if (mapRs.dbSuccess)
+            //     {
+            //         returnList.Add(new MapResult
+            //         {
+            //             Id = i,
+            //             Message = mapRs.message,
+            //             ServiceSuccess = true,
+            //             MapToDbSuccess = true,
+            //         });
+            //         return;
+            //     }
+            //     DeactiveAccommodation(i, deactive: true);
+            //     returnList.Add(new MapResult
+            //     {
+            //         Id = i,
+            //         Message = mapRs.message,
+            //         ServiceSuccess = true,
+            //         MapToDbSuccess = false,
+            //     });
+            // });
             return returnList;
         }
         /// <summary>
