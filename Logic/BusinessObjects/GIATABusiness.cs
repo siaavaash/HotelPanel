@@ -28,155 +28,57 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                var ids = new ConcurrentBag<long>();
-                Parallel.For(from, to + 1, i => ids.Add(i));
-
                 Parallel.Invoke(
                     () =>
                     {
                         using (var context = new Context2())
                         {
-                            context.BulkDelete(context.AccommodationTmps.AsParallel().Join(ids.AsParallel(), x => x.AccommodationlID, y => y, (x, y) => x).ToList());
+                            context.BulkDelete(context.AccommodationTmps.AsParallel().Where(x => x.AccommodationlID <= to && x.AccommodationlID >= from).ToList());
                         }
                     },
                     () =>
                     {
                         using (var context = new Context2())
                         {
-                            context.BulkDelete(context.AccommodationLocationTmps.AsParallel().Join(ids.AsParallel(), x => x.AccommodationID, y => y, (x, y) => x).ToList());
+                            context.BulkDelete(context.AccommodationLocationTmps.AsParallel().Where(x => x.AccommodationID <= to && x.AccommodationID >= from).ToList());
                         }
                     },
                     () =>
                     {
                         using (var context = new Context2())
                         {
-                            context.BulkDelete(context.AccomodationSupplierTmps.AsParallel().Join(ids.AsParallel(), x => x.AccommodationlID, y => y, (x, y) => x).ToList());
+                            context.BulkDelete(context.AccomodationSupplierTmps.AsParallel().Where(x => x.AccommodationlID <= to && x.AccommodationlID >= from).ToList());
                         }
                     },
                     () =>
                     {
                         using (var context = new Context2())
                         {
-                            context.BulkDelete(context.AccomodationSupplier2Tmp.AsParallel().Join(ids.AsParallel(), x => x.AccommodationlID, y => y, (x, y) => x).ToList());
+                            context.BulkDelete(context.AccomodationSupplier2Tmp.AsParallel().Where(x => x.AccommodationlID <= to && x.AccommodationlID >= from).ToList());
                         }
                     },
                     () =>
                     {
                         using (var context = new Context2())
                         {
-                            context.BulkDelete(context.AccommodationAlternativeNames.AsParallel().Join(ids.AsParallel(), x => x.AccommodationID, y => y, (x, y) => x).ToList());
+                            context.BulkDelete(context.AccommodationAlternativeNames.AsParallel().Where(x => x.AccommodationID <= to && x.AccommodationID >= from).ToList());
                         }
                     },
                     () =>
                     {
                         using (var context = new Context2())
                         {
-                            context.BulkDelete(context.DeActiveAccommodations.AsParallel().Join(ids.AsParallel(), x => x.AccommodationlD, y => y, (x, y) => x).ToList());
+                            context.BulkDelete(context.DeActiveAccommodations.AsParallel().Where(x => x.AccommodationlD <= to && x.AccommodationlD >= from).ToList());
                         }
                     },
                     () =>
                     {
                         using (var context = new Context2())
                         {
-                            context.BulkDelete(context.Acc_Airport.AsParallel().Join(ids.AsParallel(), x => x.AccommodationlID, y => y, (x, y) => x).ToList());
+                            context.BulkDelete(context.Acc_Airport.AsParallel().Where(x => x.AccommodationlID <= to && x.AccommodationlID >= from).ToList());
                         }
                     }
                     );
-
-
-
-                //Parallel.Invoke(
-                //    () =>
-                //    {
-                //        using (var context = new Context2())
-                //        {
-                //            context.Configuration.AutoDetectChangesEnabled = false;
-                //            context.AccommodationTmps.RemoveRange(context.AccommodationTmps.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
-                //            context.ChangeTracker.DetectChanges();
-                //            context.SaveChanges();
-                //        }
-                //    },
-                //    () =>
-                //    {
-                //        using (var context = new Context2())
-                //        {
-                //            context.Configuration.AutoDetectChangesEnabled = false;
-                //            context.AccommodationLocationTmps.RemoveRange(context.AccommodationLocationTmps.AsParallel().Where(x => ids.Contains(x.AccommodationID)).ToList());
-                //            context.ChangeTracker.DetectChanges();
-                //            context.SaveChanges();
-                //        }
-                //    },
-                //    () =>
-                //    {
-                //        using (var context = new Context2())
-                //        {
-                //            context.Configuration.AutoDetectChangesEnabled = false;
-                //            context.AccomodationSupplierTmps.RemoveRange(context.AccomodationSupplierTmps.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
-                //            context.ChangeTracker.DetectChanges();
-                //            context.SaveChanges();
-                //        }
-                //    },
-                //    () =>
-                //    {
-                //        using (var context = new Context2())
-                //        {
-                //            context.Configuration.AutoDetectChangesEnabled = false;
-                //            context.AccomodationSupplier2Tmp.RemoveRange(context.AccomodationSupplier2Tmp.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
-                //            context.ChangeTracker.DetectChanges();
-                //            context.SaveChanges();
-                //        }
-                //    },
-                //    () =>
-                //    {
-                //        using (var context = new Context2())
-                //        {
-                //            context.Configuration.AutoDetectChangesEnabled = false;
-                //            context.AccommodationAlternativeNames.RemoveRange(context.AccommodationAlternativeNames.AsParallel().Where(x => ids.Contains(x.AccommodationID)).ToList());
-                //            context.ChangeTracker.DetectChanges();
-                //            context.SaveChanges();
-                //        }
-                //    },
-                //    () =>
-                //    {
-                //        using (var context = new Context2())
-                //        {
-                //            context.Configuration.AutoDetectChangesEnabled = false;
-                //            context.DeActiveAccommodations.RemoveRange(context.DeActiveAccommodations.AsParallel().Where(x => ids.Contains(x.AccommodationlD)).ToList());
-                //            context.ChangeTracker.DetectChanges();
-                //            context.SaveChanges();
-                //        }
-                //    },
-                //    () =>
-                //    {
-                //        using (var context = new Context2())
-                //        {
-                //            context.Configuration.AutoDetectChangesEnabled = false;
-                //            context.Acc_Airport.RemoveRange(context.Acc_Airport.AsParallel().Where(x => ids.Contains(x.AccommodationlID ?? 0)).ToList());
-                //            context.ChangeTracker.DetectChanges();
-                //            context.SaveChanges();
-                //        }
-                //    }
-                //    );
-                //using (var context = new Context2())
-                //{
-                //    //context.AccommodationTmps.RemoveRange(context.AccommodationTmps.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
-                //    //context.AccommodationLocationTmps.RemoveRange(context.AccommodationLocationTmps.AsParallel().Where(x => ids.Contains(x.AccommodationID)).ToList());
-                //    //context.AccomodationSupplierTmps.RemoveRange(context.AccomodationSupplierTmps.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
-                //    //context.AccomodationSupplier2Tmp.RemoveRange(context.AccomodationSupplier2Tmp.AsParallel().Where(x => ids.Contains(x.AccommodationlID)).ToList());
-                //    //context.Acc_Airport.RemoveRange(context.Acc_Airport.AsParallel().Where(x => ids.Contains(x.AccommodationlID ?? 0)).ToList());
-                //    //context.AccommodationAlternativeNames.RemoveRange(context.AccommodationAlternativeNames.AsParallel().Where(x => ids.Contains(x.AccommodationID)).ToList());
-                //    //context.DeActiveAccommodations.RemoveRange(context.DeActiveAccommodations.AsParallel().Where(x => ids.Contains(x.AccommodationlD)).ToList());
-                //    //context.SaveChangesAsync().Wait();
-
-
-                //    context.AccommodationTmps.Where(x => ids.Contains(x.AccommodationlID)).DeleteFromQuery();
-                //    context.AccommodationLocationTmps.Where(x => ids.Contains(x.AccommodationID)).DeleteFromQuery();
-                //    context.AccomodationSupplierTmps.Where(x => ids.Contains(x.AccommodationlID)).DeleteFromQuery();
-                //    context.AccomodationSupplier2Tmp.Where(x => ids.Contains(x.AccommodationlID)).DeleteFromQuery();
-                //    context.Acc_Airport.Where(x => ids.Contains(x.AccommodationlID ?? 0)).DeleteFromQuery();
-                //    context.AccommodationAlternativeNames.Where(x => ids.Contains(x.AccommodationID)).DeleteFromQuery();
-                //    context.DeActiveAccommodations.Where(x => ids.Contains(x.AccommodationlD)).DeleteFromQuery();
-                //}
             }
             catch (Exception ex)
             {
@@ -507,10 +409,10 @@ namespace Logic.BusinessObjects
                         resultModel.Suppliers.Add(new AccommodationSupplier
                         {
                             Active = code.Status == "inactive" ? false : true,
-                            Code = code.Value?.FirstOrDefault(x => x.Name == "Hotel Code")?.Text ?? code.Value[0]?.Text,
+                            Code = code.Value.Count > 1 ? code.Value?.FirstOrDefault(x => x.Name == "City Code")?.Text + "|" + code.Value?.FirstOrDefault(x => x.Name == "Hotel Code")?.Text : code.Value[0]?.Text,
                             ProviderCode = provider.ProviderCode,
                             ProviderType = provider.ProviderType,
-                            ProviderValue = code.Value.FirstOrDefault(x => x.Name == "Hotel Code")?.Text ?? code.Value[0]?.Text,
+                            ProviderValue = code.Value.Count > 1 ? code.Value?.FirstOrDefault(x => x.Name == "City Code")?.Text + "|" + code.Value?.FirstOrDefault(x => x.Name == "Hotel Code")?.Text : code.Value[0]?.Text,
                         });
                 });
                 message = null;
@@ -570,7 +472,7 @@ namespace Logic.BusinessObjects
         {
             if (from > to)
                 throw new ArgumentException("Invalid parameter(s).");
-            //RemoveAll(from, to);
+            RemoveAll(from, to);
             var returnList = new ConcurrentBag<MapResult>();
             Parallel.For(from, to + 1, i =>
              {
