@@ -10,6 +10,7 @@ using Common;
 using static Data.ViewModel.WeatherModels.Forecast;
 using Data.PublicModel;
 using Data.ViewModel.AccommodationModels;
+using System.Threading.Tasks;
 
 namespace Logic.BusinessObjects
 {
@@ -65,22 +66,28 @@ namespace Logic.BusinessObjects
                     var userBounds = context.UserPictureDics.Where(x => x.UserID == userId).ToList();
                     if (userBounds != null && userBounds.Count > 0)
                     {
-                        var from = userBounds.Select(x => new { x.FromImageID, x.ToImageID }).ToDictionary(x => x.FromImageID, y => y.ToImageID);
-                        var restricted = from == 0 || to == 0 ? false : true;
+                        var bounds = userBounds.Where(x => x.FromImageID != 0 & x.ToImageID != 0).Select(x => new { x.FromImageID, x.ToImageID }).ToDictionary(x => x.FromImageID, y => y.ToImageID);
+                        var restricted = bounds.Count > 0 ? true : false;
                         if (restricted)
-                            return new AccommodationListViewModel
+                        {
+                            var result = new AccommodationListViewModel
                             {
                                 Restricted = restricted,
-                                AccommodationList = context.Accommodations.Where(x => x.AccommodationSortedByCountry.Ordered >= from && x.AccommodationSortedByCountry.Ordered <= to).Select(x => new AccommodationListRsult
-                                {
-                                    AccommodationID = x.AccommodationlID,
-                                    CityName = x.CityName,
-                                    Country = x.Country,
-                                    lastUpdate = x.lastUpdate,
-                                    Name = x.Name
-                                }).ToList(),
-
+                                AccommodationList = new List<AccommodationListRsult>(),
                             };
+                            Parallel.ForEach(bounds, bound =>
+                             {
+                                 result.AccommodationList.AddRange(context.Accommodations.Where(x => x.AccommodationSortedByCountry.Ordered >= bound.Key && x.AccommodationSortedByCountry.Ordered <= bound.Value).Select(x => new AccommodationListRsult
+                                 {
+                                     AccommodationID = x.AccommodationlID,
+                                     CityName = x.CityName,
+                                     Country = x.Country,
+                                     lastUpdate = x.lastUpdate,
+                                     Name = x.Name
+                                 }).ToList());
+                             });
+                            return result;
+                        }
                     }
                     return new AccommodationListViewModel
                     {

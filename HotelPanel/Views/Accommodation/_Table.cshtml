@@ -24,21 +24,21 @@
                     </tr>
                 </tfoot>
                 <tbody>
-                    @foreach (var Item in Model.AccommodationListRsult)
+                    @foreach (var Item in Model.AccommodationList)
                     {
-                    <tr>
-                        <td>@Item.AccommodationID</td>
-                        <td>@Item.Name</td>
-                        <td>@Item.CityName</td>
-                        <td>@Item.Country</td>
-                        <td>@Item.lastUpdate</td>
-                        <td>
-                            @*<a href="Images/?AccommodationID=@Item.AccommodationID" class="btn cur-p btn-secondary">Images</a>*@
-                            <a href="Weather/?AccommodationID=@Item.AccommodationID" class="btn cur-p btn-primary">Weather</a>
-                            <a href="Facility/?AccommodationID=@Item.AccommodationID" class="btn cur-p btn-warning">Facility</a>
-                            <a target="_blank" href="~/VerifyPanel/Details/@Item.AccommodationID" class="btn cur-p btn-info">Verify</a>
+                        <tr>
+                            <td>@Item.AccommodationID</td>
+                            <td>@Item.Name</td>
+                            <td>@Item.CityName</td>
+                            <td>@Item.Country</td>
+                            <td>@Item.lastUpdate</td>
+                            <td>
+                                @*<a href="Images/?AccommodationID=@Item.AccommodationID" class="btn cur-p btn-secondary">Images</a>*@
+                                <a href="Weather/?AccommodationID=@Item.AccommodationID" class="btn cur-p btn-primary">Weather</a>
+                                <a href="Facility/?AccommodationID=@Item.AccommodationID" class="btn cur-p btn-warning">Facility</a>
+                                <a target="_blank" href="~/VerifyPanel/Details/@Item.AccommodationID" class="btn cur-p btn-info">Verify</a>
 
-</tr>
+                        </tr>
                     }
                 </tbody>
             </table>
