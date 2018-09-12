@@ -1,13 +1,12 @@
 ﻿using Common;
 using Constants;
-using Data.ViewModel;
 using Logic.BusinessObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using static Data.ViewModel.AccommodationModels;
+using Data.ViewModel.AccommodationModels;
+
 
 namespace HotelPanel.Controllers
 {
@@ -51,24 +50,24 @@ namespace HotelPanel.Controllers
         }
         public ActionResult List()
         {
-            IEnumerable<ListNameAccommodation> Result = null;
-            return View(Result);
+            var result = _AccommodationBusiness.GetAccommodationByUser(CurrentUser.UserID);
+            return View(result);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult List(AccommodationModels.SearchAccommodation Model)
+        public ActionResult List(SearchAccommodation Model)
         {
             if (ModelState.IsValid)
             {
-                IEnumerable<AccommodationModels.ListNameAccommodation> Result = _AccommodationBusiness.GetNames(Model);
-                return View(Result);
+                var result = _AccommodationBusiness.GetNames(Model);
+                return View(result);
             }
-            return View(new List<Data.ViewModel.AccommodationModels.ListNameAccommodation>());
+            return View(new AccommodationListViewModel());
         }
         public ActionResult Images(long AccommodationID)
         {
             var Images = _AccommodationBusiness.GetImages(AccommodationID);
-            AccommodationModels.FilterImagesView Model = new AccommodationModels.FilterImagesView
+            FilterImagesView Model = new FilterImagesView
             {
                 AccommodationID = AccommodationID,
                 AccomodationImages = Images
@@ -101,7 +100,7 @@ namespace HotelPanel.Controllers
             {
                 if (model != null)
                 {
-                    var result = _AccommodationBusiness.VerifyAccommodationImages(model);
+                    var result = _AccommodationBusiness.VerifyAccommodationImages(CurrentUser.UserID, model);
                     if (result)
                     {
                         return Json(new { success = true }, JsonRequestBehavior.AllowGet);
@@ -118,7 +117,7 @@ namespace HotelPanel.Controllers
         }
         public ActionResult Facility(long AccommodationID)
         {
-            AccommodationModels.AccommodationFacility Model = new AccommodationModels.AccommodationFacility();
+            AccommodationFacility Model = new AccommodationFacility();
             var Facility = _AccommodationBusiness.GetFacilities(AccommodationID);
             var Description = _AccommodationBusiness.GetDescription(AccommodationID);
             string Name = _AccommodationBusiness.GetAccommodation(AccommodationID).Name;
@@ -131,7 +130,7 @@ namespace HotelPanel.Controllers
         public ActionResult EditName(long id)
         {
             var accommodation = _AccommodationBusiness.GetAccommodation(id);
-            AccommodationModels.EditName Model = new AccommodationModels.EditName
+            EditName Model = new EditName
             {
                 AccommodationID = accommodation.AccommodationlID,
                 Name = accommodation.Name
@@ -140,7 +139,7 @@ namespace HotelPanel.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditName(AccommodationModels.EditName Model)
+        public ActionResult EditName(EditName Model)
         {
             if (ModelState.IsValid)
             {
@@ -154,7 +153,7 @@ namespace HotelPanel.Controllers
         public ActionResult EditDescription(long id)
         {
             var accommodation = _AccommodationBusiness.GetAccommodation(id);
-            AccommodationModels.EditDescription Model = new AccommodationModels.EditDescription
+            EditDescription Model = new EditDescription
             {
                 AccommodationID = accommodation.AccommodationlID,
                 Description = accommodation.Description
@@ -164,7 +163,7 @@ namespace HotelPanel.Controllers
         [HttpPost]
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
-        public ActionResult EditDescription(AccommodationModels.EditDescription Model)
+        public ActionResult EditDescription(EditDescription Model)
         {
             if (ModelState.IsValid)
             {
@@ -179,7 +178,7 @@ namespace HotelPanel.Controllers
         {
             var Facilities = _AccommodationBusiness.GetFacilities();
             var accommodation = _AccommodationBusiness.GetAccommodation(id);
-            AccommodationModels.ListFacilities Model = new AccommodationModels.ListFacilities
+            ListFacilities Model = new ListFacilities
             {
                 AccommodationID = accommodation.AccommodationlID,
                 AccommodationName = accommodation.Name,
@@ -193,7 +192,7 @@ namespace HotelPanel.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddFacility(AccommodationModels.AddFacilities Model)
+        public ActionResult AddFacility(AddFacilities Model)
         {
             if (ModelState.IsValid)
             {
@@ -210,7 +209,7 @@ namespace HotelPanel.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditFacility(AccommodationModels.EditFacilities Model)
+        public ActionResult EditFacility(EditFacilities Model)
         {
             if (ModelState.IsValid)
             {
@@ -239,7 +238,7 @@ namespace HotelPanel.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult AddDescription(AccommodationModels.AddDescription Model)
+        public ActionResult AddDescription(AddDescription Model)
         {
             if (ModelState.IsValid)
             {
@@ -263,7 +262,7 @@ namespace HotelPanel.Controllers
             var AccommodationDescription = _AccommodationBusiness.GetAccommodationDescription(AccommodationDescriptionID);
             var enumDataType = from Common.Language e in Language.GetValues(typeof(Language)) select new { ID = (int)e, Name = e.ToString() };
             ViewBag.LanguageID = new SelectList(enumDataType, "ID", "Name", AccommodationDescription.LanguageID);
-            Data.ViewModel.AccommodationModels.EditDescriptionViewModel Model = new AccommodationModels.EditDescriptionViewModel()
+            Data.ViewModel.AccommodationModels.EditDescriptionViewModel Model = new EditDescriptionViewModel()
             {
                 AccommodationDescriptionID = AccommodationDescriptionID,
                 Description = AccommodationDescription.Description,
@@ -274,7 +273,7 @@ namespace HotelPanel.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult ChangeDescription(AccommodationModels.ChangeDescription Model)
+        public ActionResult ChangeDescription(ChangeDescription Model)
         {
             if (ModelState.IsValid)
             {
@@ -306,7 +305,7 @@ namespace HotelPanel.Controllers
             {
                 if (model != null)
                 {
-                    var result = _AccommodationBusiness.VerifyRoomImages(model);
+                    var result = _AccommodationBusiness.VerifyRoomImages(CurrentUser.UserID, model);
                     if (result)
                     {
                         return Json(new { success = true }, JsonRequestBehavior.AllowGet);

@@ -91,7 +91,6 @@ namespace Data.DataModel
         public Nullable<decimal> FareFeeAmount { get; set; }
         public string FareFeeCurrency { get; set; }
     
-        public virtual FlightContract FlightContract { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FlightEticket> FlightEtickets { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

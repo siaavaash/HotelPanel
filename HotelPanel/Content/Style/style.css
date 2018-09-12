@@ -327,6 +327,12 @@ div.gallery img {
   height: 180px;
   cursor: pointer; }
 
+img.lazy {
+  width: 250px;
+  height: 180px;
+  cursor: pointer;
+  display: block; }
+
 div.gallery:hover {
   border: 1px solid #777; }
 

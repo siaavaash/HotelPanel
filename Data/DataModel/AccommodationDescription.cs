@@ -23,9 +23,9 @@ namespace Data.DataModel
         public Nullable<long> UserID { get; set; }
         public Nullable<long> ModifyUserID { get; set; }
     
-        public virtual Accommodation Accommodation { get; set; }
         public virtual Language Language { get; set; }
         public virtual User1 User1 { get; set; }
         public virtual User1 User11 { get; set; }
+        public virtual Accommodation Accommodation { get; set; }
     }
 }

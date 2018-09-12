@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="905e1b3ae15d43b09220732dfb0874c6" Name="Diagram1">
+      <Diagram DiagramId="905e1b3ae15d43b09220732dfb0874c6" Name="Diagram1" ZoomLevel="72">
         <EntityTypeShape EntityType="DataContext.AccommodationCommission" Width="1.5" PointX="5.25" PointY="152.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DataContext.AccommodationLatLong" Width="1.5" PointX="5.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DataContext.AvailHotelCode" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
@@ -19,7 +19,6 @@
         <EntityTypeShape EntityType="DataContext.RailwayStation" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DataContext.RailwayStationTemp" Width="1.5" PointX="11.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DataContext.RailwayStationTemp2" Width="1.5" PointX="11.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataContext.Accommodation" Width="1.5" PointX="6" PointY="131.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DataContext.AccommodationAirport" Width="1.5" PointX="11.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DataContext.AccommodationAttribute" Width="1.5" PointX="8.25" PointY="152.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DataContext.AccommodationCommission1" Width="1.5" PointX="8.25" PointY="147.5" IsExpanded="true" />
@@ -76,7 +75,6 @@
         <EntityTypeShape EntityType="DataContext.Exchange" Width="1.5" PointX="3" PointY="159" IsExpanded="true" />
         <EntityTypeShape EntityType="DataContext.ExchangeDetail" Width="1.5" PointX="22.5" PointY="145.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DataContext.Facility" Width="1.5" PointX="8.25" PointY="126.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DataContext.FlightContract" Width="1.5" PointX="26.75" PointY="165.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DataContext.FlightContractPassenger" Width="1.5" PointX="24" PointY="171.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DataContext.FlightDiscount" Width="1.5" PointX="8.25" PointY="187" IsExpanded="true" />
         <EntityTypeShape EntityType="DataContext.FlightEticket" Width="1.5" PointX="31.25" PointY="173.625" IsExpanded="true" />
@@ -205,21 +203,11 @@
         <EntityTypeShape EntityType="DataContext.ServiceLocation" Width="1.5" PointX="26.75" PointY="179.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DataContext.TimeZone" Width="1.5" PointX="27.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DataContext.UserRole961221" Width="1.5" PointX="27.75" PointY="10.75" IsExpanded="true" />
-        <AssociationConnector Association="DataContext.FK_AccommodationCommission_Accommodation" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.FK_AccommodationCommission_Company" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.FK_AccommodationCommission_Location" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.FK_AccommodationCommission_Supplier" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.FK_AccommodationCommission_User_ModifyUserID" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.FK_AccommodationCommission_User_UserID" ManuallyRouted="false" />
-        <AssociationConnector Association="DataContext.FK_AccommodationAttribute_Accommodation" ManuallyRouted="false" />
-        <AssociationConnector Association="DataContext.FK_AccommodationCommission_Accommodation1" ManuallyRouted="false" />
-        <AssociationConnector Association="DataContext.FK_AccommodationDescription_Accommodation" ManuallyRouted="false" />
-        <AssociationConnector Association="DataContext.FK_AccommodationReview_Accommodation" ManuallyRouted="false" />
-        <AssociationConnector Association="DataContext.FK_AccomodationImage_Accommodation" ManuallyRouted="false" />
-        <AssociationConnector Association="DataContext.FK_AccomodationRoomImage_Accommodation" ManuallyRouted="false" />
-        <AssociationConnector Association="DataContext.FK_AccomodationSupplier_Accommodation" ManuallyRouted="false" />
-        <AssociationConnector Association="DataContext.FK_Discount_Accommodation" ManuallyRouted="false" />
-        <AssociationConnector Association="DataContext.FK_Pages_Accommodations" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.FK_AccommodationAttribute_Company" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.FK_AccommodationAttribute_Supplier" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.FK_AccommodationAttribute_User" ManuallyRouted="false" />
@@ -298,7 +286,6 @@
         <AssociationConnector Association="DataContext.FK_Contract_User" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.FK_Contract_User_PatronUserID" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.FK_ContractRefund_Contract" ManuallyRouted="false" />
-        <AssociationConnector Association="DataContext.FK_FlightContract_Contract" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.FK_InsuranceContract_Contract" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.FK_Payment_Contract" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.FK_PNR_Contract" ManuallyRouted="false" />
@@ -336,9 +323,6 @@
         <AssociationConnector Association="DataContext.FK_EmailMarketing_User" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.FK_ExchangeDetails_Exchange" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.FK_ExchangeDetails_User" ManuallyRouted="false" />
-        <AssociationConnector Association="DataContext.FK__FlightCon__Ticke__24285DB4" ManuallyRouted="false" />
-        <AssociationConnector Association="DataContext.FK_FlightContract_Supplier" ManuallyRouted="false" />
-        <AssociationConnector Association="DataContext.FK_FlightTicket_FlightContract" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.FK_FlightDiscount_Supplier" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.FK_FlightEticket_FlightTicket" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.FK_FlightIndex_Language" ManuallyRouted="false" />
@@ -431,11 +415,24 @@
         <AssociationConnector Association="DataContext.FK_Wallet_User" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.FK_Wallet_User1" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.FK_WebSites_User" ManuallyRouted="false" />
-        <AssociationConnector Association="DataContext.AccommodationFacility" ManuallyRouted="false" />
-        <AssociationConnector Association="DataContext.AccommodationLocation" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.UserRole" ManuallyRouted="false" />
         <EntityTypeShape EntityType="DataContext.IataAirport" Width="1.5" PointX="0.75" PointY="28.75" />
-      </Diagram>
+        <EntityTypeShape EntityType="DataContext.Accommodation" Width="1.5" PointX="0.75" PointY="142" />
+        <EntityTypeShape EntityType="DataContext.AccommodationSortedByCountry" Width="1.5" PointX="3" PointY="146.125" />
+        <AssociationConnector Association="DataContext.FK_AccommodationCommission_Accommodation" />
+        <AssociationConnector Association="DataContext.FK_AccommodationAttribute_Accommodation" />
+        <AssociationConnector Association="DataContext.FK_AccommodationCommission_Accommodation1" />
+        <AssociationConnector Association="DataContext.FK_AccommodationDescription_Accommodation" />
+        <AssociationConnector Association="DataContext.FK_AccommodationReview_Accommodation" />
+        <AssociationConnector Association="DataContext.FK_AccomodationImage_Accommodation" />
+        <AssociationConnector Association="DataContext.FK_AccomodationRoomImage_Accommodation" />
+        <AssociationConnector Association="DataContext.FK_AccomodationSupplier_Accommodation" />
+        <AssociationConnector Association="DataContext.FK_Discount_Accommodation" />
+        <AssociationConnector Association="DataContext.FK_Pages_Accommodations" />
+        <AssociationConnector Association="DataContext.FK_VerifyAccommodations_Accommodation" />
+        <AssociationConnector Association="DataContext.AccommodationFacility" />
+        <AssociationConnector Association="DataContext.AccommodationLocation" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

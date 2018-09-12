@@ -20,7 +20,6 @@ namespace Data.DataModel
             this.AccomodatonContracts = new HashSet<AccomodatonContract>();
             this.Contacts1 = new HashSet<Contacts1>();
             this.ContractRefunds = new HashSet<ContractRefund>();
-            this.FlightContracts = new HashSet<FlightContract>();
             this.InsuranceContracts = new HashSet<InsuranceContract>();
             this.Payments = new HashSet<Payment>();
             this.PNRs = new HashSet<PNR>();
@@ -51,8 +50,6 @@ namespace Data.DataModel
         public virtual User1 User11 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ContractRefund> ContractRefunds { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FlightContract> FlightContracts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InsuranceContract> InsuranceContracts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

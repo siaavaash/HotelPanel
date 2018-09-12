@@ -27,11 +27,11 @@ namespace Data.DataModel
         public Nullable<double> IRRPercent { get; set; }
         public Nullable<double> NokPercent { get; set; }
     
-        public virtual Accommodation Accommodation { get; set; }
         public virtual Company1 Company1 { get; set; }
         public virtual Location Location { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual User1 User1 { get; set; }
         public virtual User1 User11 { get; set; }
+        public virtual Accommodation Accommodation { get; set; }
     }
 }

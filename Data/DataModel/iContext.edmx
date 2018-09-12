@@ -987,6 +987,16 @@ warning 6002: The table/view 'DBMainTest.cnv.User' does not have a primary key d
           <Property Name="IsConfirm" Type="bit" />
           <Property Name="IsRead" Type="bit" />
         </EntityType>
+        <EntityType Name="AccommodationSortedByCountry">
+          <Key>
+            <PropertyRef Name="AccommodationId" />
+          </Key>
+          <Property Name="AccommodationId" Type="bigint" Nullable="false" />
+          <Property Name="AccommodationName" Type="nvarchar" MaxLength="255" />
+          <Property Name="CountryName" Type="nvarchar" MaxLength="300" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="300" />
+          <Property Name="Ordered" Type="bigint" />
+        </EntityType>
         <EntityType Name="AccomodationImage">
           <Key>
             <PropertyRef Name="ImageID" />
@@ -1179,12 +1189,12 @@ warning 6002: The table/view 'DBMainTest.cnv.User' does not have a primary key d
           <Property Name="AirlineCode" Type="nvarchar" MaxLength="255" />
           <Property Name="FromDate" Type="datetime" />
           <Property Name="ToDate" Type="datetime" />
-          <Property Name="Type" Type="tinyint" Nullable="false" />
-          <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="UserID" Type="bigint" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="ModifyDate" Type="datetime" />
           <Property Name="ModifyUserID" Type="bigint" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Type" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="AirLineUnMap">
           <Key>
@@ -1720,27 +1730,6 @@ warning 6002: The table/view 'DBMainTest.dbo.AirportSupplierConfig970121' does n
           <Property Name="PersianName" Type="nvarchar" MaxLength="500" />
           <Property Name="Image" Type="nvarchar(max)" />
           <Property Name="FacilityTotID" Type="bigint" />
-        </EntityType>
-        <EntityType Name="FlightContract">
-          <Key>
-            <PropertyRef Name="FlightContractID" />
-          </Key>
-          <Property Name="FlightContractID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ContractID" Type="bigint" Nullable="false" />
-          <Property Name="RPHKey_Old" Type="nvarchar" MaxLength="50" />
-          <Property Name="RPH" Type="xml" Nullable="false" />
-          <Property Name="PNR" Type="nvarchar" MaxLength="50" />
-          <Property Name="FlightReservName" Type="nvarchar" MaxLength="1000" />
-          <Property Name="TotalFare" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="TotalFareCurrencyCode" Type="char" MaxLength="3" />
-          <Property Name="TotalCommission" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="TotalCommissionCurrencyCode" Type="char" MaxLength="3" />
-          <Property Name="CounterCommission" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="CounterCommissionCurrencyCode" Type="char" MaxLength="3" />
-          <Property Name="TicketStatusID" Type="bigint" />
-          <Property Name="RPHKey" Type="varchar" MaxLength="32" />
-          <Property Name="BillTicket" Type="nvarchar(max)" />
-          <Property Name="SupplierID" Type="bigint" />
         </EntityType>
         <EntityType Name="FlightContractPassenger">
           <Key>
@@ -3587,18 +3576,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FlightCon__Ticke__24285DB4">
-          <End Role="TicketStatus" Type="Self.TicketStatus" Multiplicity="0..1" />
-          <End Role="FlightContract" Type="Self.FlightContract" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TicketStatus">
-              <PropertyRef Name="TicketStatusID" />
-            </Principal>
-            <Dependent Role="FlightContract">
-              <PropertyRef Name="TicketStatusID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Payment__Modific__20ACD28B">
           <End Role="User1" Type="Self.User1" Multiplicity="0..1" />
           <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
@@ -4715,30 +4692,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_FlightContract_Contract">
-          <End Role="Contract" Type="Self.Contract" Multiplicity="1" />
-          <End Role="FlightContract" Type="Self.FlightContract" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Contract">
-              <PropertyRef Name="ContractID" />
-            </Principal>
-            <Dependent Role="FlightContract">
-              <PropertyRef Name="ContractID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FlightContract_Supplier">
-          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
-          <End Role="FlightContract" Type="Self.FlightContract" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supplier">
-              <PropertyRef Name="SupplierID" />
-            </Principal>
-            <Dependent Role="FlightContract">
-              <PropertyRef Name="SupplierID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_FlightContractPassenger_Contacts">
           <End Role="Contacts1" Type="Self.Contacts1" Multiplicity="1" />
           <End Role="FlightContractPassenger" Type="Self.FlightContractPassenger" Multiplicity="*" />
@@ -4796,18 +4749,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
             </Principal>
             <Dependent Role="FlightIndex">
               <PropertyRef Name="LanguageID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FlightTicket_FlightContract">
-          <End Role="FlightContract" Type="Self.FlightContract" Multiplicity="1" />
-          <End Role="FlightTicket" Type="Self.FlightTicket" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FlightContract">
-              <PropertyRef Name="FlightContractID" />
-            </Principal>
-            <Dependent Role="FlightTicket">
-              <PropertyRef Name="FlightContractID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6167,6 +6108,18 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_VerifyAccommodations_Accommodation">
+          <End Role="Accommodation" Type="Self.Accommodation" Multiplicity="1" />
+          <End Role="AccommodationSortedByCountry" Type="Self.AccommodationSortedByCountry" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Accommodation">
+              <PropertyRef Name="AccommodationlID" />
+            </Principal>
+            <Dependent Role="AccommodationSortedByCountry">
+              <PropertyRef Name="AccommodationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_VocherRoom_AccomodationVocher">
           <End Role="AccomodationVoucher" Type="Self.AccomodationVoucher" Multiplicity="1" />
           <End Role="VoucherRoom" Type="Self.VoucherRoom" Multiplicity="*" />
@@ -6301,6 +6254,7 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <EntitySet Name="AccommodationItoursSupplier" EntityType="Self.AccommodationItoursSupplier" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AccommodationLocation" EntityType="Self.AccommodationLocation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AccommodationReview" EntityType="Self.AccommodationReview" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccommodationSortedByCountry" EntityType="Self.AccommodationSortedByCountry" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AccomodationImage" EntityType="Self.AccomodationImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AccomodationRoomImage" EntityType="Self.AccomodationRoomImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AccomodationSupplier" EntityType="Self.AccomodationSupplier" Schema="dbo" store:Type="Tables" />
@@ -6350,7 +6304,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <EntitySet Name="Exchange" EntityType="Self.Exchange" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExchangeDetails" EntityType="Self.ExchangeDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Facility" EntityType="Self.Facility" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FlightContract" EntityType="Self.FlightContract" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FlightContractPassenger" EntityType="Self.FlightContractPassenger" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FlightDiscount" EntityType="Self.FlightDiscount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FlightEticket" EntityType="Self.FlightEticket" Schema="dbo" store:Type="Tables" />
@@ -7116,10 +7069,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
             <End Role="User1" EntitySet="User1" />
             <End Role="DevelopmentRequest" EntitySet="DevelopmentRequest" />
           </AssociationSet>
-          <AssociationSet Name="FK__FlightCon__Ticke__24285DB4" Association="Self.FK__FlightCon__Ticke__24285DB4">
-            <End Role="TicketStatus" EntitySet="TicketStatus" />
-            <End Role="FlightContract" EntitySet="FlightContract" />
-          </AssociationSet>
           <AssociationSet Name="FK__Payment__Modific__20ACD28B" Association="Self.FK__Payment__Modific__20ACD28B">
             <End Role="User1" EntitySet="User1" />
             <End Role="Payment" EntitySet="Payment" />
@@ -7492,14 +7441,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
             <End Role="User1" EntitySet="User1" />
             <End Role="ExchangeDetails" EntitySet="ExchangeDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_FlightContract_Contract" Association="Self.FK_FlightContract_Contract">
-            <End Role="Contract" EntitySet="Contract" />
-            <End Role="FlightContract" EntitySet="FlightContract" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FlightContract_Supplier" Association="Self.FK_FlightContract_Supplier">
-            <End Role="Supplier" EntitySet="Supplier" />
-            <End Role="FlightContract" EntitySet="FlightContract" />
-          </AssociationSet>
           <AssociationSet Name="FK_FlightContractPassenger_Contacts" Association="Self.FK_FlightContractPassenger_Contacts">
             <End Role="Contacts1" EntitySet="Contacts1" />
             <End Role="FlightContractPassenger" EntitySet="FlightContractPassenger" />
@@ -7519,10 +7460,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <AssociationSet Name="FK_FlightIndex_Language" Association="Self.FK_FlightIndex_Language">
             <End Role="Language" EntitySet="Language" />
             <End Role="FlightIndex" EntitySet="FlightIndex" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FlightTicket_FlightContract" Association="Self.FK_FlightTicket_FlightContract">
-            <End Role="FlightContract" EntitySet="FlightContract" />
-            <End Role="FlightTicket" EntitySet="FlightTicket" />
           </AssociationSet>
           <AssociationSet Name="FK_FlightTicketArrival_FlightTicket" Association="Self.FK_FlightTicketArrival_FlightTicket">
             <End Role="FlightTicket" EntitySet="FlightTicket" />
@@ -7976,6 +7913,10 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
             <End Role="User1" EntitySet="User1" />
             <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
+          <AssociationSet Name="FK_VerifyAccommodations_Accommodation" Association="Self.FK_VerifyAccommodations_Accommodation">
+            <End Role="Accommodation" EntitySet="Accommodation" />
+            <End Role="AccommodationSortedByCountry" EntitySet="AccommodationSortedByCountry" />
+          </AssociationSet>
           <AssociationSet Name="FK_VocherRoom_AccomodationVocher" Association="Self.FK_VocherRoom_AccomodationVocher">
             <End Role="AccomodationVoucher" EntitySet="AccomodationVoucher" />
             <End Role="VoucherRoom" EntitySet="VoucherRoom" />
@@ -8033,12 +7974,12 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="IRRPercent" Type="Double" />
           <Property Name="NokPercent" Type="Double" />
-          <NavigationProperty Name="Accommodation" Relationship="Self.FK_AccommodationCommission_Accommodation" FromRole="AccommodationCommission" ToRole="Accommodation" />
           <NavigationProperty Name="Company1" Relationship="Self.FK_AccommodationCommission_Company" FromRole="AccommodationCommission" ToRole="Company1" />
           <NavigationProperty Name="Location" Relationship="Self.FK_AccommodationCommission_Location" FromRole="AccommodationCommission" ToRole="Location" />
           <NavigationProperty Name="Supplier" Relationship="Self.FK_AccommodationCommission_Supplier" FromRole="AccommodationCommission" ToRole="Supplier" />
           <NavigationProperty Name="User1" Relationship="Self.FK_AccommodationCommission_User_ModifyUserID" FromRole="AccommodationCommission" ToRole="User1" />
           <NavigationProperty Name="User11" Relationship="Self.FK_AccommodationCommission_User_UserID" FromRole="AccommodationCommission" ToRole="User1" />
+          <NavigationProperty Name="Accommodation" Relationship="DataContext.FK_AccommodationCommission_Accommodation" FromRole="AccommodationCommission" ToRole="Accommodation" />
         </EntityType>
         <EntityType Name="AccommodationLatLong">
           <Key>
@@ -8205,59 +8146,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <Property Name="Country" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="LocationId" Type="Int64" />
         </EntityType>
-        <EntityType Name="Accommodation">
-          <Key>
-            <PropertyRef Name="AccommodationlID" />
-          </Key>
-          <Property Name="AccommodationlID" Type="Int64" Nullable="false" />
-          <Property Name="ChainID" Type="Int64" />
-          <Property Name="AirportCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="Byte" />
-          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Rating" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PostCodeZip" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Fax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Near" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="lastUpdate" Type="DateTime" Precision="3" />
-          <Property Name="CountryCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CityName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="CityId" Type="Int64" />
-          <Property Name="Resort" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Region" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="DestinationId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Destination" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="HotelArea" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="HotelImages" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="HotelLocation" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="HotelInfo" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="PAmenities" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="Url" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="UserID" Type="Int64" />
-          <Property Name="DateVerified" Type="DateTime" Precision="3" />
-          <Property Name="IsVerified" Type="Boolean" />
-          <Property Name="IsError" Type="Boolean" />
-          <NavigationProperty Name="AccommodationCommissions" Relationship="Self.FK_AccommodationCommission_Accommodation" FromRole="Accommodation" ToRole="AccommodationCommission" />
-          <NavigationProperty Name="AccommodationAttributes" Relationship="Self.FK_AccommodationAttribute_Accommodation" FromRole="Accommodation" ToRole="AccommodationAttribute" />
-          <NavigationProperty Name="AccommodationCommission1" Relationship="Self.FK_AccommodationCommission_Accommodation1" FromRole="Accommodation" ToRole="AccommodationCommission1" />
-          <NavigationProperty Name="AccommodationDescriptions" Relationship="Self.FK_AccommodationDescription_Accommodation" FromRole="Accommodation" ToRole="AccommodationDescription" />
-          <NavigationProperty Name="AccommodationReviews" Relationship="Self.FK_AccommodationReview_Accommodation" FromRole="Accommodation" ToRole="AccommodationReview" />
-          <NavigationProperty Name="AccomodationImages" Relationship="Self.FK_AccomodationImage_Accommodation" FromRole="Accommodation" ToRole="AccomodationImage" />
-          <NavigationProperty Name="AccomodationRoomImages" Relationship="Self.FK_AccomodationRoomImage_Accommodation" FromRole="Accommodation" ToRole="AccomodationRoomImage" />
-          <NavigationProperty Name="AccomodationSuppliers" Relationship="Self.FK_AccomodationSupplier_Accommodation" FromRole="Accommodation" ToRole="AccomodationSupplier" />
-          <NavigationProperty Name="Discounts" Relationship="Self.FK_Discount_Accommodation" FromRole="Accommodation" ToRole="Discount" />
-          <NavigationProperty Name="Pages" Relationship="Self.FK_Pages_Accommodations" FromRole="Accommodation" ToRole="Pages" />
-          <NavigationProperty Name="Facilities" Relationship="Self.AccommodationFacility" FromRole="Accommodation" ToRole="Facility" />
-          <NavigationProperty Name="Locations" Relationship="Self.AccommodationLocation" FromRole="Accommodation" ToRole="Location" />
-          <Property Name="BookingUrl" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="AccommodationAirport">
           <Key>
             <PropertyRef Name="AccommodationAirportID" />
@@ -8291,10 +8179,10 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <Property Name="CompanyID" Type="Int64" />
           <Property Name="UserID" Type="Int64" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Accommodation" Relationship="Self.FK_AccommodationAttribute_Accommodation" FromRole="AccommodationAttribute" ToRole="Accommodation" />
           <NavigationProperty Name="Company1" Relationship="Self.FK_AccommodationAttribute_Company" FromRole="AccommodationAttribute" ToRole="Company1" />
           <NavigationProperty Name="Supplier" Relationship="Self.FK_AccommodationAttribute_Supplier" FromRole="AccommodationAttribute" ToRole="Supplier" />
           <NavigationProperty Name="User1" Relationship="Self.FK_AccommodationAttribute_User" FromRole="AccommodationAttribute" ToRole="User1" />
+          <NavigationProperty Name="Accommodation" Relationship="DataContext.FK_AccommodationAttribute_Accommodation" FromRole="AccommodationAttribute" ToRole="Accommodation" />
         </EntityType>
         <EntityType Name="AccommodationCommission1">
           <Key>
@@ -8312,12 +8200,12 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <Property Name="IRRPercent" Type="Double" />
           <Property Name="NokPercent" Type="Double" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Accommodation" Relationship="Self.FK_AccommodationCommission_Accommodation1" FromRole="AccommodationCommission1" ToRole="Accommodation" />
           <NavigationProperty Name="Company1" Relationship="Self.FK_AccommodationCommission_Company1" FromRole="AccommodationCommission1" ToRole="Company1" />
           <NavigationProperty Name="Location" Relationship="Self.FK_AccommodationCommission_Location1" FromRole="AccommodationCommission1" ToRole="Location" />
           <NavigationProperty Name="Supplier" Relationship="Self.FK_AccommodationCommission_Supplier1" FromRole="AccommodationCommission1" ToRole="Supplier" />
           <NavigationProperty Name="User1" Relationship="Self.FK_AccommodationCommission_User_ModifyUserID1" FromRole="AccommodationCommission1" ToRole="User1" />
           <NavigationProperty Name="User11" Relationship="Self.FK_AccommodationCommission_User_UserID1" FromRole="AccommodationCommission1" ToRole="User1" />
+          <NavigationProperty Name="Accommodation" Relationship="DataContext.FK_AccommodationCommission_Accommodation1" FromRole="AccommodationCommission1" ToRole="Accommodation" />
         </EntityType>
         <EntityType Name="AccommodationDescription">
           <Key>
@@ -8331,10 +8219,10 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <Property Name="ModificationTime" Type="DateTime" Precision="3" />
           <Property Name="UserID" Type="Int64" />
           <Property Name="ModifyUserID" Type="Int64" />
-          <NavigationProperty Name="Accommodation" Relationship="Self.FK_AccommodationDescription_Accommodation" FromRole="AccommodationDescription" ToRole="Accommodation" />
           <NavigationProperty Name="Language" Relationship="Self.FK_AccommodationDescription_Language" FromRole="AccommodationDescription" ToRole="Language" />
           <NavigationProperty Name="User1" Relationship="Self.FK_AccommodationDescription_User_ModifyUserID" FromRole="AccommodationDescription" ToRole="User1" />
           <NavigationProperty Name="User11" Relationship="Self.FK_AccommodationDescription_User_UserID" FromRole="AccommodationDescription" ToRole="User1" />
+          <NavigationProperty Name="Accommodation" Relationship="DataContext.FK_AccommodationDescription_Accommodation" FromRole="AccommodationDescription" ToRole="Accommodation" />
         </EntityType>
         <EntityType Name="AccommodationItour">
           <Key>
@@ -8413,9 +8301,9 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <Property Name="ModificationTime" Type="DateTime" Precision="3" />
           <Property Name="IsConfirm" Type="Boolean" />
           <Property Name="IsRead" Type="Boolean" />
-          <NavigationProperty Name="Accommodation" Relationship="Self.FK_AccommodationReview_Accommodation" FromRole="AccommodationReview" ToRole="Accommodation" />
           <NavigationProperty Name="User1" Relationship="Self.FK_AccommodationReview_User_ModifyUserID" FromRole="AccommodationReview" ToRole="User1" />
           <NavigationProperty Name="User11" Relationship="Self.FK_AccommodationReview_User_UserID" FromRole="AccommodationReview" ToRole="User1" />
+          <NavigationProperty Name="Accommodation" Relationship="DataContext.FK_AccommodationReview_Accommodation" FromRole="AccommodationReview" ToRole="Accommodation" />
         </EntityType>
         <EntityType Name="AccomodationImage">
           <Key>
@@ -8435,7 +8323,7 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <Property Name="VerifiedDate" Type="DateTime" Precision="3" />
           <Property Name="IsReported" Type="Boolean" />
           <Property Name="NumberOfReports" Type="Int32" />
-          <NavigationProperty Name="Accommodation" Relationship="Self.FK_AccomodationImage_Accommodation" FromRole="AccomodationImage" ToRole="Accommodation" />
+          <NavigationProperty Name="Accommodation" Relationship="DataContext.FK_AccomodationImage_Accommodation" FromRole="AccomodationImage" ToRole="Accommodation" />
         </EntityType>
         <EntityType Name="AccomodationRoomImage">
           <Key>
@@ -8462,7 +8350,7 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <Property Name="VerifiedDate" Type="DateTime" Precision="3" />
           <Property Name="IsReported" Type="Boolean" />
           <Property Name="NumberOfReports" Type="Int32" />
-          <NavigationProperty Name="Accommodation" Relationship="Self.FK_AccomodationRoomImage_Accommodation" FromRole="AccomodationRoomImage" ToRole="Accommodation" />
+          <NavigationProperty Name="Accommodation" Relationship="DataContext.FK_AccomodationRoomImage_Accommodation" FromRole="AccomodationRoomImage" ToRole="Accommodation" />
         </EntityType>
         <EntityType Name="AccomodationSupplier">
           <Key>
@@ -8481,8 +8369,8 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <Property Name="CityName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="CityId" Type="Int64" />
           <Property Name="CountryName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Accommodation" Relationship="Self.FK_AccomodationSupplier_Accommodation" FromRole="AccomodationSupplier" ToRole="Accommodation" />
           <NavigationProperty Name="Supplier" Relationship="Self.FK_AccomodationSupplier_Supplier" FromRole="AccomodationSupplier" ToRole="Supplier" />
+          <NavigationProperty Name="Accommodation" Relationship="DataContext.FK_AccomodationSupplier_Accommodation" FromRole="AccomodationSupplier" ToRole="Accommodation" />
         </EntityType>
         <EntityType Name="AccomodationVoucher">
           <Key>
@@ -8991,7 +8879,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <NavigationProperty Name="User1" Relationship="Self.FK_Contract_User" FromRole="Contract" ToRole="User1" />
           <NavigationProperty Name="User11" Relationship="Self.FK_Contract_User_PatronUserID" FromRole="Contract" ToRole="User1" />
           <NavigationProperty Name="ContractRefunds" Relationship="Self.FK_ContractRefund_Contract" FromRole="Contract" ToRole="ContractRefund" />
-          <NavigationProperty Name="FlightContracts" Relationship="Self.FK_FlightContract_Contract" FromRole="Contract" ToRole="FlightContract" />
           <NavigationProperty Name="InsuranceContracts" Relationship="Self.FK_InsuranceContract_Contract" FromRole="Contract" ToRole="InsuranceContract" />
           <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_Contract" FromRole="Contract" ToRole="Payment" />
           <NavigationProperty Name="PNRs" Relationship="Self.FK_PNR_Contract" FromRole="Contract" ToRole="PNR" />
@@ -9138,12 +9025,12 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <Property Name="AccommodationId" Type="Int64" />
           <Property Name="Rating" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="LocationID" Type="Int64" />
-          <NavigationProperty Name="Accommodation" Relationship="Self.FK_Discount_Accommodation" FromRole="Discount" ToRole="Accommodation" />
           <NavigationProperty Name="Company1" Relationship="Self.FK_Discount_Company" FromRole="Discount" ToRole="Company1" />
           <NavigationProperty Name="Currency" Relationship="Self.FK_Discount_Currency" FromRole="Discount" ToRole="Currency" />
           <NavigationProperty Name="Location" Relationship="Self.FK_Discount_Location" FromRole="Discount" ToRole="Location" />
           <NavigationProperty Name="User1" Relationship="Self.FK_Discount_User" FromRole="Discount" ToRole="User1" />
           <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_Discount" FromRole="Discount" ToRole="Payment" />
+          <NavigationProperty Name="Accommodation" Relationship="DataContext.FK_Discount_Accommodation" FromRole="Discount" ToRole="Accommodation" />
         </EntityType>
         <EntityType Name="Document">
           <Key>
@@ -9223,32 +9110,7 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <Property Name="PersianName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FacilityTotID" Type="Int64" />
-          <NavigationProperty Name="Accommodations" Relationship="Self.AccommodationFacility" FromRole="Facility" ToRole="Accommodation" />
-        </EntityType>
-        <EntityType Name="FlightContract">
-          <Key>
-            <PropertyRef Name="FlightContractID" />
-          </Key>
-          <Property Name="FlightContractID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ContractID" Type="Int64" Nullable="false" />
-          <Property Name="RPHKey_Old" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RPH" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PNR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FlightReservName" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="TotalFare" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="TotalFareCurrencyCode" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="TotalCommission" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="TotalCommissionCurrencyCode" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="CounterCommission" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="CounterCommissionCurrencyCode" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="TicketStatusID" Type="Int64" />
-          <Property Name="RPHKey" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="BillTicket" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SupplierID" Type="Int64" />
-          <NavigationProperty Name="Contract" Relationship="Self.FK_FlightContract_Contract" FromRole="FlightContract" ToRole="Contract" />
-          <NavigationProperty Name="TicketStatu" Relationship="Self.FK__FlightCon__Ticke__24285DB4" FromRole="FlightContract" ToRole="TicketStatus" />
-          <NavigationProperty Name="Supplier" Relationship="Self.FK_FlightContract_Supplier" FromRole="FlightContract" ToRole="Supplier" />
-          <NavigationProperty Name="FlightTickets" Relationship="Self.FK_FlightTicket_FlightContract" FromRole="FlightContract" ToRole="FlightTicket" />
+          <NavigationProperty Name="Accommodations" Relationship="DataContext.AccommodationFacility" FromRole="Facility" ToRole="Accommodation" />
         </EntityType>
         <EntityType Name="FlightContractPassenger">
           <Key>
@@ -9403,7 +9265,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <Property Name="Change" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="FareFeeAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="FareFeeCurrency" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="FlightContract" Relationship="Self.FK_FlightTicket_FlightContract" FromRole="FlightTicket" ToRole="FlightContract" />
           <NavigationProperty Name="FlightEtickets" Relationship="Self.FK_FlightEticket_FlightTicket" FromRole="FlightTicket" ToRole="FlightEticket" />
           <NavigationProperty Name="FlightTicketArrivals" Relationship="Self.FK_FlightTicketArrival_FlightTicket" FromRole="FlightTicket" ToRole="FlightTicketArrival" />
           <NavigationProperty Name="FlightTicketDepartures" Relationship="Self.FK_FlightTicketDeparture_FlightTicket" FromRole="FlightTicket" ToRole="FlightTicketDeparture" />
@@ -9797,7 +9658,7 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <NavigationProperty Name="RailwayStation1" Relationship="Self.FK_RailwayStation_Location" FromRole="Location" ToRole="RailwayStation1" />
           <NavigationProperty Name="ServiceContracts" Relationship="Self.FK_ServiceContract_Location" FromRole="Location" ToRole="ServiceContract" />
           <NavigationProperty Name="ServiceLocations" Relationship="Self.FK_ServiceLocation_Location" FromRole="Location" ToRole="ServiceLocation" />
-          <NavigationProperty Name="Accommodations" Relationship="Self.AccommodationLocation" FromRole="Location" ToRole="Accommodation" />
+          <NavigationProperty Name="Accommodations" Relationship="DataContext.AccommodationLocation" FromRole="Location" ToRole="Accommodation" />
         </EntityType>
         <EntityType Name="LocationCnv">
           <Key>
@@ -10065,9 +9926,9 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <Property Name="Priority" Type="Single" />
           <Property Name="PageTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="ChangeFreq" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Accommodation" Relationship="Self.FK_Pages_Accommodations" FromRole="Pages" ToRole="Accommodation" />
           <NavigationProperty Name="User1" Relationship="Self.FK_Pages_User_ModifyUserID" FromRole="Pages" ToRole="User1" />
           <NavigationProperty Name="User11" Relationship="Self.FK_Pages_User_UserID" FromRole="Pages" ToRole="User1" />
+          <NavigationProperty Name="Accommodation" Relationship="DataContext.FK_Pages_Accommodations" FromRole="Page" ToRole="Accommodation" />
         </EntityType>
         <EntityType Name="Payment">
           <Key>
@@ -10601,7 +10462,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <NavigationProperty Name="AirportSuppliers" Relationship="Self.FK_AirportSupplier_Supplier" FromRole="Supplier" ToRole="AirportSupplier" />
           <NavigationProperty Name="AirportSupplierConfig1" Relationship="Self.FK_AirportSupplierConfig_Supplier" FromRole="Supplier" ToRole="AirportSupplierConfig1" />
           <NavigationProperty Name="CompanySupplierAccesses" Relationship="Self.FK_CompanySupplierAccess_Supplier" FromRole="Supplier" ToRole="CompanySupplierAccess" />
-          <NavigationProperty Name="FlightContracts" Relationship="Self.FK_FlightContract_Supplier" FromRole="Supplier" ToRole="FlightContract" />
           <NavigationProperty Name="FlightDiscounts" Relationship="Self.FK_FlightDiscount_Supplier" FromRole="Supplier" ToRole="FlightDiscount" />
           <NavigationProperty Name="InsuranceContracts" Relationship="Self.FK_InsuranceContract_Supplier" FromRole="Supplier" ToRole="InsuranceContract" />
           <NavigationProperty Name="LocationSuppliers" Relationship="Self.FK_LocationSupplier_Supplier" FromRole="Supplier" ToRole="LocationSupplier" />
@@ -10731,7 +10591,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <Property Name="TicketStatusID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AccomodatonContracts" Relationship="Self.FK__Accomodat__Ticke__251C81ED" FromRole="TicketStatus" ToRole="AccomodatonContract" />
-          <NavigationProperty Name="FlightContracts" Relationship="Self.FK__FlightCon__Ticke__24285DB4" FromRole="TicketStatus" ToRole="FlightContract" />
         </EntityType>
         <EntityType Name="Token">
           <Key>
@@ -11847,18 +11706,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <Property Name="UserID" Type="Int64" Nullable="false" />
           <Property Name="RoleID" Type="Int64" Nullable="false" />
         </EntityType>
-        <Association Name="FK_AccommodationCommission_Accommodation">
-          <End Role="Accommodation" Type="Self.Accommodation" Multiplicity="0..1" />
-          <End Role="AccommodationCommission" Type="Self.AccommodationCommission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Accommodation">
-              <PropertyRef Name="AccommodationlID" />
-            </Principal>
-            <Dependent Role="AccommodationCommission">
-              <PropertyRef Name="AccommodationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_AccommodationCommission_Company">
           <End Role="Company1" Type="Self.Company1" Multiplicity="0..1" />
           <End Role="AccommodationCommission" Type="Self.AccommodationCommission" Multiplicity="*" />
@@ -11916,114 +11763,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
             </Principal>
             <Dependent Role="AccommodationCommission">
               <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AccommodationAttribute_Accommodation">
-          <End Role="Accommodation" Type="Self.Accommodation" Multiplicity="0..1" />
-          <End Role="AccommodationAttribute" Type="Self.AccommodationAttribute" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Accommodation">
-              <PropertyRef Name="AccommodationlID" />
-            </Principal>
-            <Dependent Role="AccommodationAttribute">
-              <PropertyRef Name="AccommodationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AccommodationCommission_Accommodation1">
-          <End Role="Accommodation" Type="Self.Accommodation" Multiplicity="0..1" />
-          <End Role="AccommodationCommission1" Type="Self.AccommodationCommission1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Accommodation">
-              <PropertyRef Name="AccommodationlID" />
-            </Principal>
-            <Dependent Role="AccommodationCommission1">
-              <PropertyRef Name="AccommodationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AccommodationDescription_Accommodation">
-          <End Role="Accommodation" Type="Self.Accommodation" Multiplicity="0..1" />
-          <End Role="AccommodationDescription" Type="Self.AccommodationDescription" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Accommodation">
-              <PropertyRef Name="AccommodationlID" />
-            </Principal>
-            <Dependent Role="AccommodationDescription">
-              <PropertyRef Name="AccommodationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AccommodationReview_Accommodation">
-          <End Role="Accommodation" Type="Self.Accommodation" Multiplicity="1" />
-          <End Role="AccommodationReview" Type="Self.AccommodationReview" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Accommodation">
-              <PropertyRef Name="AccommodationlID" />
-            </Principal>
-            <Dependent Role="AccommodationReview">
-              <PropertyRef Name="AccommodationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AccomodationImage_Accommodation">
-          <End Role="Accommodation" Type="Self.Accommodation" Multiplicity="1" />
-          <End Role="AccomodationImage" Type="Self.AccomodationImage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Accommodation">
-              <PropertyRef Name="AccommodationlID" />
-            </Principal>
-            <Dependent Role="AccomodationImage">
-              <PropertyRef Name="AccommodationlID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AccomodationRoomImage_Accommodation">
-          <End Role="Accommodation" Type="Self.Accommodation" Multiplicity="1" />
-          <End Role="AccomodationRoomImage" Type="Self.AccomodationRoomImage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Accommodation">
-              <PropertyRef Name="AccommodationlID" />
-            </Principal>
-            <Dependent Role="AccomodationRoomImage">
-              <PropertyRef Name="AccommodationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AccomodationSupplier_Accommodation">
-          <End Role="Accommodation" Type="Self.Accommodation" Multiplicity="1" />
-          <End Role="AccomodationSupplier" Type="Self.AccomodationSupplier" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Accommodation">
-              <PropertyRef Name="AccommodationlID" />
-            </Principal>
-            <Dependent Role="AccomodationSupplier">
-              <PropertyRef Name="AccommodationlID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Discount_Accommodation">
-          <End Role="Accommodation" Type="Self.Accommodation" Multiplicity="0..1" />
-          <End Role="Discount" Type="Self.Discount" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Accommodation">
-              <PropertyRef Name="AccommodationlID" />
-            </Principal>
-            <Dependent Role="Discount">
-              <PropertyRef Name="AccommodationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Pages_Accommodations">
-          <End Role="Accommodation" Type="Self.Accommodation" Multiplicity="0..1" />
-          <End Role="Pages" Type="Self.Page" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Accommodation">
-              <PropertyRef Name="AccommodationlID" />
-            </Principal>
-            <Dependent Role="Pages">
-              <PropertyRef Name="AccommodationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -12963,18 +12702,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_FlightContract_Contract">
-          <End Role="Contract" Type="Self.Contract" Multiplicity="1" />
-          <End Role="FlightContract" Type="Self.FlightContract" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Contract">
-              <PropertyRef Name="ContractID" />
-            </Principal>
-            <Dependent Role="FlightContract">
-              <PropertyRef Name="ContractID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_InsuranceContract_Contract">
           <End Role="Contract" Type="Self.Contract" Multiplicity="1" />
           <End Role="InsuranceContract" Type="Self.InsuranceContract" Multiplicity="*" />
@@ -13416,42 +13143,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
             </Principal>
             <Dependent Role="ExchangeDetails">
               <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__FlightCon__Ticke__24285DB4">
-          <End Role="TicketStatus" Type="Self.TicketStatu" Multiplicity="0..1" />
-          <End Role="FlightContract" Type="Self.FlightContract" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TicketStatus">
-              <PropertyRef Name="TicketStatusID" />
-            </Principal>
-            <Dependent Role="FlightContract">
-              <PropertyRef Name="TicketStatusID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FlightContract_Supplier">
-          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
-          <End Role="FlightContract" Type="Self.FlightContract" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supplier">
-              <PropertyRef Name="SupplierID" />
-            </Principal>
-            <Dependent Role="FlightContract">
-              <PropertyRef Name="SupplierID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FlightTicket_FlightContract">
-          <End Role="FlightContract" Type="Self.FlightContract" Multiplicity="1" />
-          <End Role="FlightTicket" Type="Self.FlightTicket" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FlightContract">
-              <PropertyRef Name="FlightContractID" />
-            </Principal>
-            <Dependent Role="FlightTicket">
-              <PropertyRef Name="FlightContractID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -14559,14 +14250,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="AccommodationFacility">
-          <End Role="Accommodation" Type="Self.Accommodation" Multiplicity="*" />
-          <End Role="Facility" Type="Self.Facility" Multiplicity="*" />
-        </Association>
-        <Association Name="AccommodationLocation">
-          <End Role="Accommodation" Type="Self.Accommodation" Multiplicity="*" />
-          <End Role="Location" Type="Self.Location" Multiplicity="*" />
-        </Association>
         <Association Name="UserRole">
           <End Role="Role" Type="Self.Role" Multiplicity="*" />
           <End Role="User1" Type="Self.User1" Multiplicity="*" />
@@ -14586,7 +14269,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <EntitySet Name="RailwayStations" EntityType="Self.RailwayStation" />
           <EntitySet Name="RailwayStationTemps" EntityType="Self.RailwayStationTemp" />
           <EntitySet Name="RailwayStationTemp2" EntityType="Self.RailwayStationTemp2" />
-          <EntitySet Name="Accommodations" EntityType="Self.Accommodation" />
           <EntitySet Name="AccommodationAirports" EntityType="Self.AccommodationAirport" />
           <EntitySet Name="AccommodationAttributes" EntityType="Self.AccommodationAttribute" />
           <EntitySet Name="AccommodationCommission1" EntityType="Self.AccommodationCommission1" />
@@ -14643,7 +14325,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <EntitySet Name="Exchanges" EntityType="Self.Exchange" />
           <EntitySet Name="ExchangeDetails" EntityType="Self.ExchangeDetail" />
           <EntitySet Name="Facilities" EntityType="Self.Facility" />
-          <EntitySet Name="FlightContracts" EntityType="Self.FlightContract" />
           <EntitySet Name="FlightContractPassengers" EntityType="Self.FlightContractPassenger" />
           <EntitySet Name="FlightDiscounts" EntityType="Self.FlightDiscount" />
           <EntitySet Name="FlightEtickets" EntityType="Self.FlightEticket" />
@@ -14772,10 +14453,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <EntitySet Name="ServiceLocations" EntityType="Self.ServiceLocation" />
           <EntitySet Name="TimeZones" EntityType="Self.TimeZone" />
           <EntitySet Name="UserRole961221" EntityType="Self.UserRole961221" />
-          <AssociationSet Name="FK_AccommodationCommission_Accommodation" Association="Self.FK_AccommodationCommission_Accommodation">
-            <End Role="Accommodation" EntitySet="Accommodations" />
-            <End Role="AccommodationCommission" EntitySet="AccommodationCommissions" />
-          </AssociationSet>
           <AssociationSet Name="FK_AccommodationCommission_Company" Association="Self.FK_AccommodationCommission_Company">
             <End Role="Company1" EntitySet="Company1" />
             <End Role="AccommodationCommission" EntitySet="AccommodationCommissions" />
@@ -14795,42 +14472,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <AssociationSet Name="FK_AccommodationCommission_User_UserID" Association="Self.FK_AccommodationCommission_User_UserID">
             <End Role="User1" EntitySet="User1" />
             <End Role="AccommodationCommission" EntitySet="AccommodationCommissions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AccommodationAttribute_Accommodation" Association="Self.FK_AccommodationAttribute_Accommodation">
-            <End Role="Accommodation" EntitySet="Accommodations" />
-            <End Role="AccommodationAttribute" EntitySet="AccommodationAttributes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AccommodationCommission_Accommodation1" Association="Self.FK_AccommodationCommission_Accommodation1">
-            <End Role="Accommodation" EntitySet="Accommodations" />
-            <End Role="AccommodationCommission1" EntitySet="AccommodationCommission1" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AccommodationDescription_Accommodation" Association="Self.FK_AccommodationDescription_Accommodation">
-            <End Role="Accommodation" EntitySet="Accommodations" />
-            <End Role="AccommodationDescription" EntitySet="AccommodationDescriptions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AccommodationReview_Accommodation" Association="Self.FK_AccommodationReview_Accommodation">
-            <End Role="Accommodation" EntitySet="Accommodations" />
-            <End Role="AccommodationReview" EntitySet="AccommodationReviews" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AccomodationImage_Accommodation" Association="Self.FK_AccomodationImage_Accommodation">
-            <End Role="Accommodation" EntitySet="Accommodations" />
-            <End Role="AccomodationImage" EntitySet="AccomodationImages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AccomodationRoomImage_Accommodation" Association="Self.FK_AccomodationRoomImage_Accommodation">
-            <End Role="Accommodation" EntitySet="Accommodations" />
-            <End Role="AccomodationRoomImage" EntitySet="AccomodationRoomImages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AccomodationSupplier_Accommodation" Association="Self.FK_AccomodationSupplier_Accommodation">
-            <End Role="Accommodation" EntitySet="Accommodations" />
-            <End Role="AccomodationSupplier" EntitySet="AccomodationSuppliers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Discount_Accommodation" Association="Self.FK_Discount_Accommodation">
-            <End Role="Accommodation" EntitySet="Accommodations" />
-            <End Role="Discount" EntitySet="Discounts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Pages_Accommodations" Association="Self.FK_Pages_Accommodations">
-            <End Role="Accommodation" EntitySet="Accommodations" />
-            <End Role="Pages" EntitySet="Pages" />
           </AssociationSet>
           <AssociationSet Name="FK_AccommodationAttribute_Company" Association="Self.FK_AccommodationAttribute_Company">
             <End Role="Company1" EntitySet="Company1" />
@@ -15144,10 +14785,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
             <End Role="Contract" EntitySet="Contracts" />
             <End Role="ContractRefund" EntitySet="ContractRefunds" />
           </AssociationSet>
-          <AssociationSet Name="FK_FlightContract_Contract" Association="Self.FK_FlightContract_Contract">
-            <End Role="Contract" EntitySet="Contracts" />
-            <End Role="FlightContract" EntitySet="FlightContracts" />
-          </AssociationSet>
           <AssociationSet Name="FK_InsuranceContract_Contract" Association="Self.FK_InsuranceContract_Contract">
             <End Role="Contract" EntitySet="Contracts" />
             <End Role="InsuranceContract" EntitySet="InsuranceContracts" />
@@ -15295,18 +14932,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <AssociationSet Name="FK_ExchangeDetails_User" Association="Self.FK_ExchangeDetails_User">
             <End Role="User1" EntitySet="User1" />
             <End Role="ExchangeDetails" EntitySet="ExchangeDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK__FlightCon__Ticke__24285DB4" Association="Self.FK__FlightCon__Ticke__24285DB4">
-            <End Role="TicketStatus" EntitySet="TicketStatus" />
-            <End Role="FlightContract" EntitySet="FlightContracts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FlightContract_Supplier" Association="Self.FK_FlightContract_Supplier">
-            <End Role="Supplier" EntitySet="Suppliers" />
-            <End Role="FlightContract" EntitySet="FlightContracts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FlightTicket_FlightContract" Association="Self.FK_FlightTicket_FlightContract">
-            <End Role="FlightContract" EntitySet="FlightContracts" />
-            <End Role="FlightTicket" EntitySet="FlightTickets" />
           </AssociationSet>
           <AssociationSet Name="FK_FlightDiscount_Supplier" Association="Self.FK_FlightDiscount_Supplier">
             <End Role="Supplier" EntitySet="Suppliers" />
@@ -15676,20 +15301,66 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
             <End Role="User1" EntitySet="User1" />
             <End Role="WebSites" EntitySet="WebSites" />
           </AssociationSet>
-          <AssociationSet Name="AccommodationFacility" Association="Self.AccommodationFacility">
-            <End Role="Accommodation" EntitySet="Accommodations" />
-            <End Role="Facility" EntitySet="Facilities" />
-          </AssociationSet>
-          <AssociationSet Name="AccommodationLocation" Association="Self.AccommodationLocation">
-            <End Role="Accommodation" EntitySet="Accommodations" />
-            <End Role="Location" EntitySet="Locations" />
-          </AssociationSet>
           <AssociationSet Name="UserRole" Association="Self.UserRole">
             <End Role="Role" EntitySet="Roles" />
             <End Role="User1" EntitySet="User1" />
           </AssociationSet>
           <EntitySet Name="IataAirports" EntityType="DataContext.IataAirport" />
-        </EntityContainer>
+          <EntitySet Name="Accommodations" EntityType="DataContext.Accommodation" />
+          <EntitySet Name="AccommodationSortedByCountries" EntityType="DataContext.AccommodationSortedByCountry" />
+          <AssociationSet Name="FK_AccommodationCommission_Accommodation" Association="DataContext.FK_AccommodationCommission_Accommodation">
+            <End Role="Accommodation" EntitySet="Accommodations" />
+            <End Role="AccommodationCommission" EntitySet="AccommodationCommissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccommodationAttribute_Accommodation" Association="DataContext.FK_AccommodationAttribute_Accommodation">
+            <End Role="Accommodation" EntitySet="Accommodations" />
+            <End Role="AccommodationAttribute" EntitySet="AccommodationAttributes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccommodationCommission_Accommodation1" Association="DataContext.FK_AccommodationCommission_Accommodation1">
+            <End Role="Accommodation" EntitySet="Accommodations" />
+            <End Role="AccommodationCommission1" EntitySet="AccommodationCommission1" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccommodationDescription_Accommodation" Association="DataContext.FK_AccommodationDescription_Accommodation">
+            <End Role="Accommodation" EntitySet="Accommodations" />
+            <End Role="AccommodationDescription" EntitySet="AccommodationDescriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccommodationReview_Accommodation" Association="DataContext.FK_AccommodationReview_Accommodation">
+            <End Role="Accommodation" EntitySet="Accommodations" />
+            <End Role="AccommodationReview" EntitySet="AccommodationReviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccomodationImage_Accommodation" Association="DataContext.FK_AccomodationImage_Accommodation">
+            <End Role="Accommodation" EntitySet="Accommodations" />
+            <End Role="AccomodationImage" EntitySet="AccomodationImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccomodationRoomImage_Accommodation" Association="DataContext.FK_AccomodationRoomImage_Accommodation">
+            <End Role="Accommodation" EntitySet="Accommodations" />
+            <End Role="AccomodationRoomImage" EntitySet="AccomodationRoomImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccomodationSupplier_Accommodation" Association="DataContext.FK_AccomodationSupplier_Accommodation">
+            <End Role="Accommodation" EntitySet="Accommodations" />
+            <End Role="AccomodationSupplier" EntitySet="AccomodationSuppliers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Discount_Accommodation" Association="DataContext.FK_Discount_Accommodation">
+            <End Role="Accommodation" EntitySet="Accommodations" />
+            <End Role="Discount" EntitySet="Discounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pages_Accommodations" Association="DataContext.FK_Pages_Accommodations">
+            <End Role="Accommodation" EntitySet="Accommodations" />
+            <End Role="Page" EntitySet="Pages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VerifyAccommodations_Accommodation" Association="DataContext.FK_VerifyAccommodations_Accommodation">
+            <End Role="Accommodation" EntitySet="Accommodations" />
+            <End Role="AccommodationSortedByCountry" EntitySet="AccommodationSortedByCountries" />
+          </AssociationSet>
+          <AssociationSet Name="AccommodationFacility" Association="DataContext.AccommodationFacility">
+            <End Role="Accommodation" EntitySet="Accommodations" />
+            <End Role="Facility" EntitySet="Facilities" />
+          </AssociationSet>
+          <AssociationSet Name="AccommodationLocation" Association="DataContext.AccommodationLocation">
+            <End Role="Accommodation" EntitySet="Accommodations" />
+            <End Role="Location" EntitySet="Locations" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="IataAirport">
           <Key>
             <PropertyRef Name="Id" />
@@ -15704,7 +15375,212 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <Property Name="Type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="IataCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
-      </Schema>
+        <EntityType Name="Accommodation">
+          <Key>
+            <PropertyRef Name="AccommodationlID" />
+          </Key>
+          <Property Name="AccommodationlID" Type="Int64" Nullable="false" />
+          <Property Name="ChainID" Type="Int64" />
+          <Property Name="AirportCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="Byte" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Rating" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PostCodeZip" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Near" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="lastUpdate" Type="DateTime" Precision="3" />
+          <Property Name="CountryCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int64" />
+          <Property Name="Resort" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Region" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="DestinationId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Destination" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HotelArea" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="HotelImages" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="HotelLocation" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="HotelInfo" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="PAmenities" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="Url" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="UserID" Type="Int64" />
+          <Property Name="DateVerified" Type="DateTime" Precision="3" />
+          <Property Name="IsVerified" Type="Boolean" />
+          <Property Name="IsError" Type="Boolean" />
+          <Property Name="BookingUrl" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AccommodationCommissions" Relationship="DataContext.FK_AccommodationCommission_Accommodation" FromRole="Accommodation" ToRole="AccommodationCommission" />
+          <NavigationProperty Name="AccommodationAttributes" Relationship="DataContext.FK_AccommodationAttribute_Accommodation" FromRole="Accommodation" ToRole="AccommodationAttribute" />
+          <NavigationProperty Name="AccommodationCommission1" Relationship="DataContext.FK_AccommodationCommission_Accommodation1" FromRole="Accommodation" ToRole="AccommodationCommission1" />
+          <NavigationProperty Name="AccommodationDescriptions" Relationship="DataContext.FK_AccommodationDescription_Accommodation" FromRole="Accommodation" ToRole="AccommodationDescription" />
+          <NavigationProperty Name="AccommodationReviews" Relationship="DataContext.FK_AccommodationReview_Accommodation" FromRole="Accommodation" ToRole="AccommodationReview" />
+          <NavigationProperty Name="AccomodationImages" Relationship="DataContext.FK_AccomodationImage_Accommodation" FromRole="Accommodation" ToRole="AccomodationImage" />
+          <NavigationProperty Name="AccomodationRoomImages" Relationship="DataContext.FK_AccomodationRoomImage_Accommodation" FromRole="Accommodation" ToRole="AccomodationRoomImage" />
+          <NavigationProperty Name="AccomodationSuppliers" Relationship="DataContext.FK_AccomodationSupplier_Accommodation" FromRole="Accommodation" ToRole="AccomodationSupplier" />
+          <NavigationProperty Name="Discounts" Relationship="DataContext.FK_Discount_Accommodation" FromRole="Accommodation" ToRole="Discount" />
+          <NavigationProperty Name="Pages" Relationship="DataContext.FK_Pages_Accommodations" FromRole="Accommodation" ToRole="Page" />
+          <NavigationProperty Name="AccommodationSortedByCountry" Relationship="DataContext.FK_VerifyAccommodations_Accommodation" FromRole="Accommodation" ToRole="AccommodationSortedByCountry" />
+          <NavigationProperty Name="Facilities" Relationship="DataContext.AccommodationFacility" FromRole="Accommodation" ToRole="Facility" />
+          <NavigationProperty Name="Locations" Relationship="DataContext.AccommodationLocation" FromRole="Accommodation" ToRole="Location" />
+        </EntityType>
+        <EntityType Name="AccommodationSortedByCountry">
+          <Key>
+            <PropertyRef Name="AccommodationId" />
+          </Key>
+          <Property Name="AccommodationId" Type="Int64" Nullable="false" />
+          <Property Name="AccommodationName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CountryName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Ordered" Type="Int64" />
+          <NavigationProperty Name="Accommodation" Relationship="DataContext.FK_VerifyAccommodations_Accommodation" FromRole="AccommodationSortedByCountry" ToRole="Accommodation" />
+        </EntityType>
+        <Association Name="FK_AccommodationCommission_Accommodation">
+          <End Type="DataContext.Accommodation" Role="Accommodation" Multiplicity="0..1" />
+          <End Type="DataContext.AccommodationCommission" Role="AccommodationCommission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accommodation">
+              <PropertyRef Name="AccommodationlID" />
+            </Principal>
+            <Dependent Role="AccommodationCommission">
+              <PropertyRef Name="AccommodationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccommodationAttribute_Accommodation">
+          <End Type="DataContext.Accommodation" Role="Accommodation" Multiplicity="0..1" />
+          <End Type="DataContext.AccommodationAttribute" Role="AccommodationAttribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accommodation">
+              <PropertyRef Name="AccommodationlID" />
+            </Principal>
+            <Dependent Role="AccommodationAttribute">
+              <PropertyRef Name="AccommodationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccommodationCommission_Accommodation1">
+          <End Type="DataContext.Accommodation" Role="Accommodation" Multiplicity="0..1" />
+          <End Type="DataContext.AccommodationCommission1" Role="AccommodationCommission1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accommodation">
+              <PropertyRef Name="AccommodationlID" />
+            </Principal>
+            <Dependent Role="AccommodationCommission1">
+              <PropertyRef Name="AccommodationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccommodationDescription_Accommodation">
+          <End Type="DataContext.Accommodation" Role="Accommodation" Multiplicity="0..1" />
+          <End Type="DataContext.AccommodationDescription" Role="AccommodationDescription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accommodation">
+              <PropertyRef Name="AccommodationlID" />
+            </Principal>
+            <Dependent Role="AccommodationDescription">
+              <PropertyRef Name="AccommodationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccommodationReview_Accommodation">
+          <End Type="DataContext.Accommodation" Role="Accommodation" Multiplicity="1" />
+          <End Type="DataContext.AccommodationReview" Role="AccommodationReview" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accommodation">
+              <PropertyRef Name="AccommodationlID" />
+            </Principal>
+            <Dependent Role="AccommodationReview">
+              <PropertyRef Name="AccommodationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccomodationImage_Accommodation">
+          <End Type="DataContext.Accommodation" Role="Accommodation" Multiplicity="1" />
+          <End Type="DataContext.AccomodationImage" Role="AccomodationImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accommodation">
+              <PropertyRef Name="AccommodationlID" />
+            </Principal>
+            <Dependent Role="AccomodationImage">
+              <PropertyRef Name="AccommodationlID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccomodationRoomImage_Accommodation">
+          <End Type="DataContext.Accommodation" Role="Accommodation" Multiplicity="1" />
+          <End Type="DataContext.AccomodationRoomImage" Role="AccomodationRoomImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accommodation">
+              <PropertyRef Name="AccommodationlID" />
+            </Principal>
+            <Dependent Role="AccomodationRoomImage">
+              <PropertyRef Name="AccommodationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccomodationSupplier_Accommodation">
+          <End Type="DataContext.Accommodation" Role="Accommodation" Multiplicity="1" />
+          <End Type="DataContext.AccomodationSupplier" Role="AccomodationSupplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accommodation">
+              <PropertyRef Name="AccommodationlID" />
+            </Principal>
+            <Dependent Role="AccomodationSupplier">
+              <PropertyRef Name="AccommodationlID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Discount_Accommodation">
+          <End Type="DataContext.Accommodation" Role="Accommodation" Multiplicity="0..1" />
+          <End Type="DataContext.Discount" Role="Discount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accommodation">
+              <PropertyRef Name="AccommodationlID" />
+            </Principal>
+            <Dependent Role="Discount">
+              <PropertyRef Name="AccommodationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pages_Accommodations">
+          <End Type="DataContext.Accommodation" Role="Accommodation" Multiplicity="0..1" />
+          <End Type="DataContext.Page" Role="Page" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accommodation">
+              <PropertyRef Name="AccommodationlID" />
+            </Principal>
+            <Dependent Role="Page">
+              <PropertyRef Name="AccommodationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VerifyAccommodations_Accommodation">
+          <End Type="DataContext.Accommodation" Role="Accommodation" Multiplicity="1" />
+          <End Type="DataContext.AccommodationSortedByCountry" Role="AccommodationSortedByCountry" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Accommodation">
+              <PropertyRef Name="AccommodationlID" />
+            </Principal>
+            <Dependent Role="AccommodationSortedByCountry">
+              <PropertyRef Name="AccommodationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AccommodationFacility">
+          <End Type="DataContext.Accommodation" Role="Accommodation" Multiplicity="*" />
+          <End Type="DataContext.Facility" Role="Facility" Multiplicity="*" />
+        </Association>
+        <Association Name="AccommodationLocation">
+          <End Type="DataContext.Accommodation" Role="Accommodation" Multiplicity="*" />
+          <End Type="DataContext.Location" Role="Location" Multiplicity="*" />
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -15903,48 +15779,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
                 <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="LocationId" ColumnName="LocationId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Accommodations">
-            <EntityTypeMapping TypeName="DataContext.Accommodation">
-              <MappingFragment StoreEntitySet="Accommodation">
-                <ScalarProperty Name="BookingUrl" ColumnName="BookingUrl" />
-                <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
-                <ScalarProperty Name="ChainID" ColumnName="ChainID" />
-                <ScalarProperty Name="AirportCode" ColumnName="AirportCode" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="PostCodeZip" ColumnName="PostCodeZip" />
-                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
-                <ScalarProperty Name="Fax" ColumnName="Fax" />
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Near" ColumnName="Near" />
-                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
-                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
-                <ScalarProperty Name="CityId" ColumnName="CityId" />
-                <ScalarProperty Name="Resort" ColumnName="Resort" />
-                <ScalarProperty Name="Region" ColumnName="Region" />
-                <ScalarProperty Name="DestinationId" ColumnName="DestinationId" />
-                <ScalarProperty Name="Destination" ColumnName="Destination" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="HotelArea" ColumnName="HotelArea" />
-                <ScalarProperty Name="HotelImages" ColumnName="HotelImages" />
-                <ScalarProperty Name="HotelLocation" ColumnName="HotelLocation" />
-                <ScalarProperty Name="HotelInfo" ColumnName="HotelInfo" />
-                <ScalarProperty Name="PAmenities" ColumnName="PAmenities" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Url" ColumnName="Url" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="DateVerified" ColumnName="DateVerified" />
-                <ScalarProperty Name="IsVerified" ColumnName="IsVerified" />
-                <ScalarProperty Name="IsError" ColumnName="IsError" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -16808,28 +16642,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
                 <ScalarProperty Name="PersianName" ColumnName="PersianName" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="FacilityTotID" ColumnName="FacilityTotID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FlightContracts">
-            <EntityTypeMapping TypeName="DataContext.FlightContract">
-              <MappingFragment StoreEntitySet="FlightContract">
-                <ScalarProperty Name="FlightContractID" ColumnName="FlightContractID" />
-                <ScalarProperty Name="ContractID" ColumnName="ContractID" />
-                <ScalarProperty Name="RPHKey_Old" ColumnName="RPHKey_Old" />
-                <ScalarProperty Name="RPH" ColumnName="RPH" />
-                <ScalarProperty Name="PNR" ColumnName="PNR" />
-                <ScalarProperty Name="FlightReservName" ColumnName="FlightReservName" />
-                <ScalarProperty Name="TotalFare" ColumnName="TotalFare" />
-                <ScalarProperty Name="TotalFareCurrencyCode" ColumnName="TotalFareCurrencyCode" />
-                <ScalarProperty Name="TotalCommission" ColumnName="TotalCommission" />
-                <ScalarProperty Name="TotalCommissionCurrencyCode" ColumnName="TotalCommissionCurrencyCode" />
-                <ScalarProperty Name="CounterCommission" ColumnName="CounterCommission" />
-                <ScalarProperty Name="CounterCommissionCurrencyCode" ColumnName="CounterCommissionCurrencyCode" />
-                <ScalarProperty Name="TicketStatusID" ColumnName="TicketStatusID" />
-                <ScalarProperty Name="RPHKey" ColumnName="RPHKey" />
-                <ScalarProperty Name="BillTicket" ColumnName="BillTicket" />
-                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -19182,22 +18994,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AccommodationFacility" TypeName="DataContext.AccommodationFacility" StoreEntitySet="AccommodationFacility">
-            <EndProperty Name="Accommodation">
-              <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
-            </EndProperty>
-            <EndProperty Name="Facility">
-              <ScalarProperty Name="FacilityID" ColumnName="FacilityID" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="AccommodationLocation" TypeName="DataContext.AccommodationLocation" StoreEntitySet="AccommodationLocation">
-            <EndProperty Name="Accommodation">
-              <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationID" />
-            </EndProperty>
-            <EndProperty Name="Location">
-              <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-            </EndProperty>
-          </AssociationSetMapping>
           <AssociationSetMapping Name="UserRole" TypeName="DataContext.UserRole" StoreEntitySet="UserRole">
             <EndProperty Name="Role">
               <ScalarProperty Name="RoleID" ColumnName="RoleID" />
@@ -19221,7 +19017,76 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="Accommodations">
+            <EntityTypeMapping TypeName="DataContext.Accommodation">
+              <MappingFragment StoreEntitySet="Accommodation">
+                <ScalarProperty Name="BookingUrl" ColumnName="BookingUrl" />
+                <ScalarProperty Name="IsError" ColumnName="IsError" />
+                <ScalarProperty Name="IsVerified" ColumnName="IsVerified" />
+                <ScalarProperty Name="DateVerified" ColumnName="DateVerified" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PAmenities" ColumnName="PAmenities" />
+                <ScalarProperty Name="HotelInfo" ColumnName="HotelInfo" />
+                <ScalarProperty Name="HotelLocation" ColumnName="HotelLocation" />
+                <ScalarProperty Name="HotelImages" ColumnName="HotelImages" />
+                <ScalarProperty Name="HotelArea" ColumnName="HotelArea" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="DestinationId" ColumnName="DestinationId" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Resort" ColumnName="Resort" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+                <ScalarProperty Name="Near" ColumnName="Near" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="PostCodeZip" ColumnName="PostCodeZip" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="AirportCode" ColumnName="AirportCode" />
+                <ScalarProperty Name="ChainID" ColumnName="ChainID" />
+                <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccommodationSortedByCountries">
+            <EntityTypeMapping TypeName="DataContext.AccommodationSortedByCountry">
+              <MappingFragment StoreEntitySet="AccommodationSortedByCountry">
+                <ScalarProperty Name="Ordered" ColumnName="Ordered" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="AccommodationName" ColumnName="AccommodationName" />
+                <ScalarProperty Name="AccommodationId" ColumnName="AccommodationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AccommodationFacility" TypeName="DataContext.AccommodationFacility" StoreEntitySet="AccommodationFacility">
+            <EndProperty Name="Facility">
+              <ScalarProperty Name="FacilityID" ColumnName="FacilityID" />
+            </EndProperty>
+            <EndProperty Name="Accommodation">
+              <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="AccommodationLocation" TypeName="DataContext.AccommodationLocation" StoreEntitySet="AccommodationLocation">
+            <EndProperty Name="Location">
+              <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+            </EndProperty>
+            <EndProperty Name="Accommodation">
+              <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

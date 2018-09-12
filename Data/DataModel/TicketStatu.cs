@@ -18,7 +18,6 @@ namespace Data.DataModel
         public TicketStatu()
         {
             this.AccomodatonContracts = new HashSet<AccomodatonContract>();
-            this.FlightContracts = new HashSet<FlightContract>();
         }
     
         public long TicketStatusID { get; set; }
@@ -26,7 +25,5 @@ namespace Data.DataModel
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccomodatonContract> AccomodatonContracts { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FlightContract> FlightContracts { get; set; }
     }
 }
