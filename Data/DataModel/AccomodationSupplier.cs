@@ -28,7 +28,7 @@ namespace Data.DataModel
         public Nullable<long> CityId { get; set; }
         public string CountryName { get; set; }
     
-        public virtual Accommodation Accommodation { get; set; }
         public virtual Supplier Supplier { get; set; }
+        public virtual Accommodation Accommodation { get; set; }
     }
 }

@@ -26,9 +26,9 @@ namespace Data.DataModel
         public Nullable<long> UserID { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
     
-        public virtual Accommodation Accommodation { get; set; }
         public virtual Company1 Company1 { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual User1 User1 { get; set; }
+        public virtual Accommodation Accommodation { get; set; }
     }
 }

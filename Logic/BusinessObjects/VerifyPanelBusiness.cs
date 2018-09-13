@@ -56,8 +56,6 @@ namespace Logic.BusinessObjects
                         CountryName = x.Country,
                     }).FirstOrDefault() ?? throw new Exception("The Accommodation does not exist.");
                     result.AccommodationFacilities = GetAccommodationFacilities(accommodationId);
-                    result.AccommodationImages = GetAccommodationImages(accommodationId);
-                    result.RoomImages = GetRoomImages(accommodationId);
                     return result;
                 }
             }
@@ -137,7 +135,7 @@ namespace Logic.BusinessObjects
             }
         }
 
-        public bool Verify(HotelInfoViewModel model, List<long> newFacilities, List<long> removedFacilities, out string message)
+        public bool Verify(long userId, HotelInfoViewModel model, List<long> newFacilities, List<long> removedFacilities, out string message)
         {
             try
             {
@@ -167,6 +165,7 @@ namespace Logic.BusinessObjects
                         accommodation.BookingUrl = model.BookingUrl ?? accommodation.BookingUrl;
                         accommodation.DateVerified = DateTime.Now.Date;
                         accommodation.IsVerified = true;
+                        accommodation.UserID = userId;
                         accommodation.IsActive = model.IsActive ?? false;
                         foreach (var item in newFacilities ?? new List<long>())
                         {

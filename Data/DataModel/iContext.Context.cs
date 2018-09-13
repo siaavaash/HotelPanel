@@ -39,7 +39,6 @@ namespace Data.DataModel
         public virtual DbSet<RailwayStation> RailwayStations { get; set; }
         public virtual DbSet<RailwayStationTemp> RailwayStationTemps { get; set; }
         public virtual DbSet<RailwayStationTemp2> RailwayStationTemp2 { get; set; }
-        public virtual DbSet<Accommodation> Accommodations { get; set; }
         public virtual DbSet<AccommodationAirport> AccommodationAirports { get; set; }
         public virtual DbSet<AccommodationAttribute> AccommodationAttributes { get; set; }
         public virtual DbSet<AccommodationCommission1> AccommodationCommission1 { get; set; }
@@ -96,7 +95,6 @@ namespace Data.DataModel
         public virtual DbSet<Exchange> Exchanges { get; set; }
         public virtual DbSet<ExchangeDetail> ExchangeDetails { get; set; }
         public virtual DbSet<Facility> Facilities { get; set; }
-        public virtual DbSet<FlightContract> FlightContracts { get; set; }
         public virtual DbSet<FlightContractPassenger> FlightContractPassengers { get; set; }
         public virtual DbSet<FlightDiscount> FlightDiscounts { get; set; }
         public virtual DbSet<FlightEticket> FlightEtickets { get; set; }
@@ -226,5 +224,7 @@ namespace Data.DataModel
         public virtual DbSet<TimeZone> TimeZones { get; set; }
         public virtual DbSet<UserRole961221> UserRole961221 { get; set; }
         public virtual DbSet<IataAirport> IataAirports { get; set; }
+        public virtual DbSet<Accommodation> Accommodations { get; set; }
+        public virtual DbSet<AccommodationSortedByCountry> AccommodationSortedByCountries { get; set; }
     }
 }

@@ -107,6 +107,9 @@
     <Compile Include="DataModel\AccommodationReview.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\AccommodationSortedByCountry.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\AccommodationTmp.cs">
       <DependentUpon>iContext2.tt</DependentUpon>
     </Compile>
@@ -309,9 +312,6 @@
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\FileName.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\FlightContract.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\FlightContractPassenger.cs">

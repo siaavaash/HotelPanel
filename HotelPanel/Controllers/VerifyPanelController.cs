@@ -69,7 +69,7 @@ namespace HotelPanel.Controllers
         {
             try
             {
-                if (verifyPanelBusiness.Verify(model, addedFacilities, removedFacilities, out string message))
+                if (verifyPanelBusiness.Verify(CurrentUser.UserID, model, addedFacilities, removedFacilities, out string message))
                     return Json(new { success = true, data = message }, JsonRequestBehavior.AllowGet);
                 return Json(new { success = false, data = message }, JsonRequestBehavior.AllowGet);
             }

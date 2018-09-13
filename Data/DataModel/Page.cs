@@ -30,8 +30,8 @@ namespace Data.DataModel
         public string PageTitle { get; set; }
         public string ChangeFreq { get; set; }
     
-        public virtual Accommodation Accommodation { get; set; }
         public virtual User1 User1 { get; set; }
         public virtual User1 User11 { get; set; }
+        public virtual Accommodation Accommodation { get; set; }
     }
 }

@@ -27,7 +27,6 @@ namespace Data.DataModel
             this.AirportSuppliers = new HashSet<AirportSupplier>();
             this.AirportSupplierConfig1 = new HashSet<AirportSupplierConfig1>();
             this.CompanySupplierAccesses = new HashSet<CompanySupplierAccess>();
-            this.FlightContracts = new HashSet<FlightContract>();
             this.FlightDiscounts = new HashSet<FlightDiscount>();
             this.InsuranceContracts = new HashSet<InsuranceContract>();
             this.LocationSuppliers = new HashSet<LocationSupplier>();
@@ -68,8 +67,6 @@ namespace Data.DataModel
         public virtual ICollection<AirportSupplierConfig1> AirportSupplierConfig1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CompanySupplierAccess> CompanySupplierAccesses { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FlightContract> FlightContracts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FlightDiscount> FlightDiscounts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

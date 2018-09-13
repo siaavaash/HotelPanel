@@ -22,7 +22,7 @@
         <button id="deactive_btn" class="btn_img">Deactive</button>
         <button id="report_btn" class="btn_img">Report</button>
         <button id="unreport_btn" class="btn_img">Unreport</button>
-        <button id="back" class="btn_img" type="submit" onclick="window.history.back();">Back</button>
+        <button id="back" class="btn_img" type="submit" onclick="window.location.href='/VerifyPanel/Details/@Model.AccommodationID';">Back</button>
         <div class="status"></div>
     </div>
     <div style="margin-top:50px;">
@@ -34,7 +34,7 @@
                 {
                     <label class="myCheckbox">
                         <span class="img_child"><i class="fas fa-times clos"></i></span>
-                        <img src="@Item.Link" id="@Item.ImageID" class="select-image">
+                        <img data-src="@Item.Link" id="@Item.ImageID" class="select-image lazy">
                     </label>
 
                 }
@@ -42,14 +42,14 @@
                 {
                     <label class="myCheckbox">
                         <span class="img_child"><i class="fas fa-check"></i></span>
-                        <img src="@Item.Link" id="@Item.ImageID" class="select-image">
+                        <img data-src="@Item.Link" id="@Item.ImageID" class="select-image lazy">
                     </label>
                 }
                 else
                 {
                     <label class="myCheckbox">
                         <span class="img_child"><i class="fas"></i></span>
-                        <img src="@Item.Link" id="@Item.ImageID" class="select-image">
+                        <img data-src="@Item.Link" id="@Item.ImageID" class="select-image lazy">
                     </label>
 
                 }
@@ -61,8 +61,15 @@
 
 
 <script type="text/javascript" src="~/Content/Scripts/jquery.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js"></script>
 
 <script>
+
+    $(function () {
+        $('.lazy').Lazy();
+    });
+
     var filtered = new Array();
     $("body").on("click", "#deactive_btn", function () {
         $("img.desc").parent().find("i").addClass("fa-times clos");
