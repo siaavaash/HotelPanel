@@ -11,6 +11,7 @@ using static Data.ViewModel.WeatherModels.Forecast;
 using Data.PublicModel;
 using Data.ViewModel.AccommodationModels;
 using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 namespace Logic.BusinessObjects
 {
@@ -75,17 +76,21 @@ namespace Logic.BusinessObjects
                                 Restricted = restricted,
                                 AccommodationList = new List<AccommodationListRsult>(),
                             };
+                            var tmpList = new ConcurrentBag<AccommodationListRsult>();
                             Parallel.ForEach(bounds, bound =>
                              {
-                                 result.AccommodationList.AddRange(context.Accommodations.Where(x => x.AccommodationSortedByCountry.Ordered >= bound.Key && x.AccommodationSortedByCountry.Ordered <= bound.Value).Select(x => new AccommodationListRsult
+                                 var accommodations = context.Accommodations.Include(x => x.AccommodationSortedByCountry).Where(x => x.AccommodationSortedByCountry.Ordered >= bound.Key && x.AccommodationSortedByCountry.Ordered <= bound.Value).Select(x => new AccommodationListRsult
                                  {
                                      AccommodationID = x.AccommodationlID,
                                      CityName = x.CityName,
                                      Country = x.Country,
                                      lastUpdate = x.lastUpdate,
                                      Name = x.Name
-                                 }).ToList());
+                                 }).ToList();
+                                 foreach (var accommodation in accommodations)
+                                     tmpList.Add(accommodation);
                              });
+                            result.AccommodationList = tmpList.ToList();
                             return result;
                         }
                     }
