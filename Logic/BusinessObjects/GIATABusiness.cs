@@ -4,6 +4,7 @@ using Service.Suppliers;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,6 +18,8 @@ namespace Logic.BusinessObjects
         {
             giataAccess = new GIATAAccess();
         }
+
+        public bool TruncateTables => ConfigurationManager.AppSettings["TruncateDb"] == "true" ? true : false;
 
         /// <summary>
         /// Remove All Accommodations in tables
@@ -472,7 +475,7 @@ namespace Logic.BusinessObjects
         {
             if (from > to)
                 throw new ArgumentException("Invalid parameter(s).");
-            //RemoveAll(from, to);
+            if (TruncateTables) RemoveAll(from, to);
             var returnList = new ConcurrentBag<MapResult>();
             var actions = new ConcurrentBag<Action>();
             Parallel.For(from, to + 1, i =>
