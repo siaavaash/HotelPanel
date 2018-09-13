@@ -56,8 +56,6 @@ namespace Logic.BusinessObjects
                         CountryName = x.Country,
                     }).FirstOrDefault() ?? throw new Exception("The Accommodation does not exist.");
                     result.AccommodationFacilities = GetAccommodationFacilities(accommodationId);
-                    result.AccommodationImages = GetAccommodationImages(accommodationId);
-                    result.RoomImages = GetRoomImages(accommodationId);
                     return result;
                 }
             }

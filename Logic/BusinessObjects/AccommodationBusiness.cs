@@ -234,16 +234,7 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                var Verified = DataContext.Context.Accommodations.Where(x => x.AccommodationlID == AccommodationID).FirstOrDefault().IsVerified;
-                if (!(bool)Verified)
-                {
-                    return DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID == AccommodationID && (x.IsActive ?? false)).ToList();
-                }
-                else
-                {
-                    return DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID == AccommodationID).ToList();
-                }
-
+                return DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID == AccommodationID).ToList();
             }
             catch (Exception exeption)
             {
@@ -554,6 +545,7 @@ namespace Logic.BusinessObjects
             {
                 using (var context = new Entities())
                 {
+                    context.Configuration.AutoDetectChangesEnabled = false;
                     return new RoomImagesViewModel
                     {
                         AccommodationID = accommodationId,
