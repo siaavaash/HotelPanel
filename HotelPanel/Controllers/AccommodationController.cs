@@ -78,7 +78,10 @@ namespace HotelPanel.Controllers
         {
             try
             {
-                return View(_AccommodationBusiness.GetRoomImageByAccId(id));
+                var result = new GroupRoomImage();
+                result.AccommodationId = id;
+                result.RoomImages = _AccommodationBusiness.GetGroupedRoomImage(id);
+                return View(result);
             }
             catch (Exception)
             {

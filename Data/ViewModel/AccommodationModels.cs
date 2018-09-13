@@ -1,5 +1,6 @@
 ﻿using Data.DataModel;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -115,4 +116,10 @@ namespace Data.ViewModel.AccommodationModels
         public System.DateTime? ModificationTime { get; set; }
         public long? ModifyUserID { get; set; }
     }
+    public class GroupRoomImage
+    {
+        public long AccommodationId { get; set; }
+        public Dictionary<string, List<AccomodationRoomImage>> RoomImages { get; set; }
+    }
+
 }

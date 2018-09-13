@@ -613,5 +613,36 @@ namespace Logic.BusinessObjects
                 throw;
             }
         }
+        public Dictionary<string, List<AccomodationRoomImage>> GetGroupedRoomImage(long accommodationId)
+        {
+            try
+            {
+                var images = new List<AccomodationRoomImage>();
+                using (var context = new Entities())
+                {
+                    images = context.AccomodationRoomImages.Where(x => x.AccommodationID == accommodationId).ToList();
+                }
+                var result = new ConcurrentDictionary<string, ConcurrentBag<AccomodationRoomImage>>();
+                Parallel.ForEach(images, image =>
+                {
+                    var thisTitle = result.FirstOrDefault(x => x.Key == image.RoomTypeName);
+                    if (thisTitle.Key == null)
+                    {
+                        result.TryAdd(image.RoomTypeName, new ConcurrentBag<AccomodationRoomImage>
+                        {
+                            image
+                        });
+                    }
+                    else
+                        thisTitle.Value.Add(image);
+                });
+                return result.ToDictionary(x => x.Key, x => x.Value.ToList());
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
