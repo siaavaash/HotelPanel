@@ -446,7 +446,7 @@ namespace Logic.BusinessObjects
                         }
                         return (true, false, message);
                     }
-                    else
+                    else if (serviceResult.Model is Error)
                     {
                         var str = ((Error)serviceResult.Model).Description.Href;
                         var movedId = Convert.ToInt64(str.Substring(str.LastIndexOf('/') + 1));
@@ -455,6 +455,8 @@ namespace Logic.BusinessObjects
                             return (true, true, message);
                         return (true, false, message);
                     }
+                    message = serviceResult.Error.Text;
+                    return (true, false, message);
                 }
                 message = serviceResult.Error.Text;
                 return (false, false, message);
@@ -473,110 +475,117 @@ namespace Logic.BusinessObjects
         /// <returns>giata ids that failed</returns>
         public ConcurrentBag<MapResult> MapRange(long from, long to)
         {
-            if (from > to)
-                throw new ArgumentException("Invalid parameter(s).");
-            if (TruncateTables) RemoveAll(from, to);
-            var returnList = new ConcurrentBag<MapResult>();
-            var actions = new ConcurrentBag<Action>();
-            Parallel.For(from, to + 1, i =>
+            try
             {
-                actions.Add(() =>
-                        {
-                            var mapRs = Map(i);
-                            if (!mapRs.serviceSuccess)
+                if (from > to)
+                    throw new ArgumentException("Invalid parameter(s).");
+                if (TruncateTables) RemoveAll(from, to);
+                var returnList = new ConcurrentBag<MapResult>();
+                var actions = new ConcurrentBag<Action>();
+                Parallel.For(from, to + 1, i =>
+                {
+                    actions.Add(() =>
                             {
-                                var tryMapRs = TryMap(i);
-                                if (!tryMapRs.Item1)
+                                var mapRs = Map(i);
+                                if (!mapRs.serviceSuccess)
                                 {
+                                    var tryMapRs = TryMap(i);
+                                    if (!tryMapRs.Item1)
+                                    {
+                                        returnList.Add(new MapResult
+                                        {
+                                            Id = i,
+                                            Message = tryMapRs.Item2,
+                                            MapToDbSuccess = false,
+                                            ServiceSuccess = false,
+                                        });
+                                        return;
+                                    }
                                     returnList.Add(new MapResult
                                     {
                                         Id = i,
                                         Message = tryMapRs.Item2,
-                                        MapToDbSuccess = false,
-                                        ServiceSuccess = false,
+                                        MapToDbSuccess = true,
+                                        ServiceSuccess = true,
                                     });
                                     return;
                                 }
-                                returnList.Add(new MapResult
+                                if (mapRs.dbSuccess)
                                 {
-                                    Id = i,
-                                    Message = tryMapRs.Item2,
-                                    MapToDbSuccess = true,
-                                    ServiceSuccess = true,
-                                });
-                                return;
-                            }
-                            if (mapRs.dbSuccess)
-                            {
+                                    returnList.Add(new MapResult
+                                    {
+                                        Id = i,
+                                        Message = mapRs.message,
+                                        ServiceSuccess = true,
+                                        MapToDbSuccess = true,
+                                    });
+                                    return;
+                                }
+                                DeactiveAccommodation(i, deactive: true);
                                 returnList.Add(new MapResult
                                 {
                                     Id = i,
                                     Message = mapRs.message,
                                     ServiceSuccess = true,
-                                    MapToDbSuccess = true,
+                                    MapToDbSuccess = false,
                                 });
-                                return;
-                            }
-                            DeactiveAccommodation(i, deactive: true);
-                            returnList.Add(new MapResult
-                            {
-                                Id = i,
-                                Message = mapRs.message,
-                                ServiceSuccess = true,
-                                MapToDbSuccess = false,
                             });
-                        });
-            });
-            Parallel.Invoke(actions.ToArray());
+                });
+                Parallel.Invoke(actions.ToArray());
 
 
-            //Parallel.For(from, to + 1, i =>
-            // {
-            //     var mapRs = Map(i);
-            //     if (!mapRs.serviceSuccess)
-            //     {
-            //         var tryMapRs = TryMap(i);
-            //         if (!tryMapRs.Item1)
-            //         {
-            //             returnList.Add(new MapResult
-            //             {
-            //                 Id = i,
-            //                 Message = tryMapRs.Item2,
-            //                 MapToDbSuccess = false,
-            //                 ServiceSuccess = false,
-            //             });
-            //             return;
-            //         }
-            //         returnList.Add(new MapResult
-            //         {
-            //             Id = i,
-            //             Message = tryMapRs.Item2,
-            //             MapToDbSuccess = true,
-            //             ServiceSuccess = true,
-            //         });
-            //         return;
-            //     }
-            //     if (mapRs.dbSuccess)
-            //     {
-            //         returnList.Add(new MapResult
-            //         {
-            //             Id = i,
-            //             Message = mapRs.message,
-            //             ServiceSuccess = true,
-            //             MapToDbSuccess = true,
-            //         });
-            //         return;
-            //     }
-            //     DeactiveAccommodation(i, deactive: true);
-            //     returnList.Add(new MapResult
-            //     {
-            //         Id = i,
-            //         Message = mapRs.message,
-            //         ServiceSuccess = true,
-            //         MapToDbSuccess = false,
-            //     });
-            // });
-            return returnList;
+                //Parallel.For(from, to + 1, i =>
+                // {
+                //     var mapRs = Map(i);
+                //     if (!mapRs.serviceSuccess)
+                //     {
+                //         var tryMapRs = TryMap(i);
+                //         if (!tryMapRs.Item1)
+                //         {
+                //             returnList.Add(new MapResult
+                //             {
+                //                 Id = i,
+                //                 Message = tryMapRs.Item2,
+                //                 MapToDbSuccess = false,
+                //                 ServiceSuccess = false,
+                //             });
+                //             return;
+                //         }
+                //         returnList.Add(new MapResult
+                //         {
+                //             Id = i,
+                //             Message = tryMapRs.Item2,
+                //             MapToDbSuccess = true,
+                //             ServiceSuccess = true,
+                //         });
+                //         return;
+                //     }
+                //     if (mapRs.dbSuccess)
+                //     {
+                //         returnList.Add(new MapResult
+                //         {
+                //             Id = i,
+                //             Message = mapRs.message,
+                //             ServiceSuccess = true,
+                //             MapToDbSuccess = true,
+                //         });
+                //         return;
+                //     }
+                //     DeactiveAccommodation(i, deactive: true);
+                //     returnList.Add(new MapResult
+                //     {
+                //         Id = i,
+                //         Message = mapRs.message,
+                //         ServiceSuccess = true,
+                //         MapToDbSuccess = false,
+                //     });
+                // });
+                return returnList;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Business Layer Error: {ex.Message} -- {ex.InnerException?.Message}");
+            }
         }
         /// <summary>
         /// Try Map 3 attempts

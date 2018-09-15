@@ -43,7 +43,7 @@ namespace Service.Suppliers
                     };
                 return new ResultDataModel
                 {
-                    Success = false,
+                    Success = true,
                     Error = new ServiceModel.PublicModels.Error
                     {
                         Code = model.Code,

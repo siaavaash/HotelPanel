@@ -1,6 +1,8 @@
 ﻿using Logic.BusinessObjects;
+using Newtonsoft.Json;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace HotelPanel.Controllers
@@ -21,15 +23,54 @@ namespace HotelPanel.Controllers
         public ActionResult GIATA() => View();
 
         // GET: Map GIATA Data
-        public JsonResult MapGIATAData(long from, long to)
+        public ActionResult MapGIATAData(long from, long to)
         {
             try
             {
-                return Json(new { success = true, data = giataBusiness.MapRange(from, to).OrderBy(x => x.Id) }, JsonRequestBehavior.AllowGet);
+                var allData = giataBusiness.MapRange(from, to).OrderBy(x => x.Id);
+                var size = allData.Count() / 5;
+                string status = "", partOneJson = "", partTwoJson = "", partThreeJson = "", partFourJson = "", partFiveJson = "";
+                Parallel.Invoke(
+                            () =>
+                            {
+                                status = JsonConvert.SerializeObject(new { success = true });
+                            },
+                            () =>
+                            {
+                                partOneJson = JsonConvert.SerializeObject(allData.Skip(0 * size).Take(size));
+                            },
+                            () =>
+                            {
+                                partTwoJson = JsonConvert.SerializeObject(allData.Skip(1 * size).Take(size));
+                            },
+                            () =>
+                            {
+                                partThreeJson = JsonConvert.SerializeObject(allData.Skip(2 * size).Take(size));
+                            },
+                            () =>
+                            {
+                                partFourJson = JsonConvert.SerializeObject(allData.Skip(3 * size).Take(size));
+                            },
+                            () =>
+                            {
+                                partFiveJson = JsonConvert.SerializeObject(allData.Skip(4 * size));
+                            });
+
+
+
+
+
+                var result = status.Remove(status.LastIndexOf("}")) + ",\"data\":" + partOneJson.Replace("]", ",")
+                                                                                        + partTwoJson.Replace("]", ",").Remove(partTwoJson.IndexOf("["), 1)
+                                                                                        + partThreeJson.Replace("]", ",").Remove(partThreeJson.IndexOf("["), 1)
+                                                                                        + partFourJson.Replace("]", ",").Remove(partFourJson.IndexOf("["), 1)
+                                                                                        + partFiveJson.Remove(partFiveJson.IndexOf("["), 1)
+                                                                                        + "}";
+                return Content(result, "application/json");
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, message = $"{ex.Message} -- {ex.InnerException?.Message}" }, JsonRequestBehavior.AllowGet);
             }
         }
 
