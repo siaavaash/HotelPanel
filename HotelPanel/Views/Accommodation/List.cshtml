@@ -17,7 +17,7 @@
         <div class="alert alert-success" role="alert">@Message_Success</div>
         Common.iUserStorage.Remove(Constants.PublicConstants.Session.Message_Success);
     }
-    @if (Model.Restricted == false || Model.AccommodationList == null)
+    @if (Model.AccommodationList == null)
     {
         @RenderPage("_Search.cshtml")
     }

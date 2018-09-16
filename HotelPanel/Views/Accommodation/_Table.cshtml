@@ -2,6 +2,14 @@
     <div class="col-md-12">
         <div class="bgc-white bd bdrs-3 p-20 mB-20">
             <h4 class="c-grey-900 mB-20">Accommodation List</h4>
+            @if (Model.Restricted)
+            {
+                object check = ViewBag.ShowVerified ? "checked" : null;
+                <div class="checkbox checkbox-circle checkbox-info peers ai-c mB-15">
+                    <input type="checkbox" id="inputCall1" name="ShowVerified" class="peer" @check>
+                    <label for="inputCall1" class="peers peer-greed js-sb ai-c"><span class="peer peer-greed">Show Verified Accommodations</span></label>
+                </div>
+            }
             <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                     <tr>
@@ -9,7 +17,7 @@
                         <th>Name</th>
                         <th>City</th>
                         <th>Country</th>
-                        <th>Last Update Date</th>
+                        <th>Last Update</th>
                         <th>Options</th>
                     </tr>
                 </thead>
@@ -45,3 +53,9 @@
         </div>
     </div>
 </div>
+<script>
+    $("input[name=ShowVerified]").change(function () {
+        var checked = $(this).is(":checked");
+        window.location.href = '/Accommodation/List?showVerified=' + checked;
+    })
+</script>

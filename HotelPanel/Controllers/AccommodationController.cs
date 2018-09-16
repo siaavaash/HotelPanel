@@ -48,9 +48,10 @@ namespace HotelPanel.Controllers
         {
             return View();
         }
-        public ActionResult List()
+        public ActionResult List(bool showVerified = false)
         {
-            var result = _AccommodationBusiness.GetAccommodationByUser(CurrentUser.UserID);
+            ViewBag.ShowVerified = showVerified;
+            var result = _AccommodationBusiness.GetAccommodationByUser(CurrentUser.UserID, showVerified);
             return View(result);
         }
         [HttpPost]
@@ -78,7 +79,10 @@ namespace HotelPanel.Controllers
         {
             try
             {
-                return View(_AccommodationBusiness.GetRoomImageByAccId(id));
+                var result = new GroupRoomImage();
+                result.AccommodationId = id;
+                result.RoomImages = _AccommodationBusiness.GetGroupedRoomImage(id);
+                return View(result);
             }
             catch (Exception)
             {
