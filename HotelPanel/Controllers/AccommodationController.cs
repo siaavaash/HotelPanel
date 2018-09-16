@@ -48,9 +48,10 @@ namespace HotelPanel.Controllers
         {
             return View();
         }
-        public ActionResult List()
+        public ActionResult List(bool showVerified = false)
         {
-            var result = _AccommodationBusiness.GetAccommodationByUser(CurrentUser.UserID);
+            ViewBag.ShowVerified = showVerified;
+            var result = _AccommodationBusiness.GetAccommodationByUser(CurrentUser.UserID, showVerified);
             return View(result);
         }
         [HttpPost]

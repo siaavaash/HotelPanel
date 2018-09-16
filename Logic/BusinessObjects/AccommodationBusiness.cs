@@ -58,7 +58,7 @@ namespace Logic.BusinessObjects
                 throw exeption;
             }
         }
-        public AccommodationListViewModel GetAccommodationByUser(long userId)
+        public AccommodationListViewModel GetAccommodationByUser(long userId, bool showIsVerified)
         {
             try
             {
@@ -67,7 +67,7 @@ namespace Logic.BusinessObjects
                     var userBounds = context.UserPictureDics.Where(x => x.UserID == userId).ToList();
                     if (userBounds != null && userBounds.Count > 0)
                     {
-                        var bounds = userBounds.Where(x => x.FromImageID != 0 & x.ToImageID != 0).Select(x => new { x.FromImageID, x.ToImageID }).ToDictionary(x => x.FromImageID, y => y.ToImageID);
+                        var bounds = userBounds.Where(x => x.FromImageID != 0 && x.ToImageID != 0).Select(x => new { x.FromImageID, x.ToImageID }).ToDictionary(x => x.FromImageID, y => y.ToImageID);
                         var restricted = bounds.Count > 0 ? true : false;
                         if (restricted)
                         {
@@ -76,21 +76,22 @@ namespace Logic.BusinessObjects
                                 Restricted = restricted,
                                 AccommodationList = new List<AccommodationListRsult>(),
                             };
-                            var tmpList = new ConcurrentBag<AccommodationListRsult>();
-                            Parallel.ForEach(bounds, bound =>
-                             {
-                                 var accommodations = context.Accommodations.Include(x => x.AccommodationSortedByCountry).Where(x => x.AccommodationSortedByCountry.Ordered >= bound.Key && x.AccommodationSortedByCountry.Ordered <= bound.Value).Select(x => new AccommodationListRsult
-                                 {
-                                     AccommodationID = x.AccommodationlID,
-                                     CityName = x.CityName,
-                                     Country = x.Country,
-                                     lastUpdate = x.lastUpdate,
-                                     Name = x.Name
-                                 }).ToList();
-                                 foreach (var accommodation in accommodations)
-                                     tmpList.Add(accommodation);
-                             });
-                            result.AccommodationList = tmpList.ToList();
+                            foreach (var bound in bounds)
+                            {
+                                var accommodations = context.Accommodations.Include(x => x.AccommodationSortedByCountry).Where(x => x.AccommodationSortedByCountry.Ordered >= bound.Key && x.AccommodationSortedByCountry.Ordered <= bound.Value);
+                                if (!showIsVerified)
+                                {
+                                    accommodations = accommodations.Where(x => x.DateVerified == null);
+                                }
+                                result.AccommodationList.AddRange(accommodations.Select(x => new AccommodationListRsult
+                                {
+                                    AccommodationID = x.AccommodationlID,
+                                    CityName = x.CityName,
+                                    Country = x.Country,
+                                    lastUpdate = x.lastUpdate,
+                                    Name = x.Name
+                                }).ToList());
+                            }
                             return result;
                         }
                     }
@@ -203,9 +204,9 @@ namespace Logic.BusinessObjects
                     }
 
                 }
-                if (Model.Verified != true && Query.Count != 0)
+                if (!Model.Verified)
                 {
-                    Query = Query.Where(x => x.IsVerified != true).ToList();
+                    Query = Query.Where(x => x.DateVerified == null).ToList();
                 }
                 var result = new AccommodationListViewModel
                 {
