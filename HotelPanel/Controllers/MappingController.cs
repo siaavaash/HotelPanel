@@ -26,46 +26,19 @@ namespace HotelPanel.Controllers
         public ActionResult MapGIATAData(long from, long to)
         {
             try
+
             {
                 var allData = giataBusiness.MapRange(from, to).OrderBy(x => x.Id);
-                var size = allData.Count() / 5;
-                string status = "", partOneJson = "", partTwoJson = "", partThreeJson = "", partFourJson = "", partFiveJson = "";
-                Parallel.Invoke(
-                            () =>
-                            {
-                                status = JsonConvert.SerializeObject(new { success = true });
-                            },
-                            () =>
-                            {
-                                partOneJson = JsonConvert.SerializeObject(allData.Skip(0 * size).Take(size));
-                            },
-                            () =>
-                            {
-                                partTwoJson = JsonConvert.SerializeObject(allData.Skip(1 * size).Take(size));
-                            },
-                            () =>
-                            {
-                                partThreeJson = JsonConvert.SerializeObject(allData.Skip(2 * size).Take(size));
-                            },
-                            () =>
-                            {
-                                partFourJson = JsonConvert.SerializeObject(allData.Skip(3 * size).Take(size));
-                            },
-                            () =>
-                            {
-                                partFiveJson = JsonConvert.SerializeObject(allData.Skip(4 * size));
-                            });
-
-
-
-
-
-                var result = status.Remove(status.LastIndexOf("}")) + ",\"data\":" + partOneJson.Replace("]", ",")
-                                                                                        + partTwoJson.Replace("]", ",").Remove(partTwoJson.IndexOf("["), 1)
-                                                                                        + partThreeJson.Replace("]", ",").Remove(partThreeJson.IndexOf("["), 1)
-                                                                                        + partFourJson.Replace("]", ",").Remove(partFourJson.IndexOf("["), 1)
-                                                                                        + partFiveJson.Remove(partFiveJson.IndexOf("["), 1)
-                                                                                        + "}";
+                var size = Convert.ToInt32(Math.Ceiling(allData.Count() / 5d));
+                var status = JsonConvert.SerializeObject(new { success = true });
+                var json = new string[5];
+                for (int i = 0; i < 5; i++)
+                {
+                    var data = allData.Skip(i * size).Take(size).ToList();
+                    if (data.Count() > 0)
+                        json[i] = JsonConvert.SerializeObject(data).Replace("[", i > 0 ? "," : "").Replace("]", "");
+                }
+                var result = status.Remove(status.LastIndexOf("}")) + ",\"data\":[" + json[0] + json[1] + json[2] + json[3] + json[4] + "]}";
                 return Content(result, "application/json");
             }
             catch (Exception ex)
