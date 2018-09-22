@@ -76,8 +76,11 @@ namespace HotelPanel.Controllers
             }
         }
 
+        // GET: Iata Code
+        public ActionResult Iata() => View();
+
         // GET: Map Iata Codes
-        public JsonResult MapIataCode(string code, byte searchBy)
+        public JsonResult MapIataCode(string code, byte searchBy = (byte)Common.IATASearchBy.ByLocationCode)
         {
             try
             {
