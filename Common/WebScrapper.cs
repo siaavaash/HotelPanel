@@ -38,6 +38,7 @@ namespace Common
         }
         protected override void Dispose(bool disposing)
         {
+            Application.Exit();
             if (thread != null)
             {
                 thread.Abort();

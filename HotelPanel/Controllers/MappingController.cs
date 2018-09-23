@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace HotelPanel.Controllers
 {
-    public class MappingController : BaseController
+    public class MappingController : Controller
     {
         private readonly GIATABusiness giataBusiness;
         private readonly GeocodingBusiness geocodingBusiness;

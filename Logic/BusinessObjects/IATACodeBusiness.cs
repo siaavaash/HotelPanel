@@ -4,6 +4,7 @@ using Service.Suppliers;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace Logic.BusinessObjects
 {
     public class IATACodeBusiness
     {
+        private bool RemoveExistingData => ConfigurationManager.AppSettings["IataAllowRemove"] == "true" ? true : false;
         private GCMAPCrawler gCMAPCrawler;
         public IATACodeBusiness()
         {
@@ -48,18 +50,58 @@ namespace Logic.BusinessObjects
                 throw;
             }
         }
+        public void Remove(string code)
+        {
+            try
+            {
+                using (var context = new Entities())
+                {
+                    context.IataAirports.RemoveRange(context.IataAirports.Where(x => x.IataCode == code).ToList());
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public void RemoveAll()
+        {
+            try
+            {
+                using (var context = new Entities())
+                {
+                    context.IataAirports.RemoveRange(context.IataAirports.ToList());
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public (bool success, List<IataAirport> data) GetIATAData(Common.IATASearchBy searchBy, string code)
         {
             try
             {
                 var result = new List<IataAirport>();
-                var gcmap = gCMAPCrawler.GetGCMAPData(code);
-                var iata = IATAScrapper.GetIATALocation(searchBy, code);
+                GCMAPResponse gcmap = null;
+                IATAResponse iata = null;
+                Parallel.Invoke(
+                    () =>
+                    {
+                        gcmap = gCMAPCrawler.GetGCMAPData(code);
+                    },
+                    () =>
+                    {
+                        iata = IATAScrapper.GetIATALocation(searchBy, code);
+                    });
                 if (iata.Success && gcmap.Success)
                 {
                     foreach (var airport in iata.Data)
                     {
-                        if (airport.AirportCode == code)
+                        if (airport.AirportCode == code.ToUpper())
                         {
                             result.Add(new IataAirport
                             {
@@ -139,6 +181,7 @@ namespace Logic.BusinessObjects
                 var getData = GetIATAData();
                 if (getData.success)
                 {
+                    if (RemoveExistingData) RemoveAll();
                     MaptoDbBulk(getData.data);
                 }
                 return (false, "Get Data failed.");
@@ -155,7 +198,9 @@ namespace Logic.BusinessObjects
                 var getData = GetIATAData(searchBy, code);
                 if (getData.success)
                 {
+                    if (RemoveExistingData) Remove(code);
                     MaptoDbBulk(getData.data);
+                    return (true, "Success");
                 }
                 return (false, "Get Data failed.");
             }
