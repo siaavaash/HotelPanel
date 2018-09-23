@@ -2,6 +2,7 @@
 using Service.ServiceModel.IATACodeModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,53 +22,61 @@ namespace Service.Suppliers
             {
                 var thread = new Thread(() =>
                 {
-                    using (var browser = new WebBrowser())
+                    try
                     {
-                        browser.AllowNavigation = true;
-                        browser.Navigate(IATAUrl);
-                        browser.ScriptErrorsSuppressed = false;
-                        browser.DocumentCompleted += documentCompletedEventHandler;
-                        void documentCompletedEventHandler(object sender, WebBrowserDocumentCompletedEventArgs e)
+                        using (var browser = new WebBrowser())
                         {
-                            if (browser.ReadyState == WebBrowserReadyState.Complete || browser.ReadyState == WebBrowserReadyState.Interactive)
+                            browser.AllowNavigation = true;
+                            browser.Navigate(IATAUrl);
+                            browser.ScriptErrorsSuppressed = false;
+                            browser.DocumentCompleted += documentCompletedEventHandler;
+                            void documentCompletedEventHandler(object sender, WebBrowserDocumentCompletedEventArgs e)
                             {
-                                browser.DocumentCompleted -= documentCompletedEventHandler;
-                                var options = browser.Document.GetElementsByTagName("select")[0].Document.GetElementsByTagName("option");
-                                foreach (HtmlElement option in options)
+                                if (browser.ReadyState == WebBrowserReadyState.Complete || browser.ReadyState == WebBrowserReadyState.Interactive)
                                 {
-                                    option.SetAttribute("selected", string.Empty);
-                                    if (option.GetAttribute("value") == searchBy.ToString())
-                                        option.SetAttribute("selected", "selected");
+                                    browser.DocumentCompleted -= documentCompletedEventHandler;
+                                    var options = browser.Document.GetElementsByTagName("select")[0].Document.GetElementsByTagName("option");
+                                    foreach (HtmlElement option in options)
+                                    {
+                                        option.SetAttribute("selected", string.Empty);
+                                        if (option.GetAttribute("value") == searchBy.ToString())
+                                            option.SetAttribute("selected", "selected");
+                                    }
+                                    browser.Document.GetElementById("ctl00_SPWebPartManager1_g_e3b09024_878e_4522_bd47_acfefd1000b0_ctl00_txtSearchCriteria").SetAttribute("value", parameter);
+                                    browser.Document.GetElementById("ctl00_SPWebPartManager1_g_e3b09024_878e_4522_bd47_acfefd1000b0_ctl00_butSearch").InvokeMember("click");
                                 }
-                                browser.Document.GetElementById("ctl00_SPWebPartManager1_g_e3b09024_878e_4522_bd47_acfefd1000b0_ctl00_txtSearchCriteria").SetAttribute("value", parameter);
-                                browser.Document.GetElementById("ctl00_SPWebPartManager1_g_e3b09024_878e_4522_bd47_acfefd1000b0_ctl00_butSearch").InvokeMember("click");
-                            }
-                        };
-                        var counter = 0;
-                        while (browser.ReadyState != WebBrowserReadyState.Complete && counter++ < 10)
-                            Application.DoEvents();
-                        HtmlElement dataTable = null;
-                        var baseTime = DateTime.Now;
-                        while (dataTable == null && DateTime.Now - baseTime < new TimeSpan(50000000))
-                        {
-                            Application.DoEvents();
-                            dataTable = browser.Document?.GetElementById("ctl00_SPWebPartManager1_g_e3b09024_878e_4522_bd47_acfefd1000b0_ctl00_panResults")?.GetElementsByTagName("table")[0];
-                        }
-                        if (dataTable != null)
-                        {
-                            result.Data = new List<IATAData>();
-                            result.Success = true;
-                            foreach (HtmlElement tr in dataTable.GetElementsByTagName("tbody")[0].Children)
+                            };
+                            var counter = 0;
+                            while (browser.ReadyState != WebBrowserReadyState.Complete && counter++ < 10)
+                                Application.DoEvents();
+                            HtmlElement dataTable = null;
+                            var baseTime = DateTime.Now;
+                            while (dataTable == null && DateTime.Now - baseTime < new TimeSpan(50000000))
                             {
-                                result.Data.Add(new IATAData
+                                Application.DoEvents();
+                                dataTable = browser.Document?.GetElementById("ctl00_SPWebPartManager1_g_e3b09024_878e_4522_bd47_acfefd1000b0_ctl00_panResults")?.GetElementsByTagName("table")[0];
+                            }
+                            if (dataTable != null)
+                            {
+                                result.Data = new List<IATAData>();
+                                result.Success = true;
+                                foreach (HtmlElement tr in dataTable.GetElementsByTagName("tbody")[0].Children)
                                 {
-                                    CityName = tr.Children[0].InnerHtml,
-                                    CityCode = tr.Children[1].InnerHtml,
-                                    AirportName = tr.Children[2].InnerHtml,
-                                    AirportCode = tr.Children[3].InnerHtml,
-                                });
+                                    result.Data.Add(new IATAData
+                                    {
+                                        CityName = tr.Children[0].InnerHtml,
+                                        CityCode = tr.Children[1].InnerHtml,
+                                        AirportName = tr.Children[2].InnerHtml,
+                                        AirportCode = tr.Children[3].InnerHtml,
+                                    });
+                                }
                             }
                         }
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
                     }
                 });
                 thread.SetApartmentState(ApartmentState.STA);
@@ -105,64 +114,71 @@ namespace Service.Suppliers
                 var result = new GCMAPResponse();
                 var thread = new Thread(() =>
                 {
-                    using (var browser = new WebBrowser())
+                    try
                     {
-                        browser.AllowNavigation = true;
-                        browser.ScriptErrorsSuppressed = false;
-                        browser.DocumentCompleted += documentCompletedEventHandler;
-                        browser.Navigate(url);
-                        void documentCompletedEventHandler(object sender, WebBrowserDocumentCompletedEventArgs e)
+                        using (var browser = new WebBrowser())
                         {
-                            if (((WebBrowser)sender).ReadyState == WebBrowserReadyState.Complete)
+                            browser.AllowNavigation = true;
+                            browser.ScriptErrorsSuppressed = false;
+                            browser.DocumentCompleted += documentCompletedEventHandler;
+                            browser.Navigate(url);
+                            void documentCompletedEventHandler(object sender, WebBrowserDocumentCompletedEventArgs e)
                             {
-                                browser.DocumentCompleted -= documentCompletedEventHandler;
-                                HtmlDocument doc = ((WebBrowser)sender).Document;
-                                var trs = doc.GetElementById("mid")?.GetElementsByTagName("table")[0]?.GetElementsByTagName("tbody")[0].GetElementsByTagName("table")[0].GetElementsByTagName("tbody")[0].Children;
-                                if (trs != null)
+                                if (((WebBrowser)sender).ReadyState == WebBrowserReadyState.Complete)
                                 {
-                                    result.Data = new GCMAPData();
-                                    foreach (HtmlElement tr in trs)
+                                    browser.DocumentCompleted -= documentCompletedEventHandler;
+                                    HtmlDocument doc = ((WebBrowser)sender).Document;
+                                    var trs = doc.GetElementById("mid")?.GetElementsByTagName("table")[0]?.GetElementsByTagName("tbody")[0].GetElementsByTagName("table")[0].GetElementsByTagName("tbody")[0].Children;
+                                    if (trs != null)
                                     {
-                                        switch (tr.FirstChild.InnerText)
+                                        result.Data = new GCMAPData();
+                                        foreach (HtmlElement tr in trs)
                                         {
-                                            case "City:":
-                                                result.Data.City = tr.Children[2].Children[0].InnerText;
-                                                result.Data.Country = tr.Children[2].Children[2].InnerText;
-                                                break;
-                                            case "IATA:":
-                                                result.Data.IATACode = tr.Children[1].GetElementsByTagName("a")[0].InnerText;
-                                                break;
-                                            case "Type:":
-                                                result.Data.Type = tr.Children[1].InnerText;
-                                                break;
-                                            case "Latitude:":
-                                                result.Data.Latitude = tr.Children[1].GetElementsByTagName("abbr")[0].GetAttribute("title");
-                                                break;
-                                            case "Longitude:":
-                                                result.Data.Longitude = tr.Children[1].GetElementsByTagName("abbr")[0].GetAttribute("title");
-                                                break;
-                                            case "Name:":
-                                                result.Data.Name = tr.Children[1].InnerText;
-                                                break;
-                                            default:
-                                                break;
+                                            switch (tr.FirstChild.InnerText)
+                                            {
+                                                case "City:":
+                                                    result.Data.City = tr.Children[2].Children[0].InnerText;
+                                                    result.Data.Country = tr.Children[2].Children[2].InnerText;
+                                                    break;
+                                                case "IATA:":
+                                                    result.Data.IATACode = tr.Children[1].GetElementsByTagName("a")[0].InnerText;
+                                                    break;
+                                                case "Type:":
+                                                    result.Data.Type = tr.Children[1].InnerText;
+                                                    break;
+                                                case "Latitude:":
+                                                    result.Data.Latitude = tr.Children[1].GetElementsByTagName("abbr")[0].GetAttribute("title");
+                                                    break;
+                                                case "Longitude:":
+                                                    result.Data.Longitude = tr.Children[1].GetElementsByTagName("abbr")[0].GetAttribute("title");
+                                                    break;
+                                                case "Name:":
+                                                    result.Data.Name = tr.Children[1].InnerText;
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
                                         }
+                                        result.Success = true;
                                     }
-                                    result.Success = true;
-                                }
-                                else
-                                {
-                                    result.Error = new ServiceModel.PublicModels.Error
+                                    else
                                     {
-                                        Text = "The Parameter is invalid."
-                                    };
-                                    result.Success = false;
+                                        result.Error = new ServiceModel.PublicModels.Error
+                                        {
+                                            Text = "The Parameter is invalid."
+                                        };
+                                        result.Success = false;
+                                    }
                                 }
                             }
+                            var baseTime = DateTime.Now;
+                            while (browser.ReadyState != WebBrowserReadyState.Complete && DateTime.Now - baseTime < new TimeSpan(0, 0, 30))
+                                Application.DoEvents();
                         }
-                        var baseTime = DateTime.Now;
-                        while (browser.ReadyState != WebBrowserReadyState.Complete && DateTime.Now - baseTime < new TimeSpan(0, 0, 30))
-                            Application.DoEvents();
+                    }
+                    catch (Exception)
+                    {
+                        throw;
                     }
                 });
                 thread.SetApartmentState(ApartmentState.STA);
@@ -208,16 +224,12 @@ namespace Service.Suppliers
                             var result = new IataCodeResponse
                             {
                                 Success = true,
-                                Data = new List<IataCodeData>(),
-                            };
-                            Parallel.ForEach(model.response, item =>
-                            {
-                                result.Data.Add(new IataCodeData
+                                Data = model.response.AsParallel().Select(x => new IataCodeData
                                 {
-                                    Code = item.code,
-                                    Name = item.name
-                                });
-                            });
+                                    Code = x.code,
+                                    Name = x.name
+                                }).ToList()
+                            };
                             return result;
                         }
                         return new IataCodeResponse

@@ -7,6 +7,13 @@ using System.Threading.Tasks;
 
 namespace Service.ServiceModel.IATACodeModels
 {
+    public class IATACodeViewModel
+    {
+        public string Message { get; set; }
+        public bool MapSuccess { get; set; }
+        public bool GetSuccess { get; set; }
+        public string Code { get; set; }
+    }
     public class IATAResponse
     {
         public Error Error { get; set; }
