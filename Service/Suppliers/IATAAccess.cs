@@ -1,4 +1,5 @@
 ﻿using Common;
+using HtmlAgilityPack;
 using Service.ServiceModel.IATACodeModels;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,6 @@ namespace Service.Suppliers
 {
     public class IATAScrapper
     {
-        private static AutoResetEvent resetEvent = new AutoResetEvent(false);
         private const string IATAUrl = "https://www.iata.org/publications/Pages/code-search.aspx";
         public static IATAResponse GetIATALocation(IATASearchBy searchBy, string parameter)
         {
@@ -105,87 +105,26 @@ namespace Service.Suppliers
     public class GCMAPCrawler
     {
         private const string BaseUrl = "http://www.gcmap.com/airport/";
-        private static AutoResetEvent resetEvent = new AutoResetEvent(false);
         public GCMAPResponse GetGCMAPData(string parameter)
         {
             try
             {
-                var url = BaseUrl + parameter;
-                var result = new GCMAPResponse();
-                var thread = new Thread(() =>
+                var web = new HtmlWeb();
+                var doc = web.Load(BaseUrl + parameter);
+                return new GCMAPResponse
                 {
-                    try
+                    Success = true,
+                    Data = new GCMAPData
                     {
-                        using (var browser = new WebBrowser())
-                        {
-                            browser.AllowNavigation = true;
-                            browser.ScriptErrorsSuppressed = false;
-                            browser.DocumentCompleted += documentCompletedEventHandler;
-                            browser.Navigate(url);
-                            void documentCompletedEventHandler(object sender, WebBrowserDocumentCompletedEventArgs e)
-                            {
-                                if (((WebBrowser)sender).ReadyState == WebBrowserReadyState.Complete)
-                                {
-                                    browser.DocumentCompleted -= documentCompletedEventHandler;
-                                    HtmlDocument doc = ((WebBrowser)sender).Document;
-                                    var trs = doc.GetElementById("mid")?.GetElementsByTagName("table")[0]?.GetElementsByTagName("tbody")[0].GetElementsByTagName("table")[0].GetElementsByTagName("tbody")[0].Children;
-                                    if (trs != null)
-                                    {
-                                        result.Data = new GCMAPData();
-                                        foreach (HtmlElement tr in trs)
-                                        {
-                                            switch (tr.FirstChild.InnerText)
-                                            {
-                                                case "City:":
-                                                    result.Data.City = tr.Children[2].Children[0].InnerText;
-                                                    result.Data.Country = tr.Children[2].Children[2].InnerText;
-                                                    break;
-                                                case "IATA:":
-                                                    result.Data.IATACode = tr.Children[1].GetElementsByTagName("a")[0].InnerText;
-                                                    break;
-                                                case "Type:":
-                                                    result.Data.Type = tr.Children[1].InnerText;
-                                                    break;
-                                                case "Latitude:":
-                                                    result.Data.Latitude = tr.Children[1].GetElementsByTagName("abbr")[0].GetAttribute("title");
-                                                    break;
-                                                case "Longitude:":
-                                                    result.Data.Longitude = tr.Children[1].GetElementsByTagName("abbr")[0].GetAttribute("title");
-                                                    break;
-                                                case "Name:":
-                                                    result.Data.Name = tr.Children[1].InnerText;
-                                                    break;
-                                                default:
-                                                    break;
-                                            }
-                                        }
-                                        result.Success = true;
-                                    }
-                                    else
-                                    {
-                                        result.Error = new ServiceModel.PublicModels.Error
-                                        {
-                                            Text = "The Parameter is invalid."
-                                        };
-                                        result.Success = false;
-                                    }
-                                }
-                            }
-                            var baseTime = DateTime.Now;
-                            while (browser.ReadyState != WebBrowserReadyState.Complete && DateTime.Now - baseTime < new TimeSpan(0, 0, 30))
-                                Application.DoEvents();
-                        }
+                        City = doc.DocumentNode.Descendants().FirstOrDefault(x => x.Attributes["class"]?.Value == "locality")?.InnerText,
+                        Country = doc.DocumentNode.Descendants().FirstOrDefault(x => x.Attributes["class"]?.Value == "country-name")?.InnerText,
+                        IATACode = doc.DocumentNode.Descendants().Where(x => x.Attributes["class"]?.Value == "nickname url").ToArray()[1]?.InnerText ?? doc.DocumentNode.Descendants().FirstOrDefault(x => x.Attributes["class"]?.Value == "nickname url")?.InnerText,
+                        Type = doc.DocumentNode.Descendants().FirstOrDefault(x => x.Attributes["class"]?.Value == "note")?.InnerText,
+                        Latitude = doc.DocumentNode.Descendants().FirstOrDefault(x => x.Attributes["class"]?.Value == "latitude")?.Attributes["title"]?.Value,
+                        Longitude = doc.DocumentNode.Descendants().FirstOrDefault(x => x.Attributes["class"]?.Value == "longitude")?.Attributes["title"]?.Value,
+                        Name = doc.DocumentNode.Descendants().FirstOrDefault(x => x.Attributes["class"]?.Value == "fn org")?.InnerText,
                     }
-                    catch (Exception)
-                    {
-                        throw;
-                    }
-                });
-                thread.SetApartmentState(ApartmentState.STA);
-                thread.Start();
-                thread.Join();
-                if (thread != null) thread.Abort();
-                return result;
+                };
             }
             catch (Exception ex)
             {

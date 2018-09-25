@@ -197,6 +197,7 @@
     <Content Include="Content\Images\datatables\sort_both.png" />
     <Content Include="Content\Images\datatables\sort_desc.png" />
     <Content Include="Content\Images\datatables\sort_desc_disabled.png" />
+    <Content Include="Content\Images\hotelImage\NoHotel.png" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\logo.svg" />
     <Content Include="Content\plugin\ckeditor\adapters\jquery.js" />
