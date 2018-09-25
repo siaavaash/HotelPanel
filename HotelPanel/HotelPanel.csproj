@@ -197,6 +197,7 @@
     <Content Include="Content\Images\datatables\sort_both.png" />
     <Content Include="Content\Images\datatables\sort_desc.png" />
     <Content Include="Content\Images\datatables\sort_desc_disabled.png" />
+    <Content Include="Content\Images\hotelImage\NoHotel.png" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\logo.svg" />
     <Content Include="Content\plugin\ckeditor\adapters\jquery.js" />
@@ -807,6 +808,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Accommodation\SearchReport.cshtml" />
     <Content Include="Views\Accommodation\RoomImages.cshtml" />
+    <Content Include="Views\Mapping\Iata.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

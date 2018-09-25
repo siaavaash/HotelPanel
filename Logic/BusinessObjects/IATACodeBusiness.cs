@@ -4,6 +4,7 @@ using Service.Suppliers;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,18 +13,34 @@ namespace Logic.BusinessObjects
 {
     public class IATACodeBusiness
     {
+        private bool RemoveExistingData => ConfigurationManager.AppSettings["IataAllowRemove"] == "true" ? true : false;
         private GCMAPCrawler gCMAPCrawler;
         public IATACodeBusiness()
         {
             gCMAPCrawler = new GCMAPCrawler();
         }
-        public void MapToDb(IataAirport model)
+        public void Remove(string code)
         {
             try
             {
                 using (var context = new Entities())
                 {
-                    context.IataAirports.Add(model);
+                    context.IataAirports.RemoveRange(context.IataAirports.Where(x => x.IataCode == code).ToList());
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public void RemoveAll()
+        {
+            try
+            {
+                using (var context = new Entities())
+                {
+                    context.IataAirports.RemoveRange(context.IataAirports.ToList());
                     context.SaveChanges();
                 }
             }
@@ -33,19 +50,22 @@ namespace Logic.BusinessObjects
                 throw;
             }
         }
-        public void MaptoDbBulk(List<IataAirport> model)
+        public (bool success, string message) MaptoDbBulk(List<IataAirport> model)
         {
             try
             {
                 using (var context = new Entities())
                 {
                     context.IataAirports.AddRange(model);
-                    context.SaveChangesAsync().Wait();
+                    var result = context.SaveChangesAsync().Result > 0 ? true : false;
+                    if (result)
+                        return (result, "");
+                    return (false, "Map to Db failed.");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return (false, ex.Message);
             }
         }
         public (bool success, List<IataAirport> data) GetIATAData(Common.IATASearchBy searchBy, string code)
@@ -53,13 +73,22 @@ namespace Logic.BusinessObjects
             try
             {
                 var result = new List<IataAirport>();
-                var gcmap = gCMAPCrawler.GetGCMAPData(code);
-                var iata = IATAScrapper.GetIATALocation(searchBy, code);
+                GCMAPResponse gcmap = null;
+                IATAResponse iata = null;
+                Parallel.Invoke(
+                    () =>
+                    {
+                        gcmap = gCMAPCrawler.GetGCMAPData(code);
+                    },
+                    () =>
+                    {
+                        iata = IATAScrapper.GetIATALocation(searchBy, code);
+                    });
                 if (iata.Success && gcmap.Success)
                 {
                     foreach (var airport in iata.Data)
                     {
-                        if (airport.AirportCode == code)
+                        if (airport.AirportCode == code.ToUpper())
                         {
                             result.Add(new IataAirport
                             {
@@ -84,84 +113,95 @@ namespace Logic.BusinessObjects
                 throw;
             }
         }
-        public (bool success, List<IataAirport> data) GetIATAData()
+        public (bool success, string message, List<IATACodeViewModel> data) GetAndMapIATAData()
         {
             try
             {
-                var result = new List<IataAirport>();
+                var result = new ConcurrentBag<IATACodeViewModel>();
                 var iataCodeResult = IataCodeAccess.GetIataCodes();
                 if (iataCodeResult.Success)
                 {
-                    Parallel.ForEach(iataCodeResult.Data, item =>
-                    {
-                        var gcmap = gCMAPCrawler.GetGCMAPData(item.Code);
-                        var iata = IATAScrapper.GetIATALocation(Common.IATASearchBy.ByLocationCode, item.Code);
-                        if (iata.Success && gcmap.Success)
-                        {
-                            foreach (var airport in iata.Data)
-                            {
-                                if (airport.AirportCode == item.Code)
-                                {
-                                    result.Add(new IataAirport
-                                    {
-                                        CityName = airport.CityName,
-                                        CountryName = gcmap.Data.Country,
-                                        IataCode = airport.AirportCode,
-                                        Latitude = gcmap.Data.Latitude,
-                                        Longitude = gcmap.Data.Longitude,
-                                        Name = airport.AirportName,
-                                        Type = gcmap.Data.Type
-                                    });
-                                }
-                            }
-                        }
-                        else
-                            result.Add(new IataAirport
-                            {
-                                IataCode = item.Code,
-                                Name = item.Name,
-                            });
-                    });
-                    return (true, result);
+                    Parallel.ForEach(iataCodeResult.Data, new ParallelOptions { MaxDegreeOfParallelism = 1 }, item =>
+                      {
+                          var getData = GetIATAData(Common.IATASearchBy.ByLocationCode, item.Code);
+                          if (getData.success)
+                          {
+                              if (RemoveExistingData) Remove(item.Code);
+                              var map = MaptoDbBulk(getData.data);
+                              if (map.success)
+                              {
+                                  result.Add(new IATACodeViewModel
+                                  {
+                                      Code = item.Code,
+                                      GetSuccess = true,
+                                      MapSuccess = true,
+                                      Message = map.message
+                                  });
+                              }
+                              else
+                                  result.Add(new IATACodeViewModel
+                                  {
+                                      Code = item.Code,
+                                      GetSuccess = true,
+                                      MapSuccess = false,
+                                      Message = map.message
+                                  });
+                          }
+                          result.Add(new IATACodeViewModel
+                          {
+                              Code = item.Code,
+                              GetSuccess = false,
+                              MapSuccess = false,
+                          });
+                      });
+                    return (true, "", result.ToList());
                 }
-                return (false, null);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        public (bool success, string message) MapIata()
-        {
-            try
-            {
-                var getData = GetIATAData();
-                if (getData.success)
-                {
-                    MaptoDbBulk(getData.data);
-                }
-                return (false, "Get Data failed.");
+                return (false, "Get iata codes failed.", null);
             }
             catch (Exception ex)
             {
-                return (false, ex.Message);
+                return (false, ex.Message, null);
             }
         }
-        public (bool success, string message) MapIata(string code, Common.IATASearchBy searchBy = Common.IATASearchBy.ByLocationCode)
+        public (bool success, string message, IATACodeViewModel data) MapIata(string code, Common.IATASearchBy searchBy = Common.IATASearchBy.ByLocationCode)
         {
             try
             {
                 var getData = GetIATAData(searchBy, code);
                 if (getData.success)
                 {
-                    MaptoDbBulk(getData.data);
+                    if (RemoveExistingData) Remove(code);
+                    var map = MaptoDbBulk(getData.data);
+                    if (map.success)
+                    {
+                        return (true, "", new IATACodeViewModel
+                        {
+                            Code = code,
+                            GetSuccess = true,
+                            MapSuccess = true,
+                            Message = map.message
+                        });
+                    }
+                    return (true, "", new IATACodeViewModel
+                    {
+                        Code = code,
+                        GetSuccess = true,
+                        MapSuccess = false,
+                        Message = map.message
+                    });
                 }
-                return (false, "Get Data failed.");
+                return (true, "", new IATACodeViewModel
+                {
+                    Code = code,
+                    GetSuccess = false,
+                    MapSuccess = false,
+                    Message = "Get Iata Data failed."
+                });
+
             }
             catch (Exception ex)
             {
-                return (false, ex.Message);
+                return (false, ex.Message, null);
             }
         }
     }

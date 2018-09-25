@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace HotelPanel.Controllers
 {
-    public class MappingController : BaseController
+    public class MappingController : Controller
     {
         private readonly GIATABusiness giataBusiness;
         private readonly GeocodingBusiness geocodingBusiness;
@@ -76,31 +76,32 @@ namespace HotelPanel.Controllers
             }
         }
 
+        // GET: Iata Code
+        public ActionResult Iata() => View();
+
         // GET: Map Iata Codes
-        public JsonResult MapIataCode(string code, byte searchBy)
+        public JsonResult MapIataCode(string code, byte searchBy = (byte)Common.IATASearchBy.ByLocationCode)
         {
             try
             {
                 var result = iATACodeBusiness.MapIata(code, (Common.IATASearchBy)searchBy);
-                return Json(new { success = result.success, message = result.message }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = result.success, message = result.message, data = result.data }, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
         public JsonResult MapAllIataCodes()
         {
             try
             {
-                var result = iATACodeBusiness.MapIata();
-                return Json(new { success = result.success, message = result.message }, JsonRequestBehavior.AllowGet);
+                var result = iATACodeBusiness.GetAndMapIATAData();
+                return Json(new { success = result.success, message = result.message, data = result.data }, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
     }
