@@ -1,5 +1,6 @@
 ﻿using Common;
 using HtmlAgilityPack;
+using MoreLinq;
 using Service.ServiceModel.IATACodeModels;
 using System;
 using System.Collections.Generic;
@@ -26,9 +27,8 @@ namespace Service.Suppliers
                     {
                         using (var browser = new WebBrowser())
                         {
-                            browser.AllowNavigation = true;
                             browser.Navigate(IATAUrl);
-                            browser.ScriptErrorsSuppressed = false;
+                            browser.ScriptErrorsSuppressed = true;
                             browser.DocumentCompleted += documentCompletedEventHandler;
                             void documentCompletedEventHandler(object sender, WebBrowserDocumentCompletedEventArgs e)
                             {
@@ -49,26 +49,31 @@ namespace Service.Suppliers
                             var counter = 0;
                             while (browser.ReadyState != WebBrowserReadyState.Complete && counter++ < 10)
                                 Application.DoEvents();
-                            HtmlElement dataTable = null;
+                            HtmlElement resultNode = null;
                             var baseTime = DateTime.Now;
-                            while (dataTable == null && DateTime.Now - baseTime < new TimeSpan(50000000))
+                            while (resultNode == null && DateTime.Now - baseTime < new TimeSpan(50000000))
                             {
                                 Application.DoEvents();
-                                dataTable = browser.Document?.GetElementById("ctl00_SPWebPartManager1_g_e3b09024_878e_4522_bd47_acfefd1000b0_ctl00_panResults")?.GetElementsByTagName("table")[0];
+                                resultNode = browser.Document?.GetElementById("ctl00_SPWebPartManager1_g_e3b09024_878e_4522_bd47_acfefd1000b0_ctl00_panResults");
                             }
-                            if (dataTable != null)
+                            if (resultNode != null)
                             {
-                                result.Data = new List<IATAData>();
-                                result.Success = true;
-                                foreach (HtmlElement tr in dataTable.GetElementsByTagName("tbody")[0].Children)
+                                var dataTable = resultNode?.GetElementsByTagName("table");
+                                if (dataTable.Count <= 0) result = new IATAResponse { Success = true, Data = new List<IATAData>() };
+                                else
                                 {
-                                    result.Data.Add(new IATAData
+                                    result.Data = new List<IATAData>();
+                                    result.Success = true;
+                                    foreach (HtmlElement tr in dataTable[0].GetElementsByTagName("tbody")?[0]?.Children)
                                     {
-                                        CityName = tr.Children[0].InnerHtml,
-                                        CityCode = tr.Children[1].InnerHtml,
-                                        AirportName = tr.Children[2].InnerHtml,
-                                        AirportCode = tr.Children[3].InnerHtml,
-                                    });
+                                        result.Data.Add(new IATAData
+                                        {
+                                            CityName = tr?.Children[0]?.InnerHtml,
+                                            CityCode = tr?.Children[1]?.InnerHtml,
+                                            AirportName = tr?.Children[2]?.InnerHtml,
+                                            AirportCode = tr?.Children[3]?.InnerHtml,
+                                        });
+                                    }
                                 }
                             }
                         }
@@ -111,6 +116,10 @@ namespace Service.Suppliers
             {
                 var web = new HtmlWeb();
                 var doc = web.Load(BaseUrl + parameter);
+                var nearby = "";
+                var old = doc.DocumentNode.Descendants("td")?.FirstOrDefault(x => x.InnerText == "Old (Alt.):")?.ParentNode.ChildNodes[1].InnerText;
+                var timezone = doc.DocumentNode.Descendants("td")?.FirstOrDefault(x => x.InnerText == "Time Zone:")?.ParentNode.ChildNodes[1].InnerText;
+                doc.DocumentNode.Descendants("td")?.FirstOrDefault(x => x.InnerText == "Nearby:")?.ParentNode.Descendants("a")?.ForEach(x => nearby += $"{x.InnerText} ");
                 return new GCMAPResponse
                 {
                     Success = true,
@@ -123,6 +132,9 @@ namespace Service.Suppliers
                         Latitude = doc.DocumentNode.Descendants().FirstOrDefault(x => x.Attributes["class"]?.Value == "latitude")?.Attributes["title"]?.Value,
                         Longitude = doc.DocumentNode.Descendants().FirstOrDefault(x => x.Attributes["class"]?.Value == "longitude")?.Attributes["title"]?.Value,
                         Name = doc.DocumentNode.Descendants().FirstOrDefault(x => x.Attributes["class"]?.Value == "fn org")?.InnerText,
+                        Nearby = nearby,
+                        OldName = old,
+                        TimeZone = timezone,
                     }
                 };
             }
