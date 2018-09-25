@@ -235,7 +235,7 @@ namespace Logic.BusinessObjects
         {
             try
             {
-                return DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID == AccommodationID).ToList();
+                return DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID == AccommodationID).ToList().Select(x => { x.Link = x.Link.Replace("../", "/"); return x; }).ToList();
             }
             catch (Exception exeption)
             {
