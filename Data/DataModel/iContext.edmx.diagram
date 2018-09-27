@@ -416,7 +416,6 @@
         <AssociationConnector Association="DataContext.FK_Wallet_User1" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.FK_WebSites_User" ManuallyRouted="false" />
         <AssociationConnector Association="DataContext.UserRole" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="DataContext.IataAirport" Width="1.5" PointX="0.75" PointY="28.75" />
         <EntityTypeShape EntityType="DataContext.Accommodation" Width="1.5" PointX="0.75" PointY="142" />
         <EntityTypeShape EntityType="DataContext.AccommodationSortedByCountry" Width="1.5" PointX="3" PointY="146.125" />
         <AssociationConnector Association="DataContext.FK_AccommodationCommission_Accommodation" />
@@ -432,6 +431,7 @@
         <AssociationConnector Association="DataContext.FK_VerifyAccommodations_Accommodation" />
         <AssociationConnector Association="DataContext.AccommodationFacility" />
         <AssociationConnector Association="DataContext.AccommodationLocation" />
+        <EntityTypeShape EntityType="DataContext.IataAirport" Width="1.5" PointX="0.75" PointY="28.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

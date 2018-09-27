@@ -430,11 +430,13 @@ warning 6002: The table/view 'DBMainTest.cnv.ExchangeDetails_970317' does not ha
           <Property Name="CountryName" Type="nvarchar" MaxLength="4000" />
           <Property Name="CityName" Type="nvarchar" MaxLength="4000" />
           <Property Name="Name" Type="nvarchar" MaxLength="4000" />
-          <Property Name="GcmapCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="OldName" Type="nvarchar" MaxLength="4000" />
           <Property Name="Latitude" Type="nvarchar" MaxLength="50" />
           <Property Name="Longitude" Type="nvarchar" MaxLength="50" />
           <Property Name="Type" Type="nvarchar" MaxLength="100" />
           <Property Name="IataCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="TimeZone" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Nearby" Type="nvarchar" MaxLength="4000" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DBMainTest.cnv.Inbox' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -15305,7 +15307,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
             <End Role="Role" EntitySet="Roles" />
             <End Role="User1" EntitySet="User1" />
           </AssociationSet>
-          <EntitySet Name="IataAirports" EntityType="DataContext.IataAirport" />
           <EntitySet Name="Accommodations" EntityType="DataContext.Accommodation" />
           <EntitySet Name="AccommodationSortedByCountries" EntityType="DataContext.AccommodationSortedByCountry" />
           <AssociationSet Name="FK_AccommodationCommission_Accommodation" Association="DataContext.FK_AccommodationCommission_Accommodation">
@@ -15360,21 +15361,8 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
             <End Role="Accommodation" EntitySet="Accommodations" />
             <End Role="Location" EntitySet="Locations" />
           </AssociationSet>
+          <EntitySet Name="IataAirports" EntityType="DataContext.IataAirport" />
           </EntityContainer>
-        <EntityType Name="IataAirport">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CountryName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Name="CityName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Name="GcmapCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="IataCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="Accommodation">
           <Key>
             <PropertyRef Name="AccommodationlID" />
@@ -15580,6 +15568,22 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <End Type="DataContext.Accommodation" Role="Accommodation" Multiplicity="*" />
           <End Type="DataContext.Location" Role="Location" Multiplicity="*" />
         </Association>
+        <EntityType Name="IataAirport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="OldName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IataCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="TimeZone" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Nearby" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -19002,21 +19006,6 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
               <ScalarProperty Name="UserID" ColumnName="UserID" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="IataAirports">
-            <EntityTypeMapping TypeName="DataContext.IataAirport">
-              <MappingFragment StoreEntitySet="IataAirports">
-                <ScalarProperty Name="IataCode" ColumnName="IataCode" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="GcmapCode" ColumnName="GcmapCode" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
-                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Accommodations">
             <EntityTypeMapping TypeName="DataContext.Accommodation">
               <MappingFragment StoreEntitySet="Accommodation">
@@ -19086,6 +19075,23 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
               <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="IataAirports">
+            <EntityTypeMapping TypeName="DataContext.IataAirport">
+              <MappingFragment StoreEntitySet="IataAirports">
+                <ScalarProperty Name="Nearby" ColumnName="Nearby" />
+                <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
+                <ScalarProperty Name="IataCode" ColumnName="IataCode" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="OldName" ColumnName="OldName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

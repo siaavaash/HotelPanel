@@ -43,6 +43,9 @@ namespace Service.ServiceModel.IATACodeModels
         public string Type { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
+        public string OldName { get; set; }
+        public string Nearby { get; set; }
+        public string TimeZone { get; set; }
     }
     public class IataCodeResponse
     {

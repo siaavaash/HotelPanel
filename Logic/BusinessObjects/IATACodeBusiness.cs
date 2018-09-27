@@ -84,23 +84,45 @@ namespace Logic.BusinessObjects
                     {
                         iata = IATAScrapper.GetIATALocation(searchBy, code);
                     });
-                if (iata.Success && gcmap.Success)
+                if (iata.Success || gcmap.Success)
                 {
-                    foreach (var airport in iata.Data)
+                    if (iata?.Data?.Count > 0)
                     {
-                        if (airport.AirportCode == code.ToUpper())
+                        foreach (var airport in iata.Data)
                         {
-                            result.Add(new IataAirport
+                            if (airport.AirportCode == code.ToUpper())
                             {
-                                CityName = airport.CityName,
-                                CountryName = gcmap.Data.Country,
-                                IataCode = airport.AirportCode,
-                                Latitude = gcmap.Data.Latitude,
-                                Longitude = gcmap.Data.Longitude,
-                                Name = airport.AirportName,
-                                Type = gcmap.Data.Type
-                            });
+                                result.Add(new IataAirport
+                                {
+                                    CityName = airport.CityName,
+                                    CountryName = gcmap.Data?.Country,
+                                    IataCode = airport.AirportCode,
+                                    Latitude = gcmap.Data?.Latitude,
+                                    Longitude = gcmap.Data?.Longitude,
+                                    Name = airport.AirportName,
+                                    Type = gcmap.Data?.Type,
+                                    Nearby = gcmap.Data?.Nearby,
+                                    OldName = gcmap.Data?.OldName,
+                                    TimeZone = gcmap.Data?.TimeZone
+                                });
+                            }
                         }
+                    }
+                    else
+                    {
+                        result.Add(new IataAirport
+                        {
+                            CityName = gcmap.Data?.City,
+                            CountryName = gcmap.Data?.Country,
+                            IataCode = gcmap.Data?.IATACode,
+                            Latitude = gcmap.Data?.Latitude,
+                            Longitude = gcmap.Data?.Longitude,
+                            Name = gcmap.Data?.Name,
+                            Type = gcmap.Data?.Type,
+                            Nearby = gcmap.Data?.Nearby,
+                            OldName = gcmap.Data?.OldName,
+                            TimeZone = gcmap.Data?.TimeZone
+                        });
                     }
                     return (true, result);
                 }
@@ -121,21 +143,21 @@ namespace Logic.BusinessObjects
                 var iataCodeResult = IataCodeAccess.GetIataCodes();
                 if (iataCodeResult.Success)
                 {
-                    Parallel.ForEach(iataCodeResult.Data, new ParallelOptions { MaxDegreeOfParallelism = 1 }, item =>
+                    Parallel.ForEach(iataCodeResult.Data, /*new ParallelOptions { MaxDegreeOfParallelism = 10 },*/ item =>
                       {
                           var getData = GetIATAData(Common.IATASearchBy.ByLocationCode, item.Code);
                           if (getData.success)
                           {
                               if (RemoveExistingData) Remove(item.Code);
-                              var map = MaptoDbBulk(getData.data);
-                              if (map.success)
+                              var (success, message) = MaptoDbBulk(getData.data);
+                              if (success)
                               {
                                   result.Add(new IATACodeViewModel
                                   {
                                       Code = item.Code,
                                       GetSuccess = true,
                                       MapSuccess = true,
-                                      Message = map.message
+                                      Message = message
                                   });
                               }
                               else
@@ -144,15 +166,16 @@ namespace Logic.BusinessObjects
                                       Code = item.Code,
                                       GetSuccess = true,
                                       MapSuccess = false,
-                                      Message = map.message
+                                      Message = message
                                   });
                           }
-                          result.Add(new IATACodeViewModel
-                          {
-                              Code = item.Code,
-                              GetSuccess = false,
-                              MapSuccess = false,
-                          });
+                          else
+                              result.Add(new IATACodeViewModel
+                              {
+                                  Code = item.Code,
+                                  GetSuccess = false,
+                                  MapSuccess = false,
+                              });
                       });
                     return (true, "", result.ToList());
                 }

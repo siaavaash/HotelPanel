@@ -18,10 +18,12 @@ namespace Data.DataModel
         public string CountryName { get; set; }
         public string CityName { get; set; }
         public string Name { get; set; }
-        public string GcmapCode { get; set; }
+        public string OldName { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
         public string Type { get; set; }
         public string IataCode { get; set; }
+        public string TimeZone { get; set; }
+        public string Nearby { get; set; }
     }
 }
