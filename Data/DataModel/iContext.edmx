@@ -2402,7 +2402,7 @@ warning 6002: The table/view 'DBMainTest.dbo.LocationMistakeName961114' does not
           <Property Name="LocationSupplierID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LocationlID" Type="bigint" Nullable="false" />
           <Property Name="SupplierID" Type="bigint" Nullable="false" />
-          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="LocationType">
@@ -9767,7 +9767,7 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <Property Name="LocationSupplierID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LocationlID" Type="Int64" Nullable="false" />
           <Property Name="SupplierID" Type="Int64" Nullable="false" />
-          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Location" Relationship="Self.FK_LocationSupplier_Location" FromRole="LocationSupplier" ToRole="Location" />
           <NavigationProperty Name="Supplier" Relationship="Self.FK_LocationSupplier_Supplier" FromRole="LocationSupplier" ToRole="Supplier" />

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Data.DataModel
+namespace BookingDB
 {
     using System;
     using System.Collections.Generic;

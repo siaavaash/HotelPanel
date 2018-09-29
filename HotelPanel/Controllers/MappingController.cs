@@ -112,9 +112,9 @@ namespace HotelPanel.Controllers
         {
             try
             {
-
+                throw new NotImplementedException();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);

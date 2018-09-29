@@ -579,6 +579,10 @@ namespace Logic.BusinessObjects
                 DataContext.Context.Accommodations.First(x => x.AccommodationlID == roomImages.AccommodationID).IsVerified = true;
                 DataContext.Context.Accommodations.First(x => x.AccommodationlID == roomImages.AccommodationID).DateVerified = DateTime.Now.Date;
                 DataContext.Context.Accommodations.First(x => x.AccommodationlID == roomImages.AccommodationID).UserID = userId;
+                DataContext.Context.AccomodationRoomImages.Where(x => x.AccommodationID == roomImages.AccommodationID).ForEachAsync(img =>
+                {
+                    img.IsVerified = true;
+                });
                 return DataContext.Context.SaveChanges() > 0 ? true : false;
             }
             catch (Exception)
@@ -606,6 +610,10 @@ namespace Logic.BusinessObjects
                 DataContext.Context.Accommodations.First(x => x.AccommodationlID == model.AccommodationID).IsVerified = true;
                 DataContext.Context.Accommodations.First(x => x.AccommodationlID == model.AccommodationID).DateVerified = DateTime.Now.Date;
                 DataContext.Context.Accommodations.First(x => x.AccommodationlID == model.AccommodationID).UserID = userId;
+                DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID == model.AccommodationID).ForEachAsync(img =>
+                {
+                    img.IsVerified = true;
+                });
                 return DataContext.Context.SaveChanges() > 0 ? true : false;
             }
             catch (Exception)

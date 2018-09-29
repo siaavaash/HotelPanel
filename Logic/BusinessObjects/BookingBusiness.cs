@@ -1,9 +1,8 @@
-﻿using Data.DataModel;
+﻿using BookingDB;
 using Service.ServiceModel.BookingModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -32,7 +31,7 @@ namespace Logic.BusinessObjects
                         Path = x,
                         LastUpdate = DateTime.Now,
                     }).ToList());
-                    context.Locations.AddRange(data.Locations.Select(x => new Data.DataModel.Location
+                    context.Locations.AddRange(data.Locations.Select(x => new BookingDB.Location
                     {
                         Name = x.Name,
                         LocationID = x.LocationID,
@@ -44,7 +43,7 @@ namespace Logic.BusinessObjects
                         Lat = data.Latitude,
                         Long = data.Longitude,
                     });
-                    context.Facilities.AddRange(data.Facilities.Select(x => new Data.DataModel.Facility
+                    context.Facilities.AddRange(data.Facilities.Select(x => new BookingDB.Facility
                     {
                         Category = x.Category,
                         HotelId = hotelID,
