@@ -62,11 +62,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceModel\BookingModels.cs" />
     <Compile Include="ServiceModel\GIATAModels.cs" />
     <Compile Include="ServiceModel\GoogleMapModels.cs" />
     <Compile Include="ServiceModel\IATACodeModels.cs" />
     <Compile Include="ServiceModel\PublicModels.cs" />
     <Compile Include="ServiceModel\Weather.cs" />
+    <Compile Include="Suppliers\BookingAccess.cs" />
     <Compile Include="Suppliers\GIATAAccess.cs" />
     <Compile Include="Suppliers\GoogleMapAccess.cs" />
     <Compile Include="Suppliers\IATAAccess.cs" />

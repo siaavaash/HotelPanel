@@ -104,5 +104,22 @@ namespace HotelPanel.Controllers
                 return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+
+        // GET: Hotel Info
+        public ActionResult HotelInfo() => View();
+
+        public JsonResult GetHotelInfo(long from, long to)
+        {
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
     }
 }

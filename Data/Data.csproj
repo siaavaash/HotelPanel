@@ -309,7 +309,7 @@
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Facility.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
+      <DependentUpon>iContext3.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\FileName.cs">
       <DependentUpon>iContext.tt</DependentUpon>
@@ -353,11 +353,20 @@
     <Compile Include="DataModel\GetHotelAvailInfo.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\GoodToNow.cs">
+      <DependentUpon>iContext3.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\Help.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\Hotel.cs">
+      <DependentUpon>iContext3.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\HotelIndex.cs">
       <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\HotelLatLong.cs">
+      <DependentUpon>iContext3.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\IataAirport.cs">
       <DependentUpon>iContext.tt</DependentUpon>
@@ -391,6 +400,24 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>iContext2.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\iContext3.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>iContext3.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\iContext3.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>iContext3.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\iContext3.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>iContext3.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\ImgUrl.cs">
+      <DependentUpon>iContext3.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Inbox.cs">
       <DependentUpon>iContext.tt</DependentUpon>
@@ -438,7 +465,7 @@
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Location.cs">
-      <DependentUpon>iContext.tt</DependentUpon>
+      <DependentUpon>iContext3.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Location960627.cs">
       <DependentUpon>iContext.tt</DependentUpon>
@@ -614,6 +641,9 @@
     <Compile Include="DataModel\Role_970414.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\RoomInfo.cs">
+      <DependentUpon>iContext3.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\Service.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
@@ -741,6 +771,13 @@
     <None Include="DataModel\iContext2.edmx.diagram">
       <DependentUpon>iContext2.edmx</DependentUpon>
     </None>
+    <EntityDeploy Include="DataModel\iContext3.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>iContext3.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DataModel\iContext3.edmx.diagram">
+      <DependentUpon>iContext3.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -763,6 +800,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>iContext2.edmx</DependentUpon>
       <LastGenOutput>iContext2.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataModel\iContext3.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>iContext3.edmx</DependentUpon>
+      <LastGenOutput>iContext3.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataModel\iContext3.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>iContext3.edmx</DependentUpon>
+      <LastGenOutput>iContext3.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
