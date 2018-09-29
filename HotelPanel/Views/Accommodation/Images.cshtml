@@ -72,8 +72,6 @@
 
     var filtered = new Array();
     $("body").on("click", "#deactive_btn", function () {
-        $("img.desc").parent().find("i").addClass("fa-times clos");
-        $("img.desc").removeClass("desc");
         var images = new Array();
         $.each(filtered, function (index, item) {
             images.push({
@@ -85,11 +83,14 @@
             AccommodationID: @(Model.AccommodationID),
             AccomodationImages: images,
         };
-        SendReq(model);
+        SendReq(model, function () {
+            $("img.desc").parent().find("i").addClass("fa-times clos");
+        }, function () {
+            $("img.desc").removeClass("desc");
+        });
     })
     $("body").on("click", "#report_btn", function () {
-        $("img.desc").parent().find("i").addClass("fa-check");
-        $("img.desc").removeClass("desc");
+
         var images = new Array();
         $.each(filtered, function (index, item) {
             images.push({
@@ -101,11 +102,14 @@
             AccommodationID: @(Model.AccommodationID),
             AccomodationImages: images,
         };
-        SendReq(model);
+        SendReq(model, function () {
+            $("img.desc").parent().find("i").addClass("fa-check");
+        }, function () {
+            $("img.desc").removeClass("desc");
+        });
     })
     $("body").on("click", "#unreport_btn", function () {
-        $("img.desc").parent().find("i").removeClass("fa-check");
-        $("img.desc").removeClass("desc");
+
         var images = new Array();
         $.each(filtered, function (index, item) {
             images.push({
@@ -117,11 +121,13 @@
             AccommodationID: @(Model.AccommodationID),
             AccomodationImages: images,
         };
-        SendReq(model);
+        SendReq(model, function () {
+            $("img.desc").parent().find("i").removeClass("fa-check");
+        }, function () {
+            $("img.desc").removeClass("desc");
+        });
     })
     $("body").on("click", "#active_btn", function () {
-        $("img.desc").parent().find("i").removeClass("fa-times clos");
-        $("img.desc").removeClass("desc");
         var images = new Array();
         $.each(filtered, function (index, item) {
             images.push({
@@ -133,7 +139,11 @@
             AccommodationID: @(Model.AccommodationID),
             AccomodationImages: images,
         };
-        SendReq(model);
+        SendReq(model, function () {
+            $("img.desc").parent().find("i").removeClass("fa-times clos");
+        }, function () {
+            $("img.desc").removeClass("desc");
+        });
     });
     $(window).on('beforeunload', function () {
         $(window).scrollTop(0);
@@ -148,17 +158,19 @@
             filtered.push(Id);
         }
     });
-    function SendReq(dataModel) {
+    function SendReq(dataModel, success, final) {
         $.ajax({
             url: "/Accommodation/Filter",
             type: "POST",
             data: $.param(dataModel),
             success: function (data) {
                 if (data.success) {
+                    success();
                     $(".status").html('<div class="alert alert-success" role="alert">Success</div>');
                 } else {
                     $(".status").html('<div class="alert alert-danger" role="alert">Failed</div>');
                 }
+                final();
             },
             error: function (ex) {
                 $(".status").html('<div class="alert alert-danger" role="alert">Failed</div>');
