@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="BusinessObjects\AccommodationBusiness.cs" />
     <Compile Include="BusinessObjects\AirportBusiness.cs" />
+    <Compile Include="BusinessObjects\BookingBusiness.cs" />
     <Compile Include="BusinessObjects\GeocodingBusiness.cs" />
     <Compile Include="BusinessObjects\GIATABusiness.cs" />
     <Compile Include="BusinessObjects\IATACodeBusiness.cs" />

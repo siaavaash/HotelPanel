@@ -12,13 +12,11 @@ namespace Data.DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Facility
+    public partial class HotelLatLong
     {
-        public long FacilityId { get; set; }
-        public long HotelId { get; set; }
-        public string Title { get; set; }
-        public string Category { get; set; }
-        public string Image { get; set; }
-        public Nullable<System.DateTime> LastUpdate { get; set; }
+        public long id { get; set; }
+        public string Lat { get; set; }
+        public string Long { get; set; }
+        public Nullable<long> HotelId { get; set; }
     }
 }

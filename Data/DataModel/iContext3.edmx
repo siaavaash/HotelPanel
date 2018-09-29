@@ -1,0 +1,471 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BookingStaticDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Facility">
+          <Key>
+            <PropertyRef Name="FacilityId" />
+          </Key>
+          <Property Name="FacilityId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HotelId" Type="bigint" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Category" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Image" Type="nvarchar" MaxLength="4000" />
+          <Property Name="LastUpdate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="GoodToNow">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CheckIn" Type="nvarchar" MaxLength="500" />
+          <Property Name="CheckOut" Type="nvarchar" MaxLength="500" />
+          <Property Name="Pets" Type="nvarchar" MaxLength="500" />
+          <Property Name="Groups" Type="nvarchar(max)" />
+          <Property Name="HotelId" Type="bigint" />
+          <Property Name="pricing" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Hotel">
+          <Key>
+            <PropertyRef Name="HotelId" />
+          </Key>
+          <Property Name="id" Type="varchar" MaxLength="5000" />
+          <Property Name="name" Type="varchar" MaxLength="5000" />
+          <Property Name="address" Type="varchar" MaxLength="5000" />
+          <Property Name="zip" Type="varchar" MaxLength="5000" />
+          <Property Name="city_hotel" Type="varchar" MaxLength="5000" />
+          <Property Name="cc1" Type="varchar" MaxLength="5000" />
+          <Property Name="ufi" Type="varchar" MaxLength="5000" />
+          <Property Name="class" Type="varchar" MaxLength="5000" />
+          <Property Name="currencycode" Type="varchar" MaxLength="5000" />
+          <Property Name="minrate" Type="varchar" MaxLength="5000" />
+          <Property Name="maxrate" Type="varchar" MaxLength="5000" />
+          <Property Name="preferred" Type="varchar" MaxLength="5000" />
+          <Property Name="nr_rooms" Type="varchar" MaxLength="5000" />
+          <Property Name="longitude" Type="varchar" MaxLength="500" />
+          <Property Name="latitude" Type="varchar" MaxLength="500" />
+          <Property Name="public_ranking" Type="varchar" MaxLength="5000" />
+          <Property Name="hotel_url" Type="varchar" MaxLength="5000" />
+          <Property Name="photo_url" Type="varchar" MaxLength="5000" />
+          <Property Name="desc_en" Type="varchar" MaxLength="5000" />
+          <Property Name="desc_fr" Type="varchar" MaxLength="5000" />
+          <Property Name="desc_es" Type="varchar" MaxLength="5000" />
+          <Property Name="desc_de" Type="varchar" MaxLength="5000" />
+          <Property Name="desc_nl" Type="varchar" MaxLength="5000" />
+          <Property Name="desc_it" Type="varchar" MaxLength="5000" />
+          <Property Name="desc_pt" Type="varchar" MaxLength="5000" />
+          <Property Name="desc_ja" Type="varchar" MaxLength="5000" />
+          <Property Name="desc_zh" Type="varchar" MaxLength="5000" />
+          <Property Name="desc_pl" Type="varchar" MaxLength="5000" />
+          <Property Name="desc_ru" Type="varchar" MaxLength="5000" />
+          <Property Name="desc_sv" Type="varchar" MaxLength="5000" />
+          <Property Name="desc_ar" Type="varchar" MaxLength="5000" />
+          <Property Name="desc_el" Type="varchar" MaxLength="5000" />
+          <Property Name="desc_no" Type="varchar" MaxLength="5000" />
+          <Property Name="city_unique" Type="varchar" MaxLength="5000" />
+          <Property Name="city_preferred" Type="varchar" MaxLength="5000" />
+          <Property Name="continent_id" Type="varchar" MaxLength="5000" />
+          <Property Name="review_score" Type="varchar" MaxLength="5000" />
+          <Property Name="review_nr" Type="varchar" MaxLength="5000" />
+          <Property Name="HotelId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DescriptionSite" Type="nvarchar(max)" />
+          <Property Name="IsRecive" Type="int" />
+          <Property Name="LastUpdate" Type="date" />
+          <Property Name="Addresnew" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Lat" Type="nvarchar" MaxLength="50" />
+          <Property Name="Long" Type="nvarchar" MaxLength="50" />
+          <Property Name="stars" Type="nvarchar" MaxLength="50" />
+          <Property Name="countryid" Type="bigint" />
+          <Property Name="AccommodationlID" Type="bigint" />
+        </EntityType>
+        <EntityType Name="HotelLatLong">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Lat" Type="nvarchar" MaxLength="500" />
+          <Property Name="Long" Type="nvarchar" MaxLength="500" />
+          <Property Name="HotelId" Type="bigint" />
+        </EntityType>
+        <EntityType Name="ImgUrl">
+          <Key>
+            <PropertyRef Name="ImgUrlId" />
+          </Key>
+          <Property Name="ImgUrlId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HotelId" Type="bigint" Nullable="false" />
+          <Property Name="Path" Type="nvarchar" MaxLength="300" />
+          <Property Name="LastUpdate" Type="datetime" />
+          <Property Name="LocalPath" Type="nvarchar(max)" />
+          <Property Name="nRow" Type="bigint" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="300" />
+          <Property Name="AccommodationlID" Type="bigint" />
+          <Property Name="PathWeb" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentLocationID" Type="bigint" />
+          <Property Name="LocationTypeID" Type="bigint" />
+          <Property Name="SubClass" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Name" Type="nvarchar" MaxLength="4000" />
+          <Property Name="NameLong" Type="nvarchar" MaxLength="4000" />
+          <Property Name="HotelId" Type="bigint" />
+          <Property Name="Flag" Type="int" />
+          <Property Name="OuterHtml" Type="nvarchar" MaxLength="4000" />
+          <Property Name="LastUpdate" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="RoomInfo">
+          <Key>
+            <PropertyRef Name="RoomInfoId" />
+          </Key>
+          <Property Name="RoomInfoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccommodationID" Type="bigint" Nullable="false" />
+          <Property Name="RoomTypeId" Type="bigint" Nullable="false" />
+          <Property Name="RoomTypeName" Type="nvarchar" MaxLength="4000" />
+          <Property Name="RoomTypeIcon" Type="nvarchar" MaxLength="4000" />
+          <Property Name="RoomTypeIconInfo" Type="nvarchar" MaxLength="4000" />
+          <Property Name="RoomTypeInfo" Type="nvarchar" MaxLength="4000" />
+          <Property Name="ImagePhysicalPath" Type="nvarchar" MaxLength="4000" />
+          <Property Name="RoomImgUrl" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Radif" Type="int" />
+          <Property Name="RoomSize" Type="nvarchar" MaxLength="1000" />
+          <Property Name="RoomFacilities" Type="nvarchar" MaxLength="4000" />
+          <Property Name="RoomDescription" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="OriginalLink" Type="nvarchar" MaxLength="4000" />
+          <Property Name="BookingId" Type="varchar" MaxLength="5000" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="BookingStaticDataModelStoreContainer">
+          <EntitySet Name="Facility" EntityType="Self.Facility" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GoodToNow" EntityType="Self.GoodToNow" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hotel" EntityType="Self.Hotel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HotelLatLong" EntityType="Self.HotelLatLong" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImgUrl" EntityType="Self.ImgUrl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoomInfo" EntityType="Self.RoomInfo" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BookingStaticDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Facility">
+          <Key>
+            <PropertyRef Name="FacilityId" />
+          </Key>
+          <Property Name="FacilityId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HotelId" Type="Int64" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Category" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="GoodToNow">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CheckIn" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CheckOut" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Pets" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Groups" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HotelId" Type="Int64" />
+          <Property Name="pricing" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Hotel">
+          <Key>
+            <PropertyRef Name="HotelId" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="zip" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="city_hotel" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="cc1" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="ufi" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="class" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="currencycode" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="minrate" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="maxrate" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="preferred" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="nr_rooms" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="longitude" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="latitude" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="public_ranking" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="hotel_url" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="photo_url" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="desc_en" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="desc_fr" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="desc_es" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="desc_de" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="desc_nl" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="desc_it" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="desc_pt" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="desc_ja" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="desc_zh" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="desc_pl" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="desc_ru" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="desc_sv" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="desc_ar" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="desc_el" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="desc_no" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="city_unique" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="city_preferred" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="continent_id" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="review_score" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="review_nr" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="HotelId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DescriptionSite" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsRecive" Type="Int32" />
+          <Property Name="LastUpdate" Type="DateTime" Precision="0" />
+          <Property Name="Addresnew" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Lat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Long" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="stars" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="countryid" Type="Int64" />
+          <Property Name="AccommodationlID" Type="Int64" />
+        </EntityType>
+        <EntityType Name="HotelLatLong">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Lat" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Long" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="HotelId" Type="Int64" />
+        </EntityType>
+        <EntityType Name="ImgUrl">
+          <Key>
+            <PropertyRef Name="ImgUrlId" />
+          </Key>
+          <Property Name="ImgUrlId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HotelId" Type="Int64" Nullable="false" />
+          <Property Name="Path" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdate" Type="DateTime" Precision="3" />
+          <Property Name="LocalPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="nRow" Type="Int64" />
+          <Property Name="FileName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="AccommodationlID" Type="Int64" />
+          <Property Name="PathWeb" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentLocationID" Type="Int64" />
+          <Property Name="LocationTypeID" Type="Int64" />
+          <Property Name="SubClass" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="NameLong" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="HotelId" Type="Int64" />
+          <Property Name="Flag" Type="Int32" />
+          <Property Name="OuterHtml" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdate" Type="DateTime" Precision="7" />
+        </EntityType>
+        <EntityContainer Name="BookingStaticDataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Facilities" EntityType="Self.Facility" />
+          <EntitySet Name="GoodToNows" EntityType="Self.GoodToNow" />
+          <EntitySet Name="Hotels" EntityType="Self.Hotel" />
+          <EntitySet Name="HotelLatLongs" EntityType="Self.HotelLatLong" />
+          <EntitySet Name="ImgUrls" EntityType="Self.ImgUrl" />
+          <EntitySet Name="Locations" EntityType="Self.Location" />
+          <EntitySet Name="RoomInfoes" EntityType="BookingStaticDataModel.RoomInfo" />
+        </EntityContainer>
+        <EntityType Name="RoomInfo">
+          <Key>
+            <PropertyRef Name="RoomInfoId" />
+          </Key>
+          <Property Name="RoomInfoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccommodationID" Type="Int64" Nullable="false" />
+          <Property Name="RoomTypeId" Type="Int64" Nullable="false" />
+          <Property Name="RoomTypeName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="RoomTypeIcon" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="RoomTypeIconInfo" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="RoomTypeInfo" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="ImagePhysicalPath" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="RoomImgUrl" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Radif" Type="Int32" />
+          <Property Name="RoomSize" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="RoomFacilities" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="RoomDescription" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="OriginalLink" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="BookingId" Type="String" Nullable="false" MaxLength="5000" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BookingStaticDataModelStoreContainer" CdmEntityContainer="BookingStaticDataEntities">
+          <EntitySetMapping Name="Facilities">
+            <EntityTypeMapping TypeName="BookingStaticDataModel.Facility">
+              <MappingFragment StoreEntitySet="Facility">
+                <ScalarProperty Name="FacilityId" ColumnName="FacilityId" />
+                <ScalarProperty Name="HotelId" ColumnName="HotelId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GoodToNows">
+            <EntityTypeMapping TypeName="BookingStaticDataModel.GoodToNow">
+              <MappingFragment StoreEntitySet="GoodToNow">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="CheckIn" ColumnName="CheckIn" />
+                <ScalarProperty Name="CheckOut" ColumnName="CheckOut" />
+                <ScalarProperty Name="Pets" ColumnName="Pets" />
+                <ScalarProperty Name="Groups" ColumnName="Groups" />
+                <ScalarProperty Name="HotelId" ColumnName="HotelId" />
+                <ScalarProperty Name="pricing" ColumnName="pricing" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hotels">
+            <EntityTypeMapping TypeName="BookingStaticDataModel.Hotel">
+              <MappingFragment StoreEntitySet="Hotel">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="zip" ColumnName="zip" />
+                <ScalarProperty Name="city_hotel" ColumnName="city_hotel" />
+                <ScalarProperty Name="cc1" ColumnName="cc1" />
+                <ScalarProperty Name="ufi" ColumnName="ufi" />
+                <ScalarProperty Name="class" ColumnName="class" />
+                <ScalarProperty Name="currencycode" ColumnName="currencycode" />
+                <ScalarProperty Name="minrate" ColumnName="minrate" />
+                <ScalarProperty Name="maxrate" ColumnName="maxrate" />
+                <ScalarProperty Name="preferred" ColumnName="preferred" />
+                <ScalarProperty Name="nr_rooms" ColumnName="nr_rooms" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="public_ranking" ColumnName="public_ranking" />
+                <ScalarProperty Name="hotel_url" ColumnName="hotel_url" />
+                <ScalarProperty Name="photo_url" ColumnName="photo_url" />
+                <ScalarProperty Name="desc_en" ColumnName="desc_en" />
+                <ScalarProperty Name="desc_fr" ColumnName="desc_fr" />
+                <ScalarProperty Name="desc_es" ColumnName="desc_es" />
+                <ScalarProperty Name="desc_de" ColumnName="desc_de" />
+                <ScalarProperty Name="desc_nl" ColumnName="desc_nl" />
+                <ScalarProperty Name="desc_it" ColumnName="desc_it" />
+                <ScalarProperty Name="desc_pt" ColumnName="desc_pt" />
+                <ScalarProperty Name="desc_ja" ColumnName="desc_ja" />
+                <ScalarProperty Name="desc_zh" ColumnName="desc_zh" />
+                <ScalarProperty Name="desc_pl" ColumnName="desc_pl" />
+                <ScalarProperty Name="desc_ru" ColumnName="desc_ru" />
+                <ScalarProperty Name="desc_sv" ColumnName="desc_sv" />
+                <ScalarProperty Name="desc_ar" ColumnName="desc_ar" />
+                <ScalarProperty Name="desc_el" ColumnName="desc_el" />
+                <ScalarProperty Name="desc_no" ColumnName="desc_no" />
+                <ScalarProperty Name="city_unique" ColumnName="city_unique" />
+                <ScalarProperty Name="city_preferred" ColumnName="city_preferred" />
+                <ScalarProperty Name="continent_id" ColumnName="continent_id" />
+                <ScalarProperty Name="review_score" ColumnName="review_score" />
+                <ScalarProperty Name="review_nr" ColumnName="review_nr" />
+                <ScalarProperty Name="HotelId" ColumnName="HotelId" />
+                <ScalarProperty Name="DescriptionSite" ColumnName="DescriptionSite" />
+                <ScalarProperty Name="IsRecive" ColumnName="IsRecive" />
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+                <ScalarProperty Name="Addresnew" ColumnName="Addresnew" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Long" ColumnName="Long" />
+                <ScalarProperty Name="stars" ColumnName="stars" />
+                <ScalarProperty Name="countryid" ColumnName="countryid" />
+                <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HotelLatLongs">
+            <EntityTypeMapping TypeName="BookingStaticDataModel.HotelLatLong">
+              <MappingFragment StoreEntitySet="HotelLatLong">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Long" ColumnName="Long" />
+                <ScalarProperty Name="HotelId" ColumnName="HotelId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImgUrls">
+            <EntityTypeMapping TypeName="BookingStaticDataModel.ImgUrl">
+              <MappingFragment StoreEntitySet="ImgUrl">
+                <ScalarProperty Name="ImgUrlId" ColumnName="ImgUrlId" />
+                <ScalarProperty Name="HotelId" ColumnName="HotelId" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+                <ScalarProperty Name="LocalPath" ColumnName="LocalPath" />
+                <ScalarProperty Name="nRow" ColumnName="nRow" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
+                <ScalarProperty Name="PathWeb" ColumnName="PathWeb" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="BookingStaticDataModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="ParentLocationID" ColumnName="ParentLocationID" />
+                <ScalarProperty Name="LocationTypeID" ColumnName="LocationTypeID" />
+                <ScalarProperty Name="SubClass" ColumnName="SubClass" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="NameLong" ColumnName="NameLong" />
+                <ScalarProperty Name="HotelId" ColumnName="HotelId" />
+                <ScalarProperty Name="Flag" ColumnName="Flag" />
+                <ScalarProperty Name="OuterHtml" ColumnName="OuterHtml" />
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoomInfoes">
+            <EntityTypeMapping TypeName="BookingStaticDataModel.RoomInfo">
+              <MappingFragment StoreEntitySet="RoomInfo">
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="OriginalLink" ColumnName="OriginalLink" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="RoomDescription" ColumnName="RoomDescription" />
+                <ScalarProperty Name="RoomFacilities" ColumnName="RoomFacilities" />
+                <ScalarProperty Name="RoomSize" ColumnName="RoomSize" />
+                <ScalarProperty Name="Radif" ColumnName="Radif" />
+                <ScalarProperty Name="RoomImgUrl" ColumnName="RoomImgUrl" />
+                <ScalarProperty Name="ImagePhysicalPath" ColumnName="ImagePhysicalPath" />
+                <ScalarProperty Name="RoomTypeInfo" ColumnName="RoomTypeInfo" />
+                <ScalarProperty Name="RoomTypeIconInfo" ColumnName="RoomTypeIconInfo" />
+                <ScalarProperty Name="RoomTypeIcon" ColumnName="RoomTypeIcon" />
+                <ScalarProperty Name="RoomTypeName" ColumnName="RoomTypeName" />
+                <ScalarProperty Name="RoomTypeId" ColumnName="RoomTypeId" />
+                <ScalarProperty Name="AccommodationID" ColumnName="AccommodationID" />
+                <ScalarProperty Name="RoomInfoId" ColumnName="RoomInfoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
