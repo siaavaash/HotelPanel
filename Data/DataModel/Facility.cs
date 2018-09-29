@@ -14,11 +14,21 @@ namespace Data.DataModel
     
     public partial class Facility
     {
-        public long FacilityId { get; set; }
-        public long HotelId { get; set; }
-        public string Title { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Facility()
+        {
+            this.Accommodations = new HashSet<Accommodation>();
+        }
+    
+        public long FacilityID { get; set; }
         public string Category { get; set; }
+        public string Name { get; set; }
+        public string PersianCategory { get; set; }
+        public string PersianName { get; set; }
         public string Image { get; set; }
-        public Nullable<System.DateTime> LastUpdate { get; set; }
+        public Nullable<long> FacilityTotID { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Accommodation> Accommodations { get; set; }
     }
 }

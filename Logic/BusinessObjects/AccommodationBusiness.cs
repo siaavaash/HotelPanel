@@ -572,13 +572,16 @@ namespace Logic.BusinessObjects
                         image.IsVerified = true;
                         image.IsReported = roomImage.IsReported ?? image.IsReported;
                         image.IsActive = roomImage.IsActive ?? image.IsActive;
-                        image.VerifiedDate = DateTime.Now.Date;
                         image.UserID = userId;
                     }
                 }
                 DataContext.Context.Accommodations.First(x => x.AccommodationlID == roomImages.AccommodationID).IsVerified = true;
                 DataContext.Context.Accommodations.First(x => x.AccommodationlID == roomImages.AccommodationID).DateVerified = DateTime.Now.Date;
                 DataContext.Context.Accommodations.First(x => x.AccommodationlID == roomImages.AccommodationID).UserID = userId;
+                DataContext.Context.AccomodationRoomImages.Where(x => x.AccommodationID == roomImages.AccommodationID).ForEachAsync(img =>
+                {
+                    img.VerifiedDate = DateTime.Now;
+                }).Wait();
                 return DataContext.Context.SaveChanges() > 0 ? true : false;
             }
             catch (Exception)
@@ -599,13 +602,16 @@ namespace Logic.BusinessObjects
                         image.IsVerified = true;
                         image.IsReported = accImage.IsReported ?? image.IsReported;
                         image.IsActive = accImage.IsActive ?? image.IsActive;
-                        image.VerifiedDate = DateTime.Now.Date;
                         image.UserID = userId;
                     }
                 }
                 DataContext.Context.Accommodations.First(x => x.AccommodationlID == model.AccommodationID).IsVerified = true;
                 DataContext.Context.Accommodations.First(x => x.AccommodationlID == model.AccommodationID).DateVerified = DateTime.Now.Date;
                 DataContext.Context.Accommodations.First(x => x.AccommodationlID == model.AccommodationID).UserID = userId;
+                DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID == model.AccommodationID).ForEachAsync(img =>
+                {
+                    img.VerifiedDate = DateTime.Now;
+                }).Wait();
                 return DataContext.Context.SaveChanges() > 0 ? true : false;
             }
             catch (Exception)

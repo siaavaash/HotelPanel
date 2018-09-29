@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EBC51139-7CA3-4029-88AD-F54656A400E4}</ProjectGuid>
+    <ProjectGuid>{047CE03C-6066-421B-A9DC-C267541E70A7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Logic</RootNamespace>
-    <AssemblyName>Logic</AssemblyName>
+    <RootNamespace>BookingDB</RootNamespace>
+    <AssemblyName>BookingDB</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,56 +38,82 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web" />
-    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Z.EntityFramework.Extensions, Version=3.15.20.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
-      <HintPath>..\packages\Z.EntityFramework.Extensions.3.15.20\lib\net45\Z.EntityFramework.Extensions.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessObjects\AccommodationBusiness.cs" />
-    <Compile Include="BusinessObjects\AirportBusiness.cs" />
-    <Compile Include="BusinessObjects\BookingBusiness.cs" />
-    <Compile Include="BusinessObjects\GeocodingBusiness.cs" />
-    <Compile Include="BusinessObjects\GIATABusiness.cs" />
-    <Compile Include="BusinessObjects\IATACodeBusiness.cs" />
-    <Compile Include="BusinessObjects\PublicBusiness.cs" />
-    <Compile Include="BusinessObjects\UserBusiness.cs" />
-    <Compile Include="BusinessObjects\VerifyPanelBusiness.cs" />
+    <Compile Include="BookingEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BookingEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BookingEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BookingEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BookingEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BookingEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Facility.cs">
+      <DependentUpon>BookingEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GoodToNow.cs">
+      <DependentUpon>BookingEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Hotel.cs">
+      <DependentUpon>BookingEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HotelLatLong.cs">
+      <DependentUpon>BookingEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ImgUrl.cs">
+      <DependentUpon>BookingEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Location.cs">
+      <DependentUpon>BookingEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoomInfo.cs">
+      <DependentUpon>BookingEntities.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BookingDB\BookingDB.csproj">
-      <Project>{047CE03C-6066-421B-A9DC-C267541E70A7}</Project>
-      <Name>BookingDB</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{a02e0e0b-aada-4ad8-a8d9-04e01bd041fe}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Data\Data.csproj">
-      <Project>{4CFA9A54-6E4C-435C-9BE4-D2A33CA8D532}</Project>
-      <Name>Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Service\Service.csproj">
-      <Project>{9bba4ed2-d855-4439-905c-5594ba8e7cfb}</Project>
-      <Name>Service</Name>
-    </ProjectReference>
+    <EntityDeploy Include="BookingEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>BookingEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.Config" />
+    <None Include="BookingEntities.edmx.diagram">
+      <DependentUpon>BookingEntities.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BookingEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BookingEntities.Context.cs</LastGenOutput>
+      <DependentUpon>BookingEntities.edmx</DependentUpon>
+    </Content>
+    <Content Include="BookingEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BookingEntities.edmx</DependentUpon>
+      <LastGenOutput>BookingEntities.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

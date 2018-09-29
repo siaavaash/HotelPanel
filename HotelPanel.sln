@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{A02E0E0B-AADA-4AD8-A8D9-04E01BD041FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingDB", "BookingDB\BookingDB.csproj", "{047CE03C-6066-421B-A9DC-C267541E70A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{A02E0E0B-AADA-4AD8-A8D9-04E01BD041FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A02E0E0B-AADA-4AD8-A8D9-04E01BD041FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A02E0E0B-AADA-4AD8-A8D9-04E01BD041FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{047CE03C-6066-421B-A9DC-C267541E70A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{047CE03C-6066-421B-A9DC-C267541E70A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{047CE03C-6066-421B-A9DC-C267541E70A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{047CE03C-6066-421B-A9DC-C267541E70A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
