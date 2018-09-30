@@ -237,9 +237,9 @@ namespace Logic.BusinessObjects
             {
                 return DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID == AccommodationID).ToList().Select(x => { x.Link = x.Link.Replace("../", "/"); return x; }).ToList();
             }
-            catch (Exception exeption)
+            catch (Exception exception)
             {
-                throw exeption;
+                throw exception;
             }
         }
         public List<Facility> GetFacilities(long AccommodationID)
@@ -572,15 +572,16 @@ namespace Logic.BusinessObjects
                         image.IsVerified = true;
                         image.IsReported = roomImage.IsReported ?? image.IsReported;
                         image.IsActive = roomImage.IsActive ?? image.IsActive;
-                        image.UserID = userId;
                     }
                 }
-                DataContext.Context.Accommodations.First(x => x.AccommodationlID == roomImages.AccommodationID).IsVerified = true;
-                DataContext.Context.Accommodations.First(x => x.AccommodationlID == roomImages.AccommodationID).DateVerified = DateTime.Now.Date;
-                DataContext.Context.Accommodations.First(x => x.AccommodationlID == roomImages.AccommodationID).UserID = userId;
+                var accommodation = DataContext.Context.Accommodations.First(x => x.AccommodationlID == roomImages.AccommodationID);
+                accommodation.IsVerified = true;
+                accommodation.DateVerified = DateTime.Now.Date;
+                accommodation.UserID = userId;
                 DataContext.Context.AccomodationRoomImages.Where(x => x.AccommodationID == roomImages.AccommodationID).ForEachAsync(img =>
                 {
                     img.VerifiedDate = DateTime.Now;
+                    img.UserID = userId;
                 }).Wait();
                 return DataContext.Context.SaveChanges() > 0 ? true : false;
             }
@@ -602,15 +603,16 @@ namespace Logic.BusinessObjects
                         image.IsVerified = true;
                         image.IsReported = accImage.IsReported ?? image.IsReported;
                         image.IsActive = accImage.IsActive ?? image.IsActive;
-                        image.UserID = userId;
                     }
                 }
-                DataContext.Context.Accommodations.First(x => x.AccommodationlID == model.AccommodationID).IsVerified = true;
-                DataContext.Context.Accommodations.First(x => x.AccommodationlID == model.AccommodationID).DateVerified = DateTime.Now.Date;
-                DataContext.Context.Accommodations.First(x => x.AccommodationlID == model.AccommodationID).UserID = userId;
+                var accommodation = DataContext.Context.Accommodations.First(x => x.AccommodationlID == model.AccommodationID);
+                accommodation.IsVerified = true;
+                accommodation.DateVerified = DateTime.Now.Date;
+                accommodation.UserID = userId;
                 DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID == model.AccommodationID).ForEachAsync(img =>
                 {
                     img.VerifiedDate = DateTime.Now;
+                    img.UserID = userId;
                 }).Wait();
                 return DataContext.Context.SaveChanges() > 0 ? true : false;
             }
@@ -629,21 +631,21 @@ namespace Logic.BusinessObjects
                 {
                     images = context.AccomodationRoomImages.Where(x => x.AccommodationID == accommodationId).ToList();
                 }
-                var result = new ConcurrentDictionary<string, ConcurrentBag<AccomodationRoomImage>>();
-                Parallel.ForEach(images, image =>
+                var result = new Dictionary<string, List<AccomodationRoomImage>>();
+                foreach (var image in images)
                 {
                     var thisTitle = result.FirstOrDefault(x => x.Key == image.RoomTypeName);
                     if (thisTitle.Key == null)
                     {
-                        result.TryAdd(image.RoomTypeName, new ConcurrentBag<AccomodationRoomImage>
+                        result.Add(image.RoomTypeName, new List<AccomodationRoomImage>
                         {
                             image
                         });
                     }
                     else
                         thisTitle.Value.Add(image);
-                });
-                return result.ToDictionary(x => x.Key, x => x.Value.ToList());
+                }
+                return result;
             }
             catch (Exception)
             {
