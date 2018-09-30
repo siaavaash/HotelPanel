@@ -62,9 +62,11 @@ namespace Service.ServiceModel.BookingModels
 
     public class BookingViewModel
     {
-        public int HotelID { get; set; }
+        public long HotelID { get; set; }
+        public string Message { get; set; }
         public bool GetRoomInfo { get; set; }
         public bool GetHotelInfo { get; set; }
-        public bool MapToDb { get; set; }
+        public bool InsertHotelToDB { get; set; }
+        public bool InsertRoomsToDB { get; set; }
     }
 }

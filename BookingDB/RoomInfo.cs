@@ -29,6 +29,6 @@ namespace BookingDB
         public string RoomDescription { get; set; }
         public Nullable<bool> Active { get; set; }
         public string OriginalLink { get; set; }
-        public string BookingId { get; set; }
+        public long HotelId { get; set; }
     }
 }

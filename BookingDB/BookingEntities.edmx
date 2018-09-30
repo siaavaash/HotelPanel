@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BookingStaticDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BookingStaticDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Facility">
           <Key>
             <PropertyRef Name="FacilityId" />
@@ -138,7 +138,7 @@
           <Property Name="RoomDescription" Type="nvarchar" MaxLength="4000" />
           <Property Name="Active" Type="bit" />
           <Property Name="OriginalLink" Type="nvarchar" MaxLength="4000" />
-          <Property Name="BookingId" Type="varchar" MaxLength="5000" Nullable="false" />
+          <Property Name="HotelId" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityContainer Name="BookingStaticDataModelStoreContainer">
           <EntitySet Name="Facility" EntityType="Self.Facility" Schema="dbo" store:Type="Tables" />
@@ -149,8 +149,7 @@
           <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoomInfo" EntityType="Self.RoomInfo" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BookingStaticDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -268,6 +267,15 @@
           <Property Name="OuterHtml" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="LastUpdate" Type="DateTime" Precision="7" />
         </EntityType>
+        <EntityContainer Name="BookingStaticDataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Facilities" EntityType="Self.Facility" />
+          <EntitySet Name="GoodToNows" EntityType="Self.GoodToNow" />
+          <EntitySet Name="Hotels" EntityType="Self.Hotel" />
+          <EntitySet Name="HotelLatLongs" EntityType="Self.HotelLatLong" />
+          <EntitySet Name="ImgUrls" EntityType="Self.ImgUrl" />
+          <EntitySet Name="Locations" EntityType="Self.Location" />
+          <EntitySet Name="RoomInfoes" EntityType="BookingStaticDataModel.RoomInfo" />
+        </EntityContainer>
         <EntityType Name="RoomInfo">
           <Key>
             <PropertyRef Name="RoomInfoId" />
@@ -287,17 +295,8 @@
           <Property Name="RoomDescription" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" />
           <Property Name="OriginalLink" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Name="BookingId" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HotelId" Type="Int64" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="BookingStaticDataEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Facilities" EntityType="Self.Facility" />
-          <EntitySet Name="GoodToNows" EntityType="Self.GoodToNow" />
-          <EntitySet Name="Hotels" EntityType="Self.Hotel" />
-          <EntitySet Name="HotelLatLongs" EntityType="Self.HotelLatLong" />
-          <EntitySet Name="ImgUrls" EntityType="Self.ImgUrl" />
-          <EntitySet Name="Locations" EntityType="Self.Location" />
-          <EntitySet Name="RoomInfoes" EntityType="Self.RoomInfo" />
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -427,22 +426,22 @@
           <EntitySetMapping Name="RoomInfoes">
             <EntityTypeMapping TypeName="BookingStaticDataModel.RoomInfo">
               <MappingFragment StoreEntitySet="RoomInfo">
-                <ScalarProperty Name="RoomInfoId" ColumnName="RoomInfoId" />
-                <ScalarProperty Name="AccommodationID" ColumnName="AccommodationID" />
-                <ScalarProperty Name="RoomTypeId" ColumnName="RoomTypeId" />
-                <ScalarProperty Name="RoomTypeName" ColumnName="RoomTypeName" />
-                <ScalarProperty Name="RoomTypeIcon" ColumnName="RoomTypeIcon" />
-                <ScalarProperty Name="RoomTypeIconInfo" ColumnName="RoomTypeIconInfo" />
-                <ScalarProperty Name="RoomTypeInfo" ColumnName="RoomTypeInfo" />
-                <ScalarProperty Name="ImagePhysicalPath" ColumnName="ImagePhysicalPath" />
-                <ScalarProperty Name="RoomImgUrl" ColumnName="RoomImgUrl" />
-                <ScalarProperty Name="Radif" ColumnName="Radif" />
-                <ScalarProperty Name="RoomSize" ColumnName="RoomSize" />
-                <ScalarProperty Name="RoomFacilities" ColumnName="RoomFacilities" />
-                <ScalarProperty Name="RoomDescription" ColumnName="RoomDescription" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="HotelId" ColumnName="HotelId" />
                 <ScalarProperty Name="OriginalLink" ColumnName="OriginalLink" />
-                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="RoomDescription" ColumnName="RoomDescription" />
+                <ScalarProperty Name="RoomFacilities" ColumnName="RoomFacilities" />
+                <ScalarProperty Name="RoomSize" ColumnName="RoomSize" />
+                <ScalarProperty Name="Radif" ColumnName="Radif" />
+                <ScalarProperty Name="RoomImgUrl" ColumnName="RoomImgUrl" />
+                <ScalarProperty Name="ImagePhysicalPath" ColumnName="ImagePhysicalPath" />
+                <ScalarProperty Name="RoomTypeInfo" ColumnName="RoomTypeInfo" />
+                <ScalarProperty Name="RoomTypeIconInfo" ColumnName="RoomTypeIconInfo" />
+                <ScalarProperty Name="RoomTypeIcon" ColumnName="RoomTypeIcon" />
+                <ScalarProperty Name="RoomTypeName" ColumnName="RoomTypeName" />
+                <ScalarProperty Name="RoomTypeId" ColumnName="RoomTypeId" />
+                <ScalarProperty Name="AccommodationID" ColumnName="AccommodationID" />
+                <ScalarProperty Name="RoomInfoId" ColumnName="RoomInfoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

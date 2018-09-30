@@ -12,11 +12,13 @@ namespace HotelPanel.Controllers
         private readonly GIATABusiness giataBusiness;
         private readonly GeocodingBusiness geocodingBusiness;
         private readonly IATACodeBusiness iATACodeBusiness;
+        private readonly BookingBusiness bookingBusiness;
         public MappingController()
         {
             giataBusiness = new GIATABusiness();
             geocodingBusiness = new GeocodingBusiness();
             iATACodeBusiness = new IATACodeBusiness();
+            bookingBusiness = new BookingBusiness();
         }
 
         // GET: GIATA
@@ -112,11 +114,11 @@ namespace HotelPanel.Controllers
         {
             try
             {
-                throw new NotImplementedException();
+                var result = bookingBusiness.MapBookingInfo(from, to);
+                return Json(new { success = result.success, message = result.message, data = result.data }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-
                 return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }

@@ -11,7 +11,7 @@
         <EntityTypeShape EntityType="BookingStaticDataModel.HotelLatLong" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingStaticDataModel.ImgUrl" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingStaticDataModel.Location" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookingStaticDataModel.RoomInfo" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookingStaticDataModel.RoomInfo" Width="1.5" PointX="0.75" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
