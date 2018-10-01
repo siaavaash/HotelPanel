@@ -32,5 +32,6 @@ namespace BookingDB
         public virtual DbSet<ImgUrl> ImgUrls { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<RoomInfo> RoomInfoes { get; set; }
+        public virtual DbSet<logHotel> logHotels { get; set; }
     }
 }

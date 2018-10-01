@@ -119,6 +119,16 @@
           <Property Name="OuterHtml" Type="nvarchar" MaxLength="4000" />
           <Property Name="LastUpdate" Type="datetime2" Precision="7" />
         </EntityType>
+        <EntityType Name="logHotel">
+          <Key>
+            <PropertyRef Name="userLogID" />
+          </Key>
+          <Property Name="userLogID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HotelID" Type="bigint" />
+          <Property Name="Exception" Type="nvarchar(max)" />
+          <Property Name="line" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+        </EntityType>
         <EntityType Name="RoomInfo">
           <Key>
             <PropertyRef Name="RoomInfoId" />
@@ -147,6 +157,7 @@
           <EntitySet Name="HotelLatLong" EntityType="Self.HotelLatLong" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ImgUrl" EntityType="Self.ImgUrl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="logHotel" EntityType="Self.logHotel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoomInfo" EntityType="Self.RoomInfo" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -275,6 +286,7 @@
           <EntitySet Name="ImgUrls" EntityType="Self.ImgUrl" />
           <EntitySet Name="Locations" EntityType="Self.Location" />
           <EntitySet Name="RoomInfoes" EntityType="BookingStaticDataModel.RoomInfo" />
+          <EntitySet Name="logHotels" EntityType="BookingStaticDataModel.logHotel" />
         </EntityContainer>
         <EntityType Name="RoomInfo">
           <Key>
@@ -296,6 +308,16 @@
           <Property Name="Active" Type="Boolean" />
           <Property Name="OriginalLink" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="HotelId" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="logHotel">
+          <Key>
+            <PropertyRef Name="userLogID" />
+          </Key>
+          <Property Name="userLogID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HotelID" Type="Int64" />
+          <Property Name="Exception" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="line" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -442,6 +464,17 @@
                 <ScalarProperty Name="RoomTypeId" ColumnName="RoomTypeId" />
                 <ScalarProperty Name="AccommodationID" ColumnName="AccommodationID" />
                 <ScalarProperty Name="RoomInfoId" ColumnName="RoomInfoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="logHotels">
+            <EntityTypeMapping TypeName="BookingStaticDataModel.logHotel">
+              <MappingFragment StoreEntitySet="logHotel">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="line" ColumnName="line" />
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+                <ScalarProperty Name="HotelID" ColumnName="HotelID" />
+                <ScalarProperty Name="userLogID" ColumnName="userLogID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

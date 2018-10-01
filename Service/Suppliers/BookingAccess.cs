@@ -144,18 +144,23 @@ namespace Service.Suppliers
                 {
                     var adults = tr.Descendants().FirstOrDefault(x => x.HasClass("occupancy_adults"))?.Descendants("i");
                     var childs = tr.Descendants().FirstOrDefault(x => x.HasClass("occupancy_children"))?.Descendants("i");
-                    var sleeps = childs != null ? string.Join("", adults.Select(x => "A").ToArray().Concat(childs?.Select(x => "C").ToArray())) : string.Join("", adults.Select(x => "A").ToArray());
-                    var title = tr.Descendants().FirstOrDefault(x => x.HasClass("jq_tooltip"))?.Attributes["title"]?.Value;
-                    var link = tr.Descendants().FirstOrDefault(x => x.HasClass("togglelink"))?.Attributes["href"]?.Value.Replace("#", "");
+                    var manyAdult = byte.TryParse(tr.Descendants().FirstOrDefault(x => x.HasClass("occupancy_multiplier_number"))?.InnerText, out byte multiplier);
+                    string sleeps = "";
+                    if (manyAdult)
+                        for (int i = 1; i <= 6; i++) { sleeps += "A"; }
+                    else
+                        sleeps = childs != null ? string.Join("", adults.Select(x => "A").ToArray().Concat(childs?.Select(x => "C").ToArray())) : string.Join("", adults.Select(x => "A").ToArray());
+                    var title = tr.Descendants().FirstOrDefault(x => x.HasClass("jq_tooltip"))?.Attributes["title"]?.Value.Replace("<br/>", " ");
+                    var link = tr.Descendants().FirstOrDefault(x => x.HasClass("togglelink") && !x.HasClass("disabled"))?.Attributes["href"]?.Value.Replace("#", "");
                     var name = tr.Descendants().FirstOrDefault(x => x.HasClass("togglelink"))?.Attributes["data-room-name-en"]?.Value;
-                    var info = tr.Descendants().FirstOrDefault(x => x.HasClass("bed-types-wrapper"))?.Descendants("ul").Select(x => x.InnerText.Replace("\n", "")).ToArray();
+                    var info = tr.Descendants().FirstOrDefault(x => x.Attributes["class"]?.Value.Contains("bed-types-wrapper") ?? false)?.Descendants("ul").Select(x => x.InnerText.Replace("\n", "")).ToArray();
                     result.Add($"{link}", new RoomData
                     {
                         Sleeps = sleeps,
                         SleepsInfo = title,
                         RoomTypeID = link,
                         RoomType = name,
-                        RoomTypeInfo = string.Join(" ", info),
+                        RoomTypeInfo = info != null ? string.Join(" ", info) : "",
                     });
                 });
                 return result;
@@ -174,26 +179,26 @@ namespace Service.Suppliers
                 var container = doc.DocumentNode.Descendants().FirstOrDefault(x => x.Id == $"blocktoggle{id}");
 
                 // Get Room Images
-                var imgs = container.Descendants().FirstOrDefault(x => x.HasClass("hp-gallery")).Descendants("img");
+                var imgs = container?.Descendants().FirstOrDefault(x => x.HasClass("hp-gallery"))?.Descendants("img");
 
                 // Get Facilities
-                var facilities = container.Descendants().Where(x => x.HasClass("hp_rt_lightbox_facilities__list__item"));
+                var facilities = container?.Descendants().Where(x => x.HasClass("hp_rt_lightbox_facilities__list__item"));
 
                 // Get Description
-                var description = container.Descendants("p").FirstOrDefault(x => x.HasClass("js_hp_rt_lightbox_room_desc")).InnerText.Replace("\n","");
+                var description = container?.Descendants("p").FirstOrDefault(x => x.HasClass("js_hp_rt_lightbox_room_desc"))?.InnerText.Replace("\n", "");
 
                 // Get Room Size
-                var size = container.Descendants().FirstOrDefault(x => x.Attributes["data-name-en"]?.Value == "roomsize")?.InnerText.Replace("Room Size","").Replace("\n","");
+                var size = container?.Descendants().FirstOrDefault(x => x.Attributes["data-name-en"]?.Value == "roomsize")?.InnerText.Replace("Room Size", "").Replace("\n", "");
 
                 var counter = 0;
 
                 data.Description = description;
-                data.Facilities = facilities.Select(x => x.Attributes["data-name-en"]?.Value.Replace("&#47;","/")).ToList();
-                data.RoomImages = imgs.Select(x => new RoomImage
+                data.Facilities = facilities?.Select(x => x.Attributes["data-name-en"]?.Value.Replace("&#47;", "/")).ToList() ?? new List<string>();
+                data.RoomImages = imgs?.Select(x => new RoomImage
                 {
                     Url = x.Attributes["data-lazy"].Value,
                     ID = ++counter,
-                }).ToList();
+                }).ToList() ?? new List<RoomImage>();
                 data.RoomSize = size;
 
                 return data;

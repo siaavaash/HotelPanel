@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -60,7 +61,7 @@ namespace Logic.BusinessObjects
                 using (var context = new BookingStaticDataEntities())
                 {
                     var url = context.Hotels.FirstOrDefault(x => x.HotelId == hotelID).hotel_url;
-                    return url.Remove(url.LastIndexOf('?'));
+                    return url.Remove(url.IndexOf('?'));
                 }
             }
             catch (Exception)
@@ -77,6 +78,8 @@ namespace Logic.BusinessObjects
                 {
                     var hotel = context.Hotels.FirstOrDefault(x => x.HotelId == hotelID);
                     hotel.DescriptionSite = data.Description;
+                    hotel.IsRecive = 1;
+                    hotel.LastUpdate = DateTime.Now;
                     context.GoodToNows.Add(new GoodToNow
                     {
                         CheckIn = data.GoodToKnow.CheckIn,
@@ -93,7 +96,8 @@ namespace Logic.BusinessObjects
                     context.Locations.AddRange(data.Locations.Select(x => new BookingDB.Location
                     {
                         Name = x.Name,
-                        LocationID = x.LocationID,
+                        HotelId = hotelID,
+                        LocationTypeID = x.LocationID,
                         LastUpdate = DateTime.Now
                     }).ToList());
                     context.HotelLatLongs.Add(new HotelLatLong
@@ -113,10 +117,13 @@ namespace Logic.BusinessObjects
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                var stackTrace = new StackTrace();
+                var frame = stackTrace.GetFrame(0);
+                var methodName = frame.GetMethod().Name;
+                LogException(hotelID, ex, $"Method Name: {methodName} -- Insert Hotel Info to DB failed.");
+                return false;
             }
         }
 
@@ -147,10 +154,33 @@ namespace Logic.BusinessObjects
                 });
                 using (var context = new BookingStaticDataEntities())
                 {
-                    context.Configuration.AutoDetectChangesEnabled = false;
-                    context.RoomInfoes.AddRange(roomsInfo);
-                    context.ChangeTracker.DetectChanges();
-                    return context.SaveChanges() > 0 ? true : false;
+                    context.BulkInsert(roomsInfo);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                var stackTrace = new StackTrace();
+                var frame = stackTrace.GetFrame(0);
+                var methodName = frame.GetMethod().Name;
+                LogException(hotelID, ex, $"Method Name: {methodName} -- Insert Rooms Info to DB failed.");
+                return false;
+            }
+        }
+
+        private void LogException(long? hotelID, Exception exception, string comment)
+        {
+            try
+            {
+                using (var context = new BookingStaticDataEntities())
+                {
+                    context.logHotels.Add(new logHotel
+                    {
+                        HotelID = hotelID,
+                        Exception = exception.Message + " -- " + exception.InnerException?.Message,
+                        Description = DateTime.Now + " : " + comment,
+                    });
+                    context.SaveChanges();
                 }
             }
             catch (Exception)
@@ -198,6 +228,7 @@ namespace Logic.BusinessObjects
                                  {
                                      message += "Get Hotel Info Message: ";
                                      message += string.Join("--", hotelResult.Errors.Select(x => x.Text).ToArray());
+                                     if (hotelResult.Errors != null) LogException(i, new Exception(string.Join(" ", hotelResult.Errors?.Select(x => x.Text).ToArray())), $"Method Name: GetHotelInfo -- Get Hotel Info from Booking failed.");
                                  }
                              },
                              () =>
@@ -209,13 +240,15 @@ namespace Logic.BusinessObjects
                                  }
                                  else
                                  {
-                                     message += "Get Hotel Info Message: ";
+                                     message += "Get Room Info Message: ";
                                      message += string.Join("--", roomsResult.Errors.Select(x => x.Text).ToArray());
+                                     if (roomsResult.Errors != null) LogException(i, new Exception(string.Join(" ", roomsResult.Errors?.Select(x => x.Text).ToArray())), $"Method Name: GetRooms -- Get Rooms Info from Booking failed.");
                                  }
                              });
                          result.Add(new BookingViewModel
                          {
                              HotelID = i,
+                             Message = message,
                              GetHotelInfo = getHotel,
                              GetRoomInfo = getRooms,
                              InsertHotelToDB = insertHotelToDB,
@@ -236,6 +269,10 @@ namespace Logic.BusinessObjects
             }
             catch (Exception ex)
             {
+                var stackTrace = new StackTrace();
+                var frame = stackTrace.GetFrame(0);
+                var methodName = frame.GetMethod().Name;
+                LogException(null, ex, $"Method Name: {methodName} -- Get Hotel and Rooms Info failed.");
                 return (false, ex.Message, null);
             }
         }

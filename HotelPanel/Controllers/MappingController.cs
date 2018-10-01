@@ -115,7 +115,7 @@ namespace HotelPanel.Controllers
             try
             {
                 var result = bookingBusiness.MapBookingInfo(from, to);
-                return Json(new { success = result.success, message = result.message, data = result.data }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = result.success, message = result.message, data = result.data.OrderBy(x => x.HotelID) }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
