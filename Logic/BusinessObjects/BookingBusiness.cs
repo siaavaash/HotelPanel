@@ -87,13 +87,13 @@ namespace Logic.BusinessObjects
                         HotelId = hotelID,
                         Pets = data.GoodToKnow.Pets,
                     });
-                    context.ImgUrls.AddRange(data.HotelImageUrls.Select(x => new ImgUrl
+                    context.BulkInsert(data.HotelImageUrls.Select(x => new ImgUrl
                     {
                         HotelId = hotelID,
                         Path = x,
                         LastUpdate = DateTime.Now,
                     }).ToList());
-                    context.Locations.AddRange(data.Locations.Select(x => new BookingDB.Location
+                    context.BulkInsert(data.Locations.Select(x => new BookingDB.Location
                     {
                         Name = x.Name,
                         HotelId = hotelID,
@@ -106,14 +106,15 @@ namespace Logic.BusinessObjects
                         Lat = data.Latitude,
                         Long = data.Longitude,
                     });
-                    context.Facilities.AddRange(data.Facilities.Select(x => new BookingDB.Facility
+                    context.BulkInsert(data.Facilities.Select(x => new BookingDB.Facility
                     {
                         Category = x.Category,
                         HotelId = hotelID,
                         Title = x.Title,
                         LastUpdate = DateTime.Now
                     }).ToList());
-                    return context.SaveChanges() > 0 ? true : false;
+                    context.BulkSaveChanges();
+                    return true;
                 }
 
             }
