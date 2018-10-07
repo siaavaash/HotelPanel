@@ -121,5 +121,10 @@ namespace Data.ViewModel.AccommodationModels
         public long AccommodationId { get; set; }
         public Dictionary<string, List<AccomodationRoomImage>> RoomImages { get; set; }
     }
-
+    public class MultipleRoomsImageViewModel
+    {
+        public int AccommodationID { get; set; }
+        public string Name { get; set; }
+        public Dictionary<string, List<AccomodationRoomImage>> GroupedImages { get; set; }
+    }
 }

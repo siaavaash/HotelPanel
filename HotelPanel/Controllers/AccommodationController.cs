@@ -324,5 +324,34 @@ namespace HotelPanel.Controllers
                 throw;
             }
         }
+
+        public ActionResult MultipleAccommodationImage(List<int> accommodationsID)
+        {
+            try
+            {
+                if (!ModelState.IsValid) throw new ArgumentOutOfRangeException("The Arguments is incorrect format.");
+                var model = _AccommodationBusiness.GetMultipleHotelImage(accommodationsID);
+                return View(model);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public ActionResult MultipleRoomsImages(List<int> accommodationsID)
+        {
+            try
+            {
+                var model = _AccommodationBusiness.GetMultipleRoomsImages(accommodationsID);
+                return View(model);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

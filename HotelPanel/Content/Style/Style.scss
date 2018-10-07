@@ -19,6 +19,14 @@
     position: absolute;
 }
 
+.submit_btn:disabled {
+    cursor: default !important;
+}
+
+.hotel_card_header{
+    background-color:rgba(0,0,0,.2) !important;
+}
+
 .btn_img {
     text-decoration: none;
     color: #fff;
