@@ -81,18 +81,10 @@ namespace Logic.BusinessObjects
             {
                 var output = new MemoryStream();
                 var result = new ConcurrentBag<SearchHotelByCityViewModel>();
-                //var cities = GetAllCities();
-                var testCity = new resultCitiesCity[]
-                {
-                    new resultCitiesCity {name = "Dubai",code=364 },
-                    //new resultCitiesCity {name = "ABANT",code=14104},
-                    //new resultCitiesCity {name = "Abashiri",code=194748},
-                    //new resultCitiesCity {name = "ABBARETZ",code=272465},
-                    //new resultCitiesCity {name = "ABBERLEY",code=179868},
-                };
+                var cities = GetAllCities();
                 using (var zip = new ZipFile())
                 {
-                    Parallel.ForEach(testCity, city =>
+                    Parallel.ForEach(cities, city =>
                     {
                         try
                         {
