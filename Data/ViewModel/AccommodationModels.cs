@@ -46,6 +46,7 @@ namespace Data.ViewModel.AccommodationModels
         public long? From { get; set; }
         public long? To { get; set; }
         public bool Verified { get; set; }
+        public bool OnlyVerified { get; set; }
     }
     public class AccommodationFacility
     {
@@ -121,5 +122,10 @@ namespace Data.ViewModel.AccommodationModels
         public long AccommodationId { get; set; }
         public Dictionary<string, List<AccomodationRoomImage>> RoomImages { get; set; }
     }
-
+    public class MultipleRoomsImageViewModel
+    {
+        public int AccommodationID { get; set; }
+        public string Name { get; set; }
+        public Dictionary<string, List<AccomodationRoomImage>> GroupedImages { get; set; }
+    }
 }

@@ -58,7 +58,7 @@ namespace Logic.BusinessObjects
                 throw exeption;
             }
         }
-        public AccommodationListViewModel GetAccommodationByUser(long userId, bool showIsVerified)
+        public AccommodationListViewModel GetAccommodationByUser(long userId, bool showIsVerified, bool onlyVerified)
         {
             try
             {
@@ -79,9 +79,16 @@ namespace Logic.BusinessObjects
                             foreach (var bound in bounds)
                             {
                                 var accommodations = context.Accommodations.Include(x => x.AccommodationSortedByCountry).Where(x => x.AccommodationSortedByCountry.Ordered >= bound.Key && x.AccommodationSortedByCountry.Ordered <= bound.Value);
-                                if (!showIsVerified)
+                                if (onlyVerified)
                                 {
-                                    accommodations = accommodations.Where(x => x.DateVerified == null);
+                                    accommodations = accommodations.Where(x => x.DateVerified != null);
+                                }
+                                else
+                                {
+                                    if (!showIsVerified)
+                                    {
+                                        accommodations = accommodations.Where(x => x.DateVerified == null);
+                                    }
                                 }
                                 result.AccommodationList.AddRange(accommodations.Select(x => new AccommodationListRsult
                                 {
@@ -92,6 +99,7 @@ namespace Logic.BusinessObjects
                                     Name = x.Name
                                 }).ToList());
                             }
+                            result.AccommodationList = result.AccommodationList.OrderBy(x => x.AccommodationID).ToList();
                             return result;
                         }
                     }
@@ -204,9 +212,16 @@ namespace Logic.BusinessObjects
                     }
 
                 }
-                if (!Model.Verified)
+                if (Model.OnlyVerified)
                 {
-                    Query = Query.Where(x => x.DateVerified == null).ToList();
+                    Query = Query.Where(x => x.DateVerified != null).ToList();
+                }
+                else
+                {
+                    if (!Model.Verified)
+                    {
+                        Query = Query.Where(x => x.DateVerified == null).ToList();
+                    }
                 }
                 var result = new AccommodationListViewModel
                 {
@@ -562,28 +577,31 @@ namespace Logic.BusinessObjects
         }
         public bool VerifyRoomImages(long userId, Data.ViewModel.AccommodationModels.RoomImagesViewModel roomImages)
         {
+            var savedItems = 0;
             try
             {
-                foreach (var roomImage in roomImages.RoomImages ?? new List<AccomodationRoomImage>())
-                {
-                    var image = DataContext.Context.AccomodationRoomImages.FirstOrDefault(x => x.AccomodationRoomImageID == roomImage.AccomodationRoomImageID);
-                    if (image != null)
-                    {
-                        image.IsVerified = true;
-                        image.IsReported = roomImage.IsReported ?? image.IsReported;
-                        image.IsActive = roomImage.IsActive ?? image.IsActive;
-                    }
-                }
-                var accommodation = DataContext.Context.Accommodations.First(x => x.AccommodationlID == roomImages.AccommodationID);
-                accommodation.IsVerified = true;
-                accommodation.DateVerified = DateTime.Now.Date;
-                accommodation.UserID = userId;
-                DataContext.Context.AccomodationRoomImages.Where(x => x.AccommodationID == roomImages.AccommodationID).ForEachAsync(img =>
-                {
-                    img.VerifiedDate = DateTime.Now;
-                    img.UserID = userId;
-                }).Wait();
-                return DataContext.Context.SaveChanges() > 0 ? true : false;
+                //foreach (var roomImage in roomImages.RoomImages ?? new List<AccomodationRoomImage>())
+                Parallel.ForEach(roomImages.RoomImages ?? new List<AccomodationRoomImage>(), roomImage =>
+                 {
+                     using (var context = new Entities())
+                     {
+                         var image = context.AccomodationRoomImages.FirstOrDefault(x => x.AccomodationRoomImageID == roomImage.AccomodationRoomImageID);
+                         var accommodation = context.Accommodations.First(x => x.AccommodationlID == image.AccommodationID);
+                         accommodation.IsVerified = true;
+                         accommodation.DateVerified = DateTime.Now;
+                         accommodation.UserID = userId;
+                         if (image != null)
+                         {
+                             image.IsVerified = true;
+                             image.IsReported = roomImage.IsReported ?? image.IsReported;
+                             image.IsActive = roomImage.IsActive ?? image.IsActive;
+                             image.VerifiedDate = DateTime.Now;
+                             image.UserID = userId;
+                         }
+                         savedItems += context.SaveChanges();
+                     }
+                 });
+                return savedItems > 0 ? true : false;
             }
             catch (Exception)
             {
@@ -593,28 +611,31 @@ namespace Logic.BusinessObjects
         }
         public bool VerifyAccommodationImages(long userId, FilterImagesView model)
         {
+            var savedItems = 0;
             try
             {
-                foreach (var accImage in model.AccomodationImages ?? new List<AccomodationImage>())
+                //foreach (var accImage in model.AccomodationImages ?? new List<AccomodationImage>())
+                Parallel.ForEach(model.AccomodationImages ?? new List<AccomodationImage>(), accImage =>
                 {
-                    var image = DataContext.Context.AccomodationImages.FirstOrDefault(x => x.ImageID == accImage.ImageID);
-                    if (image != null)
+                    using (var context = new Entities())
                     {
-                        image.IsVerified = true;
-                        image.IsReported = accImage.IsReported ?? image.IsReported;
-                        image.IsActive = accImage.IsActive ?? image.IsActive;
+                        var image = context.AccomodationImages.FirstOrDefault(x => x.ImageID == accImage.ImageID);
+                        var accommodation = context.Accommodations.First(x => x.AccommodationlID == image.AccommodationlID);
+                        accommodation.IsVerified = true;
+                        accommodation.DateVerified = DateTime.Now;
+                        accommodation.UserID = userId;
+                        if (image != null)
+                        {
+                            image.IsVerified = true;
+                            image.IsReported = accImage.IsReported ?? image.IsReported;
+                            image.IsActive = accImage.IsActive ?? image.IsActive;
+                            image.VerifiedDate = DateTime.Now;
+                            image.UserID = userId;
+                        }
+                        savedItems += context.SaveChanges();
                     }
-                }
-                var accommodation = DataContext.Context.Accommodations.First(x => x.AccommodationlID == model.AccommodationID);
-                accommodation.IsVerified = true;
-                accommodation.DateVerified = DateTime.Now.Date;
-                accommodation.UserID = userId;
-                DataContext.Context.AccomodationImages.Where(x => x.AccommodationlID == model.AccommodationID).ForEachAsync(img =>
-                {
-                    img.VerifiedDate = DateTime.Now;
-                    img.UserID = userId;
-                }).Wait();
-                return DataContext.Context.SaveChanges() > 0 ? true : false;
+                });
+                return savedItems > 0 ? true : false;
             }
             catch (Exception)
             {
@@ -645,7 +666,59 @@ namespace Logic.BusinessObjects
                     else
                         thisTitle.Value.Add(image);
                 }
-                return result;
+                return result.Keys.OrderBy(x => x).ToDictionary(x => x, x => result[x]);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public Dictionary<string, List<AccomodationImage>> GetMultipleHotelImage(List<int> ids)
+        {
+            try
+            {
+                var result = new Dictionary<string, List<AccomodationImage>>();
+                Parallel.ForEach(ids, id =>
+                {
+                    using (var context = new Entities())
+                    {
+                        context.Configuration.AutoDetectChangesEnabled = false;
+                        var hotel = context.Accommodations.AsNoTracking().FirstOrDefault(x => x.AccommodationlID == id);
+                        var name = $"{hotel.Name} - {hotel.AccommodationlID}";
+                        result.Add(name, context.AccomodationImages.Where(x => x.AccommodationlID == id).OrderBy(x => x.ImageID).ToList() ?? new List<AccomodationImage>());
+                    }
+                });
+                return result.Keys.OrderBy(x => x).ToDictionary(x => x, x => result[x]);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<MultipleRoomsImageViewModel> GetMultipleRoomsImages(List<int> ids)
+        {
+            try
+            {
+                var result = new List<MultipleRoomsImageViewModel>();
+                Parallel.ForEach(ids, id =>
+                {
+                    string hotelName = "";
+                    using (var context = new Entities())
+                    {
+                        hotelName = context.Accommodations.FirstOrDefault(x => x.AccommodationlID == id)?.Name;
+                    }
+                    result.Add(new MultipleRoomsImageViewModel
+                    {
+                        Name = hotelName,
+                        AccommodationID = id,
+                        GroupedImages = GetGroupedRoomImage(id)
+                    });
+                });
+                return result.OrderBy(x => x.Name).ToList();
             }
             catch (Exception)
             {

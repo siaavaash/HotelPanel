@@ -809,6 +809,8 @@
     <Content Include="Views\Accommodation\SearchReport.cshtml" />
     <Content Include="Views\Accommodation\RoomImages.cshtml" />
     <Content Include="Views\Mapping\Iata.cshtml" />
+    <Content Include="Views\Accommodation\MultipleAccommodationImage.cshtml" />
+    <Content Include="Views\Accommodation\MultipleRoomsImages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

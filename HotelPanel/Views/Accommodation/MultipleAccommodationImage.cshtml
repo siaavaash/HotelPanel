@@ -1,45 +1,67 @@
-﻿@model Data.ViewModel.AccommodationModels.FilterImagesView
-
+﻿@model Dictionary<string, List<Data.DataModel.AccomodationImage>>
+@{
+    var counter = 0;
+}
 <div>
     <div class="button_head">
         <button id="active_btn" class="btn_img">Active</button>
         <button id="deactive_btn" class="btn_img">Deactive</button>
         <button id="report_btn" class="btn_img">Report</button>
         <button id="unreport_btn" class="btn_img">Unreport</button>
-        <button id="back" class="btn_img" type="submit" onclick="window.location.href='/VerifyPanel/Details/@Model.AccommodationID';">Back</button>
+        <button id="back" class="btn_img" type="submit" onclick="window.history.back()">Back</button>
         <div class="status"></div>
     </div>
     <div style="margin-top:50px;">
-        @foreach (var Item in Model.AccomodationImages)
-        {
+        <div id="accordion">
+            @foreach (var part in Model)
+            {
+                var show = counter == 0 ? "collapse show" : "collapse";
+                <div class="card">
+                    <div class="card-header hotel_card_header" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#part-@counter" aria-expanded="true" aria-controls="part-@counter">
+                                @part.Key
+                            </button>
+                        </h5>
+                    </div>
 
-            <div class="gallery">
-                @if (Item.IsActive == false)
-                {
-                    <label class="myCheckbox">
-                        <span class="img_child"><i class="fas fa-times clos"></i></span>
-                        <img data-src="@Item.Link" id="@Item.ImageID" class="select-image lazy">
-                    </label>
+                    <div id="part-@counter" class="collapse show" aria-labelledby="headingOne">
+                        <div class="card-body">
+                            @foreach (var Item in part.Value)
+                            {
 
-                }
-                else if (Item.IsReported == true)
-                {
-                    <label class="myCheckbox">
-                        <span class="img_child"><i class="fas fa-check"></i></span>
-                        <img data-src="@Item.Link" id="@Item.ImageID" class="select-image lazy">
-                    </label>
-                }
-                else
-                {
-                    <label class="myCheckbox">
-                        <span class="img_child"><i class="fas"></i></span>
-                        <img data-src="@Item.Link" id="@Item.ImageID" class="select-image lazy">
-                    </label>
+                                <div class="gallery">
+                                    @if (Item.IsActive == false)
+                                    {
+                                        <label class="myCheckbox">
+                                            <span class="img_child"><i class="fas fa-times clos"></i></span>
+                                            <img data-src="@Item.Link" id="@Item.ImageID" data-hotelID="@Item.AccommodationlID" class="select-image lazy">
+                                        </label>
 
-                }
-            </div>
+                                    }
+                                    else if (Item.IsReported == true)
+                                    {
+                                        <label class="myCheckbox">
+                                            <span class="img_child"><i class="fas fa-check"></i></span>
+                                            <img data-src="@Item.Link" id="@Item.ImageID" data-hotelID="@Item.AccommodationlID" class="select-image lazy">
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <label class="myCheckbox">
+                                            <span class="img_child"><i class="fas"></i></span>
+                                            <img data-src="@Item.Link" id="@Item.ImageID" data-hotelID="@Item.AccommodationlID" class="select-image lazy">
+                                        </label>
 
-        }
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                counter++;
+            }
+        </div>
     </div>
 </div>
 
@@ -64,7 +86,6 @@
             });
         });
         var model = {
-            AccommodationID: @(Model.AccommodationID),
             AccomodationImages: images,
         };
         SendReq(model, function () {
@@ -84,7 +105,6 @@
             });
         });
         var model = {
-            AccommodationID: @(Model.AccommodationID),
             AccomodationImages: images,
         };
         SendReq(model, function () {
@@ -104,7 +124,6 @@
             });
         });
         var model = {
-            AccommodationID: @(Model.AccommodationID),
             AccomodationImages: images,
         };
         SendReq(model, function () {
@@ -123,7 +142,6 @@
             });
         });
         var model = {
-            AccommodationID: @(Model.AccommodationID),
             AccomodationImages: images,
         };
         SendReq(model, function () {
