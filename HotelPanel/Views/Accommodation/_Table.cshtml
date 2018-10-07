@@ -2,60 +2,109 @@
     <div class="col-md-12">
         <div class="bgc-white bd bdrs-3 p-20 mB-20">
             <h4 class="c-grey-900 mB-20">Accommodation List</h4>
+            <div>
+                <button class="btn btn-info submit_btn" data-action="/Accommodation/MultipleAccommodationImage" disabled>Accommodation Images</button>
+                <button class="btn btn-info submit_btn" data-action="/Accommodation/MultipleRoomsImages" disabled>Room Images</button>
+            </div>
+
             @if (Model.Restricted)
             {
                 object check = ViewBag.ShowVerified ? "checked" : null;
+                object onlyVerifiedCheck = ViewBag.OnlyVerified ? "checked" : null;
                 <div class="checkbox checkbox-circle checkbox-info peers ai-c mB-15">
-                    <input type="checkbox" id="inputCall1" name="ShowVerified" class="peer" @check>
+                    <input type="checkbox" id="inputCall1" name="Verified" class="peer" @check>
                     <label for="inputCall1" class="peers peer-greed js-sb ai-c"><span class="peer peer-greed">Show Verified Accommodations</span></label>
                 </div>
+                <div class="checkbox checkbox-circle checkbox-info peers ai-c mB-15">
+                    <input type="checkbox" id="inputCall2" name="Verified" class="peer" @onlyVerifiedCheck>
+                    <label for="inputCall2" class="peers peer-greed js-sb ai-c"><span class="peer peer-greed">Only Show Verified Accommodations</span></label>
+                </div>
             }
-            <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                <thead>
-                    <tr>
-                        <th>Accommodation ID</th>
-                        <th>Name</th>
-                        <th>City</th>
-                        <th>Country</th>
-                        <th>Last Update</th>
-                        <th>Options</th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                        <th>Accommodation ID</th>
-                        <th>Name</th>
-                        <th>City</th>
-                        <th>Country</th>
-                        <th>Last Update Date</th>
-                        <th>Options</th>
-                    </tr>
-                </tfoot>
-                <tbody>
-                    @foreach (var Item in Model.AccommodationList)
-                    {
+            <form method="post">
+                <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
                         <tr>
-                            <td>@Item.AccommodationID</td>
-                            <td>@Item.Name</td>
-                            <td>@Item.CityName</td>
-                            <td>@Item.Country</td>
-                            <td>@Item.lastUpdate</td>
-                            <td>
-                                @*<a href="Images/?AccommodationID=@Item.AccommodationID" class="btn cur-p btn-secondary">Images</a>*@
-                                <a href="Weather/?AccommodationID=@Item.AccommodationID" class="btn cur-p btn-primary">Weather</a>
-                                <a href="Facility/?AccommodationID=@Item.AccommodationID" class="btn cur-p btn-warning">Facility</a>
-                                <a target="_blank" href="~/VerifyPanel/Details/@Item.AccommodationID" class="btn cur-p btn-info">Verify</a>
-
+                            <th><input type="checkbox" class="checkAll" /></th>
+                            <th>Accommodation ID</th>
+                            <th>Name</th>
+                            <th>City</th>
+                            <th>Country</th>
+                            <th>Last Update</th>
+                            <th>Options</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th><input type="checkbox" class="checkAll" /></th>
+                            <th>Accommodation ID</th>
+                            <th>Name</th>
+                            <th>City</th>
+                            <th>Country</th>
+                            <th>Last Update Date</th>
+                            <th>Options</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var Item in Model.AccommodationList)
+                        {
+                            <tr>
+                                <td><input type="checkbox" name="accommodationsID" value="@Item.AccommodationID" /></td>
+                                <td>@Item.AccommodationID</td>
+                                <td>@Item.Name</td>
+                                <td>@Item.CityName</td>
+                                <td>@Item.Country</td>
+                                <td>@Item.lastUpdate</td>
+                                <td>
+                                    @*<a href="Images/?AccommodationID=@Item.AccommodationID" class="btn cur-p btn-secondary">Images</a>*@
+                                    <a href="Weather/?AccommodationID=@Item.AccommodationID" class="btn cur-p btn-primary">Weather</a>
+                                    <a href="Facility/?AccommodationID=@Item.AccommodationID" class="btn cur-p btn-warning">Facility</a>
+                                    <a target="_blank" href="~/VerifyPanel/Details/@Item.AccommodationID" class="btn cur-p btn-info">Verify</a>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </form>
         </div>
     </div>
 </div>
 <script>
-    $("input[name=ShowVerified]").change(function () {
+    $(".checkAll").change(function () {
+        if ($(this).is(":checked")) {
+            $(".checkAll").prop("checked", true);
+            $("input[name=accommodationsID]").prop("checked", true).trigger("change");
+        } else {
+            $(".checkAll").prop("checked", false);
+            $("input[name=accommodationsID]").prop("checked", false).trigger("change");
+        }
+    })
+    $("#inputCall1").change(function () {
         var checked = $(this).is(":checked");
         window.location.href = '/Accommodation/List?showVerified=' + checked;
+    })
+    $("#inputCall2").change(function () {
+        var checked = $(this).is(":checked");
+        window.location.href = '/Accommodation/List?onlyVerified=' + checked;
+    })
+    $("input[name=accommodationsID]").change(function () {
+        var checked = false;
+        if (!$(this).is(":checked")) {
+            $(".checkAll").prop("checked", false);
+        }
+        $("input[name=accommodationsID]").each(function () {
+            if ($(this).is(":checked")) {
+                checked = true;
+                return false;
+            }
+        })
+        if (checked) {
+            $(".submit_btn").prop("disabled", false);
+        } else {
+            $(".submit_btn").prop("disabled", true);
+        }
+    })
+    $(".submit_btn").click(function () {
+        var action = $(this).data("action");
+        $("form").attr("action", action);
+        $("form").submit();
     })
 </script>

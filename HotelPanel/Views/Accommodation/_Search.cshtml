@@ -28,11 +28,25 @@
                     <input type="checkbox" id="inputCall1" name="Verified" class="peer" value="true">
                     <label for="inputCall1" class="peers peer-greed js-sb ai-c"><span class="peer peer-greed">Show Verified Accommodations</span></label>
                 </div>
+                <div class="checkbox checkbox-circle checkbox-info peers ai-c mB-15">
+                    <input type="checkbox" id="inputCall2" name="OnlyVerified" class="peer" value="true">
+                    <label for="inputCall2" class="peers peer-greed js-sb ai-c"><span class="peer peer-greed">Only Show Verified Accommodations</span></label>
+                </div>
                 <button type="submit" class="btn btn-primary">Search</button>
             </form>
         </div>
     </div>
 <script>
+    $("#inputCall1").change(function () {
+        if ($(this).is(":checked")) {
+            $("#inputCall2").prop("checked", false);
+        }
+    })
+    $("#inputCall2").change(function () {
+        if ($(this).is(":checked")) {
+            $("#inputCall1").prop("checked", false);
+        }
+    })
     $("#inputCity").autocomplete({
         source: function(request, response) {
             $.get("/Accommodation/GetCities", {

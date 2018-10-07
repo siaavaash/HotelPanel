@@ -48,10 +48,11 @@ namespace HotelPanel.Controllers
         {
             return View();
         }
-        public ActionResult List(bool showVerified = false)
+        public ActionResult List(bool showVerified = false, bool onlyVerified = false)
         {
             ViewBag.ShowVerified = showVerified;
-            var result = _AccommodationBusiness.GetAccommodationByUser(CurrentUser.UserID, showVerified);
+            ViewBag.OnlyVerified = onlyVerified;
+            var result = _AccommodationBusiness.GetAccommodationByUser(CurrentUser.UserID, showVerified, onlyVerified);
             return View(result);
         }
         [HttpPost]
@@ -317,6 +318,35 @@ namespace HotelPanel.Controllers
                     return Json(new { success = false, message = "Verify Room Images failed." }, JsonRequestBehavior.AllowGet);
                 }
                 return Json(new { success = false, message = "Model is invalid." }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public ActionResult MultipleAccommodationImage(List<int> accommodationsID)
+        {
+            try
+            {
+                if (!ModelState.IsValid) throw new ArgumentOutOfRangeException("The Arguments is incorrect format.");
+                var model = _AccommodationBusiness.GetMultipleHotelImage(accommodationsID);
+                return View(model);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public ActionResult MultipleRoomsImages(List<int> accommodationsID)
+        {
+            try
+            {
+                var model = _AccommodationBusiness.GetMultipleRoomsImages(accommodationsID);
+                return View(model);
             }
             catch (Exception)
             {

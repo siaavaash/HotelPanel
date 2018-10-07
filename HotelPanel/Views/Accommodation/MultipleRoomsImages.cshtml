@@ -1,6 +1,7 @@
-﻿@model Data.ViewModel.AccommodationModels.GroupRoomImage
+﻿@model List<Data.ViewModel.AccommodationModels.MultipleRoomsImageViewModel>
 @{
-    var counter = 0;
+    var hotelCounter = 0;
+    var roomCounter = 0;
 }
 <div>
     <div class="button_head">
@@ -8,60 +9,83 @@
         <button id="deactive_btn" class="btn_img">Deactive</button>
         <button id="report_btn" class="btn_img">Report</button>
         <button id="unreport_btn" class="btn_img">Unreport</button>
-        <button id="back" class="btn_img" type="submit" onclick="window.location.href='/VerifyPanel/Details/@Model.AccommodationId';">Back</button>
+        <button id="back" class="btn_img" type="submit" onclick="window.history.back();">Back</button>
         <div class="status"></div>
     </div>
     <div style="margin-top:50px;">
-        <div id="accordion">
-            @foreach (var part in Model.RoomImages)
+
+
+        <div id="hotel_accordion">
+            @foreach (var hotel in Model)
             {
-                var show = counter == 0 ? "collapse show" : "collapse";
                 <div class="card">
-                    <div class="card-header" id="headingOne">
+                    <div class="card-header hotel_card_header" id="headingOne">
                         <h5 class="mb-0">
-                            <button class="btn btn-link" data-toggle="collapse" data-target="#part-@counter" aria-expanded="true" aria-controls="part-@counter">
-                                @part.Key
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#hotel-@hotelCounter" aria-expanded="true" aria-controls="hotel-@hotelCounter">
+                                @hotel.Name - @hotel.AccommodationID
                             </button>
                         </h5>
                     </div>
 
-                    <div id="part-@counter" class="collapse show" aria-labelledby="headingOne">
+                    <div id="hotel-@hotelCounter" class="collapse show" aria-labelledby="headingOne">
                         <div class="card-body">
-                            @foreach (var Item in part.Value)
-                            {
+                            <div id="room_accordion">
+                                @foreach (var part in hotel.GroupedImages)
+                                {
+                                    <div class="card">
+                                        <div class="card-header" id="headingOne">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link" data-toggle="collapse" data-target="#part-@roomCounter" aria-expanded="true" aria-controls="part-@roomCounter">
+                                                    @part.Key
+                                                </button>
+                                            </h5>
+                                        </div>
 
-                                <div class="gallery">
-                                    @if (Item.IsActive == false)
-                                    {
-                                        <label class="myCheckbox">
-                                            <span class="img_child"><i class="fas fa-times clos"></i></span>
-                                            <img data-src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" class="select-image lazy">
-                                        </label>
+                                        <div id="part-@roomCounter" class="collapse show" aria-labelledby="headingOne">
+                                            <div class="card-body">
+                                                @foreach (var Item in part.Value)
+                                                {
 
-                                    }
-                                    else if (Item.IsReported == true)
-                                    {
-                                        <label class="myCheckbox">
-                                            <span class="img_child"><i class="fas fa-check"></i></span>
-                                            <img data-src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" class="select-image lazy">
-                                        </label>
-                                    }
-                                    else
-                                    {
-                                        <label class="myCheckbox">
-                                            <span class="img_child"><i class="fas"></i></span>
-                                            <img data-src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" class="select-image lazy">
-                                        </label>
+                                                    <div class="gallery">
+                                                        @if (Item.IsActive == false)
+                                                        {
+                                                            <label class="myCheckbox">
+                                                                <span class="img_child"><i class="fas fa-times clos"></i></span>
+                                                                <img data-src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" class="select-image lazy">
+                                                            </label>
 
-                                    }
-                                </div>
-                            }
+                                                        }
+                                                        else if (Item.IsReported == true)
+                                                        {
+                                                            <label class="myCheckbox">
+                                                                <span class="img_child"><i class="fas fa-check"></i></span>
+                                                                <img data-src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" class="select-image lazy">
+                                                            </label>
+                                                        }
+                                                        else
+                                                        {
+                                                            <label class="myCheckbox">
+                                                                <span class="img_child"><i class="fas"></i></span>
+                                                                <img data-src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" class="select-image lazy">
+                                                            </label>
+
+                                                        }
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    roomCounter++;
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
-                counter++;
+                hotelCounter++;
             }
         </div>
+
+        
     </div>
 </div>
 
@@ -84,7 +108,6 @@
             });
         });
         var model = {
-            AccommodationID: @(Model.AccommodationId),
             RoomImages: images,
         };
         SendReq(model, function () {
@@ -103,7 +126,6 @@
             });
         });
         var model = {
-            AccommodationID: @(Model.AccommodationId),
             RoomImages: images,
         };
         SendReq(model, function () {
@@ -122,7 +144,6 @@
             });
         });
         var model = {
-            AccommodationID: @(Model.AccommodationId),
             RoomImages: images,
         };
         SendReq(model, function () {
@@ -141,7 +162,6 @@
             });
         });
         var model = {
-            AccommodationID: @(Model.AccommodationId),
             RoomImages: images,
         };
         SendReq(model, function () {
