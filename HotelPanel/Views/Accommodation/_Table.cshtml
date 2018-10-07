@@ -6,12 +6,18 @@
                 <button class="btn btn-info submit_btn" data-action="/Accommodation/MultipleAccommodationImage" disabled>Accommodation Images</button>
                 <button class="btn btn-info submit_btn" data-action="/Accommodation/MultipleRoomsImages" disabled>Room Images</button>
             </div>
+
             @if (Model.Restricted)
             {
                 object check = ViewBag.ShowVerified ? "checked" : null;
+                object onlyVerifiedCheck = ViewBag.OnlyVerified ? "checked" : null;
                 <div class="checkbox checkbox-circle checkbox-info peers ai-c mB-15">
-                    <input type="checkbox" id="inputCall1" name="ShowVerified" class="peer" @check>
+                    <input type="checkbox" id="inputCall1" name="Verified" class="peer" @check>
                     <label for="inputCall1" class="peers peer-greed js-sb ai-c"><span class="peer peer-greed">Show Verified Accommodations</span></label>
+                </div>
+                <div class="checkbox checkbox-circle checkbox-info peers ai-c mB-15">
+                    <input type="checkbox" id="inputCall2" name="Verified" class="peer" @onlyVerifiedCheck>
+                    <label for="inputCall1" class="peers peer-greed js-sb ai-c"><span class="peer peer-greed">Only Show Verified Accommodations</span></label>
                 </div>
             }
             <form method="post">
@@ -71,9 +77,13 @@
             $("input[name=accommodationsID]").prop("checked", false).trigger("change");
         }
     })
-    $("input[name=ShowVerified]").change(function () {
+    $("#inputCall1").change(function () {
         var checked = $(this).is(":checked");
         window.location.href = '/Accommodation/List?showVerified=' + checked;
+    })
+    $("#inputCall2").change(function () {
+        var checked = $(this).is(":checked");
+        window.location.href = '/Accommodation/List?onlyVerified=' + checked;
     })
     $("input[name=accommodationsID]").change(function () {
         var checked = false;

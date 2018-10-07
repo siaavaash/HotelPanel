@@ -46,6 +46,7 @@ namespace Data.ViewModel.AccommodationModels
         public long? From { get; set; }
         public long? To { get; set; }
         public bool Verified { get; set; }
+        public bool OnlyVerified { get; set; }
     }
     public class AccommodationFacility
     {

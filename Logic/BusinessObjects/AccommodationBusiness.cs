@@ -58,7 +58,7 @@ namespace Logic.BusinessObjects
                 throw exeption;
             }
         }
-        public AccommodationListViewModel GetAccommodationByUser(long userId, bool showIsVerified)
+        public AccommodationListViewModel GetAccommodationByUser(long userId, bool showIsVerified, bool onlyVerified)
         {
             try
             {
@@ -79,9 +79,16 @@ namespace Logic.BusinessObjects
                             foreach (var bound in bounds)
                             {
                                 var accommodations = context.Accommodations.Include(x => x.AccommodationSortedByCountry).Where(x => x.AccommodationSortedByCountry.Ordered >= bound.Key && x.AccommodationSortedByCountry.Ordered <= bound.Value);
-                                if (!showIsVerified)
+                                if (onlyVerified)
                                 {
-                                    accommodations = accommodations.Where(x => x.DateVerified == null);
+                                    accommodations = accommodations.Where(x => x.DateVerified != null);
+                                }
+                                else
+                                {
+                                    if (!showIsVerified)
+                                    {
+                                        accommodations = accommodations.Where(x => x.DateVerified == null);
+                                    }
                                 }
                                 result.AccommodationList.AddRange(accommodations.Select(x => new AccommodationListRsult
                                 {
@@ -205,9 +212,16 @@ namespace Logic.BusinessObjects
                     }
 
                 }
-                if (!Model.Verified)
+                if (Model.OnlyVerified)
                 {
-                    Query = Query.Where(x => x.DateVerified == null).ToList();
+                    Query = Query.Where(x => x.DateVerified != null).ToList();
+                }
+                else
+                {
+                    if (!Model.Verified)
+                    {
+                        Query = Query.Where(x => x.DateVerified == null).ToList();
+                    }
                 }
                 var result = new AccommodationListViewModel
                 {
