@@ -1,6 +1,4 @@
-﻿using System.Xml.Serialization;
-
-namespace Service.ServiceModel.DOTWModels
+﻿namespace Service.ServiceModel.DOTWModels
 {
     public class SearchHotelByCityViewModel
     {
@@ -9,6 +7,18 @@ namespace Service.ServiceModel.DOTWModels
         public string CityCode { get; set; }
     }
 
+    public class MyFile
+    {
+        public string Name { get; set; }
+        public string Extention { get; set; }
+        public byte[] Contents { get; set; }
+    }
+
+    public class CityModel
+    {
+        public string Name { get; set; }
+        public int Code { get; set; }
+    }
     // NOTE: Generated code may require at least .NET Framework 4.5 or .NET Core/Standard 2.0.
     /// <remarks/>
     [System.SerializableAttribute()]

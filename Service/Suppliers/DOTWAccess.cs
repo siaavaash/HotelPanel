@@ -32,7 +32,7 @@ namespace Service.Suppliers
 
         private static string SearchHotelReqXml(int cityCode) => $"<customer><username>Mehrdad</username><password>e3bb7ee8b41c04d9d94b82c74ee1325d</password><id>1080498</id><source>1</source><product>hotel</product><request command=\"searchhotels\"><bookingDetails><fromDate>{DateTime.Now.Date.ToString("yyyy-MM-dd")}</fromDate><toDate>{DateTime.Now.AddDays(1).Date.ToString("yyyy-MM-dd")}</toDate><currency>520</currency><rooms no=\"1\"><room runno=\"0\"><adultsCode>1</adultsCode><children no=\"0\"></children><rateBasis>-1</rateBasis></room></rooms></bookingDetails><return><getRooms>true</getRooms><filters xmlns:a=\"http://us.dotwconnect.com/xsd/atomicCondition\" xmlns:c=\"http://us.dotwconnect.com/xsd/complexCondition\"><city>{cityCode}</city><noPrice>true</noPrice></filters><fields><field>priority</field></fields></return></request></customer>";
 
-        public static bool GetInternalCodes(Command command, out string result)
+        public static string GetInternalCodes(Command command)
         {
             try
             {
@@ -40,13 +40,9 @@ namespace Service.Suppliers
                 {
                     var content = new StringContent(GeneralXmlReqByCommand(command), Encoding.UTF8, "application/xml");
                     var response = client.PostAsync(Url, content).Result;
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        result = null;
-                        return false;
-                    }
-                    result = response.Content.ReadAsStringAsync().Result;
-                    return true;
+                    if (response.IsSuccessStatusCode)
+                        return response.Content.ReadAsStringAsync().Result;
+                    return null;
                 }
             }
             catch (Exception)
@@ -56,7 +52,7 @@ namespace Service.Suppliers
             }
         }
 
-        public static bool SearchHotelByCity(int cityCode, out string result)
+        public static string SearchHotelByCity(int cityCode)
         {
             try
             {
@@ -64,27 +60,10 @@ namespace Service.Suppliers
                 {
                     var content = new StringContent(SearchHotelReqXml(cityCode), Encoding.UTF8, "application/xml");
                     var response = client.PostAsync(Url, content).Result;
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        result = null;
-                        return false;
-                    }
-                    result = response.Content.ReadAsStringAsync().Result;
-                    return true;
+                    if (response.IsSuccessStatusCode)
+                        return response.Content.ReadAsStringAsync().Result;
+                    return null;
                 }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        public static bool SearchHotelByID(int ID, out string result)
-        {
-            try
-            {
-                throw new NotImplementedException();
             }
             catch (Exception)
             {

@@ -13,12 +13,14 @@ namespace HotelPanel.Controllers
         private readonly GeocodingBusiness geocodingBusiness;
         private readonly IATACodeBusiness iATACodeBusiness;
         private readonly BookingBusiness bookingBusiness;
+        private readonly DOTWBusiness dotwBusiness;
         public MappingController()
         {
             giataBusiness = new GIATABusiness();
             geocodingBusiness = new GeocodingBusiness();
             iATACodeBusiness = new IATACodeBusiness();
             bookingBusiness = new BookingBusiness();
+            dotwBusiness = new DOTWBusiness();
         }
 
         // GET: GIATA
@@ -123,5 +125,18 @@ namespace HotelPanel.Controllers
             }
         }
 
+        // POST: DOTW Search Hotels
+        public FileResult SearchAllHotelsByCity()
+        {
+            try
+            {
+                return File(dotwBusiness.GetHotelsByAllCities().outputFile, "application/zip", "AllHotelsByCity.zip");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
