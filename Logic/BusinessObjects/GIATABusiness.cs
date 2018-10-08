@@ -587,6 +587,7 @@ namespace Logic.BusinessObjects
                 throw new Exception($"Business Layer Error: {ex.Message} -- {ex.InnerException?.Message}");
             }
         }
+
         /// <summary>
         /// Try Map 3 attempts
         /// </summary>
@@ -611,6 +612,22 @@ namespace Logic.BusinessObjects
             catch (Exception ex)
             {
                 return (false, ex.Message);
+            }
+        }
+
+        public byte[] DownloadProperties(long from, long to, Service.ServiceModel.GIATAModels.Version version)
+        {
+            try
+            {
+                using (var zip = ZipFile)
+                {
+
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }

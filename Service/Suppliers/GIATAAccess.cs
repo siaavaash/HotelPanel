@@ -13,6 +13,8 @@ namespace Service.Suppliers
         // GIATA web service url
         private const string serviceUrl = "http://multicodes.giatamedia.com/webservice/rest/1.latest/properties/";
 
+        private static string GetUrlByParameters(Version version, string parameter) => $"http://multicodes.giatamedia.com/webservice/rest/1.{version}/properties/{parameter}";
+
         /// <summary>
         /// Get Properties by id
         /// </summary>
@@ -95,6 +97,42 @@ namespace Service.Suppliers
             catch (System.Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        public GIATAFile GetFileByUrl(string name, string extention, string url)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    var response = client.GetAsync(url).Result;
+                    return new GIATAFile
+                    {
+                        Name = name,
+                        Contents = response.Content.ReadAsByteArrayAsync().Result,
+                        Extention = extention
+                    };
+                }
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public GIATAFile GetPropertiesById(Version version, long id)
+        {
+            try
+            {
+                var url = GetUrlByParameters(version, id.ToString());
+                return GetFileByUrl($"{id}-{version.ToString()} Properties", ".xml", url);
+            }
+            catch (System.Exception)
+            {
+
+                throw;
             }
         }
     }

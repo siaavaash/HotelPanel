@@ -5,6 +5,12 @@ using System.Xml.Serialization;
 
 namespace Service.ServiceModel.GIATAModels
 {
+    public enum Version
+    {
+        old = 1,
+        latest = 2,
+    }
+
 
     #region GIATA Response Model
 
@@ -340,5 +346,12 @@ namespace Service.ServiceModel.GIATAModels
         public string Message { get; set; }
         public bool ServiceSuccess { get; set; }
         public bool MapToDbSuccess { get; set; }
+    }
+
+    public class GIATAFile
+    {
+        public string Name { get; set; }
+        public string Extention { get; set; }
+        public byte[] Contents { get; set; }
     }
 }
