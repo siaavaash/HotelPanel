@@ -1,10 +1,12 @@
 ﻿using Data.DataModel;
+using Ionic.Zip;
 using Service.ServiceModel.GIATAModels;
 using Service.Suppliers;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,16 +15,12 @@ namespace Logic.BusinessObjects
     public class GIATABusiness
     {
         private readonly Context2 context = new Context2();
-        private readonly GIATAAccess giataAccess;
-        public GIATABusiness()
-        {
-            giataAccess = new GIATAAccess();
-        }
+        private readonly GIATAAccess giataAccess = new GIATAAccess();
 
-        public bool TruncateTables => ConfigurationManager.AppSettings["TruncateDb"] == "true" ? true : false;
+        private bool TruncateTables => ConfigurationManager.AppSettings["TruncateDb"] == "true" ? true : false;
 
         /// <summary>
-        /// Remove All Accommodations in tables
+        /// Remove All Relative Data in DB
         /// </summary>
         /// <param name="from"></param>
         /// <param name="to"></param>
@@ -309,6 +307,7 @@ namespace Logic.BusinessObjects
                 return false;
             }
         }
+
         /// <summary>
         /// Insert Deactive Accommodation
         /// </summary>
@@ -615,14 +614,31 @@ namespace Logic.BusinessObjects
             }
         }
 
-        public byte[] DownloadProperties(long from, long to, Service.ServiceModel.GIATAModels.Version version)
+        /// <summary>
+        /// Download Properties by ID in xml
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="version"></param>
+        /// <returns></returns>
+        public byte[] DownloadPropertiesByID(long from, long to, Service.ServiceModel.GIATAModels.Version version)
         {
             try
             {
-                using (var zip = ZipFile)
+                var output = new MemoryStream();
+                using (var zip = new ZipFile())
                 {
-
+                    //zip.MaxOutputSegmentSize = 50 * 1024 * 1024;
+                    Parallel.For(from, to + 1, i =>
+                    {
+                        var ver = version == Service.ServiceModel.GIATAModels.Version.latest ? "1.latest" : "1.0";
+                        var url = GIATAAccess.GetUrlByParameters(ver, Method.properties, i.ToString());
+                        var file = giataAccess.GetFileByUrl(i.ToString(), ".xml", url);
+                        zip.AddEntry($"{file.Name}{file.Extention}", file.Contents);
+                    });
+                    zip.Save(output);
                 }
+                return output.ToArray();
             }
             catch (Exception)
             {

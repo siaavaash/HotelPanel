@@ -7,8 +7,25 @@ namespace Service.ServiceModel.GIATAModels
 {
     public enum Version
     {
-        old = 1,
-        latest = 2,
+        old = 0,
+        latest = 1,
+    }
+    public enum Method
+    {
+        geography,
+        airports,
+        providers,
+        properties,
+    }
+    public enum Filter
+    {
+        country,
+        city,
+        gds,
+        tourOperator,
+        moved,
+        chain,
+        since,
     }
 
 
