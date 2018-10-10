@@ -614,6 +614,34 @@ namespace Logic.BusinessObjects
             }
         }
 
+        public async Task<GIATAFile> GetHotelFileAsync(int id, string version)
+        {
+            try
+            {
+                var response = await giataAccess.GetHotelDataByIDAsync(id, version);
+                if (response != null)
+                {
+                    return new GIATAFile
+                    {
+                        Contents = response,
+                        Extention = ".xml",
+                        Name = id.ToString()
+                    };
+                }
+                return new GIATAFile
+                {
+                    Contents = new byte[0],
+                    Extention = ".xml",
+                    Name = id.ToString()
+                };
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         /// <summary>
         /// Download Properties by ID in xml Async
         /// </summary>
@@ -628,14 +656,14 @@ namespace Logic.BusinessObjects
                 int count = 900000 + 1;
                 int size = Convert.ToInt32(Math.Ceiling(count / 20d));
                 int from = (part - 1) * size + 1, to = part * size;
+
                 string ver = version == Service.ServiceModel.GIATAModels.Version.latest ? "1.latest" : "1.0";
+
                 var output = new MemoryStream();
                 var tasks = new List<Task<GIATAFile>>();
+
                 for (int i = from; i <= to && i < count; i++)
-                {
-                    var url = GIATAAccess.GetUrlByParameters(ver, Method.properties, i.ToString());
-                    tasks.Add(giataAccess.GetFileByUrlAsync(i.ToString(), ".xml", url));
-                }
+                    tasks.Add(GetHotelFileAsync(i, ver));
                 var files = await Task.WhenAll(tasks);
                 using (var zip = new ZipFile())
                 {

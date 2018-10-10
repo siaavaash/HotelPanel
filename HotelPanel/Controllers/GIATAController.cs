@@ -51,7 +51,7 @@ namespace HotelPanel.Controllers
             try
             {
                 var result = await giataBusiness.DownloadPropertiesByIDAsync((Service.ServiceModel.GIATAModels.Version)version, part);
-                return File(result, "application/zip", $"Properties_Part{part}_{Enum.GetName(typeof(Service.ServiceModel.GIATAModels.Version), version)}.zip");
+                return File(result, "application/zip", $"HotelsByID-Part{part} ({Enum.GetName(typeof(Service.ServiceModel.GIATAModels.Version), version)}).zip");
             }
             catch (Exception)
             {

@@ -101,26 +101,35 @@ namespace Service.Suppliers
             }
         }
 
-        public async Task<GIATAFile> GetFileByUrlAsync(string name, string extention, string url)
+        public async Task<byte[]> GetHotelDataByIDAsync(int id, string version)
         {
             try
             {
                 using (var client = new HttpClient())
                 {
+                    var url = GetUrlByParameters(version, Method.properties, id.ToString());
                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "bmV2aWxsZXxpdG91cnMubm86cDZNUkVLcHg =");
                     var response = await client.GetAsync(url);
-                    return new GIATAFile
-                    {
-                        Name = name,
-                        Contents = await response.Content.ReadAsByteArrayAsync(),
-                        Extention = extention
-                    };
+                    return await response.Content.ReadAsByteArrayAsync();
                 }
             }
             catch (System.Exception)
             {
 
-                throw;
+                try
+                {
+                    using (var client = new HttpClient())
+                    {
+                        var url = GetUrlByParameters(version, Method.properties, id.ToString());
+                        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "bmV2aWxsZXxpdG91cnMubm86cDZNUkVLcHg =");
+                        var response = await client.GetAsync(url);
+                        return await response.Content.ReadAsByteArrayAsync();
+                    }
+                }
+                catch (System.Exception)
+                {
+                    return null;
+                }
             }
         }
 
