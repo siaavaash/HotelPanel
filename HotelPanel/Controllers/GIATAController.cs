@@ -46,28 +46,12 @@ namespace HotelPanel.Controllers
             }
         }
 
-        [Route("giata/downloadpropertiesbyidasync/{version}/{from}/{to}")]
-        public async Task<FileResult> DownloadPropertiesByIDAsync(long from, long to, byte version)
+        public async Task<FileResult> DownloadPropertiesByIDAsync(byte part, byte version)
         {
             try
             {
-                var result = await giataBusiness.DownloadPropertiesByIDAsync(from, to, (Service.ServiceModel.GIATAModels.Version)version);
-                return File(result, "application/zip", $"Properties_{from}-{to}_{Enum.GetName(typeof(Service.ServiceModel.GIATAModels.Version), version)}.zip");
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        [Route("giata/downloadpropertiesbyid/{version}/{from}/{to}")]
-        public FileResult DownloadPropertiesByID(long from, long to, byte version)
-        {
-            try
-            {
-                var result = giataBusiness.DownloadPropertiesByID(from, to, (Service.ServiceModel.GIATAModels.Version)version);
-                return File(result, "application/zip", $"Properties_{from}-{to}_{Enum.GetName(typeof(Service.ServiceModel.GIATAModels.Version), version)}.zip");
+                var result = await giataBusiness.DownloadPropertiesByIDAsync((Service.ServiceModel.GIATAModels.Version)version, part);
+                return File(result, "application/zip", $"Properties_Part{part}_{Enum.GetName(typeof(Service.ServiceModel.GIATAModels.Version), version)}.zip");
             }
             catch (Exception)
             {
