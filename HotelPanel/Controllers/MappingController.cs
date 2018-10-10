@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace HotelPanel.Controllers
 {
+    [SessionState(System.Web.SessionState.SessionStateBehavior.ReadOnly)]
     public class MappingController : Controller
     {
         private readonly GeocodingBusiness geocodingBusiness;
@@ -95,12 +96,12 @@ namespace HotelPanel.Controllers
             }
         }
 
-        // POST: DOTW Search Hotels
-        public FileResult SearchAllHotelsByCity()
+        // GET: DOTW Hotels Info
+        public async Task<FileResult> DownloadAllDotwHotels(byte part)
         {
             try
             {
-                return File(dotwBusiness.GetHotelsByAllCities().outputFile, "application/zip", "AllHotelsByCity.zip");
+                return File(await dotwBusiness.GetHotelsByAllCitiesAsync(part), "application/zip", $"AllHotelsByCity_Part{part}.zip");
             }
             catch (Exception)
             {
