@@ -1,10 +1,12 @@
 ﻿using Data.DataModel;
+using Ionic.Zip;
 using Service.ServiceModel.GIATAModels;
 using Service.Suppliers;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,16 +15,12 @@ namespace Logic.BusinessObjects
     public class GIATABusiness
     {
         private readonly Context2 context = new Context2();
-        private readonly GIATAAccess giataAccess;
-        public GIATABusiness()
-        {
-            giataAccess = new GIATAAccess();
-        }
+        private readonly GIATAAccess giataAccess = new GIATAAccess();
 
-        public bool TruncateTables => ConfigurationManager.AppSettings["TruncateDb"] == "true" ? true : false;
+        private bool TruncateTables => ConfigurationManager.AppSettings["TruncateDb"] == "true" ? true : false;
 
         /// <summary>
-        /// Remove All Accommodations in tables
+        /// Remove All Relative Data in DB
         /// </summary>
         /// <param name="from"></param>
         /// <param name="to"></param>
@@ -309,6 +307,7 @@ namespace Logic.BusinessObjects
                 return false;
             }
         }
+
         /// <summary>
         /// Insert Deactive Accommodation
         /// </summary>
@@ -587,6 +586,7 @@ namespace Logic.BusinessObjects
                 throw new Exception($"Business Layer Error: {ex.Message} -- {ex.InnerException?.Message}");
             }
         }
+
         /// <summary>
         /// Try Map 3 attempts
         /// </summary>
@@ -611,6 +611,72 @@ namespace Logic.BusinessObjects
             catch (Exception ex)
             {
                 return (false, ex.Message);
+            }
+        }
+
+        public async Task<GIATAFile> GetHotelFileAsync(int id, string version)
+        {
+            try
+            {
+                var response = await giataAccess.GetHotelDataByIDAsync(id, version);
+                if (response != null)
+                {
+                    return new GIATAFile
+                    {
+                        Contents = response,
+                        Extention = ".xml",
+                        Name = id.ToString()
+                    };
+                }
+                return new GIATAFile
+                {
+                    Contents = new byte[0],
+                    Extention = ".xml",
+                    Name = id.ToString()
+                };
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Download Properties by ID in xml Async
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="version"></param>
+        /// <returns></returns>
+        public async Task<byte[]> DownloadPropertiesByIDAsync(Service.ServiceModel.GIATAModels.Version version, byte part)
+        {
+            try
+            {
+                int count = 900000 + 1;
+                int size = Convert.ToInt32(Math.Ceiling(count / 20d));
+                int from = (part - 1) * size + 1, to = part * size;
+
+                string ver = version == Service.ServiceModel.GIATAModels.Version.latest ? "1.latest" : "1.0";
+
+                var output = new MemoryStream();
+                var tasks = new List<Task<GIATAFile>>();
+
+                for (int i = from; i <= to && i < count; i++)
+                    tasks.Add(GetHotelFileAsync(i, ver));
+                var files = await Task.WhenAll(tasks);
+                using (var zip = new ZipFile())
+                {
+                    foreach (var file in files)
+                        zip.AddEntry($"{file.Name}{file.Extention}", file.Contents);
+                    zip.Save(output);
+                }
+                return output.ToArray();
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }

@@ -13,6 +13,9 @@ namespace Service.Suppliers
         // GIATA web service url
         private const string serviceUrl = "http://multicodes.giatamedia.com/webservice/rest/1.latest/properties/";
 
+        public static string GetUrlByParameters(string version, Method method, string parameter) => $"http://multicodes.giatamedia.com/webservice/rest/{version}/{method}/{parameter}";
+        public static string GetPropertiesUrlWithFilter(string version, Filter filter, string parameter) => $"http://multicodes.giatamedia.com/webservice/rest/{version}/properties/{filter}/{parameter}";
+
         /// <summary>
         /// Get Properties by id
         /// </summary>
@@ -97,5 +100,38 @@ namespace Service.Suppliers
                 throw ex;
             }
         }
+
+        public async Task<byte[]> GetHotelDataByIDAsync(int id, string version)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    var url = GetUrlByParameters(version, Method.properties, id.ToString());
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "bmV2aWxsZXxpdG91cnMubm86cDZNUkVLcHg =");
+                    var response = await client.GetAsync(url);
+                    return await response.Content.ReadAsByteArrayAsync();
+                }
+            }
+            catch (System.Exception)
+            {
+
+                try
+                {
+                    using (var client = new HttpClient())
+                    {
+                        var url = GetUrlByParameters(version, Method.properties, id.ToString());
+                        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "bmV2aWxsZXxpdG91cnMubm86cDZNUkVLcHg =");
+                        var response = await client.GetAsync(url);
+                        return await response.Content.ReadAsByteArrayAsync();
+                    }
+                }
+                catch (System.Exception)
+                {
+                    return null;
+                }
+            }
+        }
+
     }
 }
