@@ -3,11 +3,14 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
 namespace HotelPanel.Controllers
 {
+    [SessionState(System.Web.SessionState.SessionStateBehavior.ReadOnly)]
     public class GIATAController : Controller
     {
         private GIATABusiness giataBusiness = new GIATABusiness();
@@ -43,6 +46,21 @@ namespace HotelPanel.Controllers
             }
         }
 
+        [Route("giata/downloadpropertiesbyidasync/{version}/{from}/{to}")]
+        public async Task<FileResult> DownloadPropertiesByIDAsync(long from, long to, byte version)
+        {
+            try
+            {
+                var result = await giataBusiness.DownloadPropertiesByIDAsync(from, to, (Service.ServiceModel.GIATAModels.Version)version);
+                return File(result, "application/zip", $"Properties_{from}-{to}_{Enum.GetName(typeof(Service.ServiceModel.GIATAModels.Version), version)}.zip");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         [Route("giata/downloadpropertiesbyid/{version}/{from}/{to}")]
         public FileResult DownloadPropertiesByID(long from, long to, byte version)
         {
@@ -59,12 +77,12 @@ namespace HotelPanel.Controllers
         }
 
         // Get Properties by ID
-        [Route("giata/1.{version:regex(0|1)}/properties/{filter?}/parameter")]
+        [Route("giata/1.{version:regex(0|1)}/properties/{parameter}/{filter?}")]
         public ContentResult Properties(byte version, string parameter, string filter = "")
         {
             try
             {
-                throw new Exception();
+                return Content("hiiiiiiii.");
             }
             catch (Exception)
             {

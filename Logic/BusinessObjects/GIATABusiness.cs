@@ -615,6 +615,41 @@ namespace Logic.BusinessObjects
         }
 
         /// <summary>
+        /// Download Properties by ID in xml Async
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="version"></param>
+        /// <returns></returns>
+        public async Task<byte[]> DownloadPropertiesByIDAsync(long from, long to, Service.ServiceModel.GIATAModels.Version version)
+        {
+            try
+            {
+                var tasks = new List<Task>();
+                var output = new MemoryStream();
+                using (var zip = new ZipFile())
+                {
+                    //zip.MaxOutputSegmentSize = 50 * 1024 * 1024;
+                    for (long i = from; i <= to; i++)
+                    //Parallel.For(from, to + 1, i =>
+                    {
+                        var ver = version == Service.ServiceModel.GIATAModels.Version.latest ? "1.latest" : "1.0";
+                        var url = GIATAAccess.GetUrlByParameters(ver, Method.properties, i.ToString());
+                        var file = await giataAccess.GetFileByUrlAsync(i.ToString(), ".xml", url);
+                        zip.AddEntry($"{file.Name}{file.Extention}", file.Contents);
+                    }
+                    zip.Save(output);
+                }
+                return output.ToArray();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Download Properties by ID in xml
         /// </summary>
         /// <param name="from"></param>
@@ -625,15 +660,17 @@ namespace Logic.BusinessObjects
         {
             try
             {
+                var tasks = new List<Task>();
                 var output = new MemoryStream();
                 using (var zip = new ZipFile())
                 {
                     //zip.MaxOutputSegmentSize = 50 * 1024 * 1024;
+                    //for (long i = from; i <= to; i++)
                     Parallel.For(from, to + 1, i =>
                     {
                         var ver = version == Service.ServiceModel.GIATAModels.Version.latest ? "1.latest" : "1.0";
                         var url = GIATAAccess.GetUrlByParameters(ver, Method.properties, i.ToString());
-                        var file = giataAccess.GetFileByUrl(i.ToString(), ".xml", url);
+                        var file = giataAccess.GetFileByUrlAsync(i.ToString(), ".xml", url).Result;
                         zip.AddEntry($"{file.Name}{file.Extention}", file.Contents);
                     });
                     zip.Save(output);

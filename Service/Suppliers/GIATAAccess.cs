@@ -101,18 +101,18 @@ namespace Service.Suppliers
             }
         }
 
-        public GIATAFile GetFileByUrl(string name, string extention, string url)
+        public async Task<GIATAFile> GetFileByUrlAsync(string name, string extention, string url)
         {
             try
             {
                 using (var client = new HttpClient())
                 {
                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "bmV2aWxsZXxpdG91cnMubm86cDZNUkVLcHg =");
-                    var response = client.GetAsync(url).Result;
+                    var response = await client.GetAsync(url);
                     return new GIATAFile
                     {
                         Name = name,
-                        Contents = response.Content.ReadAsByteArrayAsync().Result,
+                        Contents = await response.Content.ReadAsByteArrayAsync(),
                         Extention = extention
                     };
                 }
