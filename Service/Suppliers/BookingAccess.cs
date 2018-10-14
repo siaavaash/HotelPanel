@@ -23,6 +23,12 @@ namespace Service.Suppliers
         {
             try
             {
+                // Get Name
+                var name = doc.DocumentNode.Descendants().FirstOrDefault(x => x.Id == "hp_hotel_name").InnerText.Replace("\n", "");
+
+                // Get Address
+                var address = doc.DocumentNode.Descendants().FirstOrDefault(x => x.HasClass("hp_address_subtitle")).InnerText.Replace("\n", "");
+
                 // Get Description
                 var paragraphes = doc.DocumentNode.Descendants().FirstOrDefault(x => x.Attributes["id"]?.Value == "summary")?.Descendants("p");
                 var description = string.Join(" ", paragraphes.Select(x => x.InnerText).ToList());
@@ -67,6 +73,8 @@ namespace Service.Suppliers
                     Success = true,
                     Data = new HotelData
                     {
+                        Name = name,
+                        Address = address,
                         Description = description,
                         Facilities = facilities,
                         GoodToKnow = new GoodToKnow
@@ -110,11 +118,11 @@ namespace Service.Suppliers
                     Success = true,
                     Data = new List<RoomData>(),
                 };
-                //Parallel.ForEach(roomUrls, roomUrl =>
-                foreach (var roomUrl in roomUrls)
+                Parallel.ForEach(roomUrls, roomUrl =>
+                //foreach (var roomUrl in roomUrls)
                 {
                     result.Data.Add(GetRoomInfo(roomUrl.Key, roomUrl.Value));
-                }
+                });
                 return result;
             }
             catch (Exception ex)
@@ -152,7 +160,7 @@ namespace Service.Suppliers
                         sleeps = childs != null ? string.Join("", adults.Select(x => "A").ToArray().Concat(childs?.Select(x => "C").ToArray())) : string.Join("", adults.Select(x => "A").ToArray());
                     var title = tr.Descendants().FirstOrDefault(x => x.HasClass("jq_tooltip"))?.Attributes["title"]?.Value.Replace("<br/>", " ");
                     var link = tr.Descendants().FirstOrDefault(x => x.HasClass("togglelink") && !x.HasClass("disabled"))?.Attributes["href"]?.Value.Replace("#", "");
-                    var name = tr.Descendants().FirstOrDefault(x => x.HasClass("togglelink"))?.Attributes["data-room-name-en"]?.Value;
+                    var name = tr.Descendants().FirstOrDefault(x => x.Attributes["data-room-name-en"] != null)?.Attributes["data-room-name-en"]?.Value;
                     var info = tr.Descendants().FirstOrDefault(x => x.Attributes["class"]?.Value.Contains("bed-types-wrapper") ?? false)?.Descendants("ul").Select(x => x.InnerText.Replace("\n", "")).ToArray();
                     result.Add($"{link}", new RoomData
                     {
@@ -175,7 +183,6 @@ namespace Service.Suppliers
         {
             try
             {
-
                 var container = doc.DocumentNode.Descendants().FirstOrDefault(x => x.Id == $"blocktoggle{id}");
 
                 // Get Room Images
