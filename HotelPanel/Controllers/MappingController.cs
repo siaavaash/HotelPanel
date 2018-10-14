@@ -96,18 +96,6 @@ namespace HotelPanel.Controllers
             }
         }
 
-        // GET: DOTW Hotels Info
-        public async Task<FileResult> DownloadAllDotwHotels(byte part)
-        {
-            try
-            {
-                return File(await dotwBusiness.GetHotelsByAllCitiesAsync(part), "application/zip", $"AllHotelsByCity_Part{part}.zip");
-            }
-            catch (Exception)
-            {
 
-                throw;
-            }
-        }
     }
 }

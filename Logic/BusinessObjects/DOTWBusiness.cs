@@ -1,6 +1,7 @@
 ﻿using Ionic.Zip;
 using Service.ServiceModel.DOTWModels;
 using Service.Suppliers;
+using Service.Suppliers.DOTWModels.CitiesModel;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -175,6 +176,21 @@ namespace Logic.BusinessObjects
             {
 
                 throw;
+            }
+        }
+
+        public async Task<List<CitiesByCountryModel>> GetCitiesByCountryAsync()
+        {
+            try
+            {
+                var countries = DOTWAccess.GetAllCountries().countries.country;
+                var tasks = countries.Select(x => DOTWAccess.GetCitiesByCountryAsync(x.code, x.name)).ToList();
+                var models = await Task.WhenAll(tasks);
+                return models.ToList();
+            }
+            catch (Exception)
+            {
+                return new List<CitiesByCountryModel>();
             }
         }
     }
