@@ -71,6 +71,8 @@
     <Compile Include="ServiceModel\Weather.cs" />
     <Compile Include="Suppliers\BookingAccess.cs" />
     <Compile Include="Suppliers\DOTWAccess.cs" />
+    <Compile Include="Suppliers\DOTWModels\CitiesModel.cs" />
+    <Compile Include="Suppliers\DOTWModels\CountriesModel.cs" />
     <Compile Include="Suppliers\GIATAAccess.cs" />
     <Compile Include="Suppliers\GoogleMapAccess.cs" />
     <Compile Include="Suppliers\IATAAccess.cs" />

@@ -165,6 +165,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AirportController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\DotwController.cs" />
     <Compile Include="Controllers\MappingController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
@@ -815,6 +816,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Dotw\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Fonts\icons\fontawesome\fontawesome-webfont.eot" />
