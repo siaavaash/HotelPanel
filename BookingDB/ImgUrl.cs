@@ -23,5 +23,6 @@ namespace BookingDB
         public string FileName { get; set; }
         public Nullable<long> AccommodationlID { get; set; }
         public string PathWeb { get; set; }
+        public string Link { get; set; }
     }
 }
