@@ -179,21 +179,14 @@ namespace Logic.BusinessObjects
             }
         }
 
-        public List<CitiesByCountryModel> GetCitiesByCountry()
+        public async Task<List<CitiesByCountryModel>> GetCitiesByCountryAsync()
         {
             try
             {
-                var result = new List<CitiesByCountryModel>();
                 var countries = DOTWAccess.GetAllCountries().countries.country;
-                Parallel.ForEach(countries, country =>
-                {
-                    result.Add(DOTWAccess.GetCitiesByCountry(country.code, country.name) ?? new CitiesByCountryModel
-                    {
-                        CountryCode = country.code,
-                        CountryName = country.name
-                    });
-                });
-                return result;
+                var tasks = countries.Select(x => DOTWAccess.GetCitiesByCountryAsync(x.code, x.name)).ToList();
+                var models = await Task.WhenAll(tasks);
+                return models.ToList();
             }
             catch (Exception)
             {

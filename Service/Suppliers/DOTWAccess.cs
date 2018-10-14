@@ -128,7 +128,7 @@ namespace Service.Suppliers
             }
         }
 
-        public static CitiesByCountryModel GetCitiesByCountry(int countryCode, string countryName)
+        public static async Task<CitiesByCountryModel> GetCitiesByCountryAsync(int countryCode, string countryName)
         {
             try
             {
@@ -137,10 +137,10 @@ namespace Service.Suppliers
                 using (var client = new HttpClient())
                 {
                     var content = new StringContent(request);
-                    var response = client.PostAsync(Url, content).Result;
+                    var response = await client.PostAsync(Url, content);
                     if (response.IsSuccessStatusCode)
                     {
-                        TextReader reader = new StringReader(response.Content.ReadAsStringAsync().Result);
+                        TextReader reader = new StringReader(await response.Content.ReadAsStringAsync());
                         return new CitiesByCountryModel
                         {
                             CountryCode = countryCode,
