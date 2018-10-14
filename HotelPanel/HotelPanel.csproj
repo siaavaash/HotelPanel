@@ -165,6 +165,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AirportController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\GIATAController.cs" />
     <Compile Include="Controllers\DotwController.cs" />
     <Compile Include="Controllers\MappingController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -816,6 +817,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\GIATA\" />
     <Folder Include="Views\Dotw\" />
   </ItemGroup>
   <ItemGroup>
