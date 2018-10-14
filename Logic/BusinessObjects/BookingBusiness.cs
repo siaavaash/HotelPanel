@@ -78,6 +78,8 @@ namespace Logic.BusinessObjects
                 {
                     var hotel = context.Hotels.FirstOrDefault(x => x.HotelId == hotelID);
                     hotel.DescriptionSite = data.Description;
+                    hotel.name = data.Name;
+                    hotel.address = data.Address;
                     hotel.IsRecive = 1;
                     hotel.LastUpdate = DateTime.Now;
                     context.GoodToNows.Add(new GoodToNow
@@ -132,26 +134,41 @@ namespace Logic.BusinessObjects
         {
             try
             {
+                int noImageRoom = 100;
                 var roomsInfo = new ConcurrentBag<RoomInfo>();
                 Parallel.ForEach(data, roomData =>
                 {
-                    roomData.RoomImages.ForEach(image =>
-                    {
+                    if (roomData.RoomImages.Count > 0)
+                        roomData.RoomImages.ForEach(image =>
+                        {
+                            roomsInfo.Add(new RoomInfo
+                            {
+                                HotelId = hotelID,
+                                Radif = image.ID,
+                                RoomSize = roomData.RoomSize,
+                                RoomTypeIcon = roomData.Sleeps,
+                                RoomTypeName = roomData.RoomType,
+                                RoomTypeInfo = roomData.RoomTypeInfo,
+                                RoomTypeIconInfo = roomData.SleepsInfo,
+                                RoomImgUrl = image.Url,
+                                RoomFacilities = string.Join("-", roomData.Facilities),
+                                RoomDescription = roomData.Description,
+                                RoomTypeId = Convert.ToInt64(Regex.Replace(roomData.RoomTypeID, "[A-Za-z ]", "")),
+                            });
+                        });
+                    else
                         roomsInfo.Add(new RoomInfo
                         {
                             HotelId = hotelID,
-                            Radif = image.ID,
                             RoomSize = roomData.RoomSize,
                             RoomTypeIcon = roomData.Sleeps,
                             RoomTypeName = roomData.RoomType,
                             RoomTypeInfo = roomData.RoomTypeInfo,
                             RoomTypeIconInfo = roomData.SleepsInfo,
-                            RoomImgUrl = image.Url,
                             RoomFacilities = string.Join("-", roomData.Facilities),
                             RoomDescription = roomData.Description,
-                            RoomTypeId = Convert.ToInt64(Regex.Replace(roomData.RoomTypeID, "[A-Za-z ]", "")),
+                            RoomTypeId = roomData.RoomTypeID != null ? Convert.ToInt64(Regex.Replace(roomData.RoomTypeID, "[A-Za-z ]", "")) : ++noImageRoom,
                         });
-                    });
                 });
                 using (var context = new BookingStaticDataEntities())
                 {
