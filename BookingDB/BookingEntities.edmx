@@ -103,6 +103,7 @@
           <Property Name="FileName" Type="nvarchar" MaxLength="300" />
           <Property Name="AccommodationlID" Type="bigint" />
           <Property Name="PathWeb" Type="nvarchar" MaxLength="300" />
+          <Property Name="Link" Type="nvarchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="Location">
           <Key>
@@ -262,6 +263,7 @@
           <Property Name="FileName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="AccommodationlID" Type="Int64" />
           <Property Name="PathWeb" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Link" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Location">
           <Key>
@@ -417,6 +419,7 @@
           <EntitySetMapping Name="ImgUrls">
             <EntityTypeMapping TypeName="BookingStaticDataModel.ImgUrl">
               <MappingFragment StoreEntitySet="ImgUrl">
+                <ScalarProperty Name="Link" ColumnName="Link" />
                 <ScalarProperty Name="ImgUrlId" ColumnName="ImgUrlId" />
                 <ScalarProperty Name="HotelId" ColumnName="HotelId" />
                 <ScalarProperty Name="Path" ColumnName="Path" />
