@@ -60,7 +60,7 @@ namespace Logic.BusinessObjects
             {
                 using (var context = new BookingStaticDataEntities())
                 {
-                    var url = context.Hotels.FirstOrDefault(x => x.HotelId == hotelID).hotel_url;
+                    var url = context.Hotels.FirstOrDefault(x => x.HotelId == hotelID && x.IsRecive == 2).hotel_url;
                     return url.Remove(url.IndexOf('?'));
                 }
             }
