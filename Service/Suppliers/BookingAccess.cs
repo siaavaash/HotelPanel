@@ -1,6 +1,8 @@
-﻿using HtmlAgilityPack;
+﻿using BookingDB;
+using HtmlAgilityPack;
 using Service.ServiceModel.BookingModels;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,17 +11,22 @@ namespace Service.Suppliers
 {
     public class BookingAccess
     {
-        private readonly string hotelUrl;
-        private readonly HtmlDocument doc;
-        public BookingAccess(string hotelUrl)
+        public static async Task<(BookingResponseModel<HotelData> hotelRes, BookingResponseModel<List<RoomData>> roomRes)> GetDataAsync(string url)
         {
-            var web = new HtmlWeb();
-            doc = web.Load(hotelUrl);
-            this.hotelUrl = hotelUrl;
+            try
+            {
+                var web = new HtmlWeb();
+                var doc = await web.LoadFromWebAsync(url);
+                return (GetHotelInfo(doc), GetRooms(doc));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message + " Load HtmlWeb Failed.");
+            }
         }
 
         // Get Hotel Info
-        public BookingResponseModel<HotelData> GetHotelInfo()
+        private static BookingResponseModel<HotelData> GetHotelInfo(HtmlDocument doc)
         {
             try
             {
@@ -47,7 +54,7 @@ namespace Service.Suppliers
                 // Get Location
                 var counter = 0;
                 var breadcrumbList = doc.DocumentNode.Descendants("a").Where(x => x.HasClass("bui_breadcrumb__link")).ToList();
-                var locations = breadcrumbList.Select(x => new Location { Name = x.InnerText.Replace("\n", ""), LocationID = ++counter }).ToList();
+                var locations = breadcrumbList.Select(x => new Location { Name = x.InnerText.Replace("\n", ""), LocationTypeID = ++counter }).ToList();
 
                 // Get Good to Know
                 var checkin = doc.DocumentNode.Descendants().FirstOrDefault(x => x.Id == "checkin_policy")?.InnerText.Replace("\n", "").Replace("Check-in", "").Replace("&nbsp;", " ");
@@ -77,7 +84,7 @@ namespace Service.Suppliers
                         Address = address,
                         Description = description,
                         Facilities = facilities,
-                        GoodToKnow = new GoodToKnow
+                        GoodToKnow = new GoodToNow
                         {
                             Pets = pets,
                             CheckOut = checkout,
@@ -108,21 +115,22 @@ namespace Service.Suppliers
         }
 
         // Get Rooms Info
-        public BookingResponseModel<List<RoomData>> GetRooms()
+        private static BookingResponseModel<List<RoomData>> GetRooms(HtmlDocument doc)
         {
             try
             {
-                var roomUrls = GetRoomsUrl();
+                var roomUrls = GetRoomsUrl(doc);
+                var infos = new ConcurrentBag<RoomData>();
                 var result = new BookingResponseModel<List<RoomData>>
                 {
                     Success = true,
                     Data = new List<RoomData>(),
                 };
                 Parallel.ForEach(roomUrls, roomUrl =>
-                //foreach (var roomUrl in roomUrls)
                 {
-                    result.Data.Add(GetRoomInfo(roomUrl.Key, roomUrl.Value));
+                    infos.Add(GetRoomInfo(doc, roomUrl.Key, roomUrl.Value));
                 });
+                result.Data.AddRange(infos.ToList());
                 return result;
             }
             catch (Exception ex)
@@ -141,12 +149,12 @@ namespace Service.Suppliers
             }
         }
 
-        private Dictionary<string, RoomData> GetRoomsUrl()
+        private static Dictionary<string, RoomData> GetRoomsUrl(HtmlDocument doc)
         {
             try
             {
                 var result = new Dictionary<string, RoomData>();
-
+                var noLinkId = 100;
                 var trs = doc.DocumentNode.Descendants().FirstOrDefault(x => x.Id == "maxotel_rooms")?.ChildNodes["tbody"]?.Descendants("tr")?.Where(x => !x.HasClass("extendedRow")).ToList();
                 trs.ForEach(tr =>
                 {
@@ -159,7 +167,7 @@ namespace Service.Suppliers
                     else
                         sleeps = childs != null ? string.Join("", adults.Select(x => "A").ToArray().Concat(childs?.Select(x => "C").ToArray())) : string.Join("", adults.Select(x => "A").ToArray());
                     var title = tr.Descendants().FirstOrDefault(x => x.HasClass("jq_tooltip"))?.Attributes["title"]?.Value.Replace("<br/>", " ");
-                    var link = tr.Descendants().FirstOrDefault(x => x.HasClass("togglelink") && !x.HasClass("disabled"))?.Attributes["href"]?.Value.Replace("#", "");
+                    var link = tr.Descendants().FirstOrDefault(x => x.HasClass("togglelink") && !x.HasClass("disabled"))?.Attributes["href"]?.Value.Replace("#", "") ?? $"{++noLinkId}";
                     var name = tr.Descendants().FirstOrDefault(x => x.Attributes["data-room-name-en"] != null)?.Attributes["data-room-name-en"]?.Value;
                     var info = tr.Descendants().FirstOrDefault(x => x.Attributes["class"]?.Value.Contains("bed-types-wrapper") ?? false)?.Descendants("ul").Select(x => x.InnerText.Replace("\n", "")).ToArray();
                     result.Add($"{link}", new RoomData
@@ -179,7 +187,7 @@ namespace Service.Suppliers
                 throw;
             }
         }
-        private RoomData GetRoomInfo(string id, RoomData data)
+        private static RoomData GetRoomInfo(HtmlDocument doc, string id, RoomData data)
         {
             try
             {

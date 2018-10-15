@@ -84,6 +84,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BookingDB\BookingDB.csproj">
+      <Project>{047CE03C-6066-421B-A9DC-C267541E70A7}</Project>
+      <Name>BookingDB</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{A02E0E0B-AADA-4AD8-A8D9-04E01BD041FE}</Project>
       <Name>Common</Name>

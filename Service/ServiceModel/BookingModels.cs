@@ -1,12 +1,14 @@
-﻿using Service.ServiceModel.PublicModels;
-using System;
+﻿using BookingDB;
+using Service.ServiceModel.PublicModels;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service.ServiceModel.BookingModels
 {
+    public class UrlModel
+    {
+        public long ID { get; set; }
+        public string Url { get; set; }
+    }
     public class BookingResponseModel<T>
     {
         public bool Success { get; set; }
@@ -22,7 +24,7 @@ namespace Service.ServiceModel.BookingModels
         public string Longitude { get; set; }
         public List<string> HotelImageUrls { get; set; }
         public List<Facility> Facilities { get; set; }
-        public GoodToKnow GoodToKnow { get; set; }
+        public GoodToNow GoodToKnow { get; set; }
         public List<Location> Locations { get; set; }
     }
     public class RoomData
@@ -41,25 +43,6 @@ namespace Service.ServiceModel.BookingModels
     {
         public int ID { get; set; }
         public string Url { get; set; }
-    }
-
-    public class GoodToKnow
-    {
-        public string CheckIn { get; set; }
-        public string CheckOut { get; set; }
-        public string Pets { get; set; }
-        public string Groups { get; set; }
-    }
-
-    public class Facility
-    {
-        public string Title { get; set; }
-        public string Category { get; set; }
-    }
-    public class Location
-    {
-        public int LocationID { get; set; }
-        public string Name { get; set; }
     }
 
     public class BookingViewModel
