@@ -5,19 +5,51 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.NetworkInformation;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Service.Suppliers
 {
     public class BookingAccess
     {
-        public static async Task<(BookingResponseModel<HotelData> hotelRes, BookingResponseModel<List<RoomData>> roomRes)> GetDataAsync(string url)
+        private static IPStatus PingService(string url)
+        {
+            Uri uri = new Uri(url);
+            Ping ping = new Ping();
+            PingReply reply = ping.Send(uri.Host);
+            return reply.Status;
+        }
+        public static async Task<(BookingResponseModel<HotelData> hotelRes, BookingResponseModel<List<RoomData>> roomRes)> GetDataAsync(HttpClient client, string url)
         {
             try
             {
-                var web = new HtmlWeb();
-                var doc = await web.LoadFromWebAsync(url);
-                return (GetHotelInfo(doc), GetRooms(doc));
+                var response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    HtmlDocument doc = new HtmlDocument();
+                    doc.LoadHtml(await response.Content.ReadAsStringAsync());
+                    return (GetHotelInfo(doc), GetRooms(doc));
+                }
+                Thread.Sleep(TimeSpan.FromMinutes(2));
+                DateTime timeout = DateTime.Now;
+                while ((response.StatusCode == System.Net.HttpStatusCode.GatewayTimeout
+                    || response.StatusCode == System.Net.HttpStatusCode.BadGateway
+                    || response.StatusCode == System.Net.HttpStatusCode.NotImplemented
+                    || response.StatusCode == System.Net.HttpStatusCode.ServiceUnavailable
+                    || response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                    && DateTime.Now - timeout < TimeSpan.FromSeconds(60))
+                {
+                    response = await client.GetAsync(url);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        HtmlDocument doc = new HtmlDocument();
+                        doc.LoadHtml(await response.Content.ReadAsStringAsync());
+                        return (GetHotelInfo(doc), GetRooms(doc));
+                    }
+                }
+                throw new Exception();
             }
             catch (Exception ex)
             {
