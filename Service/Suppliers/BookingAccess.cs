@@ -32,23 +32,6 @@ namespace Service.Suppliers
                     doc.LoadHtml(await response.Content.ReadAsStringAsync());
                     return (GetHotelInfo(doc), GetRooms(doc));
                 }
-                Thread.Sleep(TimeSpan.FromMinutes(2));
-                DateTime timeout = DateTime.Now;
-                while ((response.StatusCode == System.Net.HttpStatusCode.GatewayTimeout
-                    || response.StatusCode == System.Net.HttpStatusCode.BadGateway
-                    || response.StatusCode == System.Net.HttpStatusCode.NotImplemented
-                    || response.StatusCode == System.Net.HttpStatusCode.ServiceUnavailable
-                    || response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
-                    && DateTime.Now - timeout < TimeSpan.FromSeconds(60))
-                {
-                    response = await client.GetAsync(url);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        HtmlDocument doc = new HtmlDocument();
-                        doc.LoadHtml(await response.Content.ReadAsStringAsync());
-                        return (GetHotelInfo(doc), GetRooms(doc));
-                    }
-                }
                 throw new Exception();
             }
             catch (Exception ex)

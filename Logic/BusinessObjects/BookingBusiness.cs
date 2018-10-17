@@ -17,6 +17,7 @@ namespace Logic.BusinessObjects
 {
     public class BookingBusiness
     {
+        private static readonly Lazy<HttpClient> client = new Lazy<HttpClient>();
         private bool AllowTruncate => ConfigurationManager.AppSettings["AllowTruncateBookingDB"] == "true" ? true : false;
         private void TruncateDB(long from, long to)
         {
@@ -212,13 +213,13 @@ namespace Logic.BusinessObjects
             }
         }
 
-        public async Task<BookingViewModel> GetAndSaveAsync(HttpClient client, string url, long id, SemaphoreSlim semaphore)
+        public async Task<BookingViewModel> GetAndSaveAsync(string url, long id, SemaphoreSlim semaphore)
         {
             await semaphore.WaitAsync();
             try
             {
                 bool insertHotelToDB = false, insertRoomsToDB = false;
-                (BookingResponseModel<HotelData> hotelRes, BookingResponseModel<List<RoomData>> roomRes) = await BookingAccess.GetDataAsync(client, url);
+                (BookingResponseModel<HotelData> hotelRes, BookingResponseModel<List<RoomData>> roomRes) = await BookingAccess.GetDataAsync(client.Value, url);
                 string message = string.Empty;
                 byte isRecieve = (byte)(hotelRes.Success && roomRes.Success ? 1 : hotelRes.Success && !roomRes.Success ? 3 : 2);
 
@@ -274,12 +275,11 @@ namespace Logic.BusinessObjects
             {
                 if (from > to) throw new ArgumentOutOfRangeException();
                 if (AllowTruncate) TruncateDB(from, to);
-                HttpClient client = new HttpClient();
-                ServicePointManager.DefaultConnectionLimit = 100;
+                ServicePointManager.DefaultConnectionLimit = 50;
                 UrlModel[] urls = GetUrlRange(from, to);
                 using (var semaphor = new SemaphoreSlim(50))
                 {
-                    Task<BookingViewModel>[] tasks = urls.Select(x => GetAndSaveAsync(client, x.Url.Remove(x.Url.LastIndexOf("?")), x.ID, semaphor)).ToArray();
+                    Task<BookingViewModel>[] tasks = urls.Select(x => GetAndSaveAsync(x.Url.Remove(x.Url.LastIndexOf("?")), x.ID, semaphor)).ToArray();
                     return await Task.WhenAll(tasks);
                 }
             }
