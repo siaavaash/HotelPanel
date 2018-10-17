@@ -32,44 +32,44 @@
           <Key>
             <PropertyRef Name="HotelId" />
           </Key>
-          <Property Name="id" Type="varchar" MaxLength="5000" />
-          <Property Name="name" Type="varchar" MaxLength="5000" />
-          <Property Name="address" Type="varchar" MaxLength="5000" />
-          <Property Name="zip" Type="varchar" MaxLength="5000" />
-          <Property Name="city_hotel" Type="varchar" MaxLength="5000" />
-          <Property Name="cc1" Type="varchar" MaxLength="5000" />
-          <Property Name="ufi" Type="varchar" MaxLength="5000" />
-          <Property Name="class" Type="varchar" MaxLength="5000" />
-          <Property Name="currencycode" Type="varchar" MaxLength="5000" />
-          <Property Name="minrate" Type="varchar" MaxLength="5000" />
-          <Property Name="maxrate" Type="varchar" MaxLength="5000" />
-          <Property Name="preferred" Type="varchar" MaxLength="5000" />
-          <Property Name="nr_rooms" Type="varchar" MaxLength="5000" />
-          <Property Name="longitude" Type="varchar" MaxLength="500" />
-          <Property Name="latitude" Type="varchar" MaxLength="500" />
-          <Property Name="public_ranking" Type="varchar" MaxLength="5000" />
-          <Property Name="hotel_url" Type="varchar" MaxLength="5000" />
-          <Property Name="photo_url" Type="varchar" MaxLength="5000" />
-          <Property Name="desc_en" Type="varchar" MaxLength="5000" />
-          <Property Name="desc_fr" Type="varchar" MaxLength="5000" />
-          <Property Name="desc_es" Type="varchar" MaxLength="5000" />
-          <Property Name="desc_de" Type="varchar" MaxLength="5000" />
-          <Property Name="desc_nl" Type="varchar" MaxLength="5000" />
-          <Property Name="desc_it" Type="varchar" MaxLength="5000" />
-          <Property Name="desc_pt" Type="varchar" MaxLength="5000" />
-          <Property Name="desc_ja" Type="varchar" MaxLength="5000" />
-          <Property Name="desc_zh" Type="varchar" MaxLength="5000" />
-          <Property Name="desc_pl" Type="varchar" MaxLength="5000" />
-          <Property Name="desc_ru" Type="varchar" MaxLength="5000" />
-          <Property Name="desc_sv" Type="varchar" MaxLength="5000" />
-          <Property Name="desc_ar" Type="varchar" MaxLength="5000" />
-          <Property Name="desc_el" Type="varchar" MaxLength="5000" />
-          <Property Name="desc_no" Type="varchar" MaxLength="5000" />
-          <Property Name="city_unique" Type="varchar" MaxLength="5000" />
-          <Property Name="city_preferred" Type="varchar" MaxLength="5000" />
-          <Property Name="continent_id" Type="varchar" MaxLength="5000" />
-          <Property Name="review_score" Type="varchar" MaxLength="5000" />
-          <Property Name="review_nr" Type="varchar" MaxLength="5000" />
+          <Property Name="BookingId" Type="nvarchar" MaxLength="4000" />
+          <Property Name="name" Type="nvarchar" MaxLength="4000" />
+          <Property Name="address" Type="nvarchar" MaxLength="4000" />
+          <Property Name="zip" Type="nvarchar" MaxLength="4000" />
+          <Property Name="city_hotel" Type="nvarchar" MaxLength="4000" />
+          <Property Name="cc1" Type="nvarchar" MaxLength="4000" />
+          <Property Name="ufi" Type="nvarchar" MaxLength="4000" />
+          <Property Name="class" Type="nvarchar" MaxLength="4000" />
+          <Property Name="currencycode" Type="nvarchar" MaxLength="4000" />
+          <Property Name="minrate" Type="nvarchar" MaxLength="4000" />
+          <Property Name="maxrate" Type="nvarchar" MaxLength="4000" />
+          <Property Name="preferred" Type="nvarchar" MaxLength="4000" />
+          <Property Name="nr_rooms" Type="nvarchar" MaxLength="4000" />
+          <Property Name="longitude" Type="nvarchar" MaxLength="4000" />
+          <Property Name="latitude" Type="nvarchar" MaxLength="4000" />
+          <Property Name="public_ranking" Type="nvarchar" MaxLength="4000" />
+          <Property Name="hotel_url" Type="nvarchar" MaxLength="4000" />
+          <Property Name="photo_url" Type="nvarchar" MaxLength="4000" />
+          <Property Name="desc_en" Type="nvarchar" MaxLength="4000" />
+          <Property Name="desc_fr" Type="nvarchar" MaxLength="4000" />
+          <Property Name="desc_es" Type="nvarchar" MaxLength="4000" />
+          <Property Name="desc_de" Type="nvarchar" MaxLength="4000" />
+          <Property Name="desc_nl" Type="nvarchar" MaxLength="4000" />
+          <Property Name="desc_it" Type="nvarchar" MaxLength="4000" />
+          <Property Name="desc_pt" Type="nvarchar" MaxLength="4000" />
+          <Property Name="desc_ja" Type="nvarchar" MaxLength="4000" />
+          <Property Name="desc_zh" Type="nvarchar" MaxLength="4000" />
+          <Property Name="desc_pl" Type="nvarchar" MaxLength="4000" />
+          <Property Name="desc_ru" Type="nvarchar" MaxLength="4000" />
+          <Property Name="desc_sv" Type="nvarchar" MaxLength="4000" />
+          <Property Name="desc_ar" Type="nvarchar" MaxLength="4000" />
+          <Property Name="desc_el" Type="nvarchar" MaxLength="4000" />
+          <Property Name="desc_no" Type="nvarchar" MaxLength="4000" />
+          <Property Name="city_unique" Type="nvarchar" MaxLength="4000" />
+          <Property Name="city_preferred" Type="nvarchar" MaxLength="4000" />
+          <Property Name="continent_id" Type="nvarchar" MaxLength="4000" />
+          <Property Name="review_score" Type="nvarchar" MaxLength="4000" />
+          <Property Name="review_nr" Type="nvarchar" MaxLength="4000" />
           <Property Name="HotelId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DescriptionSite" Type="nvarchar(max)" />
           <Property Name="IsRecive" Type="int" />
@@ -81,6 +81,11 @@
           <Property Name="countryid" Type="bigint" />
           <Property Name="AccommodationlID" Type="bigint" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'BookingStaticData.dbo.HotelId' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="HotelId">
+          <Property Name="HotelId" Type="bigint" />
+        </EntityType>-->
         <EntityType Name="HotelLatLong">
           <Key>
             <PropertyRef Name="id" />
@@ -130,6 +135,15 @@
           <Property Name="line" Type="nvarchar(max)" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="MapAccommodationBookingHotel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccommodationId" Type="bigint" />
+          <Property Name="BookingId" Type="bigint" />
+          <Property Name="UrlPath" Type="nvarchar" MaxLength="4000" />
+        </EntityType>
         <EntityType Name="RoomInfo">
           <Key>
             <PropertyRef Name="RoomInfoId" />
@@ -159,6 +173,7 @@
           <EntitySet Name="ImgUrl" EntityType="Self.ImgUrl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="logHotel" EntityType="Self.logHotel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MapAccommodationBookingHotel" EntityType="Self.MapAccommodationBookingHotel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoomInfo" EntityType="Self.RoomInfo" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -187,59 +202,6 @@
           <Property Name="Groups" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="HotelId" Type="Int64" />
           <Property Name="pricing" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Hotel">
-          <Key>
-            <PropertyRef Name="HotelId" />
-          </Key>
-          <Property Name="id" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="name" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="address" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="zip" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="city_hotel" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="cc1" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="ufi" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="class" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="currencycode" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="minrate" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="maxrate" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="preferred" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="nr_rooms" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="longitude" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="latitude" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="public_ranking" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="hotel_url" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="photo_url" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="desc_en" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="desc_fr" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="desc_es" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="desc_de" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="desc_nl" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="desc_it" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="desc_pt" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="desc_ja" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="desc_zh" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="desc_pl" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="desc_ru" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="desc_sv" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="desc_ar" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="desc_el" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="desc_no" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="city_unique" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="city_preferred" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="continent_id" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="review_score" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="review_nr" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="HotelId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DescriptionSite" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsRecive" Type="Int32" />
-          <Property Name="LastUpdate" Type="DateTime" Precision="0" />
-          <Property Name="Addresnew" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Name="Lat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Long" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="stars" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="countryid" Type="Int64" />
-          <Property Name="AccommodationlID" Type="Int64" />
         </EntityType>
         <EntityType Name="HotelLatLong">
           <Key>
@@ -283,12 +245,13 @@
         <EntityContainer Name="BookingStaticDataEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Facilities" EntityType="Self.Facility" />
           <EntitySet Name="GoodToNows" EntityType="Self.GoodToNow" />
-          <EntitySet Name="Hotels" EntityType="Self.Hotel" />
           <EntitySet Name="HotelLatLongs" EntityType="Self.HotelLatLong" />
           <EntitySet Name="ImgUrls" EntityType="Self.ImgUrl" />
           <EntitySet Name="Locations" EntityType="Self.Location" />
           <EntitySet Name="RoomInfoes" EntityType="BookingStaticDataModel.RoomInfo" />
           <EntitySet Name="logHotels" EntityType="BookingStaticDataModel.logHotel" />
+          <EntitySet Name="Hotels" EntityType="BookingStaticDataModel.Hotel" />
+          <EntitySet Name="MapAccommodationBookingHotels" EntityType="BookingStaticDataModel.MapAccommodationBookingHotel" />
         </EntityContainer>
         <EntityType Name="RoomInfo">
           <Key>
@@ -321,6 +284,68 @@
           <Property Name="line" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Hotel">
+          <Key>
+            <PropertyRef Name="HotelId" />
+          </Key>
+          <Property Name="BookingId" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="zip" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="city_hotel" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="cc1" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="ufi" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="class" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="currencycode" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="minrate" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="maxrate" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="preferred" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="nr_rooms" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="longitude" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="latitude" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="public_ranking" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="hotel_url" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="photo_url" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="desc_en" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="desc_fr" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="desc_es" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="desc_de" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="desc_nl" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="desc_it" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="desc_pt" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="desc_ja" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="desc_zh" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="desc_pl" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="desc_ru" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="desc_sv" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="desc_ar" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="desc_el" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="desc_no" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="city_unique" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="city_preferred" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="continent_id" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="review_score" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="review_nr" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="HotelId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DescriptionSite" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsRecive" Type="Int32" />
+          <Property Name="LastUpdate" Type="DateTime" Precision="0" />
+          <Property Name="Addresnew" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Lat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Long" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="stars" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="countryid" Type="Int64" />
+          <Property Name="AccommodationlID" Type="Int64" />
+        </EntityType>
+        <EntityType Name="MapAccommodationBookingHotel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccommodationId" Type="Int64" />
+          <Property Name="BookingId" Type="Int64" />
+          <Property Name="UrlPath" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -349,60 +374,6 @@
                 <ScalarProperty Name="Groups" ColumnName="Groups" />
                 <ScalarProperty Name="HotelId" ColumnName="HotelId" />
                 <ScalarProperty Name="pricing" ColumnName="pricing" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Hotels">
-            <EntityTypeMapping TypeName="BookingStaticDataModel.Hotel">
-              <MappingFragment StoreEntitySet="Hotel">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="zip" ColumnName="zip" />
-                <ScalarProperty Name="city_hotel" ColumnName="city_hotel" />
-                <ScalarProperty Name="cc1" ColumnName="cc1" />
-                <ScalarProperty Name="ufi" ColumnName="ufi" />
-                <ScalarProperty Name="class" ColumnName="class" />
-                <ScalarProperty Name="currencycode" ColumnName="currencycode" />
-                <ScalarProperty Name="minrate" ColumnName="minrate" />
-                <ScalarProperty Name="maxrate" ColumnName="maxrate" />
-                <ScalarProperty Name="preferred" ColumnName="preferred" />
-                <ScalarProperty Name="nr_rooms" ColumnName="nr_rooms" />
-                <ScalarProperty Name="longitude" ColumnName="longitude" />
-                <ScalarProperty Name="latitude" ColumnName="latitude" />
-                <ScalarProperty Name="public_ranking" ColumnName="public_ranking" />
-                <ScalarProperty Name="hotel_url" ColumnName="hotel_url" />
-                <ScalarProperty Name="photo_url" ColumnName="photo_url" />
-                <ScalarProperty Name="desc_en" ColumnName="desc_en" />
-                <ScalarProperty Name="desc_fr" ColumnName="desc_fr" />
-                <ScalarProperty Name="desc_es" ColumnName="desc_es" />
-                <ScalarProperty Name="desc_de" ColumnName="desc_de" />
-                <ScalarProperty Name="desc_nl" ColumnName="desc_nl" />
-                <ScalarProperty Name="desc_it" ColumnName="desc_it" />
-                <ScalarProperty Name="desc_pt" ColumnName="desc_pt" />
-                <ScalarProperty Name="desc_ja" ColumnName="desc_ja" />
-                <ScalarProperty Name="desc_zh" ColumnName="desc_zh" />
-                <ScalarProperty Name="desc_pl" ColumnName="desc_pl" />
-                <ScalarProperty Name="desc_ru" ColumnName="desc_ru" />
-                <ScalarProperty Name="desc_sv" ColumnName="desc_sv" />
-                <ScalarProperty Name="desc_ar" ColumnName="desc_ar" />
-                <ScalarProperty Name="desc_el" ColumnName="desc_el" />
-                <ScalarProperty Name="desc_no" ColumnName="desc_no" />
-                <ScalarProperty Name="city_unique" ColumnName="city_unique" />
-                <ScalarProperty Name="city_preferred" ColumnName="city_preferred" />
-                <ScalarProperty Name="continent_id" ColumnName="continent_id" />
-                <ScalarProperty Name="review_score" ColumnName="review_score" />
-                <ScalarProperty Name="review_nr" ColumnName="review_nr" />
-                <ScalarProperty Name="HotelId" ColumnName="HotelId" />
-                <ScalarProperty Name="DescriptionSite" ColumnName="DescriptionSite" />
-                <ScalarProperty Name="IsRecive" ColumnName="IsRecive" />
-                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
-                <ScalarProperty Name="Addresnew" ColumnName="Addresnew" />
-                <ScalarProperty Name="Lat" ColumnName="Lat" />
-                <ScalarProperty Name="Long" ColumnName="Long" />
-                <ScalarProperty Name="stars" ColumnName="stars" />
-                <ScalarProperty Name="countryid" ColumnName="countryid" />
-                <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -478,6 +449,70 @@
                 <ScalarProperty Name="Exception" ColumnName="Exception" />
                 <ScalarProperty Name="HotelID" ColumnName="HotelID" />
                 <ScalarProperty Name="userLogID" ColumnName="userLogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hotels">
+            <EntityTypeMapping TypeName="BookingStaticDataModel.Hotel">
+              <MappingFragment StoreEntitySet="Hotel">
+                <ScalarProperty Name="AccommodationlID" ColumnName="AccommodationlID" />
+                <ScalarProperty Name="countryid" ColumnName="countryid" />
+                <ScalarProperty Name="stars" ColumnName="stars" />
+                <ScalarProperty Name="Long" ColumnName="Long" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Addresnew" ColumnName="Addresnew" />
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+                <ScalarProperty Name="IsRecive" ColumnName="IsRecive" />
+                <ScalarProperty Name="DescriptionSite" ColumnName="DescriptionSite" />
+                <ScalarProperty Name="HotelId" ColumnName="HotelId" />
+                <ScalarProperty Name="review_nr" ColumnName="review_nr" />
+                <ScalarProperty Name="review_score" ColumnName="review_score" />
+                <ScalarProperty Name="continent_id" ColumnName="continent_id" />
+                <ScalarProperty Name="city_preferred" ColumnName="city_preferred" />
+                <ScalarProperty Name="city_unique" ColumnName="city_unique" />
+                <ScalarProperty Name="desc_no" ColumnName="desc_no" />
+                <ScalarProperty Name="desc_el" ColumnName="desc_el" />
+                <ScalarProperty Name="desc_ar" ColumnName="desc_ar" />
+                <ScalarProperty Name="desc_sv" ColumnName="desc_sv" />
+                <ScalarProperty Name="desc_ru" ColumnName="desc_ru" />
+                <ScalarProperty Name="desc_pl" ColumnName="desc_pl" />
+                <ScalarProperty Name="desc_zh" ColumnName="desc_zh" />
+                <ScalarProperty Name="desc_ja" ColumnName="desc_ja" />
+                <ScalarProperty Name="desc_pt" ColumnName="desc_pt" />
+                <ScalarProperty Name="desc_it" ColumnName="desc_it" />
+                <ScalarProperty Name="desc_nl" ColumnName="desc_nl" />
+                <ScalarProperty Name="desc_de" ColumnName="desc_de" />
+                <ScalarProperty Name="desc_es" ColumnName="desc_es" />
+                <ScalarProperty Name="desc_fr" ColumnName="desc_fr" />
+                <ScalarProperty Name="desc_en" ColumnName="desc_en" />
+                <ScalarProperty Name="photo_url" ColumnName="photo_url" />
+                <ScalarProperty Name="hotel_url" ColumnName="hotel_url" />
+                <ScalarProperty Name="public_ranking" ColumnName="public_ranking" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="nr_rooms" ColumnName="nr_rooms" />
+                <ScalarProperty Name="preferred" ColumnName="preferred" />
+                <ScalarProperty Name="maxrate" ColumnName="maxrate" />
+                <ScalarProperty Name="minrate" ColumnName="minrate" />
+                <ScalarProperty Name="currencycode" ColumnName="currencycode" />
+                <ScalarProperty Name="class" ColumnName="class" />
+                <ScalarProperty Name="ufi" ColumnName="ufi" />
+                <ScalarProperty Name="cc1" ColumnName="cc1" />
+                <ScalarProperty Name="city_hotel" ColumnName="city_hotel" />
+                <ScalarProperty Name="zip" ColumnName="zip" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MapAccommodationBookingHotels">
+            <EntityTypeMapping TypeName="BookingStaticDataModel.MapAccommodationBookingHotel">
+              <MappingFragment StoreEntitySet="MapAccommodationBookingHotel">
+                <ScalarProperty Name="UrlPath" ColumnName="UrlPath" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+                <ScalarProperty Name="AccommodationId" ColumnName="AccommodationId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

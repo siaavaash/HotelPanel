@@ -85,6 +85,9 @@
     <Compile Include="logHotel.cs">
       <DependentUpon>BookingEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="MapAccommodationBookingHotel.cs">
+      <DependentUpon>BookingEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoomInfo.cs">
       <DependentUpon>BookingEntities.tt</DependentUpon>

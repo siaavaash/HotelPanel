@@ -27,11 +27,12 @@ namespace BookingDB
     
         public virtual DbSet<Facility> Facilities { get; set; }
         public virtual DbSet<GoodToNow> GoodToNows { get; set; }
-        public virtual DbSet<Hotel> Hotels { get; set; }
         public virtual DbSet<HotelLatLong> HotelLatLongs { get; set; }
         public virtual DbSet<ImgUrl> ImgUrls { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<RoomInfo> RoomInfoes { get; set; }
         public virtual DbSet<logHotel> logHotels { get; set; }
+        public virtual DbSet<Hotel> Hotels { get; set; }
+        public virtual DbSet<MapAccommodationBookingHotel> MapAccommodationBookingHotels { get; set; }
     }
 }

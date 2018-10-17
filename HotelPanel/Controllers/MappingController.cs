@@ -83,12 +83,11 @@ namespace HotelPanel.Controllers
         // GET: Hotel Info
         public ActionResult HotelInfo() => View();
 
-        public JsonResult GetHotelInfo(long from, long to)
+        public async Task<JsonResult> MapBookingDataAsync(long from, long to)
         {
             try
             {
-                var result = bookingBusiness.MapBookingInfo(from, to);
-                return Json(new { success = result.success, message = result.message, data = result.data.OrderBy(x => x.HotelID) }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, data = (await bookingBusiness.MapBookingInfoAsync(from, to)).OrderBy(x => x.HotelID) }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

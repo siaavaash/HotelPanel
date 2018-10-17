@@ -7,80 +7,88 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Logic.BusinessObjects
 {
     public class BookingBusiness
     {
+        private static readonly Lazy<HttpClient> client = new Lazy<HttpClient>();
         private bool AllowTruncate => ConfigurationManager.AppSettings["AllowTruncateBookingDB"] == "true" ? true : false;
-        private void TruncateDB(long hotelId)
+        private void TruncateDB(long from, long to)
+        {
+            try
+            {
+                using (var context = new BookingStaticDataEntities())
+                {
+                    // Remove Room Info
+                    context.BulkDelete(context.RoomInfoes.Where(x => x.HotelId >= from && x.HotelId <= to));
+
+                    // Remove Lat_Long
+                    context.BulkDelete(context.HotelLatLongs.Where(x => x.HotelId >= from && x.HotelId <= to));
+
+                    // Remove Locations
+                    context.BulkDelete(context.Locations.Where(x => x.HotelId >= from && x.HotelId <= to));
+
+                    // Remove Images
+                    context.BulkDelete(context.ImgUrls.Where(x => x.HotelId >= from && x.HotelId <= to));
+
+                    // Remove Facilities
+                    context.BulkDelete(context.Facilities.Where(x => x.HotelId >= from && x.HotelId <= to));
+
+                    // Remove GoodToKnow
+                    context.BulkDelete(context.GoodToNows.Where(x => x.HotelId >= from && x.HotelId <= to));
+
+                    // Remove Locations
+                    context.BulkDelete(context.Locations.Where(x => x.HotelId >= from && x.HotelId <= to));
+
+                    //Remove Logs
+                    context.BulkDelete(context.logHotels.Where(x => x.HotelID >= from && x.HotelID <= to));
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        private UrlModel[] GetUrlRange(long from, long to)
+        {
+            try
+            {
+                using (var context = new BookingStaticDataEntities())
+                {
+
+                    context.Configuration.AutoDetectChangesEnabled = false;
+                    return context.Hotels.AsNoTracking().Where(x => x.HotelId <= to && x.HotelId >= from && x.IsRecive != 1).Select(x => new UrlModel
+                    {
+                        ID = x.HotelId,
+                        Url = x.hotel_url
+                    }).ToArray();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        private async Task<bool> InsertHotelAsync(long hotelID, HotelData data, byte isRecieve)
         {
             try
             {
                 using (var context = new BookingStaticDataEntities())
                 {
                     context.Configuration.AutoDetectChangesEnabled = false;
-
-                    // Remove Room Info
-                    context.RoomInfoes.RemoveRange(context.RoomInfoes.Where(x => x.HotelId == hotelId));
-
-                    // Remove Lat_Long
-                    context.HotelLatLongs.RemoveRange(context.HotelLatLongs.Where(x => x.HotelId == hotelId));
-
-                    // Remove Locations
-                    context.Locations.RemoveRange(context.Locations.Where(x => x.HotelId == hotelId));
-
-                    // Remove Images
-                    context.ImgUrls.RemoveRange(context.ImgUrls.Where(x => x.HotelId == hotelId));
-
-                    // Remove Facilities
-                    context.Facilities.RemoveRange(context.Facilities.Where(x => x.HotelId == hotelId));
-
-                    // Remove GoodToKnow
-                    context.GoodToNows.RemoveRange(context.GoodToNows.Where(x => x.HotelId == hotelId));
-
-                    // Remove Locations
-                    context.Locations.RemoveRange(context.Locations.Where(x => x.HotelId == hotelId));
-
-                    context.ChangeTracker.DetectChanges();
-                    context.SaveChanges();
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        private string GetUrlByID(long hotelID)
-        {
-            try
-            {
-                using (var context = new BookingStaticDataEntities())
-                {
-                    var url = context.Hotels.FirstOrDefault(x => x.HotelId == hotelID).hotel_url;
-                    return url.Remove(url.IndexOf('?'));
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        private bool InsertHotelInfo(long hotelID, HotelData data)
-        {
-            try
-            {
-                using (var context = new BookingStaticDataEntities())
-                {
                     var hotel = context.Hotels.FirstOrDefault(x => x.HotelId == hotelID);
                     hotel.DescriptionSite = data.Description;
                     hotel.name = data.Name;
                     hotel.address = data.Address;
-                    hotel.IsRecive = 1;
+                    hotel.IsRecive = isRecieve;
                     hotel.LastUpdate = DateTime.Now;
                     context.GoodToNows.Add(new GoodToNow
                     {
@@ -89,52 +97,49 @@ namespace Logic.BusinessObjects
                         HotelId = hotelID,
                         Pets = data.GoodToKnow.Pets,
                     });
-                    context.BulkInsert(data.HotelImageUrls.Select(x => new ImgUrl
-                    {
-                        HotelId = hotelID,
-                        Path = x,
-                        LastUpdate = DateTime.Now,
-                    }).ToList());
-                    context.BulkInsert(data.Locations.Select(x => new BookingDB.Location
-                    {
-                        Name = x.Name,
-                        HotelId = hotelID,
-                        LocationTypeID = x.LocationID,
-                        LastUpdate = DateTime.Now
-                    }).ToList());
                     context.HotelLatLongs.Add(new HotelLatLong
                     {
                         HotelId = hotelID,
                         Lat = data.Latitude,
                         Long = data.Longitude,
                     });
-                    context.BulkInsert(data.Facilities.Select(x => new BookingDB.Facility
+                    context.ImgUrls.AddRange(data.HotelImageUrls.Select(x => new ImgUrl
                     {
-                        Category = x.Category,
                         HotelId = hotelID,
-                        Title = x.Title,
-                        LastUpdate = DateTime.Now
+                        Path = x,
+                        LastUpdate = DateTime.Now,
                     }).ToList());
-                    context.BulkSaveChanges();
+                    context.Locations.AddRange(data.Locations.Select(x =>
+                    {
+                        x.HotelId = hotelID;
+                        x.LastUpdate = DateTime.Now;
+                        return x;
+                    }).ToList());
+                    context.Facilities.AddRange(data.Facilities.Select(x =>
+                    {
+                        x.HotelId = hotelID;
+                        x.LastUpdate = DateTime.Now;
+                        return x;
+                    }).ToList());
+                    context.ChangeTracker.DetectChanges();
+                    await context.BulkSaveChangesAsync();
                     return true;
                 }
-
             }
             catch (Exception ex)
             {
                 var stackTrace = new StackTrace();
                 var frame = stackTrace.GetFrame(0);
                 var methodName = frame.GetMethod().Name;
-                LogException(hotelID, ex, $"Method Name: {methodName} -- Insert Hotel Info to DB failed.");
+                await LogExceptionAsync(hotelID, ex, $"Method Name: {methodName} -- Insert Hotel Info to DB failed.");
                 return false;
             }
         }
 
-        private bool InsertRoomInfo(long hotelID, List<RoomData> data)
+        private async Task<bool> InsertRoomAsync(long hotelID, List<RoomData> data)
         {
             try
             {
-                int noImageRoom = 100;
                 var roomsInfo = new ConcurrentBag<RoomInfo>();
                 Parallel.ForEach(data, roomData =>
                 {
@@ -167,12 +172,12 @@ namespace Logic.BusinessObjects
                             RoomTypeIconInfo = roomData.SleepsInfo,
                             RoomFacilities = string.Join("-", roomData.Facilities),
                             RoomDescription = roomData.Description,
-                            RoomTypeId = roomData.RoomTypeID != null ? Convert.ToInt64(Regex.Replace(roomData.RoomTypeID, "[A-Za-z ]", "")) : ++noImageRoom,
+                            RoomTypeId = Convert.ToInt64(Regex.Replace(roomData.RoomTypeID, "[A-Za-z ]", "")),
                         });
                 });
                 using (var context = new BookingStaticDataEntities())
                 {
-                    context.BulkInsert(roomsInfo);
+                    await context.BulkInsertAsync(roomsInfo);
                 }
                 return true;
             }
@@ -181,12 +186,12 @@ namespace Logic.BusinessObjects
                 var stackTrace = new StackTrace();
                 var frame = stackTrace.GetFrame(0);
                 var methodName = frame.GetMethod().Name;
-                LogException(hotelID, ex, $"Method Name: {methodName} -- Insert Rooms Info to DB failed.");
+                await LogExceptionAsync(hotelID, ex, $"Method Name: {methodName} -- Insert Rooms to DB failed.");
                 return false;
             }
         }
 
-        private void LogException(long? hotelID, Exception exception, string comment)
+        private async Task LogExceptionAsync(long? hotelID, Exception exception, string comment)
         {
             try
             {
@@ -198,7 +203,7 @@ namespace Logic.BusinessObjects
                         Exception = exception.Message + " -- " + exception.InnerException?.Message,
                         Description = DateTime.Now + " : " + comment,
                     });
-                    context.SaveChanges();
+                    await context.SaveChangesAsync();
                 }
             }
             catch (Exception)
@@ -208,90 +213,79 @@ namespace Logic.BusinessObjects
             }
         }
 
-        public (bool success, string message, List<BookingViewModel> data) MapBookingInfo(long from, long to)
+        public async Task<BookingViewModel> GetAndSaveAsync(string url, long id, SemaphoreSlim semaphore)
         {
+            await semaphore.WaitAsync();
             try
             {
-                if (from > to) throw new ArgumentOutOfRangeException();
-                var result = new ConcurrentBag<BookingViewModel>();
-                Parallel.For(from, to + 1, i =>
-                 {
-                     try
-                     {
-                         string message = "";
-                         bool insertHotelToDB = false, insertRoomsToDB = false, getHotel = false, getRooms = false;
-                         if (AllowTruncate) TruncateDB(i);
-                         string bookingUrl = GetUrlByID(i);
-                         var bookingAccess = new BookingAccess(bookingUrl);
-                         var hotelResult = new BookingResponseModel<HotelData>();
-                         var roomsResult = new BookingResponseModel<List<RoomData>>();
-                         Parallel.Invoke(
-                             () =>
-                             {
-                                 hotelResult = bookingAccess.GetHotelInfo();
-                             },
-                             () =>
-                             {
-                                 roomsResult = bookingAccess.GetRooms();
-                             });
-                         Parallel.Invoke(
-                             () =>
-                             {
-                                 if (hotelResult.Success)
-                                 {
-                                     getHotel = true;
-                                     if (InsertHotelInfo(i, hotelResult.Data)) insertHotelToDB = true;
-                                 }
-                                 else
-                                 {
-                                     message += "Get Hotel Info Message: ";
-                                     message += string.Join("--", hotelResult.Errors.Select(x => x.Text).ToArray());
-                                     if (hotelResult.Errors != null) LogException(i, new Exception(string.Join(" ", hotelResult.Errors?.Select(x => x.Text).ToArray())), $"Method Name: GetHotelInfo -- Get Hotel Info from Booking failed.");
-                                 }
-                             },
-                             () =>
-                             {
-                                 if (roomsResult.Success)
-                                 {
-                                     getRooms = true;
-                                     if (InsertRoomInfo(i, roomsResult.Data)) insertRoomsToDB = true;
-                                 }
-                                 else
-                                 {
-                                     message += "Get Room Info Message: ";
-                                     message += string.Join("--", roomsResult.Errors.Select(x => x.Text).ToArray());
-                                     if (roomsResult.Errors != null) LogException(i, new Exception(string.Join(" ", roomsResult.Errors?.Select(x => x.Text).ToArray())), $"Method Name: GetRooms -- Get Rooms Info from Booking failed.");
-                                 }
-                             });
-                         result.Add(new BookingViewModel
-                         {
-                             HotelID = i,
-                             Message = message,
-                             GetHotelInfo = getHotel,
-                             GetRoomInfo = getRooms,
-                             InsertHotelToDB = insertHotelToDB,
-                             InsertRoomsToDB = insertRoomsToDB,
-                         });
-                     }
-                     catch (Exception ex)
-                     {
-                         result.Add(new BookingViewModel
-                         {
-                             HotelID = i,
-                             Message = ex.Message,
-                         });
-                     }
-                 });
-                return (true, null, result.ToList());
+                bool insertHotelToDB = false, insertRoomsToDB = false;
+                (BookingResponseModel<HotelData> hotelRes, BookingResponseModel<List<RoomData>> roomRes) = await BookingAccess.GetDataAsync(client.Value, url);
+                string message = string.Empty;
+                byte isRecieve = (byte)(hotelRes.Success && roomRes.Success ? 1 : hotelRes.Success && !roomRes.Success ? 3 : 2);
+
+                if (hotelRes.Success)
+                {
+                    if (await InsertHotelAsync(id, hotelRes.Data, isRecieve)) insertHotelToDB = true;
+                }
+                else
+                {
+                    message += "Get Hotel Info Message: ";
+                    message += string.Join("--", hotelRes.Errors.Select(x => x.Text).ToArray());
+                    if (hotelRes.Errors != null) await LogExceptionAsync(id, new Exception(string.Join(" ", hotelRes.Errors?.Select(x => x.Text).ToArray())), $"Method Name: GetHotelInfo -- Get Hotel Info from Booking failed.");
+                }
+                if (roomRes.Success)
+                {
+                    if (await InsertRoomAsync(id, roomRes.Data)) insertRoomsToDB = true;
+                }
+                else
+                {
+                    message += "Get Room Info Message: ";
+                    message += string.Join("--", roomRes.Errors.Select(x => x.Text).ToArray());
+                    if (roomRes.Errors != null) await LogExceptionAsync(id, new Exception(string.Join(" ", roomRes.Errors?.Select(x => x.Text).ToArray())), $"Method Name: GetRooms -- Get Rooms Info from Booking failed.");
+                }
+                return new BookingViewModel
+                {
+                    HotelID = id,
+                    GetHotelInfo = hotelRes.Success,
+                    GetRoomInfo = roomRes.Success,
+                    InsertHotelToDB = insertHotelToDB,
+                    InsertRoomsToDB = insertRoomsToDB,
+                    Message = message
+                };
 
             }
             catch (Exception ex)
             {
-                var stackTrace = new StackTrace();
-                var frame = stackTrace.GetFrame(0);
-                var methodName = frame.GetMethod().Name;
-                LogException(null, ex, $"Method Name: {methodName} -- Get Hotel and Rooms Info failed.");
-                return (false, ex.Message, null);
+                await LogExceptionAsync(id, ex, "");
+                return new BookingViewModel
+                {
+                    HotelID = id,
+                    Message = ex.Message
+                };
+            }
+            finally
+            {
+                semaphore.Release();
+            }
+        }
+
+        public async Task<BookingViewModel[]> MapBookingInfoAsync(long from, long to)
+        {
+            try
+            {
+                if (from > to) throw new ArgumentOutOfRangeException();
+                if (AllowTruncate) TruncateDB(from, to);
+                ServicePointManager.DefaultConnectionLimit = 50;
+                UrlModel[] urls = GetUrlRange(from, to);
+                using (var semaphor = new SemaphoreSlim(50))
+                {
+                    Task<BookingViewModel>[] tasks = urls.Select(x => GetAndSaveAsync(x.Url.Remove(x.Url.LastIndexOf("?")), x.ID, semaphor)).ToArray();
+                    return await Task.WhenAll(tasks);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
 
