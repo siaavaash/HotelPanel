@@ -103,19 +103,19 @@ namespace Logic.BusinessObjects
                         Lat = data.Latitude,
                         Long = data.Longitude,
                     });
-                    context.ImgUrls.AddRange(data.HotelImageUrls.Select(x => new ImgUrl
+                    await context.BulkInsertAsync(data.HotelImageUrls.Select(x => new ImgUrl
                     {
                         HotelId = hotelID,
                         Path = x,
                         LastUpdate = DateTime.Now,
                     }).ToList());
-                    context.Locations.AddRange(data.Locations.Select(x =>
+                    await context.BulkInsertAsync(data.Locations.Select(x =>
                     {
                         x.HotelId = hotelID;
                         x.LastUpdate = DateTime.Now;
                         return x;
                     }).ToList());
-                    context.Facilities.AddRange(data.Facilities.Select(x =>
+                    await context.BulkInsertAsync(data.Facilities.Select(x =>
                     {
                         x.HotelId = hotelID;
                         x.LastUpdate = DateTime.Now;
