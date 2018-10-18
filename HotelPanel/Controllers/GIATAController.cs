@@ -74,5 +74,21 @@ namespace HotelPanel.Controllers
                 throw;
             }
         }
+
+        public async Task<FileResult> GetHotelsByProviders(string version, byte provider)
+        {
+            var content = await giataBusiness.GetHotelsByProviderAsync(version, (Service.ServiceModel.GIATAModels.Filter)provider);
+            return File(content, "application/zip", $"{(Service.ServiceModel.GIATAModels.Filter)provider}_{version}");
+        }
+        public async Task<FileResult> GetHotelsByCities(string version, byte part)
+        {
+            var content = await giataBusiness.GetHotelsByCitiesAsync(version, part);
+            return File(content, "application/zip", $"GetHotelsByCities_{version}_Part{part}");
+        }
+        public async Task<FileResult> GetHotelsByCountries(string version)
+        {
+            var content = await giataBusiness.GetHotelsByCountriesAsync(version);
+            return File(content, "application/zip", $"GetHotelsByCountries_{version}");
+        }
     }
 }

@@ -8,7 +8,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Logic.BusinessObjects
 {
@@ -669,6 +672,116 @@ namespace Logic.BusinessObjects
                 {
                     foreach (var file in files)
                         zip.AddEntry($"{file.Name}{file.Extention}", file.Contents);
+                    zip.Save(output);
+                }
+                return output.ToArray();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private string[] GetAllCountries(string version)
+        {
+            try
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(geography));
+                string path = $@"D:\GIATAData\{version}\geography.xml";
+                TextReader reader = new StreamReader(path);
+                return ((geography)serializer.Deserialize(reader)).countries.Select(x => x.countryCode).ToArray();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        private List<int> GetAllCities(string version)
+        {
+            try
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(geography));
+                string path = $@"D:\GIATAData\{version}\geography.xml";
+                TextReader reader = new StreamReader(path);
+                List<int> cities = new List<int>();
+                var model = (geography)serializer.Deserialize(reader);
+                foreach (var country in model.countries)
+                    foreach (var destination in country.destinations)
+                        cities.AddRange(destination.cities.Select(x => x.cityId).ToList());
+                return cities;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<byte[]> GetHotelsByProviderAsync(string version, Filter filter)
+        {
+            try
+            {
+                SemaphoreSlim semaphore = new SemaphoreSlim(3);
+                var output = new MemoryStream();
+                var gds = giataAccess.GetAllProvider(version, filter).Distinct();
+                var tasks = gds.Select(x => giataAccess.GetHotelsByFilterAsync(version, x, filter, semaphore)).ToArray();
+                var files = await Task.WhenAll(tasks);
+                using (var zip = new ZipFile())
+                {
+                    foreach (var file in files)
+                        if (file != null)
+                            zip.AddEntry($"{file.Name}{file.Extention}", file.Contents);
+                    zip.Save(output);
+                }
+                return output.ToArray();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public async Task<byte[]> GetHotelsByCitiesAsync(string version, byte part)
+        {
+            try
+            {
+                ServicePointManager.DefaultConnectionLimit = 100;
+                SemaphoreSlim semaphore = new SemaphoreSlim(100);
+                var output = new MemoryStream();
+                var codes = GetAllCities(version).OrderBy(x => x).Skip((part - 1) * 20000).Take(20000);
+                var tasks = codes.Select(x => giataAccess.GetHotelsByFilterAsync(version, x.ToString(), Filter.city, semaphore)).ToArray();
+                var files = await Task.WhenAll(tasks);
+                using (var zip = new ZipFile())
+                {
+                    foreach (var file in files)
+                        if (file != null)
+                            zip.AddEntry($"{file.Name}{file.Extention}", file.Contents);
+                    zip.Save(output);
+                }
+                return output.ToArray();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public async Task<byte[]> GetHotelsByCountriesAsync(string version)
+        {
+            try
+            {
+                SemaphoreSlim semaphore = new SemaphoreSlim(500);
+                var output = new MemoryStream();
+                var codes = GetAllCountries(version);
+                var tasks = codes.Select(x => giataAccess.GetHotelsByFilterAsync(version, x, Filter.country, semaphore)).ToArray();
+                var files = await Task.WhenAll(tasks);
+                using (var zip = new ZipFile())
+                {
+                    foreach (var file in files)
+                        if (file != null)
+                            zip.AddEntry($"{file.Name}{file.Extention}", file.Contents);
                     zip.Save(output);
                 }
                 return output.ToArray();
