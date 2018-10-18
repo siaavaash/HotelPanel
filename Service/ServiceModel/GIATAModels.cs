@@ -19,13 +19,13 @@ namespace Service.ServiceModel.GIATAModels
     }
     public enum Filter
     {
-        country,
-        city,
-        gds,
-        tourOperator,
-        moved,
-        chain,
-        since,
+        country = 1,
+        city = 2,
+        gds = 3,
+        tourOperator = 4,
+        moved = 5,
+        chain = 6,
+        since = 7,
     }
 
 
@@ -371,4 +371,478 @@ namespace Service.ServiceModel.GIATAModels
         public string Extention { get; set; }
         public byte[] Contents { get; set; }
     }
+
+    #region provider_gds
+
+    // NOTE: Generated code may require at least .NET Framework 4.5 or .NET Core/Standard 2.0.
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
+    public partial class providers
+    {
+
+        private providersProvider[] providerField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("provider")]
+        public providersProvider[] provider
+        {
+            get
+            {
+                return this.providerField;
+            }
+            set
+            {
+                this.providerField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class providersProvider
+    {
+
+        private providersProviderProperties propertiesField;
+
+        private string providerCodeField;
+
+        private string providerTypeField;
+
+        /// <remarks/>
+        public providersProviderProperties properties
+        {
+            get
+            {
+                return this.propertiesField;
+            }
+            set
+            {
+                this.propertiesField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string providerCode
+        {
+            get
+            {
+                return this.providerCodeField;
+            }
+            set
+            {
+                this.providerCodeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string providerType
+        {
+            get
+            {
+                return this.providerTypeField;
+            }
+            set
+            {
+                this.providerTypeField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class providersProviderProperties
+    {
+
+        private providersProviderPropertiesRequests requestsField;
+
+        private string hrefField;
+
+        /// <remarks/>
+        public providersProviderPropertiesRequests requests
+        {
+            get
+            {
+                return this.requestsField;
+            }
+            set
+            {
+                this.requestsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = "http://www.w3.org/1999/xlink")]
+        public string href
+        {
+            get
+            {
+                return this.hrefField;
+            }
+            set
+            {
+                this.hrefField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class providersProviderPropertiesRequests
+    {
+
+        private providersProviderPropertiesRequestsRequest requestField;
+
+        /// <remarks/>
+        public providersProviderPropertiesRequestsRequest request
+        {
+            get
+            {
+                return this.requestField;
+            }
+            set
+            {
+                this.requestField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class providersProviderPropertiesRequestsRequest
+    {
+
+        private providersProviderPropertiesRequestsRequestParam[] paramsField;
+
+        private string formatField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("param", IsNullable = false)]
+        public providersProviderPropertiesRequestsRequestParam[] @params
+        {
+            get
+            {
+                return this.paramsField;
+            }
+            set
+            {
+                this.paramsField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string format
+        {
+            get
+            {
+                return this.formatField;
+            }
+            set
+            {
+                this.formatField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class providersProviderPropertiesRequestsRequestParam
+    {
+
+        private string nameField;
+
+        private string typeHintField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string name
+        {
+            get
+            {
+                return this.nameField;
+            }
+            set
+            {
+                this.nameField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string typeHint
+        {
+            get
+            {
+                return this.typeHintField;
+            }
+            set
+            {
+                this.typeHintField = value;
+            }
+        }
+    }
+
+
+    #endregion
+
+    #region geography
+
+    // NOTE: Generated code may require at least .NET Framework 4.5 or .NET Core/Standard 2.0.
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
+    public partial class geography
+    {
+
+        private geographyCountry[] countriesField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("country", IsNullable = false)]
+        public geographyCountry[] countries
+        {
+            get
+            {
+                return this.countriesField;
+            }
+            set
+            {
+                this.countriesField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class geographyCountry
+    {
+
+        private geographyCountryDestination[] destinationsField;
+
+        private string countryCodeField;
+
+        private string countryNameField;
+
+        private string hrefField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("destination", IsNullable = false)]
+        public geographyCountryDestination[] destinations
+        {
+            get
+            {
+                return this.destinationsField;
+            }
+            set
+            {
+                this.destinationsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string countryCode
+        {
+            get
+            {
+                return this.countryCodeField;
+            }
+            set
+            {
+                this.countryCodeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string countryName
+        {
+            get
+            {
+                return this.countryNameField;
+            }
+            set
+            {
+                this.countryNameField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = "http://www.w3.org/1999/xlink")]
+        public string href
+        {
+            get
+            {
+                return this.hrefField;
+            }
+            set
+            {
+                this.hrefField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class geographyCountryDestination
+    {
+
+        private geographyCountryDestinationCity[] citiesField;
+
+        private ushort destinationIdField;
+
+        private string destinationNameField;
+
+        private string hrefField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("city", IsNullable = false)]
+        public geographyCountryDestinationCity[] cities
+        {
+            get
+            {
+                return this.citiesField;
+            }
+            set
+            {
+                this.citiesField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public ushort destinationId
+        {
+            get
+            {
+                return this.destinationIdField;
+            }
+            set
+            {
+                this.destinationIdField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string destinationName
+        {
+            get
+            {
+                return this.destinationNameField;
+            }
+            set
+            {
+                this.destinationNameField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = "http://www.w3.org/1999/xlink")]
+        public string href
+        {
+            get
+            {
+                return this.hrefField;
+            }
+            set
+            {
+                this.hrefField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public partial class geographyCountryDestinationCity
+    {
+
+        private int cityIdField;
+
+        private string cityNameField;
+
+        private string iataField;
+
+        private string hrefField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public int cityId
+        {
+            get
+            {
+                return this.cityIdField;
+            }
+            set
+            {
+                this.cityIdField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string cityName
+        {
+            get
+            {
+                return this.cityNameField;
+            }
+            set
+            {
+                this.cityNameField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string iata
+        {
+            get
+            {
+                return this.iataField;
+            }
+            set
+            {
+                this.iataField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = "http://www.w3.org/1999/xlink")]
+        public string href
+        {
+            get
+            {
+                return this.hrefField;
+            }
+            set
+            {
+                this.hrefField = value;
+            }
+        }
+    }
+
+
+    #endregion
 }

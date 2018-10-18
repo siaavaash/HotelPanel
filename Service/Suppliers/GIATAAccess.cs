@@ -1,8 +1,11 @@
 ﻿using Service.ServiceModel.GIATAModels;
 using Service.ServiceModel.PublicModels;
+using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -10,6 +13,14 @@ namespace Service.Suppliers
 {
     public class GIATAAccess
     {
+        private static Lazy<HttpClient> client = new Lazy<HttpClient>(() =>
+        {
+            HttpClient client = new HttpClient();
+            client.Timeout = TimeSpan.FromMinutes(5);
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "bmV2aWxsZXxpdG91cnMubm86cDZNUkVLcHg =");
+            return client;
+        });
+
         // GIATA web service url
         private const string serviceUrl = "http://multicodes.giatamedia.com/webservice/rest/1.latest/properties/";
 
@@ -133,5 +144,55 @@ namespace Service.Suppliers
             }
         }
 
+        public string[] GetAllProvider(string version, Filter filter)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(providers));
+            var response = GetXML(GetUrlByParameters(version, Method.providers, Enum.GetName(typeof(Filter), filter)));
+            if (response.statusCode == HttpStatusCode.OK)
+                return ((providers)serializer.Deserialize(response.data)).provider.Select(x => x.providerCode).ToArray();
+            return null;
+        }
+        public async Task<byte[]> GetXMLAsync(string url)
+        {
+            try
+            {
+                var response = await client.Value.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                    return await response.Content.ReadAsByteArrayAsync();
+                return null;
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<GIATAFile> GetHotelsByFilterAsync(string version, string code, Filter filter, SemaphoreSlim semaphore)
+        {
+            await semaphore.WaitAsync();
+            try
+            {
+                var url = GetPropertiesUrlWithFilter(version, filter, code);
+                var response = await GetXMLAsync(url);
+                if (response != null)
+                {
+                    return new GIATAFile
+                    {
+                        Contents = response,
+                        Extention = ".xml",
+                        Name = code
+                    };
+                }
+                return null;
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                semaphore.Release();
+            }
+        }
     }
 }

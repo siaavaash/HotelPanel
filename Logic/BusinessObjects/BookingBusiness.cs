@@ -64,7 +64,7 @@ namespace Logic.BusinessObjects
                 {
 
                     context.Configuration.AutoDetectChangesEnabled = false;
-                    return context.Hotels.AsNoTracking().Where(x => x.HotelId <= to && x.HotelId >= from && x.IsRecive != 1).Select(x => new UrlModel
+                    return context.Hotels.AsNoTracking().Where(x => x.HotelId <= to && x.HotelId >= from && x.IsRecive == 2).Select(x => new UrlModel
                     {
                         ID = x.HotelId,
                         Url = x.hotel_url
