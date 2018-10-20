@@ -19,6 +19,9 @@ namespace HotelPanel
                 defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional }
             );
 
+
+
+
             routes.MapMvcAttributeRoutes();
         }
     }

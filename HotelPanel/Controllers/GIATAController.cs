@@ -46,6 +46,15 @@ namespace HotelPanel.Controllers
             }
         }
 
+        // Get Properties by ID
+        [Route("giata/test")]
+        [Route("giata/{version:regex(1.0|1.latest)}/properties/{parameter}")]
+        [Route("giata/{version:regex(1.0|1.latest)}/properties/{filter:alpha}/{parameter}")]
+        public async Task<ContentResult> GetGiataData(string version, string method = "properties", string filter = "", string parameter = "")
+            => Content(await giataBusiness.GetFileAsString(version, method, parameter, filter), "application/xml");
+
+
+        #region Download
         public async Task<FileResult> DownloadPropertiesByIDAsync(byte part, byte version)
         {
             try
@@ -59,22 +68,6 @@ namespace HotelPanel.Controllers
                 throw;
             }
         }
-
-        // Get Properties by ID
-        [Route("giata/1.{version:regex(0|1)}/properties/{parameter}/{filter?}")]
-        public ContentResult Properties(byte version, string parameter, string filter = "")
-        {
-            try
-            {
-                return Content("hiiiiiiii.");
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
         public async Task<FileResult> GetHotelsByProviders(string version, byte provider)
         {
             var content = await giataBusiness.GetHotelsByProviderAsync(version, (Service.ServiceModel.GIATAModels.Filter)provider);
@@ -90,5 +83,6 @@ namespace HotelPanel.Controllers
             var content = await giataBusiness.GetHotelsByCountriesAsync(version);
             return File(content, "application/zip", $"GetHotelsByCountries_{version}");
         }
+        #endregion
     }
 }

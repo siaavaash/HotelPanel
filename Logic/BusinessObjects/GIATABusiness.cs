@@ -21,6 +21,7 @@ namespace Logic.BusinessObjects
         private readonly GIATAAccess giataAccess = new GIATAAccess();
 
         private bool TruncateTables => ConfigurationManager.AppSettings["TruncateDb"] == "true" ? true : false;
+        private string Path => ConfigurationManager.AppSettings["GiataDataPath"];
 
         /// <summary>
         /// Remove All Relative Data in DB
@@ -785,6 +786,20 @@ namespace Logic.BusinessObjects
                     zip.Save(output);
                 }
                 return output.ToArray();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public Task<string> GetFileAsString(string version, string method, string parameter, string filter)
+        {
+            try
+            {
+                var path = $@"{Path}\{version}\{method}\{filter}\{parameter}.xml";
+                return Task.Run(() => File.ReadAllText(path));
             }
             catch (Exception)
             {
