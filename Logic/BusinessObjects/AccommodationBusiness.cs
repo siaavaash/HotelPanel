@@ -12,6 +12,7 @@ using Data.PublicModel;
 using Data.ViewModel.AccommodationModels;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
+using System.Collections;
 
 namespace Logic.BusinessObjects
 {
@@ -64,33 +65,19 @@ namespace Logic.BusinessObjects
             {
                 using (var context = new Entities())
                 {
-                    var userBounds = context.UserPictureDics.Where(x => x.UserID == userId).ToList();
+                    context.Configuration.AutoDetectChangesEnabled = false;
+                    var userBounds = context.UserPictureDics.AsNoTracking().Where(x => x.UserID == userId && x.FromImageID != 0 && x.ToImageID != 0).ToList();
                     if (userBounds != null && userBounds.Count > 0)
                     {
-                        var bounds = userBounds.Where(x => x.FromImageID != 0 && x.ToImageID != 0).Select(x => new { x.FromImageID, x.ToImageID }).ToDictionary(x => x.FromImageID, y => y.ToImageID);
-                        var restricted = bounds.Count > 0 ? true : false;
-                        if (restricted)
+                        var result = new AccommodationListViewModel
                         {
-                            var result = new AccommodationListViewModel
-                            {
-                                Restricted = restricted,
-                                AccommodationList = new List<AccommodationListRsult>(),
-                            };
-                            foreach (var bound in bounds)
-                            {
-                                var accommodations = context.Accommodations.Include(x => x.AccommodationSortedByCountry).Where(x => x.AccommodationSortedByCountry.Ordered >= bound.Key && x.AccommodationSortedByCountry.Ordered <= bound.Value);
-                                if (onlyVerified)
-                                {
-                                    accommodations = accommodations.Where(x => x.DateVerified != null);
-                                }
-                                else
-                                {
-                                    if (!showIsVerified)
-                                    {
-                                        accommodations = accommodations.Where(x => x.DateVerified == null);
-                                    }
-                                }
-                                result.AccommodationList.AddRange(accommodations.Select(x => new AccommodationListRsult
+                            Restricted = true,
+                            AccommodationList = new List<AccommodationListRsult>(),
+                        };
+                        if (onlyVerified)
+                        {
+                            foreach (var bound in userBounds)
+                                result.AccommodationList.AddRange(context.Accommodations.AsNoTracking().Include(x => x.AccommodationSortedByCountry).Where(x => x.AccommodationSortedByCountry.Ordered >= bound.FromImageID && x.AccommodationSortedByCountry.Ordered <= bound.ToImageID && x.DateVerified != null).Select(x => new AccommodationListRsult
                                 {
                                     AccommodationID = x.AccommodationlID,
                                     CityName = x.CityName,
@@ -98,10 +85,36 @@ namespace Logic.BusinessObjects
                                     lastUpdate = x.lastUpdate,
                                     Name = x.Name
                                 }).ToList());
-                            }
-                            result.AccommodationList = result.AccommodationList.OrderBy(x => x.AccommodationID).ToList();
-                            return result;
                         }
+                        else
+                        {
+                            if (!showIsVerified)
+                            {
+                                foreach (var bound in userBounds)
+                                    result.AccommodationList.AddRange(context.Accommodations.AsNoTracking().Include(x => x.AccommodationSortedByCountry).Where(x => x.AccommodationSortedByCountry.Ordered >= bound.FromImageID && x.AccommodationSortedByCountry.Ordered <= bound.ToImageID && x.DateVerified == null).Select(x => new AccommodationListRsult
+                                    {
+                                        AccommodationID = x.AccommodationlID,
+                                        CityName = x.CityName,
+                                        Country = x.Country,
+                                        lastUpdate = x.lastUpdate,
+                                        Name = x.Name
+                                    }).ToList());
+                            }
+                            else
+                            {
+                                foreach (var bound in userBounds)
+                                    result.AccommodationList.AddRange(context.Accommodations.AsNoTracking().Include(x => x.AccommodationSortedByCountry).Where(x => x.AccommodationSortedByCountry.Ordered >= bound.FromImageID && x.AccommodationSortedByCountry.Ordered <= bound.ToImageID && x.DateVerified == null).Select(x => new AccommodationListRsult
+                                    {
+                                        AccommodationID = x.AccommodationlID,
+                                        CityName = x.CityName,
+                                        Country = x.Country,
+                                        lastUpdate = x.lastUpdate,
+                                        Name = x.Name
+                                    }).ToList());
+                            }
+                        }
+                        result.AccommodationList = result.AccommodationList.Distinct(new AccommodationEquality<AccommodationListRsult>(x => x.AccommodationID)).OrderBy(x => x.AccommodationID).ToList();
+                        return result;
                     }
                     return new AccommodationListViewModel
                     {
@@ -725,6 +738,25 @@ namespace Logic.BusinessObjects
 
                 throw;
             }
+        }
+    }
+    public class AccommodationEquality<T> : IEqualityComparer<T> where T : class
+    {
+        private Func<T, object> func;
+        public AccommodationEquality(Func<T, object> func)
+        {
+            this.func = func;
+        }
+        public bool Equals(T x, T y)
+        {
+            object first = func(x);
+            object second = func(y);
+            return first.Equals(second);
+        }
+
+        public int GetHashCode(T obj)
+        {
+            return obj.GetHashCode();
         }
     }
 }
