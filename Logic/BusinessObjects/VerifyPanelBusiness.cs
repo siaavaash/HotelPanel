@@ -163,7 +163,7 @@ namespace Logic.BusinessObjects
                         accommodation.Latitude = model.Latitude ?? accommodation.Latitude;
                         accommodation.Longitude = model.Longitude ?? accommodation.Longitude;
                         accommodation.BookingUrl = model.BookingUrl ?? accommodation.BookingUrl;
-                        accommodation.DateVerified = DateTime.Now.Date;
+                        accommodation.DateVerified = DateTime.Now;
                         accommodation.IsVerified = true;
                         accommodation.UserID = userId;
                         accommodation.IsActive = model.IsActive ?? false;
@@ -187,7 +187,7 @@ namespace Logic.BusinessObjects
                                 image.IsVerified = true;
                                 image.IsReported = roomImage.IsReported;
                                 image.IsActive = roomImage.IsActive;
-                                image.VerifiedDate = DateTime.Now.Date;
+                                image.VerifiedDate = DateTime.Now;
                             }
                         }
                         foreach (var item in model.AccommodationImages ?? new List<Image>())
@@ -198,7 +198,7 @@ namespace Logic.BusinessObjects
                                 image.IsVerified = true;
                                 image.IsReported = item.IsReported;
                                 image.IsActive = item.IsActive;
-                                image.VerifiedDate = DateTime.Now.Date;
+                                image.VerifiedDate = DateTime.Now;
                             }
                         }
                         message = null;
