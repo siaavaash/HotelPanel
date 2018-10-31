@@ -19,6 +19,10 @@
                     <input type="checkbox" id="inputCall2" name="Verified" class="peer" @onlyVerifiedCheck>
                     <label for="inputCall2" class="peers peer-greed js-sb ai-c"><span class="peer peer-greed">Only Show Verified Accommodations</span></label>
                 </div>
+                <div>
+                    <label>Part</label>
+                    <input type="number" id="part" value="@ViewBag.Part" />
+                </div>
             }
             <form method="post">
                 <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -106,5 +110,8 @@
         var action = $(this).data("action");
         $("form").attr("action", action);
         $("form").submit();
+    })
+    $("#part").change(function () {
+        window.location.href = "/Accommodation/List?part=" + $(this).val();
     })
 </script>
