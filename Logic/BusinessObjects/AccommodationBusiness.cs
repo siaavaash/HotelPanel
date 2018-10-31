@@ -742,21 +742,23 @@ namespace Logic.BusinessObjects
     }
     public class AccommodationEquality<T> : IEqualityComparer<T> where T : class
     {
-        private Func<T, object> func;
-        public AccommodationEquality(Func<T, object> func)
+        private Func<T, long> func;
+        public AccommodationEquality(Func<T, long> func)
         {
             this.func = func;
         }
+
         public bool Equals(T x, T y)
         {
-            object first = func(x);
-            object second = func(y);
-            return first.Equals(second);
+            long first = func(x);
+            long second = func(y);
+            if (first == second) return true;
+            return false;
         }
 
         public int GetHashCode(T obj)
         {
-            return obj.GetHashCode();
+            return func(obj).GetHashCode();
         }
     }
 }
