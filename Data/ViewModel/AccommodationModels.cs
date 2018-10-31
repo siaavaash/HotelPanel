@@ -11,9 +11,9 @@ namespace Data.ViewModel.AccommodationModels
     public class AccommodationListViewModel
     {
         public bool Restricted { get; set; }
-        public List<AccommodationListRsult> AccommodationList { get; set; }
+        public List<AccommodationListResult> AccommodationList { get; set; }
     }
-    public class AccommodationListRsult
+    public class AccommodationListResult
     {
         public long AccommodationID { get; set; }
         public string Name { get; set; }
