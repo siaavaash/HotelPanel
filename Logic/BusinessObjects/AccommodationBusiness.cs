@@ -59,7 +59,7 @@ namespace Logic.BusinessObjects
                 throw exeption;
             }
         }
-        public AccommodationListViewModel GetAccommodationByUser(long userId, bool showIsVerified, bool onlyVerified, int part)
+        public AccommodationListViewModel GetAccommodationByUser(long userId, bool showIsVerified, bool onlyVerified)
         {
             try
             {
@@ -113,7 +113,7 @@ namespace Logic.BusinessObjects
                                     }).ToList());
                             }
                         }
-                        result.AccommodationList = result.AccommodationList.Distinct(new AccommodationEquality<AccommodationListResult>(x => x.AccommodationID)).OrderBy(x => x.AccommodationID).Skip((part - 1) * 1000).Take(1000).ToList();
+                        result.AccommodationList = result.AccommodationList.Distinct(new AccommodationEquality<AccommodationListResult>(x => x.AccommodationID)).OrderBy(x => x.AccommodationID).ToList();
                         return result;
                     }
                     return new AccommodationListViewModel
