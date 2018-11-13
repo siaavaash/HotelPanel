@@ -187,6 +187,36 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\cba68f986e60df8c74f4a53c3e39595c.svg" />
+    <Content Include="Content\DataTables-1.10.18\css\dataTables.bootstrap.css" />
+    <Content Include="Content\DataTables-1.10.18\css\dataTables.bootstrap.min.css" />
+    <Content Include="Content\DataTables-1.10.18\css\dataTables.bootstrap4.css" />
+    <Content Include="Content\DataTables-1.10.18\css\dataTables.bootstrap4.min.css" />
+    <Content Include="Content\DataTables-1.10.18\css\dataTables.foundation.css" />
+    <Content Include="Content\DataTables-1.10.18\css\dataTables.foundation.min.css" />
+    <Content Include="Content\DataTables-1.10.18\css\dataTables.jqueryui.css" />
+    <Content Include="Content\DataTables-1.10.18\css\dataTables.jqueryui.min.css" />
+    <Content Include="Content\DataTables-1.10.18\css\dataTables.semanticui.css" />
+    <Content Include="Content\DataTables-1.10.18\css\dataTables.semanticui.min.css" />
+    <Content Include="Content\DataTables-1.10.18\css\jquery.dataTables.css" />
+    <Content Include="Content\DataTables-1.10.18\css\jquery.dataTables.min.css" />
+    <Content Include="Content\DataTables-1.10.18\images\sort_asc.png" />
+    <Content Include="Content\DataTables-1.10.18\images\sort_asc_disabled.png" />
+    <Content Include="Content\DataTables-1.10.18\images\sort_both.png" />
+    <Content Include="Content\DataTables-1.10.18\images\sort_desc.png" />
+    <Content Include="Content\DataTables-1.10.18\images\sort_desc_disabled.png" />
+    <Content Include="Content\DataTables-1.10.18\js\dataTables.bootstrap.js" />
+    <Content Include="Content\DataTables-1.10.18\js\dataTables.bootstrap.min.js" />
+    <Content Include="Content\DataTables-1.10.18\js\dataTables.bootstrap4.js" />
+    <Content Include="Content\DataTables-1.10.18\js\dataTables.bootstrap4.min.js" />
+    <Content Include="Content\DataTables-1.10.18\js\dataTables.foundation.js" />
+    <Content Include="Content\DataTables-1.10.18\js\dataTables.foundation.min.js" />
+    <Content Include="Content\DataTables-1.10.18\js\dataTables.jqueryui.js" />
+    <Content Include="Content\DataTables-1.10.18\js\dataTables.jqueryui.min.js" />
+    <Content Include="Content\DataTables-1.10.18\js\dataTables.semanticui.js" />
+    <Content Include="Content\DataTables-1.10.18\js\dataTables.semanticui.min.js" />
+    <Content Include="Content\DataTables-1.10.18\js\jquery.dataTables.js" />
+    <Content Include="Content\DataTables-1.10.18\js\jquery.dataTables.min.js" />
+    <Content Include="Content\datatables.min.css" />
     <Content Include="Content\dbc7556d44aaa93cc89743f163cc09c4.svg" />
     <Content Include="Content\default-user.png" />
     <Content Include="Content\Fonts\icons\fontawesome\fontawesome-webfont.svg" />
@@ -640,6 +670,7 @@
       <DependentUpon>Style.css</DependentUpon>
     </Content>
     <Content Include="Content\Style\StyleSheet1.css" />
+    <Content Include="Scripts\datatables.min.js" />
     <Content Include="Scripts\owl.carousel.js" />
     <Content Include="Content\Scripts\vendor.js" />
     <Content Include="Content\Style\owl.carousel.min.css" />
@@ -817,8 +848,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\GIATA\" />
     <Folder Include="Views\Dotw\" />
+    <Folder Include="Views\GIATA\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Fonts\icons\fontawesome\fontawesome-webfont.eot" />
