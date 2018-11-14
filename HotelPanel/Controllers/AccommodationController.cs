@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Data.ViewModel.AccommodationModels;
-
+using PagedList;
 
 namespace HotelPanel.Controllers
 {
@@ -48,23 +48,22 @@ namespace HotelPanel.Controllers
         {
             return View();
         }
-        public ActionResult List(bool showVerified = false, bool onlyVerified = false)
+        public ActionResult List(bool showVerified = false, bool onlyVerified = false, int page = 1, int pageSize = 20)
         {
             ViewBag.ShowVerified = showVerified;
             ViewBag.OnlyVerified = onlyVerified;
-            var result = _AccommodationBusiness.GetAccommodationByUser(CurrentUser.UserID, showVerified, onlyVerified);
-            return View(result);
+            ViewBag.PageSize = pageSize;
+            ViewBag.Restricted = true;
+            return View(_AccommodationBusiness.GetAccommodationByUser(CurrentUser.UserID, showVerified, onlyVerified)?.ToPagedList(page, pageSize));
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult List(SearchAccommodation Model)
+        public ActionResult List(SearchAccommodation Model, int page = 1, int pageSize = 20)
         {
+            ViewBag.Restricted = false;
             if (ModelState.IsValid)
-            {
-                var result = _AccommodationBusiness.GetNames(Model);
-                return View(result);
-            }
-            return View(new AccommodationListViewModel());
+                return View(_AccommodationBusiness.GetNames(Model)?.ToPagedList(page, pageSize));
+            return View();
         }
         public ActionResult Images(long AccommodationID)
         {

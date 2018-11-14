@@ -402,3 +402,14 @@ i.fa-check {
 .status {
   display: inline-block;
   width: 75%; }
+
+.accomodation_paging {
+  text-align: center;
+  margin-bottom: 5px; }
+  .accomodation_paging span.text-item {
+    float: left; }
+    .accomodation_paging span.text-item .form-control {
+      width: auto !important;
+      display: inline-block !important; }
+  .accomodation_paging .search_input {
+    float: right; }
