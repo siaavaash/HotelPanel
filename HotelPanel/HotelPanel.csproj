@@ -58,6 +58,12 @@
     <Reference Include="MoreLinq, Version=3.0.0.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
       <HintPath>..\packages\morelinq.3.0.0\lib\net451\MoreLinq.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -232,6 +238,7 @@
     <Content Include="Content\Images\hotelImage\NoHotel.png" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\logo.svg" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\plugin\ckeditor\adapters\jquery.js" />
     <Content Include="Content\plugin\ckeditor\build-config.js" />
     <Content Include="Content\plugin\ckeditor\ckeditor.js" />

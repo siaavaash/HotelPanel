@@ -523,3 +523,19 @@ i.fa-check {
     display:inline-block;
     width:75%;
 }
+.accomodation_paging {
+    text-align: center;
+    margin-bottom: 5px;
+
+    span.text-item {
+        float: left;
+
+        .form-control {
+            width: auto !important;
+            display: inline-block !important;
+        }
+    }
+    .search_input{
+        float:right;
+    }
+}

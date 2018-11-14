@@ -8,11 +8,6 @@ using System.Threading.Tasks;
 
 namespace Data.ViewModel.AccommodationModels
 {
-    public class AccommodationListViewModel
-    {
-        public bool Restricted { get; set; }
-        public List<AccommodationListResult> AccommodationList { get; set; }
-    }
     public class AccommodationListResult
     {
         public long AccommodationID { get; set; }
