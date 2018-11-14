@@ -99,7 +99,7 @@ namespace Logic.BusinessObjects
                             else
                             {
                                 foreach (var bound in userBounds)
-                                    result.AddRange(context.Accommodations.AsNoTracking().Include(x => x.AccommodationSortedByCountry).Where(x => x.AccommodationSortedByCountry.Ordered >= bound.FromImageID && x.AccommodationSortedByCountry.Ordered <= bound.ToImageID && x.DateVerified == null).Select(x => new AccommodationListResult
+                                    result.AddRange(context.Accommodations.AsNoTracking().Include(x => x.AccommodationSortedByCountry).Where(x => x.AccommodationSortedByCountry.Ordered >= bound.FromImageID && x.AccommodationSortedByCountry.Ordered <= bound.ToImageID).Select(x => new AccommodationListResult
                                     {
                                         AccommodationID = x.AccommodationlID,
                                         CityName = x.CityName,
