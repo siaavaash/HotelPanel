@@ -32,6 +32,7 @@ namespace Data.DataModel
             this.LocationSuppliers = new HashSet<LocationSupplier>();
             this.PNR_RPH = new HashSet<PNR_RPH>();
             this.RailwayContracts = new HashSet<RailwayContract>();
+            this.Payments = new HashSet<Payment>();
         }
     
         public long SupplierID { get; set; }
@@ -77,5 +78,7 @@ namespace Data.DataModel
         public virtual ICollection<PNR_RPH> PNR_RPH { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RailwayContract> RailwayContracts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Payment> Payments { get; set; }
     }
 }

@@ -2550,6 +2550,7 @@ warning 6002: The table/view 'DBMainTest.dbo.LocationMistakeName961114' does not
           <Property Name="Priority" Type="real" />
           <Property Name="PageTitle" Type="nvarchar" MaxLength="250" />
           <Property Name="ChangeFreq" Type="nvarchar" MaxLength="15" />
+          <Property Name="Params" Type="nvarchar(max)" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DBMainTest.dbo.Pages_970513' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -2600,6 +2601,7 @@ warning 6002: The table/view 'DBMainTest.dbo.Pages_970513' does not have a prima
           <Property Name="DiscountCode" Type="nvarchar" MaxLength="50" />
           <Property Name="DiscountPercent" Type="tinyint" />
           <Property Name="DiscountValue" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SupplierID" Type="bigint" />
         </EntityType>
         <EntityType Name="PaymentCard">
           <Key>
@@ -2728,6 +2730,7 @@ warning 6002: The table/view 'DBMainTest.dbo.Pages_970513' does not have a prima
           <Property Name="PnrFileHtml" Type="nvarchar(max)" />
           <Property Name="ContractID" Type="bigint" />
           <Property Name="PnrType" Type="tinyint" />
+          <Property Name="PaymentStatus" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="PNR_RPH">
           <Key>
@@ -5330,6 +5333,18 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Payment_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PaymentList_IssuanceData">
           <End Role="IssuanceData" Type="Self.IssuanceData" Multiplicity="1" />
           <End Role="PaymentList" Type="Self.PaymentList" Multiplicity="*" />
@@ -6230,6 +6245,9 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="SP_GetAccommodationBoundByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="User" Type="bigint" Mode="In" />
+        </Function>
         <EntityContainer Name="DataContextStoreContainer">
           <EntitySet Name="AccommodationCommission" EntityType="Self.AccommodationCommission" Schema="cnv" store:Type="Tables" />
           <EntitySet Name="AccommodationLatLong" EntityType="Self.AccommodationLatLong" Schema="cnv" store:Type="Tables" />
@@ -7653,6 +7671,10 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           </AssociationSet>
           <AssociationSet Name="FK_Payment_Discount" Association="Self.FK_Payment_Discount">
             <End Role="Discount" EntitySet="Discount" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_Supplier" Association="Self.FK_Payment_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
             <End Role="Payment" EntitySet="Payment" />
           </AssociationSet>
           <AssociationSet Name="FK_PaymentList_IssuanceData" Association="Self.FK_PaymentList_IssuanceData">
@@ -9931,6 +9953,7 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <NavigationProperty Name="User1" Relationship="Self.FK_Pages_User_ModifyUserID" FromRole="Pages" ToRole="User1" />
           <NavigationProperty Name="User11" Relationship="Self.FK_Pages_User_UserID" FromRole="Pages" ToRole="User1" />
           <NavigationProperty Name="Accommodation" Relationship="DataContext.FK_Pages_Accommodations" FromRole="Page" ToRole="Accommodation" />
+          <Property Name="Params" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Payment">
           <Key>
@@ -9963,6 +9986,8 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <NavigationProperty Name="User1" Relationship="Self.FK__Payment__Modific__20ACD28B" FromRole="Payment" ToRole="User1" />
           <NavigationProperty Name="PaymentTickets" Relationship="Self.FK_PaymentTicket_Payment" FromRole="Payment" ToRole="PaymentTicket" />
           <NavigationProperty Name="Wallets" Relationship="Self.FK_Wallet_Payment" FromRole="Payment" ToRole="Wallet" />
+          <Property Name="SupplierID" Type="Int64" />
+          <NavigationProperty Name="Supplier" Relationship="DataContext.FK_Payment_Supplier" FromRole="Payment" ToRole="Supplier" />
         </EntityType>
         <EntityType Name="PaymentCard">
           <Key>
@@ -10108,6 +10133,7 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <NavigationProperty Name="PNR_RPH" Relationship="Self.FK_PNR_RPH_PNR" FromRole="PNR" ToRole="PNR_RPH" />
           <NavigationProperty Name="User1" Relationship="Self.FK_PNR_User" FromRole="PNR" ToRole="User1" />
           <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_PNR" FromRole="PNR" ToRole="Ticket" />
+          <Property Name="PaymentStatus" Type="Byte" Nullable="false" />
         </EntityType>
         <EntityType Name="PNR_RPH">
           <Key>
@@ -10469,6 +10495,7 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <NavigationProperty Name="LocationSuppliers" Relationship="Self.FK_LocationSupplier_Supplier" FromRole="Supplier" ToRole="LocationSupplier" />
           <NavigationProperty Name="PNR_RPH" Relationship="Self.FK_PNR_RPH_Supplier" FromRole="Supplier" ToRole="PNR_RPH" />
           <NavigationProperty Name="RailwayContracts" Relationship="Self.FK_RailwayContract_Supplier" FromRole="Supplier" ToRole="RailwayContract" />
+          <NavigationProperty Name="Payments" Relationship="DataContext.FK_Payment_Supplier" FromRole="Supplier" ToRole="Payment" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -15362,6 +15389,13 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
             <End Role="Location" EntitySet="Locations" />
           </AssociationSet>
           <EntitySet Name="IataAirports" EntityType="DataContext.IataAirport" />
+          <AssociationSet Name="FK_Payment_Supplier" Association="DataContext.FK_Payment_Supplier">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <FunctionImport Name="SP_GetAccommodationBoundByUser" ReturnType="Collection(DataContext.SP_GetAccommodationBoundByUser_Result)">
+            <Parameter Name="User" Mode="In" Type="Int64" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="Accommodation">
           <Key>
@@ -15584,6 +15618,25 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <Property Name="TimeZone" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="Nearby" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
         </EntityType>
+        <Association Name="FK_Payment_Supplier">
+          <End Type="DataContext.Supplier" Role="Supplier" Multiplicity="0..1" />
+          <End Type="DataContext.Payment" Role="Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="SP_GetAccommodationBoundByUser_Result">
+          <Property Type="Int64" Name="AccommodationId" Nullable="false" />
+          <Property Type="String" Name="AccommodationName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="CountryName" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="CityName" Nullable="true" MaxLength="300" />
+          <Property Type="Int64" Name="Ordered" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -17396,6 +17449,7 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <EntitySetMapping Name="Pages">
             <EntityTypeMapping TypeName="DataContext.Page">
               <MappingFragment StoreEntitySet="Pages">
+                <ScalarProperty Name="Params" ColumnName="Params" />
                 <ScalarProperty Name="PageId" ColumnName="PageId" />
                 <ScalarProperty Name="PageUrl" ColumnName="PageUrl" />
                 <ScalarProperty Name="AccommodationID" ColumnName="AccommodationID" />
@@ -17417,6 +17471,7 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <EntitySetMapping Name="Payments">
             <EntityTypeMapping TypeName="DataContext.Payment">
               <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
                 <ScalarProperty Name="CurrencyID" ColumnName="CurrencyID" />
@@ -17526,6 +17581,7 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <EntitySetMapping Name="PNRs">
             <EntityTypeMapping TypeName="DataContext.PNR">
               <MappingFragment StoreEntitySet="PNR">
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
                 <ScalarProperty Name="PNRID" ColumnName="PNRID" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Origin" ColumnName="Origin" />
@@ -19092,6 +19148,17 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_GetAccommodationBoundByUser" FunctionName="DataContext.Store.SP_GetAccommodationBoundByUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DataContext.SP_GetAccommodationBoundByUser_Result">
+                <ScalarProperty Name="AccommodationId" ColumnName="AccommodationId" />
+                <ScalarProperty Name="AccommodationName" ColumnName="AccommodationName" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="Ordered" ColumnName="Ordered" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

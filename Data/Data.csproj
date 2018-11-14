@@ -635,6 +635,9 @@
     <Compile Include="DataModel\SpecialEquipPref.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\SP_GetAccommodationBoundByUser_Result.cs">
+      <DependentUpon>iContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\Suggestion.cs">
       <DependentUpon>iContext.tt</DependentUpon>
     </Compile>

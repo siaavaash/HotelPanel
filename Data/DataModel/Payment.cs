@@ -41,6 +41,7 @@ namespace Data.DataModel
         public string DiscountCode { get; set; }
         public Nullable<byte> DiscountPercent { get; set; }
         public Nullable<decimal> DiscountValue { get; set; }
+        public Nullable<long> SupplierID { get; set; }
     
         public virtual Company1 Company1 { get; set; }
         public virtual Contract Contract { get; set; }
@@ -51,5 +52,6 @@ namespace Data.DataModel
         public virtual ICollection<PaymentTicket> PaymentTickets { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Wallet> Wallets { get; set; }
+        public virtual Supplier Supplier { get; set; }
     }
 }

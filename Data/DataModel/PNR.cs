@@ -67,6 +67,7 @@ namespace Data.DataModel
         public string PnrFileHtml { get; set; }
         public Nullable<long> ContractID { get; set; }
         public Nullable<byte> PnrType { get; set; }
+        public byte PaymentStatus { get; set; }
     
         public virtual Contract Contract { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
