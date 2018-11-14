@@ -12,6 +12,8 @@ namespace Data.DataModel
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class Entities : DbContext
     {
@@ -226,5 +228,14 @@ namespace Data.DataModel
         public virtual DbSet<Accommodation> Accommodations { get; set; }
         public virtual DbSet<AccommodationSortedByCountry> AccommodationSortedByCountries { get; set; }
         public virtual DbSet<IataAirport> IataAirports { get; set; }
+    
+        public virtual ObjectResult<SP_GetAccommodationBoundByUser_Result> SP_GetAccommodationBoundByUser(Nullable<long> user)
+        {
+            var userParameter = user.HasValue ?
+                new ObjectParameter("User", user) :
+                new ObjectParameter("User", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetAccommodationBoundByUser_Result>("SP_GetAccommodationBoundByUser", userParameter);
+        }
     }
 }

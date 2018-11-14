@@ -29,6 +29,7 @@ namespace Data.DataModel
         public Nullable<float> Priority { get; set; }
         public string PageTitle { get; set; }
         public string ChangeFreq { get; set; }
+        public string Params { get; set; }
     
         public virtual User1 User1 { get; set; }
         public virtual User1 User11 { get; set; }

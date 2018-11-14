@@ -432,6 +432,7 @@
         <AssociationConnector Association="DataContext.AccommodationFacility" />
         <AssociationConnector Association="DataContext.AccommodationLocation" />
         <EntityTypeShape EntityType="DataContext.IataAirport" Width="1.5" PointX="0.75" PointY="28.75" />
+        <AssociationConnector Association="DataContext.FK_Payment_Supplier" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
