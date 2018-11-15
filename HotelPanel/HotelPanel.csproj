@@ -678,6 +678,7 @@
     </Content>
     <Content Include="Content\Style\StyleSheet1.css" />
     <Content Include="Scripts\datatables.min.js" />
+    <Content Include="Scripts\jquery.elevatezoom.js" />
     <Content Include="Scripts\owl.carousel.js" />
     <Content Include="Content\Scripts\vendor.js" />
     <Content Include="Content\Style\owl.carousel.min.css" />

@@ -51,7 +51,7 @@
                                                         {
                                                             <label class="myCheckbox">
                                                                 <span class="img_child"><i class="fas fa-times clos"></i></span>
-                                                                <img data-src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" class="select-image lazy">
+                                                                <img data-src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" data-zoom-image="@Item.RoomImagePhysicalPath" class="select-image lazy">
                                                             </label>
 
                                                         }
@@ -59,14 +59,14 @@
                                                         {
                                                             <label class="myCheckbox">
                                                                 <span class="img_child"><i class="fas fa-check"></i></span>
-                                                                <img data-src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" class="select-image lazy">
+                                                                <img data-src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" data-zoom-image="@Item.RoomImagePhysicalPath" class="select-image lazy">
                                                             </label>
                                                         }
                                                         else
                                                         {
                                                             <label class="myCheckbox">
                                                                 <span class="img_child"><i class="fas"></i></span>
-                                                                <img data-src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" class="select-image lazy">
+                                                                <img data-src="@Item.RoomImagePhysicalPath" id="@Item.AccomodationRoomImageID" data-zoom-image="@Item.RoomImagePhysicalPath" class="select-image lazy">
                                                             </label>
 
                                                         }
@@ -93,10 +93,19 @@
 <script type="text/javascript" src="~/Content/Scripts/jquery.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js"></script>
+<script src="~/Scripts/jquery.elevatezoom.js" type="text/javascript"></script>
 
 <script>
     $(function () {
-        $('.lazy').Lazy();
+        $('.lazy').Lazy({
+            afterLoad: function (element) {
+                element.elevateZoom({
+                    zoomType: "inner",
+                    cursor: "crosshair",
+                    scrollZoom: true
+                });
+            }
+        });
     });
     var filtered = new Array();
     $("body").on("click", "#deactive_btn", function () {
