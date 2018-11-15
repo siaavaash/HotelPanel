@@ -59,59 +59,60 @@ namespace Logic.BusinessObjects
                 throw exeption;
             }
         }
-        public List<AccommodationListResult> GetAccommodationByUser(long userId, bool showIsVerified, bool onlyVerified)
+        public IEnumerable<SP_GetAccommodationBoundByUser_Result> GetAccommodationByUser(long userId, bool showIsVerified, bool onlyVerified)
         {
             try
             {
                 using (var context = new Entities())
                 {
-                    context.Configuration.AutoDetectChangesEnabled = false;
-                    var userBounds = context.UserPictureDics.AsNoTracking().Where(x => x.UserID == userId && x.FromImageID != 0 && x.ToImageID != 0).ToList();
-                    if (userBounds != null && userBounds.Count > 0)
-                    {
-                        var result = new List<AccommodationListResult>();
-                        if (onlyVerified)
-                        {
-                            foreach (var bound in userBounds)
-                                result.AddRange(context.Accommodations.AsNoTracking().Include(x => x.AccommodationSortedByCountry).Where(x => x.AccommodationSortedByCountry.Ordered >= bound.FromImageID && x.AccommodationSortedByCountry.Ordered <= bound.ToImageID && x.DateVerified != null).Select(x => new AccommodationListResult
-                                {
-                                    AccommodationID = x.AccommodationlID,
-                                    CityName = x.CityName,
-                                    Country = x.Country,
-                                    lastUpdate = x.lastUpdate,
-                                    Name = x.Name
-                                }).ToList());
-                        }
-                        else
-                        {
-                            if (!showIsVerified)
-                            {
-                                foreach (var bound in userBounds)
-                                    result.AddRange(context.Accommodations.AsNoTracking().Include(x => x.AccommodationSortedByCountry).Where(x => x.AccommodationSortedByCountry.Ordered >= bound.FromImageID && x.AccommodationSortedByCountry.Ordered <= bound.ToImageID && x.DateVerified == null).Select(x => new AccommodationListResult
-                                    {
-                                        AccommodationID = x.AccommodationlID,
-                                        CityName = x.CityName,
-                                        Country = x.Country,
-                                        lastUpdate = x.lastUpdate,
-                                        Name = x.Name
-                                    }).ToList());
-                            }
-                            else
-                            {
-                                foreach (var bound in userBounds)
-                                    result.AddRange(context.Accommodations.AsNoTracking().Include(x => x.AccommodationSortedByCountry).Where(x => x.AccommodationSortedByCountry.Ordered >= bound.FromImageID && x.AccommodationSortedByCountry.Ordered <= bound.ToImageID).Select(x => new AccommodationListResult
-                                    {
-                                        AccommodationID = x.AccommodationlID,
-                                        CityName = x.CityName,
-                                        Country = x.Country,
-                                        lastUpdate = x.lastUpdate,
-                                        Name = x.Name
-                                    }).ToList());
-                            }
-                        }
-                        return result.Distinct(new AccommodationEquality<AccommodationListResult>(x => x.AccommodationID)).OrderBy(x => x.AccommodationID).ToList();
-                    }
-                    return null;
+                    return context.SP_GetAccommodationBoundByUser(userId, showIsVerified, onlyVerified).ToList();
+                    //context.Configuration.AutoDetectChangesEnabled = false;
+                    //var userBounds = context.UserPictureDics.AsNoTracking().Where(x => x.UserID == userId && x.FromImageID != 0 && x.ToImageID != 0).ToList();
+                    //if (userBounds != null && userBounds.Count > 0)
+                    //{
+                    //    var result = new List<SP_GetAccommodationBoundByUser_Result>();
+                    //    if (onlyVerified)
+                    //    {
+                    //        foreach (var bound in userBounds)
+                    //            result.AddRange(context.Accommodations.AsNoTracking().Include(x => x.AccommodationSortedByCountry).Where(x => x.AccommodationSortedByCountry.Ordered >= bound.FromImageID && x.AccommodationSortedByCountry.Ordered <= bound.ToImageID && x.DateVerified != null).Select(x => new SP_GetAccommodationBoundByUser_Result
+                    //            {
+                    //                AccommodationID = x.AccommodationlID,
+                    //                CityName = x.CityName,
+                    //                Country = x.Country,
+                    //                lastUpdate = x.lastUpdate,
+                    //                Name = x.Name
+                    //            }).ToList());
+                    //    }
+                    //    else
+                    //    {
+                    //        if (!showIsVerified)
+                    //        {
+                    //            foreach (var bound in userBounds)
+                    //                result.AddRange(context.Accommodations.AsNoTracking().Include(x => x.AccommodationSortedByCountry).Where(x => x.AccommodationSortedByCountry.Ordered >= bound.FromImageID && x.AccommodationSortedByCountry.Ordered <= bound.ToImageID && x.DateVerified == null).Select(x => new SP_GetAccommodationBoundByUser_Result
+                    //                {
+                    //                    AccommodationID = x.AccommodationlID,
+                    //                    CityName = x.CityName,
+                    //                    Country = x.Country,
+                    //                    lastUpdate = x.lastUpdate,
+                    //                    Name = x.Name
+                    //                }).ToList());
+                    //        }
+                    //        else
+                    //        {
+                    //            foreach (var bound in userBounds)
+                    //                result.AddRange(context.Accommodations.AsNoTracking().Include(x => x.AccommodationSortedByCountry).Where(x => x.AccommodationSortedByCountry.Ordered >= bound.FromImageID && x.AccommodationSortedByCountry.Ordered <= bound.ToImageID).Select(x => new SP_GetAccommodationBoundByUser_Result
+                    //                {
+                    //                    AccommodationID = x.AccommodationlID,
+                    //                    CityName = x.CityName,
+                    //                    Country = x.Country,
+                    //                    lastUpdate = x.lastUpdate,
+                    //                    Name = x.Name
+                    //                }).ToList());
+                    //        }
+                    //    }
+                    //    return result.Distinct(new AccommodationEquality<SP_GetAccommodationBoundByUser_Result>(x => x.AccommodationID)).OrderBy(x => x.AccommodationID).ToList();
+                    //}
+                    //return null;
                 }
             }
             catch (Exception)
@@ -140,7 +141,7 @@ namespace Logic.BusinessObjects
         /// Get Full Name Of Accommodations
         /// </summary>
         /// <returns></returns>
-        public List<AccommodationListResult> GetNames(SearchAccommodation Model)
+        public List<SP_GetAccommodationBoundByUser_Result> GetNames(SearchAccommodation Model)
         {
             try
             {
@@ -228,7 +229,7 @@ namespace Logic.BusinessObjects
                         Query = Query.Where(x => x.DateVerified == null).ToList();
                     }
                 }
-                return Query.Select(x => new AccommodationListResult
+                return Query.Select(x => new SP_GetAccommodationBoundByUser_Result
                 {
                     AccommodationID = x.AccommodationlID,
                     Name = x.Name,

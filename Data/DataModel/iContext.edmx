@@ -6247,6 +6247,8 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
         </Association>
         <Function Name="SP_GetAccommodationBoundByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="User" Type="bigint" Mode="In" />
+          <Parameter Name="ShowIsVerified" Type="bit" Mode="In" />
+          <Parameter Name="OnlyVerified" Type="bit" Mode="In" />
         </Function>
         <EntityContainer Name="DataContextStoreContainer">
           <EntitySet Name="AccommodationCommission" EntityType="Self.AccommodationCommission" Schema="cnv" store:Type="Tables" />
@@ -15395,6 +15397,8 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           </AssociationSet>
           <FunctionImport Name="SP_GetAccommodationBoundByUser" ReturnType="Collection(DataContext.SP_GetAccommodationBoundByUser_Result)">
             <Parameter Name="User" Mode="In" Type="Int64" />
+            <Parameter Name="ShowIsVerified" Mode="In" Type="Boolean" />
+            <Parameter Name="OnlyVerified" Mode="In" Type="Boolean" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="Accommodation">
@@ -15631,11 +15635,11 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           </ReferentialConstraint>
         </Association>
         <ComplexType Name="SP_GetAccommodationBoundByUser_Result">
-          <Property Type="Int64" Name="AccommodationId" Nullable="false" />
-          <Property Type="String" Name="AccommodationName" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="CountryName" Nullable="true" MaxLength="300" />
+          <Property Type="Int64" Name="AccommodationID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Country" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="CityName" Nullable="true" MaxLength="300" />
-          <Property Type="Int64" Name="Ordered" Nullable="true" />
+          <Property Type="DateTime" Name="lastUpdate" Nullable="true" Precision="23" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -19151,11 +19155,11 @@ warning 6002: The table/view 'DBMainTest.dbo.UserRole961221' does not have a pri
           <FunctionImportMapping FunctionImportName="SP_GetAccommodationBoundByUser" FunctionName="DataContext.Store.SP_GetAccommodationBoundByUser">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DataContext.SP_GetAccommodationBoundByUser_Result">
-                <ScalarProperty Name="AccommodationId" ColumnName="AccommodationId" />
-                <ScalarProperty Name="AccommodationName" ColumnName="AccommodationName" />
-                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="AccommodationID" ColumnName="AccommodationID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="CityName" ColumnName="CityName" />
-                <ScalarProperty Name="Ordered" ColumnName="Ordered" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
