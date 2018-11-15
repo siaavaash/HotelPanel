@@ -65,7 +65,9 @@ namespace Logic.BusinessObjects
             {
                 using (var context = new Entities())
                 {
-                    return context.SP_GetAccommodationBoundByUser(userId, showIsVerified, onlyVerified).ToList();
+                    var result = context.SP_GetAccommodationBoundByUser(userId, showIsVerified, onlyVerified).ToList();
+                    if (result[0].AccommodationID == null) return null;
+                    return result;
                     //context.Configuration.AutoDetectChangesEnabled = false;
                     //var userBounds = context.UserPictureDics.AsNoTracking().Where(x => x.UserID == userId && x.FromImageID != 0 && x.ToImageID != 0).ToList();
                     //if (userBounds != null && userBounds.Count > 0)
