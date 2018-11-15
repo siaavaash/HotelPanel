@@ -13,10 +13,10 @@ namespace Data.DataModel
     
     public partial class SP_GetAccommodationBoundByUser_Result
     {
-        public long AccommodationId { get; set; }
-        public string AccommodationName { get; set; }
-        public string CountryName { get; set; }
+        public long AccommodationID { get; set; }
+        public string Name { get; set; }
+        public string Country { get; set; }
         public string CityName { get; set; }
-        public Nullable<long> Ordered { get; set; }
+        public Nullable<System.DateTime> lastUpdate { get; set; }
     }
 }

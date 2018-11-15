@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Data.ViewModel.AccommodationModels
 {
-    public class AccommodationListResult
-    {
-        public long AccommodationID { get; set; }
-        public string Name { get; set; }
-        public string CityName { get; set; }
-        public string Country { get; set; }
-        public Nullable<System.DateTime> lastUpdate { get; set; }
-    }
+    //public class SP_GetAccommodationBoundByUser_Result
+    //{
+    //    public long AccommodationID { get; set; }
+    //    public string Name { get; set; }
+    //    public string CityName { get; set; }
+    //    public string Country { get; set; }
+    //    public Nullable<System.DateTime> lastUpdate { get; set; }
+    //}
     public class FilterImages
     {
         public long AccommodationID { get; set; }
